@@ -101,7 +101,6 @@ npm install
 node server.js
 ```
 브라우저에서 `http://localhost:3000` 접속.
-- 최초 1회: 로그인 화면에서 제목을 5번 클릭 → 마스터 설정.
 - 엔터프라이즈 버전: 관리자 탭 → API 키(Groq 무료 / Claude) 등록 시 AI 분석 사용.
 - 프로 버전: 본인 계정 → API 키(Groq 무료 / Claude) 등록 시 AI 분석 사용.
 
