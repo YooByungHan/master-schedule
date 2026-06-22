@@ -1,0 +1,36 @@
+# ── 민감 파일 (절대 업로드 금지) ──
+# API 키 환경변수 (절대 금지)
+.env
+.env.*
+# Claude / Groq API 키
+config.json
+# 사용자 계정·비밀번호·역할
+accounts.json
+# (구) 단일 데이터 저장소
+data.json
+# 현장별 공정표 데이터 (data/<siteId>.json)
+data/
+# 하도사 접수·보관 파일
+하도업체/
+# 현장별 백업 + 백업로그.jsonl
+백업/
+# 코드/데이터 스냅샷(.tgz)
+_스냅샷/
+# 구 백업 폴더
+_백업/
+
+# ── Node.js ──
+node_modules/
+npm-debug.log*
+server.log
+*.log
+
+# ── 백업·복구 잔여물 ──
+*.bak_*
+*.corrupt_*
+*.protect_*
+*.empty_*
+
+# ── OS ──
+.DS_Store
+Thumbs.db
