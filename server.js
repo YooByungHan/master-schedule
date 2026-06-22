@@ -1024,9 +1024,9 @@ const server = http.createServer(async (req, res) => {
     try {
       const body = await parseBody(req);
       const { adminUserId, companyId, apiKey } = body;
-      const d = readData();
-      const adminUser = (d.users || []).find(u => u.id === adminUserId && u.companyId === companyId);
-      if (!adminUser || !adminUser.isAdmin) {
+      const a = loadAccounts();
+      const adminUser = acctUser(a, adminUserId);
+      if (!adminUser || (adminUser.role !== 'master' && adminUser.role !== 'manager')) {
         res.writeHead(403, {'Content-Type':'application/json'});
         res.end(JSON.stringify({ok:false, msg:'관리자 권한이 필요합니다'}));
         return;
@@ -1052,9 +1052,9 @@ const server = http.createServer(async (req, res) => {
       const { adminUserId, companyId, apiKey } = body;
 
       // 관리자 권한 검증
-      const d = readData();
-      const adminUser = (d.users || []).find(u => u.id === adminUserId && u.companyId === companyId);
-      if (!adminUser || !adminUser.isAdmin) {
+      const a = loadAccounts();
+      const adminUser = acctUser(a, adminUserId);
+      if (!adminUser || (adminUser.role !== 'master' && adminUser.role !== 'manager')) {
         res.writeHead(403, {'Content-Type':'application/json'});
         res.end(JSON.stringify({ok:false, msg:'관리자 권한이 필요합니다'}));
         return;
