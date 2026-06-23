@@ -512,13 +512,44 @@ async function callClaudeApi(system, user) {
 // AI가 코드블록이나 부가 설명을 덧붙여도 JSON 부분만 최대한 살려서 파싱
 function parseAiJson(raw) {
   if (!raw) return null;
-  let text = raw.trim();
+  let text = String(raw).trim();
   text = text.replace(/^```json\s*/i, '').replace(/^```\s*/, '').replace(/```\s*$/, '').trim();
   const start = text.indexOf('{');
   const end = text.lastIndexOf('}');
   if (start === -1 || end === -1 || end < start) return null;
-  try { return JSON.parse(text.slice(start, end + 1)); }
-  catch { return null; }
+  const body = text.slice(start, end + 1);
+  // 1차: 그대로 파싱
+  try { return JSON.parse(body); } catch (e) {}
+  // 2차: LLM 흔한 결함 보정 — 문자열 값 내부의 실제 제어문자(개행/탭/CR) 이스케이프 + 트레일링 콤마 제거
+  try {
+    let outp = '', inStr = false, esc = false;
+    for (let i = 0; i < body.length; i++) {
+      const c = body[i];
+      if (esc) { outp += c; esc = false; continue; }
+      if (c === '\\') { outp += c; esc = true; continue; }
+      if (c === '"') { inStr = !inStr; outp += c; continue; }
+      if (inStr) {
+        if (c === '\n') { outp += '\\n'; continue; }
+        if (c === '\r') { outp += '\\r'; continue; }
+        if (c === '\t') { outp += '\\t'; continue; }
+        if (c.charCodeAt(0) < 0x20) { continue; }
+        outp += c;
+      } else { outp += c; }
+    }
+    outp = outp.replace(/,(\s*[}\]])/g, '$1');
+    return JSON.parse(outp);
+  } catch (e) {}
+  // 3차: 알려진 필드 직접 추출 (최후 수단)
+  try {
+    const grab = (k) => {
+      const m = body.match(new RegExp('"' + k + '"\\s*:\\s*"((?:[^"\\\\]|\\\\.)*)"'));
+      if (!m) return '';
+      return m[1].replace(/\\n/g, '\n').replace(/\\t/g, '\t').replace(/\\r/g, '').replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+    };
+    const su = grab('summary'), ri = grab('risk'), rc = grab('recovery');
+    if (su || ri || rc) return { summary: su, risk: ri, recovery: rc };
+  } catch (e) {}
+  return null;
 }
 
 // ════════════════════════════════════════════════════════════
