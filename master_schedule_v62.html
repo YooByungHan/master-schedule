@@ -2247,7 +2247,7 @@ async function switchDoc(which){
   }
 }
 function closeLocalDoc(){ const wasLocal=(_activeDoc==='local'); _localDoc=null; if(wasLocal){ switchDoc('server'); } else { renderDocTabs(); } }
-function getViewId(){ if(_privateLocal && _localPrimary) return _localPrimary; if(CU&&CU.isPrimary&&VCID) return VCID; return _sitePrimary || (CU&&CU.id); }
+function getViewId(){ if(_privateLocal && _localPrimary) return _localPrimary; if(VCID===MEETING_ID) return MEETING_ID; if(CU&&CU.isPrimary&&VCID) return VCID; return _sitePrimary || (CU&&CU.id); }
 function getProj(){
   const d=gs();const vid=getViewId();
   const co=d.companies.find(c=>c.id===vid);
@@ -2961,7 +2961,7 @@ async function runAiAnalyze(){
   try{
     const r = await fetch(API+'/api/ai/analyze',{
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({companyId: CU.id, baseDate})
+      body: JSON.stringify({companyId: getViewId(), baseDate, site:_activeSite||undefined})
     });
     let data;
     try{ data = await r.json(); }
