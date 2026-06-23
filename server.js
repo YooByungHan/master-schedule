@@ -60,6 +60,7 @@ function readData() {
 // ── 멀티현장: accounts.json(계정·현장·권한) + data/<siteId>.json(현장 스케줄) ──
 const ACCOUNTS_FILE = path.join(__dirname, 'accounts.json');
 const SITES_DIR = path.join(__dirname, 'data');
+try { fs.mkdirSync(SITES_DIR, { recursive: true }); } catch(e) {}
 function loadAccounts() {
   try { return JSON.parse(fs.readFileSync(ACCOUNTS_FILE, 'utf8')); }
   catch { return { users: [], sites: [] }; }
