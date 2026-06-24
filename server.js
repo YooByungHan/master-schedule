@@ -406,42 +406,163 @@ function computeOverallProgress(sections) {
   return totalAmt > 0 ? Math.round((totalAct / totalAmt) * 1000) / 10 : 0;
 }
 
-const PROMPT_FILE = path.join(__dirname, 'prompts', 'Groq_Llama3.3-70B_작업지시서.md');
-const DEFAULT_AI_INSTRUCTIONS = '당신은 건설 공정관리 전문가입니다. 제공된 공정 현황 데이터(시스템 확정 사실)만 근거로 분석하고, 설명·코드블록 없이 {"summary":"...","risk":"...","recovery":"..."} JSON 하나만 한국어 존댓말로 출력하세요.';
+const PROMPTS_DIR  = path.join(__dirname, 'prompts');
+const PROMPT_FILE  = path.join(PROMPTS_DIR, 'Groq_Llama3.3-70B_작업지시서.md');
+
+// 최초 설치 시 prompts/ 폴더 + 기본 작업지시서 자동 생성
+const DEFAULT_AI_INSTRUCTIONS = `당신은 20년 경력의 건설 공정관리 전문 분석관입니다.
+CPM(Critical Path Method), 공정 간섭 분석, 만회 공정 계획 수립이 전문 영역입니다.
+
+## 역할 정의
+
+당신은 속기사가 아닌 형사입니다.
+- 속기사: "지연 26건, 지연율 76.8%입니다. 조속한 조치가 필요합니다."
+- 형사(당신): "철근콘크리트 공사 27% 지연은 창호·내부마감의 선행입니다. 현 추세라면 창호 착공이 3주 지연되고 준공일에 직접 영향을 줍니다."
+
+## 분석 절차 (반드시 순서대로)
+
+### Step 1 — 설계 의도 독해
+공정표 전체 구조(sections, 선후행 배치, 날짜 간격, 공종 계층)를 보고 작성자의 설계 의도를 먼저 파악하십시오.
+"이 공정표의 작성자는 [핵심 공종]을 먼저 완료하고 [후속 공종들]을 병행하려 했다"는 의도를 식별하십시오.
+
+### Step 2 — 크리티컬 패스 추론
+선후행(predLinks) 연결과 날짜를 분석하여 준공일에 직접 영향을 주는 공종 체인을 추론하십시오.
+여유시간(TF)이 가장 적은 경로를 크리티컬 패스로 식별하십시오.
+
+### Step 3 — 연쇄 영향 추적
+현재 지연 공종 각각에 대해:
+- 이 공종이 후행(선후행 데이터 참조)에 얼마나 영향을 미치는가?
+- 영향 공종 수 × 영향 기간 = "지연의 무게"를 계산하십시오.
+- 크리티컬 패스 위에 있는 지연 공종을 최우선으로 분류하십시오.
+
+### Step 4 — 집중 공종 Top 3 선정
+지연의 무게가 가장 큰 공종 3개를 선정하고, 각각에 대해:
+- 왜 이 공종이 Top에 드는가 (선후행 파급 범위 명시)
+- 준공일 영향 여부
+- 구체적 만회 방안
+
+### Step 5 — 블라인드 스팟 탐지
+인간이 놓치기 쉬운 패턴을 찾으십시오:
+- "안심 공종": 실적율이 낮아 보이지만 후행이 없거나 여유시간이 충분해 전체에 무해한 공종
+- "위험 공종": 실적율이 높아 보이지만 후행이 밀집되어 집중 관리가 필요한 공종
+- "간섭 위험": 개별로는 정상이지만 동시 진행 시 자원(인력/장비) 충돌 가능성이 있는 공종 조합
+
+## 출력 형식 (엄격 준수)
+
+아래 JSON 하나만 출력하십시오. 설명·코드블록·전문 없이 JSON만 출력합니다.
+
+{"intent":"설계 의도 1-2문장","criticalPath":"크리티컬 패스 체인 요약","top3":[{"rank":1,"name":"공종명","delayDays":숫자,"impactCount":숫자,"reason":"이유","isOnCriticalPath":true,"recovery":"만회방안"},{"rank":2,"name":"...","delayDays":0,"impactCount":0,"reason":"...","isOnCriticalPath":false,"recovery":"..."},{"rank":3,"name":"...","delayDays":0,"impactCount":0,"reason":"...","isOnCriticalPath":false,"recovery":"..."}],"blindSpots":{"safe":"안심 공종 이름과 이유 또는 null","danger":"위험 공종 이름과 이유 또는 null","interference":"동시 진행 시 간섭 위험 조합 또는 null"},"completionRisk":"준공일 영향 여부 및 예상 지연 규모 한 문장","summary":"종합 의견 3-5문장 (의도 이탈 지점 + 핵심 위험 + 권고 행동 포함)","recovery":"만회 공정 제안 2-3가지 (각각 예상 효과 포함)"}
+
+## 제약 사항
+
+- 제공된 공정 데이터(sections, predLinks, 날짜, 실적율)만 근거로 분석합니다
+- "조속한 조치가 필요합니다"와 같은 공허한 문장을 사용하지 않습니다
+- 모든 판단에 구체적 근거(공종명, 날짜, 선후행 관계)를 명시합니다
+- 한국어 존댓말로 작성합니다
+- 지연 공종 목록 자체는 시스템이 별도 표로 보여주므로, 다시 길게 나열하지 말고 분석·조치에 집중한다.
+- JSON 외 다른 텍스트를 출력하지 않습니다`;
+
+(function ensurePromptsDir() {
+  try {
+    fs.mkdirSync(PROMPTS_DIR, { recursive: true });
+    if (!fs.existsSync(PROMPT_FILE)) {
+      fs.writeFileSync(PROMPT_FILE, DEFAULT_AI_INSTRUCTIONS, 'utf8');
+      console.log('[AI] prompts/ 폴더 및 기본 작업지시서 자동 생성:', PROMPT_FILE);
+    }
+  } catch(e) {
+    console.warn('[AI] prompts/ 폴더 초기화 실패 (기본값 사용):', e.message);
+  }
+})();
+
 function loadAiInstructions() {
   try { return fs.readFileSync(PROMPT_FILE, 'utf8'); }
   catch { return DEFAULT_AI_INSTRUCTIONS; }
 }
 
-// 사용자 메시지(전처리 데이터)만 생성 — 역할/절차/출력형식은 지시서 파일(system 메시지)에 있음
-function buildAiPrompt({ baseDate, progressRate, planRate, delays, conflicts, predLinksText, projectName }) {
+// ── P1-A: 전체 공정표 직렬화 ─────────────────────────────────
+// sections[] + nodes(트리) + predLinks[] + 계획/실적 날짜 + 실적율 전부를
+// AI가 설계 의도를 독해할 수 있는 구조화된 JSON으로 변환한다.
+// 토큰 절감을 위해 name/id/plan/actual/actRate/amount/ch(자식) 만 포함.
+function serializeScheduleForAI(proj) {
+  function serializeNode(n, depth) {
+    const obj = {
+      id: n.id,
+      name: n.name,
+      depth,
+      plan: { s: (n.plan && n.plan.s) || null, f: (n.plan && n.plan.f) || null },
+      actual: { s: (n.actual && n.actual.s) || null, f: (n.actual && n.actual.f) || null },
+      actRate: n.actRate || 0,
+      amount: n.amount || 0,
+    };
+    if (n.ch && n.ch.length) {
+      obj.children = n.ch.map(c => serializeNode(c, depth + 1));
+    }
+    return obj;
+  }
+
+  const sections = (proj.sections || []).map(sec => ({
+    id: sec.id,
+    name: sec.name,
+    nodes: (sec.nodes || []).map(n => serializeNode(n, 0))
+  }));
+
+  // predLinks: srcId → tgtIds (노드명을 함께 포함해 AI가 이름으로 파악 가능하도록)
+  const nodeMap = flattenNodes(proj.sections || []);
+  const predLinks = (proj.predLinks || []).map(l => {
+    const src = nodeMap.get(l.srcId);
+    const tgts = (l.tgtIds || []).map(tid => {
+      const t = nodeMap.get(tid);
+      return t ? { id: tid, name: t.path } : null;
+    }).filter(Boolean);
+    if (!src || !tgts.length) return null;
+    return { srcId: l.srcId, srcName: src.path, targets: tgts };
+  }).filter(Boolean);
+
+  return JSON.stringify({ projectName: proj.projectName || '', sections, predLinks });
+}
+
+// 토큰 수 추정 (영문 4자/토큰, 한글 2자/토큰 근사치)
+function estimateTokens(str) {
+  const korean = (str.match(/[\uAC00-\uD7A3]/g) || []).length;
+  const other = str.length - korean;
+  return Math.ceil(korean / 2 + other / 4);
+}
+
+// 사용자 메시지(전처리 데이터) 생성 — 역할/절차/출력형식은 지시서 파일(system 메시지)에 있음
+// P1-A/P1-B: 전체 공종 트리 + predLinks 를 직렬화하여 AI에 전달 (의도 독해 가능하도록)
+function buildAiPrompt({ baseDate, progressRate, planRate, delays, conflicts, scheduleJson, projectName }) {
   const delayTable = delays.length
     ? ['| 공종 | 구분 | 계획종료 | 실적종료 | 진행률 | 지연일 |', '|---|---|---|---|---|---|']
-        .concat(delays.slice(0, 30).map(d =>
+        .concat(delays.slice(0, 50).map(d =>
           `| ${d.section} > ${d.name} | ${d.type} | ${d.planEnd} | ${d.actualEnd || '-'} | ${d.progress}% | ${d.daysLate}일 |`
         )).join('\n')
     : '(지연 공종 없음)';
   const conflictLines = conflicts.length
-    ? conflicts.slice(0, 20).map(c =>
+    ? conflicts.slice(0, 30).map(c =>
         `- 선행 [${c.predName}](진행 ${c.predProgress}%) 미완 → 후행 [${c.succName}]이 ${c.succActualStart}에 착수`
       ).join('\n')
     : '(선후행 충돌 없음)';
+
+  // 토큰 용량 확인: 128K 컨텍스트 한계 대비 전체 직렬화 데이터 포함 여부 결정
+  // 공정표 JSON + 프롬프트 overhead 합산 기준 90,000 토큰 이하면 전체 포함
+  const TOKEN_LIMIT = 90000;
+  const scheduleSection = scheduleJson && estimateTokens(scheduleJson) + estimateTokens(delayTable) < TOKEN_LIMIT
+    ? `\n## 전체 공정표 구조 (JSON)\n\`\`\`json\n${scheduleJson}\n\`\`\`\n`
+    : `\n## ⚠ 공정표 데이터 생략 (토큰 한계 초과) — 지연/충돌 목록만으로 분석하십시오\n`;
+
   return [
     '# 공정 현황 데이터 (시스템 확정 사실)',
     `- 프로젝트: ${projectName || '(미입력)'}`,
     `- 기준일: ${baseDate}`,
     `- 실적 진행률: ${progressRate}%  /  계획 진행률: ${planRate != null ? planRate : '-'}%`,
-    '',
-    '## 지연 공종 (지연일 큰 순)',
+    scheduleSection,
+    '## 지연 공종 (지연일 큰 순) — 시스템 계산 결과',
     delayTable,
     '',
-    '## 선후행 충돌',
+    '## 선후행 충돌 — 시스템 계산 결과',
     conflictLines,
     '',
-    '## 선후행 관계',
-    predLinksText || '(없음)',
-    '',
-    '위 데이터만 근거로, 지시서에 명시된 JSON 형식으로 분석 결과를 출력하세요.'
+    '위 데이터를 바탕으로 지시서에 명시된 절차(Step 1~5)와 JSON 형식으로 분석 결과를 출력하십시오.'
   ].join('\n');
 }
 
@@ -512,44 +633,13 @@ async function callClaudeApi(system, user) {
 // AI가 코드블록이나 부가 설명을 덧붙여도 JSON 부분만 최대한 살려서 파싱
 function parseAiJson(raw) {
   if (!raw) return null;
-  let text = String(raw).trim();
+  let text = raw.trim();
   text = text.replace(/^```json\s*/i, '').replace(/^```\s*/, '').replace(/```\s*$/, '').trim();
   const start = text.indexOf('{');
   const end = text.lastIndexOf('}');
   if (start === -1 || end === -1 || end < start) return null;
-  const body = text.slice(start, end + 1);
-  // 1차: 그대로 파싱
-  try { return JSON.parse(body); } catch (e) {}
-  // 2차: LLM 흔한 결함 보정 — 문자열 값 내부의 실제 제어문자(개행/탭/CR) 이스케이프 + 트레일링 콤마 제거
-  try {
-    let outp = '', inStr = false, esc = false;
-    for (let i = 0; i < body.length; i++) {
-      const c = body[i];
-      if (esc) { outp += c; esc = false; continue; }
-      if (c === '\\') { outp += c; esc = true; continue; }
-      if (c === '"') { inStr = !inStr; outp += c; continue; }
-      if (inStr) {
-        if (c === '\n') { outp += '\\n'; continue; }
-        if (c === '\r') { outp += '\\r'; continue; }
-        if (c === '\t') { outp += '\\t'; continue; }
-        if (c.charCodeAt(0) < 0x20) { continue; }
-        outp += c;
-      } else { outp += c; }
-    }
-    outp = outp.replace(/,(\s*[}\]])/g, '$1');
-    return JSON.parse(outp);
-  } catch (e) {}
-  // 3차: 알려진 필드 직접 추출 (최후 수단)
-  try {
-    const grab = (k) => {
-      const m = body.match(new RegExp('"' + k + '"\\s*:\\s*"((?:[^"\\\\]|\\\\.)*)"'));
-      if (!m) return '';
-      return m[1].replace(/\\n/g, '\n').replace(/\\t/g, '\t').replace(/\\r/g, '').replace(/\\"/g, '"').replace(/\\\\/g, '\\');
-    };
-    const su = grab('summary'), ri = grab('risk'), rc = grab('recovery');
-    if (su || ri || rc) return { summary: su, risk: ri, recovery: rc };
-  } catch (e) {}
-  return null;
+  try { return JSON.parse(text.slice(start, end + 1)); }
+  catch { return null; }
 }
 
 // ════════════════════════════════════════════════════════════
@@ -969,13 +1059,12 @@ const server = http.createServer(async (req, res) => {
       const planRate = computePlanRate(proj.sections || [], baseDate);
 
       // 2) AI 코멘트 생성 (만회 제안 / 종합 의견) — 1차 시도 실패 시 자동 폴백
-      const predLinksText = (proj.predLinks || []).map(l => {
-        const sp = nodeMap.get(l.srcId); if (!sp) return null;
-        const ts = (l.tgtIds || []).map(t => { const x = nodeMap.get(t); return x ? x.path : null; }).filter(Boolean);
-        return ts.length ? `${sp.path} → ${ts.join(', ')}` : null;
-      }).filter(Boolean).join('\n');
+      // P1-A: 전체 공정표 트리 직렬화 — AI가 설계 의도를 독해할 수 있도록 전달
+      const scheduleJson = serializeScheduleForAI(proj);
+      const tokenEst = estimateTokens(scheduleJson);
+      console.log(`[AI] 공정표 직렬화 완료 — 추정 ${tokenEst.toLocaleString()} 토큰 (${(scheduleJson.length/1024).toFixed(1)} KB)`);
       const instructions = loadAiInstructions();
-      const userMsg = buildAiPrompt({ baseDate, progressRate, planRate, delays, conflicts, predLinksText, projectName: proj.projectName });
+      const userMsg = buildAiPrompt({ baseDate, progressRate, planRate, delays, conflicts, scheduleJson, projectName: proj.projectName });
 
       // provider 우선순위: 요청값 > 환경변수 > 기본값(groq)
       const defaultProvider = process.env.AI_PROVIDER || 'groq';
@@ -1017,16 +1106,38 @@ const server = http.createServer(async (req, res) => {
       let ai = null;
       if (aiRaw) {
         const parsed = parseAiJson(aiRaw);
-        ai = parsed
-          ? { provider: aiProvider, summary: parsed.summary || '', risk: parsed.risk || '', recovery: parsed.recovery || '' }
-          : { provider: aiProvider, recovery: '', summary: aiRaw.trim(),
+        if (parsed) {
+          // P1-B: 새 JSON 구조 (intent, criticalPath, top3, blindSpots, completionRisk, summary, recovery)
+          ai = {
+            provider: aiProvider,
+            // 기존 필드 유지 (하위 호환)
+            summary: parsed.summary || '',
+            risk: parsed.completionRisk || parsed.risk || '',
+            recovery: parsed.recovery || '',
+            // P1-B 신규 필드
+            intent: parsed.intent || null,
+            criticalPath: parsed.criticalPath || null,
+            top3: Array.isArray(parsed.top3) ? parsed.top3 : null,
+            blindSpots: parsed.blindSpots || null,
+            completionRisk: parsed.completionRisk || null,
+          };
+        } else {
+          ai = { provider: aiProvider, recovery: '', summary: aiRaw.trim(),
               warning: 'AI 응답을 JSON으로 해석하지 못해 원문을 그대로 표시합니다' };
+        }
       }
 
       // AI 호출이 실패해도 결정론적 분석 결과(지연/충돌/진행률)는 항상 응답한다
       // HTML이 json.result 또는 json.reply 를 읽으므로 result 키로 텍스트 응답 포함
       const resultText = ai
-        ? [ai.summary && ('📊 종합 의견\n'+ai.summary), ai.risk && ('⚠ 위험 요인\n'+ai.risk), ai.recovery && ('💡 권장 조치\n'+ai.recovery)].filter(Boolean).join('\n\n')
+        ? [
+            ai.intent && ('🎯 설계 의도\n'+ai.intent),
+            ai.criticalPath && ('🔴 크리티컬 패스\n'+ai.criticalPath),
+            ai.top3 && ('📌 집중 공종 Top 3\n'+(ai.top3.map(t=>`${t.rank}. ${t.name} — ${t.reason}`).join('\n'))),
+            ai.summary && ('📊 종합 의견\n'+ai.summary),
+            ai.risk && ('⚠ 위험 요인\n'+ai.risk),
+            ai.recovery && ('💡 만회 방안\n'+ai.recovery),
+          ].filter(Boolean).join('\n\n')
         : (aiError || '(AI 응답 없음)');
 
       res.writeHead(200, {'Content-Type':'application/json; charset=utf-8'});
