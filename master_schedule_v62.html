@@ -54,7 +54,7 @@ input,select{font-family:inherit}
 .welcome-banner .wb-title{font-size:13px;font-weight:700;margin-bottom:4px}
 
 /* ── HEADER ── */
-.app-hdr{background:var(--navy);color:#fff;height:46px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:80;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.app-hdr{background:var(--navy);color:#fff;height:46px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:1000;box-shadow:0 2px 8px rgba(0,0,0,.2)}
 .hdr-l{display:flex;align-items:center;gap:14px}
 .hdr-logo{font-size:13px;font-weight:700;letter-spacing:.08em;white-space:nowrap}
 /* 현장명 입력창 — 로고와 한 몸처럼 (동일 폰트, 테두리/배경 없음) */
@@ -73,7 +73,7 @@ input,select{font-family:inherit}
   display:none;position:absolute;right:0;top:calc(100% + 4px);
   min-width:128px;background:#fff;border:1px solid var(--border2);
   border-radius:7px;box-shadow:0 6px 18px rgba(0,0,0,.18);
-  padding:4px;z-index:200;
+  padding:4px;z-index:2200;
 }
 .hdr-menu.open{display:block}
 .hdr-mi{
@@ -617,6 +617,39 @@ body.pred-edit-mode .nacts-edit{display:flex!important}
 .color-ctx-btn:hover{background:var(--navy2)}
 .color-ctx-close{width:100%;padding:5px 0;border:1px solid var(--border);border-radius:5px;background:#fff;color:var(--text2);font-size:11px;cursor:pointer;margin-top:3px;font-family:inherit}
 .color-ctx-close:hover{background:var(--surface2)}
+
+/* ── 잘라내기·복사·붙여넣기 ── */
+.clip-ctx-menu{
+  position:fixed;background:#fff;
+  border:1px solid var(--border2);border-radius:10px;
+  box-shadow:0 8px 24px rgba(0,0,0,.18);
+  z-index:2100;padding:6px 0;min-width:210px;
+}
+.clip-ctx-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:7px 14px;font-size:12px;cursor:pointer;color:var(--text);
+  gap:10px;
+}
+.clip-ctx-item:hover{background:var(--surface2);}
+.clip-ctx-item.disabled{color:var(--text3);cursor:default;pointer-events:none;}
+.clip-ctx-item .clip-ctx-shortcut{font-size:10px;color:var(--text3);font-family:monospace;}
+.clip-ctx-sep{height:1px;background:var(--border);margin:4px 0;}
+
+/* 우클릭 직후: 노란 배경 (어느 공종인지 확인) */
+.nrow.sel-ctx{background:#fef9c3 !important;}
+.nrow-left-fixed.sel-ctx{background:#fef9c3 !important;}
+
+/* 복사 상태: 연두 배경 */
+.nrow.sel-copy{background:#dcfce7 !important;}
+.nrow-left-fixed.sel-copy{background:#dcfce7 !important;}
+
+/* 잘라내기 상태: 밝은 분홍 배경 (하위 포함 — tree-node 전체) */
+.tree-node.cut-sel .nrow{background:#ffe4e6 !important;}
+.tree-node.cut-sel .nrow-left-fixed{background:#ffe4e6 !important;}
+
+/* 이동 후 강조 */
+.tree-node.moved-highlight>.nrow{animation:_moved-flash 1.4s ease;}
+@keyframes _moved-flash{0%{background:#fef08a !important;}60%{background:#fef08a !important;}100%{}}
 
 /* ── 5-ZONE LAYOUT ── */
 .nzone{display:flex;align-items:center;gap:3px;padding:2px 5px;border-radius:4px;flex-shrink:0;white-space:nowrap}
@@ -1620,7 +1653,7 @@ body.pred-edit-mode .nacts{min-width:44px}
         <div id="inputSecs"></div>
       </div>
       <style>
-      .analyze-panel{position:fixed;top:92px;right:0;width:360px;height:calc(100vh - 92px);background:#fff;border-left:2px solid var(--navy);box-shadow:-4px 0 16px rgba(0,0,0,.12);z-index:900;display:none;flex-direction:column}
+      .analyze-panel{position:fixed;top:92px;right:0;width:360px;height:calc(100vh - 92px);background:#fff;border-left:2px solid var(--navy);box-shadow:-4px 0 16px rgba(0,0,0,.12);z-index:70;display:none;flex-direction:column}
       .analyze-panel.open{display:flex}
       .ap-head{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 12px;background:var(--navy);color:#fff;font-weight:700;font-size:13px}
       .ap-body{flex:1;overflow:auto;padding:10px 12px;font-size:12px}
@@ -1684,15 +1717,13 @@ body.pred-edit-mode .nacts{min-width:44px}
       <div id="matchTable" style="display:none;margin-bottom:10px"></div>
 
       <div id="mergeActs" style="display:none;gap:7px;margin-bottom:8px;flex-wrap:wrap;align-items:center" class="no-print">
-        <button class="btn bs" style="font-size:12px" onclick="saveFilesToCompanies()">💾 업체별 저장 <span style="font-size:10px;opacity:.8">(조회 업체 연동)</span></button>
-        <div style="width:1px;height:20px;background:var(--border)"></div>
-        <button class="btn bp" onclick="applyMergeToProject()">📥 원도급사 통합 적용</button>
-        <label style="font-size:11px;display:flex;align-items:center;gap:3px;cursor:pointer" title="켜면 회사명→공종 변환 없이 원본 대분류 구조 그대로 편입합니다">
-          <input type="checkbox" id="mergeKeepStruct"> 구조 그대로
+        <button class="btn bp" disabled style="opacity:.4;cursor:not-allowed" title="비활성화된 기능입니다">📥 원도급사 통합 적용</button>
+        <label style="font-size:11px;display:flex;align-items:center;gap:3px;cursor:not-allowed;opacity:.4" title="비활성화된 기능입니다">
+          <input type="checkbox" id="mergeKeepStruct" disabled> 구조 그대로
         </label>
-        <button class="btn bgray" onclick="renderMerged()">📊 통합 간트 미리보기</button>
+        <button class="btn bgray" disabled style="opacity:.4;cursor:not-allowed" title="비활성화된 기능입니다">📊 통합 간트 미리보기</button>
         <div style="width:1px;height:20px;background:var(--border)"></div>
-        <button class="btn bgray" onclick="clearMerge()">✕ 초기화</button>
+        <button class="btn bgray" disabled style="opacity:.4;cursor:not-allowed" title="비활성화된 기능입니다">✕ 초기화</button>
       </div>
       <div id="mergedOut"></div>
     </div>
@@ -1886,6 +1917,12 @@ let _dirty  = false;
 let _ws     = null;
 let _wsReconnTimer = null;
 let _pendingRender = false;
+
+/* ── 클립보드 / 선택 상태 (잘라내기·복사·붙여넣기) ── */
+let _selPick = null;   // {secId, nodeId}
+let _clip = null;      // {mode:'copy'|'cut', secId, nodeId, node(스냅샷), srcParentId, srcIndex, srcPredLinksSubset}
+let _cutUndo = null;   // {secId, parentArr, index, node, removedPredLinks}
+let _clipCtxEl = null;
 let _serverMode = false; // 서버 연결 여부 — false=로컬 단독 모드
 
 function gs(){ return _cache; }
@@ -3000,21 +3037,69 @@ function renderAiReport(data){
         </div>`).join('')
     : `<div class="ai-list-item conflict" style="border-left-color:var(--green)">선후행 충돌이 발견되지 않았습니다.</div>`;
 
-  const providerLabel = ai && ai.provider==='claude' ? 'Claude API' : (ai && ai.provider==='ollama' ? 'Ollama (로컬)' : '');
+  const providerLabel = ai && ai.provider==='claude' ? 'Claude API'
+    : ai && ai.provider==='groq' ? 'Groq (Llama 3.3 70B)'
+    : (ai && ai.provider==='ollama' ? 'Ollama (로컬)' : '');
   const warnBanner = (ai && ai.warning)
     ? `<div class="ai-warn-banner">⚠ ${escHtml(ai.warning)}</div>` : '';
   const aiErrorBanner = (!ai && data.aiError)
     ? `<div class="ai-warn-banner">⚠ AI 코멘트 생성에 실패했습니다 (${escHtml(data.aiError)}). 지연·충돌 분석 결과는 정상적으로 계산되었습니다.</div>`
     : '';
 
+  // P1-B: 집중 공종 Top 3 카드
+  const top3Html = (ai && ai.top3 && ai.top3.length)
+    ? `<div class="ai-section">
+        <div class="ai-section-title">📌 집중 공종 Top 3 <span style="font-size:10px;font-weight:400;color:var(--text2)">(선후행 파급 기준)</span></div>
+        ${ai.top3.map(t=>`
+          <div class="ai-list-item" style="border-left-color:${t.rank===1?'#dc2626':t.rank===2?'#ea580c':'#d97706'};background:${t.rank===1?'#fff5f5':'var(--surface2)'}">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+              <span style="font-size:15px;font-weight:900;color:${t.rank===1?'#dc2626':t.rank===2?'#ea580c':'#d97706'}">${t.rank}위</span>
+              <b>${escHtml(t.name)}</b>
+              ${t.isOnCriticalPath?'<span style="font-size:9px;font-weight:700;padding:1px 6px;border-radius:8px;background:#fee2e2;color:#dc2626">CP</span>':''}
+              <span style="font-size:10px;color:var(--red)">지연 ${t.delayDays||'-'}일</span>
+              ${t.impactCount?`<span style="font-size:10px;color:var(--text2)">영향 ${t.impactCount}개 공종</span>`:''}
+            </div>
+            <div style="font-size:11px;color:var(--text2);margin-bottom:4px">${escHtml(t.reason||'')}</div>
+            ${t.recovery?`<div style="font-size:11px;color:#0e7490;border-top:1px solid var(--border);padding-top:4px;margin-top:4px">💡 ${escHtml(t.recovery)}</div>`:''}
+          </div>`).join('')}
+      </div>` : '';
+
+  // P1-B: 설계 의도 & 크리티컬 패스
+  const intentHtml = (ai && (ai.intent || ai.criticalPath))
+    ? `<div class="ai-section">
+        ${ai.intent?`<div style="font-size:11.5px;line-height:1.6;background:#eff6ff;border:1px solid #bfdbfe;border-radius:4px;padding:10px 12px;margin-bottom:8px">
+          <span style="font-weight:700;color:#1d4ed8">🎯 설계 의도</span><br>${escHtml(ai.intent)}</div>`:''}
+        ${ai.criticalPath?`<div style="font-size:11px;line-height:1.6;background:#fef3c7;border:1px solid #fcd34d;border-radius:4px;padding:8px 12px">
+          <span style="font-weight:700;color:#92400e">🔴 크리티컬 패스</span>&nbsp; ${escHtml(ai.criticalPath)}</div>`:''}
+      </div>` : '';
+
+  // P1-B: 블라인드 스팟
+  const bsData = ai && ai.blindSpots;
+  const blindSpotHtml = (bsData && (bsData.safe || bsData.danger || bsData.interference))
+    ? `<div class="ai-section">
+        <div class="ai-section-title">🔍 블라인드 스팟</div>
+        ${bsData.safe?`<div class="ai-list-item" style="border-left-color:var(--green)"><span style="font-weight:700;color:var(--green)">✅ 안심 공종</span> ${escHtml(bsData.safe)}</div>`:''}
+        ${bsData.danger?`<div class="ai-list-item" style="border-left-color:var(--red)"><span style="font-weight:700;color:var(--red)">⚠ 위험 공종</span> ${escHtml(bsData.danger)}</div>`:''}
+        ${bsData.interference?`<div class="ai-list-item" style="border-left-color:#7c3aed"><span style="font-weight:700;color:#7c3aed">⚡ 간섭 위험</span> ${escHtml(bsData.interference)}</div>`:''}
+      </div>` : '';
+
+  // 준공일 영향
+  const completionRiskHtml = (ai && ai.completionRisk)
+    ? `<div style="font-size:11px;font-weight:700;padding:7px 10px;border-radius:4px;margin-bottom:10px;background:#fff1f2;border:1px solid #fecdd3;color:#be123c">
+        🏗 ${escHtml(ai.completionRisk)}</div>` : '';
+
   panel.innerHTML = `
     <div class="ai-report">
       <div class="ai-summary-bar">
         <div class="ai-progress-circle">${data.progressRate}%</div>
-        <div class="ai-meta">전체 공정률<br><span style="font-size:10px">기준일 ${data.baseDate}</span></div>
-        ${providerLabel?`<div class="ai-meta">AI 코멘트 작성<span class="ai-provider-badge">${providerLabel}</span></div>`:''}
+        <div class="ai-meta">전체 공정률<br><span style="font-size:10px">기준일 ${data.baseDate}</span>
+          ${data.rateGap!=null?`<br><span style="color:${data.rateGap<0?'var(--red)':'var(--green)'}">계획대비 ${data.rateGap>0?'+':''}${data.rateGap}%</span>`:''}
+        </div>
+        ${providerLabel?`<div class="ai-meta">AI 분석<span class="ai-provider-badge">${providerLabel}</span></div>`:''}
       </div>
-      ${aiErrorBanner}${warnBanner}
+      ${aiErrorBanner}${warnBanner}${completionRiskHtml}
+      ${intentHtml}
+      ${top3Html}
       <div class="ai-section">
         <div class="ai-section-title">⚠️ 지연 공종 <span class="ai-count-badge${delays.length?'':' zero'}">${delays.length}건</span></div>
         ${delayHtml}
@@ -3023,6 +3108,7 @@ function renderAiReport(data){
         <div class="ai-section-title">🔗 선후행 충돌 <span class="ai-count-badge${conflicts.length?'':' zero'}">${conflicts.length}건</span></div>
         ${conflictHtml}
       </div>
+      ${blindSpotHtml}
       ${ai && ai.recovery ? `
       <div class="ai-section">
         <div class="ai-section-title">💡 만회 공정 제안</div>
@@ -3042,8 +3128,20 @@ function escHtml(s){
 
 function _buildAiReportText(data){
   const lines=[];
-  lines.push('■ AI 공정 분석 리포트');
-  lines.push('기준일: '+data.baseDate+'   전체 공정률: '+data.progressRate+'%');
+  const ai=data.ai;
+  lines.push('■ AI 공정 분석 리포트 (Phase 1 — 의도 독해 + 연쇄 추론)');
+  lines.push('기준일: '+data.baseDate+'   전체 공정률: '+data.progressRate+'%'+(data.rateGap!=null?'   계획대비: '+(data.rateGap>0?'+':'')+data.rateGap+'%':''));
+  if(ai && ai.intent){ lines.push(''); lines.push('[설계 의도]'); lines.push(ai.intent); }
+  if(ai && ai.criticalPath){ lines.push(''); lines.push('[크리티컬 패스]'); lines.push(ai.criticalPath); }
+  if(ai && ai.completionRisk){ lines.push(''); lines.push('[준공일 영향]'); lines.push(ai.completionRisk); }
+  if(ai && ai.top3 && ai.top3.length){
+    lines.push(''); lines.push('[집중 공종 Top 3]');
+    ai.top3.forEach(t=>{
+      lines.push(t.rank+'위. '+t.name+(t.isOnCriticalPath?' [CP]':'')+(t.delayDays?' / 지연 '+t.delayDays+'일':'')+(t.impactCount?' / 영향 '+t.impactCount+'개':''));
+      if(t.reason) lines.push('   근거: '+t.reason);
+      if(t.recovery) lines.push('   만회: '+t.recovery);
+    });
+  }
   lines.push('');
   lines.push('[지연 공종] '+(data.delays||[]).length+'건');
   (data.delays||[]).forEach(d=>{
@@ -3056,9 +3154,18 @@ function _buildAiReportText(data){
     lines.push('- 선행 ['+c.predName+'](진행률 '+c.predProgress+'%, 계획종료 '+c.predPlanEnd+')가 끝나지 않았는데 후행 ['+c.succName+']이 '+c.succActualStart+'에 시작됨');
   });
   if(!(data.conflicts||[]).length) lines.push('(선후행 충돌 없음)');
-  if(data.ai && data.ai.recovery){ lines.push(''); lines.push('[만회 공정 제안]'); lines.push(data.ai.recovery); }
-  if(data.ai && data.ai.summary){ lines.push(''); lines.push('[종합 의견]'); lines.push(data.ai.summary); }
-  if(data.aiError && !data.ai){ lines.push(''); lines.push('[AI 코멘트 생성 실패] '+data.aiError); }
+  if(ai && ai.blindSpots){
+    const bs=ai.blindSpots;
+    if(bs.safe||bs.danger||bs.interference){
+      lines.push(''); lines.push('[블라인드 스팟]');
+      if(bs.safe) lines.push('안심 공종: '+bs.safe);
+      if(bs.danger) lines.push('위험 공종: '+bs.danger);
+      if(bs.interference) lines.push('간섭 위험: '+bs.interference);
+    }
+  }
+  if(ai && ai.recovery){ lines.push(''); lines.push('[만회 공정 제안]'); lines.push(ai.recovery); }
+  if(ai && ai.summary){ lines.push(''); lines.push('[종합 의견]'); lines.push(ai.summary); }
+  if(data.aiError && !ai){ lines.push(''); lines.push('[AI 코멘트 생성 실패] '+data.aiError); }
   return lines.join('\n');
 }
 
@@ -4008,42 +4115,296 @@ function _removeColorCtx(){ if(_colorCtxEl){_colorCtxEl.remove();_colorCtxEl=nul
 // 우클릭한 노드 + 자식 트리에만 색상 적용 (상위/형제/다른 트리 영향 없음)
 function nodeCtxMenu(e,secId,nodeId){
   e.preventDefault(); e.stopPropagation();
-  _removeColorCtx();
+  _removeColorCtx(); _removeClipCtx();
   const p=getProj(); const sec=p.sections.find(s=>s.id===secId); if(!sec)return;
   const node=findNode(sec.nodes,nodeId); if(!node)return;
-  // 현재 노드의 고유 색상 (없으면 섹션 기본색)
+
+  // ── 선택(Ctrl+클릭)이 이미 된 상태거나, 이 노드를 우클릭 ──
+  // 우클릭 자체도 선택으로 간주
+  _setSelPick(secId, nodeId);
+
+  const hasPaste = !!_clip;
+  const hasUndo  = !!_cutUndo;
   const curColor=_toHex(node._ownColor||sec.color||'#1c3a5e');
+  const x=Math.min(e.clientX,window.innerWidth-220);
+  const y=Math.min(e.clientY,window.innerHeight-280);
 
   const menu=document.createElement('div');
-  menu.className='color-ctx-menu';
-  menu.style.cssText=`left:${Math.min(e.clientX,window.innerWidth-210)}px;top:${Math.min(e.clientY,window.innerHeight-160)}px;`;
+  menu.className='clip-ctx-menu';
+  menu.style.cssText=`left:${x}px;top:${y}px;`;
   menu.innerHTML=`
-    <div class="color-ctx-title">🎨 공종 색상 변경</div>
-    <div style="font-size:9px;color:var(--text3);margin-bottom:7px;line-height:1.4">
-      선택 공종 + 하위 트리만 변경<br>상위/형제 트리는 유지됨
-    </div>
-    <div class="color-ctx-row">
-      <label>색상 선택</label>
-      <input type="color" class="color-ctx-inp" id="ctxColorInp" value="${curColor}">
-    </div>
-    <button class="color-ctx-btn" id="ctxColorApply">✔ 적용 (하위 전체 반영)</button>
-    <button class="color-ctx-btn" id="ctxColorGray" style="background:#6b7280;margin-top:4px">⬜ 회색으로 변경</button>
-    <button class="color-ctx-close" id="ctxColorClose">닫기</button>`;
+    <div class="clip-ctx-item" id="_ctxCopy"><span>📋 복사</span><span class="clip-ctx-shortcut">Ctrl+C</span></div>
+    <div class="clip-ctx-item" id="_ctxCut"><span>✂️ 잘라내기</span><span class="clip-ctx-shortcut">Ctrl+X</span></div>
+    <div class="clip-ctx-item${hasPaste?'':' disabled'}" id="_ctxPaste"><span>📌 붙여넣기 (자식으로)</span><span class="clip-ctx-shortcut">Ctrl+V</span></div>
+    <div class="clip-ctx-item${hasUndo?'':' disabled'}" id="_ctxUndo"><span>↩ 되돌리기</span><span class="clip-ctx-shortcut">Ctrl+Z</span></div>
+    <div class="clip-ctx-sep"></div>
+    <div class="clip-ctx-item" id="_ctxCancel"><span>✖ 취소 / 선택해제</span><span class="clip-ctx-shortcut">Esc</span></div>
+    <div class="clip-ctx-sep"></div>
+    <div class="clip-ctx-item" id="_ctxColor" style="font-size:11px;color:var(--text2)">🎨 색상 변경…</div>`;
   document.body.appendChild(menu);
-  _colorCtxEl=menu;
-  menu.addEventListener('click', e2=>e2.stopPropagation());
-  document.getElementById('ctxColorApply').onclick=(e2)=>{
-    e2.stopPropagation();
-    applyNodeColor(secId,nodeId,document.getElementById('ctxColorInp').value);
+  _clipCtxEl=menu;
+  menu.addEventListener('click',e2=>e2.stopPropagation());
+
+  menu.querySelector('#_ctxCopy').onclick=()=>{ _clipCopy(secId,nodeId); _removeClipCtx(); };
+  menu.querySelector('#_ctxCut').onclick=()=>{ _clipCut(secId,nodeId); _removeClipCtx(); };
+  if(hasPaste) menu.querySelector('#_ctxPaste').onclick=()=>{ _clipPaste(secId,nodeId); _removeClipCtx(); };
+  if(hasUndo)  menu.querySelector('#_ctxUndo').onclick=()=>{ _clipUndoCut(); _removeClipCtx(); };
+  menu.querySelector('#_ctxCancel').onclick=()=>{ _clearSelPick(); _removeClipCtx(); };
+  menu.querySelector('#_ctxColor').onclick=()=>{
+    _removeClipCtx();
+    // 기존 color-ctx-menu 재사용
     _removeColorCtx();
+    const menu2=document.createElement('div');
+    menu2.className='color-ctx-menu';
+    menu2.style.cssText=`left:${Math.min(x+10,window.innerWidth-210)}px;top:${Math.min(y+10,window.innerHeight-180)}px;`;
+    menu2.innerHTML=`
+      <div class="color-ctx-title">🎨 공종 색상 변경</div>
+      <div style="font-size:9px;color:var(--text3);margin-bottom:7px;line-height:1.4">선택 공종 + 하위 트리만 변경<br>상위/형제 트리는 유지됨</div>
+      <div class="color-ctx-row"><label>색상 선택</label>
+        <input type="color" class="color-ctx-inp" id="ctxColorInp" value="${curColor}">
+      </div>
+      <button class="color-ctx-btn" id="ctxColorApply">✔ 적용 (하위 전체 반영)</button>
+      <button class="color-ctx-btn" id="ctxColorGray" style="background:#6b7280;margin-top:4px">⬜ 회색으로 변경</button>
+      <button class="color-ctx-close" id="ctxColorClose">닫기</button>`;
+    document.body.appendChild(menu2);
+    _colorCtxEl=menu2;
+    menu2.addEventListener('click',e2=>e2.stopPropagation());
+    document.getElementById('ctxColorApply').onclick=(e2)=>{ e2.stopPropagation(); applyNodeColor(secId,nodeId,document.getElementById('ctxColorInp').value); _removeColorCtx(); };
+    document.getElementById('ctxColorGray').onclick=(e2)=>{ e2.stopPropagation(); applyNodeColor(secId,nodeId,_lighterGray(0),true); _removeColorCtx(); };
+    document.getElementById('ctxColorClose').onclick=(e2)=>{ e2.stopPropagation(); _removeColorCtx(); };
+    setTimeout(()=>{ document.addEventListener('click',_removeColorCtx,{once:true}); },0);
   };
-  document.getElementById('ctxColorGray').onclick=(e2)=>{
-    e2.stopPropagation();
-    applyNodeColor(secId,nodeId,_lighterGray(0),true);
-    _removeColorCtx();
-  };
-  document.getElementById('ctxColorClose').onclick=(e2)=>{e2.stopPropagation();_removeColorCtx();};
-  setTimeout(()=>{ document.addEventListener('click',_removeColorCtx,{once:true}); },0);
+  setTimeout(()=>{ document.addEventListener('click',_removeClipCtx,{once:true}); },0);
+}
+
+function _removeClipCtx(){
+  if(_clipCtxEl){_clipCtxEl.remove();_clipCtxEl=null;}
+  // 메뉴 닫힘 후: 클립 상태에 따라 sel-ctx → 유지색으로 전환
+  if(_selPick){
+    const nd=document.getElementById('nd_'+_selPick.nodeId);
+    if(nd){
+      const nr=nd.querySelector('.nrow'); const lf=nd.querySelector('.nrow-left-fixed');
+      if(_clip&&_clip.mode==='copy'&&_clip.nodeId===_selPick.nodeId){
+        if(nr){nr.classList.remove('sel-ctx');nr.classList.add('sel-copy');}
+        if(lf){lf.classList.remove('sel-ctx');lf.classList.add('sel-copy');}
+      } else if(!_clip||_clip.mode!=='cut'||_clip.nodeId!==_selPick.nodeId){
+        // cut-sel은 tree-node에 있으므로 nrow에서 sel-ctx만 제거
+        if(nr) nr.classList.remove('sel-ctx');
+        if(lf) lf.classList.remove('sel-ctx');
+      }
+    }
+  }
+}
+
+// ══════════════════════════════════════════════
+//  잘라내기·복사·붙여넣기 (트리 행 이동)
+// ══════════════════════════════════════════════
+
+function _setSelPick(secId, nodeId){
+  _clearSelPick();
+  _selPick={secId, nodeId};
+  // 우클릭 직후 노란 배경 (어느 공종인지 시각 확인)
+  const nd=document.getElementById('nd_'+nodeId);
+  if(nd){
+    nd.querySelector('.nrow').classList.add('sel-ctx');
+    const lf=nd.querySelector('.nrow-left-fixed');
+    if(lf) lf.classList.add('sel-ctx');
+  }
+}
+function _clearSelPick(){
+  if(_selPick){
+    const nd=document.getElementById('nd_'+_selPick.nodeId);
+    if(nd){
+      const nr=nd.querySelector('.nrow');
+      const lf=nd.querySelector('.nrow-left-fixed');
+      if(nr){ nr.classList.remove('sel-ctx','sel-copy'); }
+      if(lf){ lf.classList.remove('sel-ctx','sel-copy'); }
+    }
+  }
+  _selPick=null;
+}
+
+// ── 복사 ──
+function _clipCopy(secId, nodeId){
+  const p=getProj(); const sec=p.sections.find(s=>s.id===secId); if(!sec)return;
+  const node=findNode(sec.nodes, nodeId); if(!node)return;
+  _clearCutGhost();
+  const idMap={};
+  const copied=deepCopyNodes([node], idMap)[0];
+  const allOldIds=Object.keys(idMap);
+  const subset=(p.predLinks||[]).filter(l=>allOldIds.includes(l.srcId)&&(l.tgtIds||[]).every(t=>allOldIds.includes(t)));
+  const remapped=remapPredLinks(subset, idMap);
+  _clip={mode:'copy', secId, nodeId, node:copied, predLinksSubset:remapped};
+  // 복사 상태: 연두 배경 유지
+  const nd=document.getElementById('nd_'+nodeId);
+  if(nd){
+    const nr=nd.querySelector('.nrow'); const lf=nd.querySelector('.nrow-left-fixed');
+    if(nr){ nr.classList.remove('sel-ctx'); nr.classList.add('sel-copy'); }
+    if(lf){ lf.classList.remove('sel-ctx'); lf.classList.add('sel-copy'); }
+  }
+  toast('📋 복사됨 — 붙여넣을 공종을 우클릭(또는 Ctrl+클릭) 후 Ctrl+V');
+}
+
+// ── 잘라내기 ──
+function _clipCut(secId, nodeId){
+  const p=getProj(); const sec=p.sections.find(s=>s.id===secId); if(!sec)return;
+  const node=findNode(sec.nodes, nodeId); if(!node)return;
+  _clearCutGhost();
+  const fa=_findParentArr(sec.nodes, nodeId);
+  _clip={mode:'cut', secId, nodeId, node, srcParentArr:fa?fa.a:sec.nodes, srcIndex:fa?fa.i:sec.nodes.indexOf(node)};
+  _cutUndo=null;
+  // 잘라내기 상태: tree-node 전체(하위 포함)에 분홍 배경
+  const nd=document.getElementById('nd_'+nodeId);
+  if(nd){
+    nd.classList.add('cut-sel');
+    const nr=nd.querySelector('.nrow'); const lf=nd.querySelector('.nrow-left-fixed');
+    if(nr) nr.classList.remove('sel-ctx','sel-copy');
+    if(lf) lf.classList.remove('sel-ctx','sel-copy');
+  }
+  toast('✂️ 잘라내기됨 — 붙여넣을 공종을 우클릭(또는 Ctrl+클릭) 후 Ctrl+V (Ctrl+Z로 취소)');
+}
+
+function _clearCutGhost(){
+  if(_clip&&_clip.mode==='cut'){
+    const nd=document.getElementById('nd_'+_clip.nodeId);
+    if(nd) nd.classList.remove('cut-sel');
+  }
+}
+
+// ── 붙여넣기 ──
+function _clipPaste(secId, nodeId){
+  if(!_clip){ toast('클립보드가 비어있습니다'); return; }
+  const p=getProj();
+  const destSec=p.sections.find(s=>s.id===secId); if(!destSec)return;
+  const destNode=findNode(destSec.nodes, nodeId); if(!destNode)return;
+
+  // 순환 방지: cut 모드에서 목적지가 자기 자신이거나 자손이면 거부
+  if(_clip.mode==='cut'){
+    if(_clip.nodeId===nodeId){ toast('⚠ 자기 자신에게 붙여넣을 수 없습니다'); return; }
+    if(_isDescendant(_clip.node, nodeId)){ toast('⚠ 자기 자손에게 붙여넣을 수 없습니다'); return; }
+  }
+
+  if(!destNode.ch) destNode.ch=[];
+
+  // leaf→parent carry 규칙: addCh와 동일
+  const _wasLeaf=destNode.ch.length===0;
+
+  let insertNode;
+  if(_clip.mode==='copy'){
+    // 연속 붙여넣기: 매번 새 ID
+    const idMap2={};
+    insertNode=deepCopyNodes([_clip.node], idMap2)[0];
+    remapPredecessors([insertNode], idMap2);
+    // predLinks 추가
+    const newLinks=remapPredLinks(_clip.predLinksSubset||[], idMap2);
+    if(newLinks.length){
+      if(!p.predLinks) p.predLinks=[];
+      p.predLinks.push(...newLinks);
+    }
+  } else {
+    // cut: 원본을 원위치에서 제거
+    insertNode=_clip.node;
+    const srcSec=p.sections.find(s=>s.id===_clip.secId); 
+    if(srcSec){
+      const fa2=_findParentArr(srcSec.nodes, _clip.nodeId);
+      const arr=fa2?fa2.a:srcSec.nodes;
+      const idx=fa2?fa2.i:arr.indexOf(insertNode);
+      if(idx>=0) arr.splice(idx,1);
+      // cut undo 저장
+      _cutUndo={secId:_clip.secId, parentArr:arr, index:idx, node:insertNode};
+      // 출발지 롤업
+      rollupSection(srcSec);
+    }
+    _clearCutGhost();
+  }
+
+  // leaf carry
+  if(_wasLeaf){
+    const _had=(destNode.qty&&String(destNode.qty).trim())||destNode.unit||(destNode.amount>0)||(destNode.actRate>0)||(destNode.plan&&(destNode.plan.s||destNode.plan.f))||(destNode.actual&&(destNode.actual.s||destNode.actual.f));
+    if(_had){
+      const carried=mkNode(destNode.name);
+      carried.qty=destNode.qty||''; carried.unit=destNode.unit||''; carried.amount=destNode.amount||0;
+      carried.actRate=destNode.actRate||0; carried.manager=destNode.manager||'';
+      carried.plan={s:(destNode.plan&&destNode.plan.s)||'',f:(destNode.plan&&destNode.plan.f)||''};
+      carried.actual={s:(destNode.actual&&destNode.actual.s)||'',f:(destNode.actual&&destNode.actual.f)||''};
+      destNode.qty=''; destNode.unit=''; destNode.amount=0; destNode.actRate=0;
+      destNode.plan={s:'',f:''}; destNode.actual={s:'',f:''};
+      destNode.ch.push(carried);
+    }
+  }
+
+  destNode.ch.push(insertNode);
+  destNode.open=true;
+  _localOpen[insertNode.id]=true;
+  try{ localStorage.setItem(_UI_KEY, JSON.stringify(_localOpen)); }catch{}
+
+  if(_clip.mode==='cut') _clip=null;
+
+  // 롤업 + 저장
+  rollupSection(destSec);
+  saveProj(p);
+  renderInput(); markGanttDirty();
+
+  // 목적지 강조 (투명성: 이동된 공종 하이라이트)
+  setTimeout(()=>{
+    const nd2=document.getElementById('nd_'+insertNode.id);
+    if(nd2){ nd2.classList.add('moved-highlight'); setTimeout(()=>nd2.classList.remove('moved-highlight'),1500); }
+  }, 150);
+
+  _clearCutGhost();
+  _clearSelPick();
+  // cut-sel 잔류 정리
+  document.querySelectorAll('.tree-node.cut-sel').forEach(el=>el.classList.remove('cut-sel'));
+  document.querySelectorAll('.nrow.sel-copy,.nrow-left-fixed.sel-copy').forEach(el=>el.classList.remove('sel-copy'));
+  toast('📌 붙여넣기 완료');
+  if(_serverMode){ setTimeout(flushToServer, 0); }
+}
+
+// ── 되돌리기 (마지막 잘라내기 1건) ──
+function _clipUndoCut(){
+  if(!_cutUndo){ toast('되돌릴 작업이 없습니다'); return; }
+  const {secId, parentArr, index, node}=_cutUndo;
+  const p=getProj();
+  const sec=p.sections.find(s=>s.id===secId);
+  // 현재 트리에서 이 노드 제거 (붙여넣어진 위치에서)
+  function _removeFromTree(nodes, nid){
+    for(let i=0;i<nodes.length;i++){
+      if(nodes[i].id===nid){nodes.splice(i,1);return true;}
+      if(nodes[i].ch&&_removeFromTree(nodes[i].ch,nid))return true;
+    }
+    return false;
+  }
+  p.sections.forEach(s=>_removeFromTree(s.nodes, node.id));
+  // 원위치 복원
+  if(sec){
+    parentArr.splice(index, 0, node);
+    rollupSection(sec);
+  }
+  _cutUndo=null; _clip=null;
+  rollupSection(p.sections.find(s=>s.id===secId));
+  saveProj(p);
+  renderInput(); markGanttDirty();
+  document.querySelectorAll('.tree-node.cut-sel').forEach(el=>el.classList.remove('cut-sel'));
+  document.querySelectorAll('.nrow.sel-copy,.nrow-left-fixed.sel-copy').forEach(el=>el.classList.remove('sel-copy'));
+  _clearSelPick();
+  toast('↩ 되돌리기 완료');
+  if(_serverMode) setTimeout(flushToServer, 0);
+}
+
+// ── 헬퍼: 순환 방지 — node 서브트리에 targetId가 있는지 ──
+function _isDescendant(node, targetId){
+  if(!node.ch||!node.ch.length) return false;
+  for(const c of node.ch){ if(c.id===targetId||_isDescendant(c,targetId)) return true; }
+  return false;
+}
+
+// ── 헬퍼: 부모 배열+인덱스 반환 ({a, i}) — findPA와 동일 ──
+function _findParentArr(arr, id){
+  for(let i=0;i<arr.length;i++){
+    if(arr[i].id===id) return {a:arr, i};
+    if(arr[i].ch){ const f=_findParentArr(arr[i].ch, id); if(f) return f; }
+  }
+  return null;
 }
 
 function _toHex(color){
@@ -4308,7 +4669,7 @@ function bNode(node,secId,depth,totalBudget,secColor){
   });
 
   wrap.innerHTML=`
-    <div class="nrow" style="background:${rowBg}${textColor?';color:'+textColor:''}" oncontextmenu="nodeCtxMenu(event,'${secId}','${node.id}')">
+    <div class="nrow" style="background:${rowBg}${textColor?';color:'+textColor:''}" oncontextmenu="nodeCtxMenu(event,'${secId}','${node.id}')" onclick="if(event.ctrlKey||event.metaKey){event.preventDefault();event.stopPropagation();_setSelPick('${secId}','${node.id}');}">
       <div class="nrow-left-fixed" style="background:${rowBg}${textColor?';color:'+textColor:''}">
       ${depthBarHtml}
       ${togBtn}
@@ -11023,6 +11384,31 @@ function endPredMode(){
 // ── ESC키 ──
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'&&_predSubMode){endPredMode();e.preventDefault();}
+});
+
+// ── 클립보드 단축키 (Ctrl+C/X/V/Z, Esc) ──
+document.addEventListener('keydown', e=>{
+  // 입력 필드 포커스 중이면 기본 동작 우선
+  const tag=(document.activeElement||{}).tagName||'';
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT') return;
+  // 데이터입력 탭이 보이는 상태에서만 동작
+  const inputTab=document.getElementById('inputSecs');
+  if(!inputTab||inputTab.closest('.tab-panel')&&inputTab.closest('.tab-panel').style.display==='none') return;
+
+  if(e.ctrlKey||e.metaKey){
+    if(e.key==='c'||e.key==='C'){
+      if(_selPick){ e.preventDefault(); _clipCopy(_selPick.secId, _selPick.nodeId); }
+    } else if(e.key==='x'||e.key==='X'){
+      if(_selPick){ e.preventDefault(); _clipCut(_selPick.secId, _selPick.nodeId); }
+    } else if(e.key==='v'||e.key==='V'){
+      if(_selPick&&_clip){ e.preventDefault(); _clipPaste(_selPick.secId, _selPick.nodeId); }
+    } else if(e.key==='z'||e.key==='Z'){
+      if(_cutUndo){ e.preventDefault(); _clipUndoCut(); }
+    }
+  } else if(e.key==='Escape'){
+    if(_clipCtxEl){ _removeClipCtx(); e.preventDefault(); return; }
+    if(_selPick||_clip){ _clearSelPick(); e.preventDefault(); }
+  }
 });
 
 // ── 배지 클릭: 그룹 전체 삭제 (선행 배지 클릭) ──
