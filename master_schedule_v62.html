@@ -1414,10 +1414,68 @@ body.pred-edit-mode .nacts{min-width:44px}
 .ai-list-item.conflict{border-left-color:var(--red)}
 .ai-list-item b{color:var(--text)}
 .ai-list-item .days{color:var(--red);font-weight:700}
+/* P2-B: Top3 카드 */
+.ai-top3-card{
+  padding:10px 12px;border:1px solid var(--border);border-radius:6px;
+  background:#fff;margin-bottom:8px;cursor:pointer;
+  transition:box-shadow .15s,transform .1s;
+  border-left:4px solid #dc2626;
+}
+.ai-top3-card:nth-child(2){border-left-color:#ea580c}
+.ai-top3-card:nth-child(3){border-left-color:#d97706}
+.ai-top3-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.12);transform:translateX(2px)}
+.ai-top3-card .t3-rank{font-size:16px;font-weight:900;line-height:1}
+.ai-top3-card .t3-name{font-weight:700;font-size:12px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ai-top3-card .t3-cp{font-size:9px;font-weight:700;padding:1px 5px;border-radius:8px;background:#fee2e2;color:#dc2626;flex-shrink:0}
+.ai-top3-card .t3-score{font-size:10px;color:var(--text2)}
+.ai-top3-card .t3-reason{font-size:11px;color:var(--text2);margin-top:4px;line-height:1.5}
+.ai-top3-card .t3-recovery{font-size:11px;color:#0e7490;border-top:1px solid var(--border);padding-top:5px;margin-top:5px}
+/* P2-C: TF 급감 / 안심/위험 */
+.ai-tf-item{padding:6px 10px;border:1px solid #fde68a;border-left:3px solid #f59e0b;border-radius:4px;background:#fffbeb;font-size:11px;margin-bottom:5px;line-height:1.5}
+.ai-tf-item.tf-critical{border-color:#fca5a5;border-left-color:#dc2626;background:#fff5f5}
+.ai-safe-item{padding:6px 10px;border:1px solid #bbf7d0;border-left:3px solid #16a34a;border-radius:4px;background:#f0fdf4;font-size:11px;margin-bottom:5px}
+.ai-danger-item{padding:6px 10px;border:1px solid #fecdd3;border-left:3px solid #dc2626;border-radius:4px;background:#fff5f5;font-size:11px;margin-bottom:5px}
+/* 스크롤 후 플래시 (ap-flash 재사용) */
 .ai-text-block{font-size:12px;line-height:1.7;white-space:pre-wrap;background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:12px 14px}
 .ai-warn-banner{font-size:11px;color:var(--amber);background:var(--orange-bg);border:1px solid #fed7aa;border-radius:4px;padding:7px 10px;margin-bottom:14px}
 #aiSpinner{display:inline-block;width:13px;height:13px;border:2px solid var(--border);border-top-color:var(--navy);border-radius:50%;animation:aiSpin .7s linear infinite;vertical-align:middle;margin-right:5px}
 @keyframes aiSpin{to{transform:rotate(360deg)}}
+
+/* ── Phase 3 UI ─────────────────────────────────────────────── */
+/* 멀티턴 진행 표시 */
+.ai-progress-steps{display:flex;align-items:center;gap:4px;padding:10px 14px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;margin-bottom:10px}
+.ai-step{display:flex;align-items:center;gap:5px;font-size:11px;color:#94a3b8}
+.ai-step.active{color:#1d4ed8;font-weight:700}
+.ai-step.done{color:#16a34a}
+.ai-step-dot{width:20px;height:20px;border-radius:50%;background:#e2e8f0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.ai-step.active .ai-step-dot{background:#3b82f6;color:#fff}
+.ai-step.done .ai-step-dot{background:#16a34a;color:#fff}
+.ai-step-arrow{color:#cbd5e1;font-size:12px}
+/* 병행 가능 조합 */
+.ai-parallel-item{padding:7px 10px;border:1px solid #e0f2fe;border-left:3px solid #0ea5e9;border-radius:4px;background:#f0f9ff;font-size:11px;margin-bottom:5px}
+.ai-parallel-item b{color:#0369a1}
+/* 준공일 위험 배너 */
+.ai-completion-risk{padding:8px 12px;border-radius:6px;font-size:11.5px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.ai-completion-risk.critical{background:#fff1f2;border:1px solid #fecdd3;color:#be123c}
+.ai-completion-risk.high{background:#fff7ed;border:1px solid #fed7aa;color:#c2410c}
+.ai-completion-risk.medium{background:#fffbeb;border:1px solid #fde68a;color:#92400e}
+.ai-completion-risk.low{background:#f0fdf4;border:1px solid #bbf7d0;color:#15803d}
+/* 멀티턴 뱃지 */
+.ai-multiturn-badge{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;background:#ede9fe;color:#7c3aed;margin-left:6px}
+/* 공정회의 안건 */
+.agenda-btn{padding:5px 14px;font-size:11px;background:#7c3aed;color:#fff;border:none;border-radius:4px;cursor:pointer;font-family:inherit}
+.agenda-btn:hover{background:#6d28d9}
+.agenda-panel{margin-top:14px;border:1px solid #ddd6fe;border-radius:8px;overflow:hidden}
+.agenda-head{background:#7c3aed;color:#fff;padding:8px 14px;font-size:12px;font-weight:700;display:flex;align-items:center;gap:8px}
+.agenda-body{padding:12px 14px}
+.agenda-item{padding:8px 10px;border:1px solid var(--border);border-radius:4px;margin-bottom:7px;font-size:11px}
+.agenda-item .ag-no{display:inline-block;width:20px;height:20px;background:#7c3aed;color:#fff;border-radius:50%;text-align:center;line-height:20px;font-size:10px;font-weight:700;margin-right:6px;flex-shrink:0}
+.agenda-item .ag-title{font-weight:700;color:var(--navy)}
+.agenda-item .ag-detail{color:var(--text2);margin-top:3px}
+.agenda-item .ag-meta{font-size:10px;color:var(--text3);margin-top:3px}
+.scenario-item{padding:8px 10px;border:1px solid #e0f2fe;border-left:3px solid #0ea5e9;border-radius:4px;background:#f0f9ff;margin-bottom:6px;font-size:11px}
+.scenario-item .sc-title{font-weight:700;color:#0369a1}
+.scenario-item .sc-effect{color:#0e7490;font-size:10.5px;margin-top:2px}
 </style>
 </head>
 <body>
@@ -1767,6 +1825,7 @@ body.pred-edit-mode .nacts{min-width:44px}
         <div id="aiReportActs" style="display:none;gap:7px">
           <button class="btn bgray" onclick="copyAiReport()">📄 리포트 복사</button>
           <button class="btn bgray" onclick="printAiReport()">🖨️ 출력</button>
+          <button class="agenda-btn" onclick="runMeetingAgenda()" id="agendaBtn">📋 공정회의 안건 생성</button>
         </div>
       </div>
       <div id="aiReportPanel">
@@ -2988,13 +3047,45 @@ function _doSwitchTab(btn){
 // ══════════════════════════════════════════════
 let _lastAiData=null; // 리포트 복사/출력에 재사용
 
+// P3-A: 멀티턴 진행 표시 업데이트
+function _updateAiStepUI(step, msg) {
+  const statusEl = document.getElementById('aiStatus');
+  if (!statusEl) return;
+  const steps = [
+    {n:1, label:'전체 요약'},
+    {n:2, label:'집중 분석'},
+    {n:3, label:'종합 의견'}
+  ];
+  const stepsHtml = steps.map((s, i) => {
+    const cls = s.n < step ? 'done' : s.n === step ? 'active' : '';
+    const icon = s.n < step ? '✓' : s.n;
+    return `<span class="ai-step ${cls}"><span class="ai-step-dot">${icon}</span>${s.label}</span>${i<2?'<span class="ai-step-arrow">›</span>':''}`;
+  }).join('');
+  statusEl.innerHTML = `<div class="ai-progress-steps">${stepsHtml}<span style="margin-left:8px;font-size:10.5px;color:var(--text2)">${escHtml(msg||'')}</span></div>`;
+}
+
 async function runAiAnalyze(){
   if(_IS_LOCAL){ toast('⚠ AI 분석은 서버 연결 모드에서만 사용할 수 있습니다'); return; }
   const baseDate = document.getElementById('aiBaseDate').value || ds(new Date());
   const btn = document.getElementById('aiRunBtn');
   const statusEl = document.getElementById('aiStatus');
   btn.disabled = true;
-  statusEl.innerHTML = '<span id="aiSpinner"></span>분석 중... (로컬 AI 모델은 다소 시간이 걸릴 수 있습니다)';
+  statusEl.innerHTML = '<span id="aiSpinner"></span>분석 중... (토큰 규모에 따라 1~3단계로 처리됩니다)';
+
+  // P3-A: 서버에서 SSE 진행 표시 대신, 클라이언트에서 예상 단계 UI 표시
+  // (실제 멀티턴 여부는 서버가 결정 — 응답에 multiTurnMeta 포함)
+  let stepTimer = null;
+  let stepN = 1;
+  const stepMsgs = ['1단계: 전체 공정 요약 분석 중...','2단계: 집중 섹션 상세 분석 중...','3단계: 종합 의견 + 만회 계획 작성 중...'];
+  // 20초 후에 멀티턴일 가능성 있으면 단계 UI 표시
+  stepTimer = setTimeout(() => {
+    _updateAiStepUI(1, stepMsgs[0]);
+    stepTimer = setInterval(() => {
+      stepN = Math.min(stepN + 1, 3);
+      _updateAiStepUI(stepN, stepMsgs[stepN-1]);
+    }, 15000);
+  }, 20000);
+
   try{
     const r = await fetch(API+'/api/ai/analyze',{
       method:'POST', headers:{'Content-Type':'application/json'},
@@ -3006,29 +3097,173 @@ async function runAiAnalyze(){
     if(!r.ok || data.ok===false){ throw new Error(data.msg || ('서버 오류 (HTTP '+r.status+')')); }
     _lastAiData = data;
     renderAiReport(data);
-    statusEl.textContent='';
+    statusEl.innerHTML = '';
     document.getElementById('aiReportActs').style.display='flex';
   }catch(err){
-    statusEl.textContent='';
+    statusEl.innerHTML = '';
     toast('⚠ AI 분석 실패: '+(err&&err.message||err));
   }finally{
+    clearTimeout(stepTimer);
+    clearInterval(stepTimer);
     btn.disabled=false;
+  }
+}
+
+// P3-C: 공정회의 안건 초안 생성
+async function runMeetingAgenda(){
+  if(_IS_LOCAL){ toast('⚠ 서버 연결 모드에서만 사용할 수 있습니다'); return; }
+  const btn = document.getElementById('agendaBtn');
+  const baseDate = document.getElementById('aiBaseDate').value || ds(new Date());
+  btn.disabled = true;
+  btn.textContent = '📋 안건 생성 중...';
+  try{
+    const r = await fetch(API+'/api/ai/meeting-agenda',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({companyId: getViewId(), baseDate, site:_activeSite||undefined})
+    });
+    const data = await r.json();
+    if(!r.ok || data.ok===false) throw new Error(data.msg || '서버 오류');
+    renderMeetingAgenda(data);
+  }catch(err){
+    toast('⚠ 안건 생성 실패: '+(err&&err.message||err));
+  }finally{
+    btn.disabled = false;
+    btn.textContent = '📋 공정회의 안건 생성';
+  }
+}
+
+// P3-C: 공정회의 안건 UI 렌더링
+function renderMeetingAgenda(data){
+  const panel = document.getElementById('aiReportPanel');
+  const ag = data.agenda;
+  if(!ag){ toast('안건 데이터를 받지 못했습니다'); return; }
+
+  const riskCls = data.completionRiskScore ? data.completionRiskScore.riskLevel : 'low';
+  const riskLabel = {critical:'🔴 위험',high:'🟠 높음',medium:'🟡 보통',low:'🟢 양호'}[riskCls]||'';
+
+  const agendaItemsHtml = (ag.agendaItems||[]).map(a=>`
+    <div class="agenda-item">
+      <div style="display:flex;align-items:flex-start;gap:4px">
+        <span class="ag-no">${a.no||''}</span>
+        <div>
+          <div class="ag-title">${escHtml(a.title||'')}</div>
+          <div class="ag-detail">${escHtml(a.detail||'')}</div>
+          <div class="ag-meta">담당: ${escHtml(a.owner||'')} &nbsp;|&nbsp; 조치 기한: ${escHtml(a.deadline||'')}</div>
+        </div>
+      </div>
+    </div>`).join('');
+
+  const scenariosHtml = (ag.scenarios||[]).map((s,i)=>`
+    <div class="scenario-item">
+      <div class="sc-title">시나리오 ${i+1}. ${escHtml(s.title||'')}</div>
+      <div style="color:var(--text2);margin-top:2px">${escHtml(s.description||'')}</div>
+      <div class="sc-effect">📈 예상 효과: ${escHtml(s.expectedEffect||'')}</div>
+    </div>`).join('');
+
+  const parallelHtml = (data.parallelCandidates||[]).slice(0,5).map(p=>`
+    <div class="ai-parallel-item">
+      <b>[${escHtml(p.aSection)}] ${escHtml(p.aName)}</b> + <b>[${escHtml(p.bSection)}] ${escHtml(p.bName)}</b>
+      <span style="color:var(--text3);margin-left:6px">겹침 ${p.overlapDays}일 · ${escHtml(p.note||'')}</span>
+    </div>`).join('');
+
+  // 기존 패널에 안건 패널 추가
+  const agendaEl = document.createElement('div');
+  agendaEl.id = 'agendaPanelBox';
+  agendaEl.className = 'agenda-panel';
+  agendaEl.innerHTML = `
+    <div class="agenda-head">
+      📋 공정회의 안건 초안
+      <span style="font-size:10px;font-weight:400">${escHtml(ag.meetingTitle||'')} · ${data.baseDate}</span>
+    </div>
+    <div class="agenda-body">
+      <div class="ai-completion-risk ${riskCls}">
+        준공일 위험 ${riskLabel}
+        &nbsp;|&nbsp; CP 지연 최대 ${(data.completionRiskScore||{}).maxDelay||'-'}일
+        &nbsp;|&nbsp; 예상 슬립 ${(data.completionRiskScore||{}).estimatedSlip||'-'}일
+        <br><span style="font-size:10.5px;font-weight:400">${escHtml(ag.completionForecast||'')}</span>
+      </div>
+      ${agendaItemsHtml ? `<div style="font-size:11.5px;font-weight:700;margin-bottom:6px;color:var(--navy)">📌 안건 목록</div>${agendaItemsHtml}` : ''}
+      ${scenariosHtml ? `<div style="font-size:11.5px;font-weight:700;margin:10px 0 6px;color:#0369a1">🔄 만회 시나리오</div>${scenariosHtml}` : ''}
+      ${parallelHtml ? `<div style="font-size:11.5px;font-weight:700;margin:10px 0 6px;color:var(--navy)">⚡ 병행 가능 공종 조합</div>${parallelHtml}` : ''}
+      ${ag.conclusion ? `<div style="font-size:11.5px;font-weight:700;margin:10px 0 5px">📝 종합 결론</div><div class="ai-text-block">${escHtml(ag.conclusion)}</div>` : ''}
+      <div style="text-align:right;margin-top:10px">
+        <button class="btn bgray" onclick="copyAgendaText()" style="font-size:11px">📄 안건 복사</button>
+      </div>
+    </div>`;
+
+  // 기존 안건 패널 제거 후 추가
+  const existing = document.getElementById('agendaPanelBox');
+  if (existing) existing.remove();
+  panel.appendChild(agendaEl);
+  agendaEl.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// P3-C: 공정회의 안건 텍스트 복사
+function copyAgendaText(){
+  if(!_lastAiData) return;
+  const el = document.getElementById('agendaPanelBox');
+  if(!el){ toast('안건을 먼저 생성하세요'); return; }
+  const text = el.innerText;
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>toast('📋 안건이 복사되었습니다')).catch(()=>{ document.execCommand && document.execCommand('copy'); });
   }
 }
 
 function renderAiReport(data){
   const panel = document.getElementById('aiReportPanel');
   const delays = data.delays||[], conflicts = data.conflicts||[];
+  const tfAlerts = data.tfAlerts||[], blindSpots = data.blindSpots||{safe:[],danger:[]};
+  const parallelCandidates = data.parallelCandidates||[];
+  const completionRiskScore = data.completionRiskScore||null;
+  const multiTurnMeta = data.multiTurnMeta||null;
   const ai = data.ai;
 
+  // ── 요약바 ──
+  const providerLabel = ai
+    ? (ai.provider==='claude'?'Claude API':ai.provider==='groq'?'Groq (Llama 3.3 70B)':ai.provider==='ollama'?'Ollama (로컬)':'')
+    : '';
+  const warnBanner = (ai && ai.warning) ? `<div class="ai-warn-banner">⚠ ${escHtml(ai.warning)}</div>` : '';
+  const aiErrorBanner = (!ai && data.aiError)
+    ? `<div class="ai-warn-banner">⚠ AI 코멘트 생성에 실패했습니다 (${escHtml(data.aiError)}). 결정론적 분석 결과는 정상적으로 계산되었습니다.</div>`
+    : '';
+  const rateGap = data.rateGap;
+  const gapColor = rateGap < 0 ? 'var(--red)' : 'var(--green)';
+
+  // ── P2-B: Top3 카드 (클릭 → 공종 자동 스크롤) ──
+  const top3 = (ai && ai.top3 && Array.isArray(ai.top3)) ? ai.top3 : [];
+  const rankColor = ['#dc2626','#ea580c','#d97706'];
+  const top3Html = top3.length ? `
+    <div class="ai-section">
+      <div class="ai-section-title">📌 집중 공종 Top 3 <span style="font-size:10px;font-weight:400;color:var(--text2)">(지연 무게 기준 — 클릭 시 해당 공종으로 이동)</span></div>
+      ${top3.map((t,i)=>`
+        <div class="ai-top3-card" onclick="scrollToNodeByName(${JSON.stringify(t.name||'')})" title="클릭하면 해당 공종으로 이동합니다">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+            <span class="t3-rank" style="color:${rankColor[i]||'#666'}">${t.rank||i+1}위</span>
+            <span class="t3-name">${escHtml(t.name||'')}</span>
+            ${t.isOnCriticalPath?'<span class="t3-cp">CP</span>':''}
+          </div>
+          <div class="t3-score">
+            지연 <b style="color:var(--red)">${t.delayDays||'-'}일</b>
+            &nbsp;·&nbsp; 영향 공종 <b>${t.impactCount||'-'}개</b>
+            &nbsp;·&nbsp; 지연 무게 <b>${t.weight!=null?t.weight:(t.delayDays&&t.impactCount?(t.delayDays*t.impactCount):'-')}</b>
+          </div>
+          ${t.reason?`<div class="t3-reason">${escHtml(t.reason)}</div>`:''}
+          ${t.recovery?`<div class="t3-recovery">💡 ${escHtml(t.recovery)}</div>`:''}
+        </div>`).join('')}
+    </div>` : '';
+
+  // ── 지연 공종 목록 (P2-A 스코어 표시) ──
   const delayHtml = delays.length
     ? delays.map(d=>`
-        <div class="ai-list-item">
-          <b>[${escHtml(d.section)}] ${escHtml(d.name)}</b> — 계획종료 ${d.planEnd}${d.actualEnd?`, 실적종료 ${d.actualEnd}`:''},
-          진행률 ${d.progress}%, ${d.type} <span class="days">${d.daysLate}일</span>
+        <div class="ai-list-item" style="${d.isOnCriticalPath?'border-left-color:#dc2626;background:#fff5f5':''}">
+          ${d.isOnCriticalPath?'<span style="font-size:9px;font-weight:700;background:#fee2e2;color:#dc2626;padding:1px 5px;border-radius:8px;margin-right:4px">CP</span>':''}
+          <b>[${escHtml(d.section)}] ${escHtml(d.name)}</b> — ${d.type} <span class="days">${d.daysLate}일</span>
+          &nbsp;<span style="font-size:10px;color:var(--text2)">영향 ${d.impactCount||0}개 · 무게 ${d.weight||0}</span><br>
+          <span style="font-size:10.5px;color:var(--text2)">계획종료 ${d.planEnd}${d.actualEnd?` / 실적종료 ${d.actualEnd}`:''} / 진행률 ${d.progress}%</span>
         </div>`).join('')
     : `<div class="ai-list-item" style="border-left-color:var(--green)">현재 기준 지연된 공종이 없습니다.</div>`;
 
+  // ── 선후행 충돌 ──
   const conflictHtml = conflicts.length
     ? conflicts.map(c=>`
         <div class="ai-list-item conflict">
@@ -3037,68 +3272,86 @@ function renderAiReport(data){
         </div>`).join('')
     : `<div class="ai-list-item conflict" style="border-left-color:var(--green)">선후행 충돌이 발견되지 않았습니다.</div>`;
 
-  const providerLabel = ai && ai.provider==='claude' ? 'Claude API'
-    : ai && ai.provider==='groq' ? 'Groq (Llama 3.3 70B)'
-    : (ai && ai.provider==='ollama' ? 'Ollama (로컬)' : '');
-  const warnBanner = (ai && ai.warning)
-    ? `<div class="ai-warn-banner">⚠ ${escHtml(ai.warning)}</div>` : '';
-  const aiErrorBanner = (!ai && data.aiError)
-    ? `<div class="ai-warn-banner">⚠ AI 코멘트 생성에 실패했습니다 (${escHtml(data.aiError)}). 지연·충돌 분석 결과는 정상적으로 계산되었습니다.</div>`
-    : '';
+  // ── P2-C: TF 급감 공종 ──
+  const tfHtml = tfAlerts.length ? `
+    <div class="ai-section">
+      <div class="ai-section-title">⏱ TF 급감 공종 <span class="ai-count-badge${tfAlerts.length?'':' zero'}">${tfAlerts.length}건</span>
+        <span style="font-size:10px;font-weight:400;color:var(--text2)">여유시간 7일 이하</span>
+      </div>
+      ${tfAlerts.map(t=>`
+        <div class="ai-tf-item${t.tf<=0?' tf-critical':''}">
+          <b>[${escHtml(t.section)}] ${escHtml(t.name)}</b>
+          &nbsp;<span style="color:${t.tf<=0?'#dc2626':'#d97706'};font-weight:700">TF ${t.tf}일</span>
+          &nbsp;· 후행 ${t.succCount}개 · 실적 ${t.actRate}% · 계획종료 ${t.planF}
+          ${t.isDelayed?'&nbsp;<span style="color:#dc2626;font-size:10px">⚠ 현재 지연 중</span>':''}
+        </div>`).join('')}
+    </div>` : '';
 
-  // P1-B: 집중 공종 Top 3 카드
-  const top3Html = (ai && ai.top3 && ai.top3.length)
-    ? `<div class="ai-section">
-        <div class="ai-section-title">📌 집중 공종 Top 3 <span style="font-size:10px;font-weight:400;color:var(--text2)">(선후행 파급 기준)</span></div>
-        ${ai.top3.map(t=>`
-          <div class="ai-list-item" style="border-left-color:${t.rank===1?'#dc2626':t.rank===2?'#ea580c':'#d97706'};background:${t.rank===1?'#fff5f5':'var(--surface2)'}">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-              <span style="font-size:15px;font-weight:900;color:${t.rank===1?'#dc2626':t.rank===2?'#ea580c':'#d97706'}">${t.rank}위</span>
-              <b>${escHtml(t.name)}</b>
-              ${t.isOnCriticalPath?'<span style="font-size:9px;font-weight:700;padding:1px 6px;border-radius:8px;background:#fee2e2;color:#dc2626">CP</span>':''}
-              <span style="font-size:10px;color:var(--red)">지연 ${t.delayDays||'-'}일</span>
-              ${t.impactCount?`<span style="font-size:10px;color:var(--text2)">영향 ${t.impactCount}개 공종</span>`:''}
-            </div>
-            <div style="font-size:11px;color:var(--text2);margin-bottom:4px">${escHtml(t.reason||'')}</div>
-            ${t.recovery?`<div style="font-size:11px;color:#0e7490;border-top:1px solid var(--border);padding-top:4px;margin-top:4px">💡 ${escHtml(t.recovery)}</div>`:''}
-          </div>`).join('')}
-      </div>` : '';
+  // ── P2-C: 안심/위험 공종 ──
+  const safeList = blindSpots.safe||[], dangerList = blindSpots.danger||[];
+  const blindSpotHtml = (safeList.length||dangerList.length) ? `
+    <div class="ai-section">
+      <div class="ai-section-title">🔍 블라인드 스팟</div>
+      ${dangerList.length ? `
+        <div style="font-size:11px;font-weight:700;color:#dc2626;margin-bottom:4px">⚠ 위험 공종 — 실적 높아 보이지만 후행 밀집</div>
+        ${dangerList.map(d=>`
+          <div class="ai-danger-item">
+            <b>[${escHtml(d.section)}] ${escHtml(d.name)}</b> — 실적 ${d.actRate}%, 후행 ${d.succCount}개 대기
+          </div>`).join('')}` : ''}
+      ${safeList.length ? `
+        <div style="font-size:11px;font-weight:700;color:#16a34a;margin-bottom:4px;margin-top:8px">✅ 안심 공종 — 지연처럼 보이지만 후행 없어 전체 무해</div>
+        ${safeList.map(s=>`
+          <div class="ai-safe-item">
+            <b>[${escHtml(s.section)}] ${escHtml(s.name)}</b> — 실적 ${s.actRate}%, 후행 없음
+          </div>`).join('')}` : ''}
+    </div>` : '';
 
-  // P1-B: 설계 의도 & 크리티컬 패스
-  const intentHtml = (ai && (ai.intent || ai.criticalPath))
-    ? `<div class="ai-section">
-        ${ai.intent?`<div style="font-size:11.5px;line-height:1.6;background:#eff6ff;border:1px solid #bfdbfe;border-radius:4px;padding:10px 12px;margin-bottom:8px">
-          <span style="font-weight:700;color:#1d4ed8">🎯 설계 의도</span><br>${escHtml(ai.intent)}</div>`:''}
-        ${ai.criticalPath?`<div style="font-size:11px;line-height:1.6;background:#fef3c7;border:1px solid #fcd34d;border-radius:4px;padding:8px 12px">
-          <span style="font-weight:700;color:#92400e">🔴 크리티컬 패스</span>&nbsp; ${escHtml(ai.criticalPath)}</div>`:''}
-      </div>` : '';
+  // P3: 준공일 위험 배너
+  const crScore = completionRiskScore;
+  const crHtml = crScore ? `
+    <div class="ai-completion-risk ${crScore.riskLevel||'low'}">
+      🏗 준공일 위험: <b>${{critical:'위험',high:'높음',medium:'보통',low:'양호'}[crScore.riskLevel]||'-'}</b>
+      &nbsp;·&nbsp; CP 지연 최대 <b>${crScore.maxDelay||0}일</b>
+      &nbsp;·&nbsp; 예상 슬립 <b>${crScore.estimatedSlip||0}일</b>
+      (CP 위 지연 공종 ${crScore.cpDelayCount||0}건)
+    </div>` : '';
 
-  // P1-B: 블라인드 스팟
-  const bsData = ai && ai.blindSpots;
-  const blindSpotHtml = (bsData && (bsData.safe || bsData.danger || bsData.interference))
-    ? `<div class="ai-section">
-        <div class="ai-section-title">🔍 블라인드 스팟</div>
-        ${bsData.safe?`<div class="ai-list-item" style="border-left-color:var(--green)"><span style="font-weight:700;color:var(--green)">✅ 안심 공종</span> ${escHtml(bsData.safe)}</div>`:''}
-        ${bsData.danger?`<div class="ai-list-item" style="border-left-color:var(--red)"><span style="font-weight:700;color:var(--red)">⚠ 위험 공종</span> ${escHtml(bsData.danger)}</div>`:''}
-        ${bsData.interference?`<div class="ai-list-item" style="border-left-color:#7c3aed"><span style="font-weight:700;color:#7c3aed">⚡ 간섭 위험</span> ${escHtml(bsData.interference)}</div>`:''}
-      </div>` : '';
+  // P3-A: 멀티턴 뱃지
+  const multiTurnBadge = multiTurnMeta
+    ? `<span class="ai-multiturn-badge">🔀 멀티턴${multiTurnMeta.focusSections&&multiTurnMeta.focusSections.length?' · '+multiTurnMeta.focusSections.join(', '):''}</span>` : '';
 
-  // 준공일 영향
-  const completionRiskHtml = (ai && ai.completionRisk)
-    ? `<div style="font-size:11px;font-weight:700;padding:7px 10px;border-radius:4px;margin-bottom:10px;background:#fff1f2;border:1px solid #fecdd3;color:#be123c">
-        🏗 ${escHtml(ai.completionRisk)}</div>` : '';
+  // P3-B: 병행 가능 공종 조합 섹션
+  const parallelHtml = parallelCandidates.length ? `
+    <div class="ai-section">
+      <div class="ai-section-title">⚡ 병행 가능 공종 조합 <span class="ai-count-badge">${parallelCandidates.length}건</span>
+        <span style="font-size:10px;font-weight:400;color:var(--text2)">선후행 없이 기간 겹치는 쌍 — 동시 투입 시 공기 단축 가능</span>
+      </div>
+      ${parallelCandidates.slice(0,6).map(p=>`
+        <div class="ai-parallel-item">
+          <b>[${escHtml(p.aSection)}] ${escHtml(p.aName)}</b> <span style="color:var(--text3)">실적 ${p.aRate}%</span>
+          &nbsp;+&nbsp;
+          <b>[${escHtml(p.bSection)}] ${escHtml(p.bName)}</b> <span style="color:var(--text3)">실적 ${p.bRate}%</span>
+          &nbsp;<span style="color:#0369a1;font-size:10px">겹침 ${p.overlapDays}일 · ${escHtml(p.note||'')}</span>
+        </div>`).join('')}
+    </div>` : '';
+
+  const riskHtml = (ai && ai.risk) ? `
+    <div class="ai-section">
+      <div class="ai-section-title">⚠ 위험 요인</div>
+      <div class="ai-text-block">${escHtml(ai.risk)}</div>
+    </div>` : '';
 
   panel.innerHTML = `
     <div class="ai-report">
       <div class="ai-summary-bar">
         <div class="ai-progress-circle">${data.progressRate}%</div>
-        <div class="ai-meta">전체 공정률<br><span style="font-size:10px">기준일 ${data.baseDate}</span>
-          ${data.rateGap!=null?`<br><span style="color:${data.rateGap<0?'var(--red)':'var(--green)'}">계획대비 ${data.rateGap>0?'+':''}${data.rateGap}%</span>`:''}
+        <div class="ai-meta">전체 공정률<br>
+          <span style="font-size:10px">기준일 ${data.baseDate}</span>
+          ${rateGap!=null?`<br><span style="color:${gapColor};font-weight:700">계획대비 ${rateGap>0?'+':''}${rateGap}%</span>`:''}
         </div>
-        ${providerLabel?`<div class="ai-meta">AI 분석<span class="ai-provider-badge">${providerLabel}</span></div>`:''}
+        ${providerLabel?`<div class="ai-meta">AI 분석<span class="ai-provider-badge">${providerLabel}</span>${multiTurnBadge}</div>`:''}
       </div>
-      ${aiErrorBanner}${warnBanner}${completionRiskHtml}
-      ${intentHtml}
+      ${aiErrorBanner}${warnBanner}${crHtml}
       ${top3Html}
       <div class="ai-section">
         <div class="ai-section-title">⚠️ 지연 공종 <span class="ai-count-badge${delays.length?'':' zero'}">${delays.length}건</span></div>
@@ -3108,7 +3361,10 @@ function renderAiReport(data){
         <div class="ai-section-title">🔗 선후행 충돌 <span class="ai-count-badge${conflicts.length?'':' zero'}">${conflicts.length}건</span></div>
         ${conflictHtml}
       </div>
+      ${tfHtml}
       ${blindSpotHtml}
+      ${parallelHtml}
+      ${riskHtml}
       ${ai && ai.recovery ? `
       <div class="ai-section">
         <div class="ai-section-title">💡 만회 공정 제안</div>
@@ -3122,26 +3378,61 @@ function renderAiReport(data){
     </div>`;
 }
 
+
+// ── P2-B: Top3 카드 클릭 → 공종 자동 스크롤 ──────────────────
+// AI가 반환한 공종명(name)으로 DOM에서 .nn1 input을 검색하여 해당 .tree-node로 이동
+function scrollToNodeByName(targetName){
+  if(!targetName) return;
+  // 1) 데이터 입력 탭으로 전환
+  const inputTabBtn = document.querySelector('[data-tab="input"]');
+  if(inputTabBtn && !document.getElementById('tabInput').classList.contains('on')){
+    inputTabBtn.click();
+  }
+  // 2) 공종명 부분 일치로 .nn1 input 탐색
+  const inputs = document.querySelectorAll('#inputSecs .nn1');
+  let found = null;
+  // 완전 일치 우선
+  for(const inp of inputs){
+    if(inp.value.trim() === targetName.trim()){ found = inp; break; }
+  }
+  // 없으면 부분 일치 (AI 공종명에 섹션명 포함될 수 있어 역방향으로도 검색)
+  if(!found){
+    const lower = targetName.toLowerCase();
+    for(const inp of inputs){
+      if(inp.value.trim() && lower.includes(inp.value.trim().toLowerCase())){
+        found = inp; break;
+      }
+    }
+  }
+  if(!found){
+    toast('해당 공종을 찾지 못했습니다: ' + targetName);
+    return;
+  }
+  // 3) tree-node로 올라가서 _flashNode 방식으로 스크롤 + 하이라이트
+  const treeNode = found.closest('.tree-node');
+  if(!treeNode){ found.scrollIntoView({behavior:'smooth',block:'center'}); return; }
+  const nodeId = treeNode.id.replace('nd_','');
+  // 닫혀있으면 열기 (부모 sec-card 포함)
+  const secCard = treeNode.closest('.sec-card');
+  if(secCard && !secCard.classList.contains('open')){
+    const togBtn = secCard.querySelector('.sec-hdr');
+    if(togBtn) togBtn.click();
+  }
+  setTimeout(()=>{
+    treeNode.scrollIntoView({behavior:'smooth', block:'center'});
+    treeNode.classList.add('ap-flash');
+    setTimeout(()=>treeNode.classList.remove('ap-flash'), 2800);
+  }, secCard && !secCard.classList.contains('open') ? 200 : 0);
+}
+
 function escHtml(s){
   return String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
 function _buildAiReportText(data){
   const lines=[];
-  const ai=data.ai;
-  lines.push('■ AI 공정 분석 리포트 (Phase 1 — 의도 독해 + 연쇄 추론)');
-  lines.push('기준일: '+data.baseDate+'   전체 공정률: '+data.progressRate+'%'+(data.rateGap!=null?'   계획대비: '+(data.rateGap>0?'+':'')+data.rateGap+'%':''));
-  if(ai && ai.intent){ lines.push(''); lines.push('[설계 의도]'); lines.push(ai.intent); }
-  if(ai && ai.criticalPath){ lines.push(''); lines.push('[크리티컬 패스]'); lines.push(ai.criticalPath); }
-  if(ai && ai.completionRisk){ lines.push(''); lines.push('[준공일 영향]'); lines.push(ai.completionRisk); }
-  if(ai && ai.top3 && ai.top3.length){
-    lines.push(''); lines.push('[집중 공종 Top 3]');
-    ai.top3.forEach(t=>{
-      lines.push(t.rank+'위. '+t.name+(t.isOnCriticalPath?' [CP]':'')+(t.delayDays?' / 지연 '+t.delayDays+'일':'')+(t.impactCount?' / 영향 '+t.impactCount+'개':''));
-      if(t.reason) lines.push('   근거: '+t.reason);
-      if(t.recovery) lines.push('   만회: '+t.recovery);
-    });
-  }
+  lines.push('■ AI 공정 분석 리포트');
+  lines.push('기준일: '+data.baseDate+'   전체 공정률: '+data.progressRate+'%');
   lines.push('');
   lines.push('[지연 공종] '+(data.delays||[]).length+'건');
   (data.delays||[]).forEach(d=>{
@@ -3154,18 +3445,10 @@ function _buildAiReportText(data){
     lines.push('- 선행 ['+c.predName+'](진행률 '+c.predProgress+'%, 계획종료 '+c.predPlanEnd+')가 끝나지 않았는데 후행 ['+c.succName+']이 '+c.succActualStart+'에 시작됨');
   });
   if(!(data.conflicts||[]).length) lines.push('(선후행 충돌 없음)');
-  if(ai && ai.blindSpots){
-    const bs=ai.blindSpots;
-    if(bs.safe||bs.danger||bs.interference){
-      lines.push(''); lines.push('[블라인드 스팟]');
-      if(bs.safe) lines.push('안심 공종: '+bs.safe);
-      if(bs.danger) lines.push('위험 공종: '+bs.danger);
-      if(bs.interference) lines.push('간섭 위험: '+bs.interference);
-    }
-  }
-  if(ai && ai.recovery){ lines.push(''); lines.push('[만회 공정 제안]'); lines.push(ai.recovery); }
-  if(ai && ai.summary){ lines.push(''); lines.push('[종합 의견]'); lines.push(ai.summary); }
-  if(data.aiError && !ai){ lines.push(''); lines.push('[AI 코멘트 생성 실패] '+data.aiError); }
+  if(data.ai && data.ai.risk){ lines.push(''); lines.push('[위험 요인]'); lines.push(data.ai.risk); }
+  if(data.ai && data.ai.recovery){ lines.push(''); lines.push('[만회 공정 제안]'); lines.push(data.ai.recovery); }
+  if(data.ai && data.ai.summary){ lines.push(''); lines.push('[종합 의견]'); lines.push(data.ai.summary); }
+  if(data.aiError && !data.ai){ lines.push(''); lines.push('[AI 코멘트 생성 실패] '+data.aiError); }
   return lines.join('\n');
 }
 
@@ -8633,20 +8916,24 @@ function exitMeeting(){
   toast('회의뷰를 종료하고 내 데이터로 돌아왔습니다');
 }
 
-// AI 간섭분석: __MEETING__을 서버에 반영 후 분석 호출
+// AI 간섭분석: __MEETING__ 데이터를 inlineProj로 직접 전송 (서버 저장 의존 제거)
 async function runMeetingAi(){
   if(_IS_LOCAL){ toast('⚠ AI 분석은 서버 연결 모드에서만 사용할 수 있습니다'); return; }
   const proj=gs().projects[MEETING_ID];
   if(!proj){ toast('먼저 [결합 생성/갱신]을 실행하세요'); return; }
   const out=document.getElementById('meetingAiOut');
   if(out) out.innerHTML='<span style="color:var(--text3)">간섭 분석 중... (AI 코멘트는 다소 걸릴 수 있습니다)</span>';
-  // __MEETING__ 슬롯을 서버에 반영 (AI는 서버의 projects[__MEETING__]를 읽음)
-  try{ if(typeof flushToServer==='function') await flushToServer(); }catch(e){}
+
+  // ★ predLinks 최신 상태 명시 동기화 — 화면에서 설정한 선후행이 반드시 포함되도록
+  const latestPredLinks = _getPredLinks();
+  const inlineProj = Object.assign({}, proj, { predLinks: latestPredLinks });
+
+  // ★ inlineProj로 직접 전송 — 서버 __MEETING__ 저장 여부와 무관하게 정확한 데이터 분석
   const baseDate=(document.getElementById('meetingBaseDate')||{}).value||ds(new Date());
   try{
     const r=await fetch(API+'/api/ai/analyze',{
       method:'POST', headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({companyId:MEETING_ID, baseDate, site:_activeSite||undefined})
+      body:JSON.stringify({ inlineProj, baseDate })
     });
     const j=await r.json();
     if(!j.ok){ if(out)out.textContent='분석 실패: '+(j.msg||'알 수 없는 오류'); return; }
@@ -8913,6 +9200,17 @@ function _renderEditorAnalyze(j,body){
     <span style="background:${dl.length?'#fef3c7':'#dcfce7'};color:${dl.length?'#92400e':'#15803d'};padding:2px 8px;border-radius:10px;font-weight:700">지연 ${dl.length}</span>
     <span style="background:#e0e7ff;color:#3730a3;padding:2px 8px;border-radius:10px;font-weight:700">진행 ${j.progressRate!=null?j.progressRate:'-'}% / 계획 ${j.planRate!=null?j.planRate:'-'}%</span>
     ${gap!=null?`<span style="background:${gap<0?'#fee2e2':'#dcfce7'};color:${gap<0?'#b91c1c':'#15803d'};padding:2px 8px;border-radius:10px;font-weight:700">${gap<0?'지연':'선행'} ${Math.abs(gap)}%p</span>`:''}</div>`;
+  // 핵심 지표 카드 (CPM/EVM/추세/신뢰도)
+  const _cpm=j.cpm, _evm=j.evm, _vel=j.velocity, _conf=(j.ai&&j.ai.confidence!=null)?j.ai.confidence:null;
+  const _cards=[];
+  if(_evm){ _cards.push(['SPI(일정효율)', (_evm.SPI!=null?_evm.SPI:'-'), (_evm.SPI!=null&&_evm.SPI<1)?'#b91c1c':'#15803d']);
+            _cards.push(['기성율', _evm.completionPct+'% / 계획 '+_evm.plannedPct+'%', '#3730a3']); }
+  if(_cpm && !_cpm.cyclic && _cpm.projectFinish){ let _slip=null; try{_slip=Math.round((new Date(_cpm.projectFinish)-new Date(_cpm.plannedFinish))/86400000);}catch(_e){}
+            _cards.push(['CPM 예상준공', _cpm.projectFinish+(_slip!=null?(' (슬립 '+_slip+'일)'):''), (_slip!=null&&_slip>0)?'#b91c1c':'#15803d']);
+            _cards.push(['임계경로', _cpm.criticalCount+'개', '#92400e']); }
+  if(_vel){ _cards.push(['주당 진척', _vel.velocityPerWeek+'%p'+(_vel.forecastWeeksToFinish!=null?(' · 잔여 ~'+_vel.forecastWeeksToFinish+'주'):''), _vel.stalled?'#b91c1c':'#15803d']); }
+  if(_conf!=null){ _cards.push(['분석 신뢰도', _conf+'%', _conf>=70?'#15803d':(_conf>=40?'#92400e':'#b91c1c')]); }
+  if(_cards.length){ h+='<div class="ap-sec-title">📐 핵심 지표</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px">'+_cards.map(c=>`<div style="flex:1;min-width:118px;background:#f8fafc;border:1px solid var(--border);border-radius:6px;padding:6px 8px"><div style="font-size:10px;color:var(--text3)">${c[0]}</div><div style="font-weight:700;color:${c[2]}">${c[1]}</div></div>`).join('')+'</div>'; }
   if(cf.length){ h+='<div class="ap-sec-title">⚠ 선후행 충돌</div>'+cf.map(c=>`<div class="ap-item" onclick="jumpToNode('${c.succId||c.predId||''}')"><b>${e(c.predName)}</b> 미완 → <b>${e(c.succName)}</b> 착수(${e(c.succActualStart)})</div>`).join(''); }
   if(dl.length){ h+='<div class="ap-sec-title">⏰ 지연 공종</div>'+dl.map(d=>`<div class="ap-item" onclick="jumpToNode('${d.id||''}')">[${e(d.section)}] <b>${e(d.name)}</b> — ${e(d.type)} ${e(d.daysLate)}일</div>`).join(''); }
   if(!cf.length && !dl.length) h+='<div style="color:#15803d;padding:8px">지연·충돌 없음 👍</div>';
