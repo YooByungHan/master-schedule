@@ -1,5 +1,5 @@
 /**
- * MASTER SCHEDULE — 서버 v5 (개인 계정, 이름 자동 회사 배치)
+ * Terminus master schedule — 서버 v5 (개인 계정, 이름 자동 회사 배치)
  * 실행: node server.js
  */
 const http  = require('http');
@@ -10,7 +10,7 @@ const { WebSocketServer } = require('ws');
 
 const PORT        = 3000;
 const DATA_FILE   = path.join(__dirname, 'data.json');
-const HTML_FILE   = path.join(__dirname, 'master_schedule_v62.html');
+const HTML_FILE   = path.join(__dirname, 'Terminus_master_schedule.html');
 const CONFIG_FILE = path.join(__dirname, 'config.json'); // API키 등 민감 설정 (git 제외)
 const INBOX_DIR   = path.join(__dirname, '하도업체', '접수'); // 메신저로 받은 하도 파일
 const DIST_DIR    = path.join(__dirname, '하도업체', '배포'); // 회의 결과 배포 파일
