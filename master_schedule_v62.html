@@ -1718,6 +1718,8 @@ body.pred-edit-mode .nacts{min-width:44px}
       .ap-item{padding:7px 9px;margin-bottom:6px;border:1px solid var(--border);border-radius:6px;cursor:pointer;background:#fff}
       .ap-item:hover{background:#f1f5f9;border-color:var(--navy)}
       .ap-sec-title{font-weight:700;margin:10px 0 5px}
+      .apc{flex:1 1 140px;min-width:0}
+      @media(max-width:520px){.apc{flex:1 1 calc(50% - 4px)}}
       .ap-flash .nrow-left-fixed{background:#fde68a !important;box-shadow:inset 0 0 0 2px #f59e0b !important}
       .ap-flash > div:first-child{outline:2px solid #f59e0b;outline-offset:-2px}
       body.ap-open #tabInput{padding-right:372px}
@@ -2360,6 +2362,11 @@ const _DEFAULT_MASTER_CODE = 'wuablj'; // 기본 마스터 코드
 
 // 로컬(file://) 여부
 const _IS_LOCAL = location.protocol === 'file:';
+// ── Pro AI: ai-server(기본 localhost:3100) 사용, 서버모드는 동일 출처 ──
+const _AI_PORT_URL = 'http://localhost:3100';
+function _aiIsPro(){ return !!(typeof CU!=='undefined' && CU && CU.ver==='pro'); }
+function _aiBaseUrl(){ return _aiIsPro() ? (localStorage.getItem('ms_ai_url')||_AI_PORT_URL) : API; }
+function _aiAugment(b){ b=b||{}; if(_aiIsPro()){ if(!b.inlineProj){ try{ b.inlineProj=getProj(); }catch(e){} } const k=(localStorage.getItem('ms_claude_key')||'').trim(); if(k){ b.apiKey=k; b.provider=_detectProvider(k)||b.provider; } } return b; }
 
 let _loginClickCount = 0;     // 로컬: 5회 클릭 카운터
 let _pendingServerUser = null; // 서버: 1차 검증 통과 후 대기 중인 유저 정보
@@ -3065,7 +3072,7 @@ function _updateAiStepUI(step, msg) {
 }
 
 async function runAiAnalyze(){
-  if(_IS_LOCAL){ toast('⚠ AI 분석은 서버 연결 모드에서만 사용할 수 있습니다'); return; }
+  if(_IS_LOCAL && !_aiIsPro()){ toast('⚠ AI 분석은 서버 연결 또는 Pro(ai-server.js 실행) 모드에서 사용할 수 있습니다'); return; }
   const baseDate = document.getElementById('aiBaseDate').value || ds(new Date());
   const btn = document.getElementById('aiRunBtn');
   const statusEl = document.getElementById('aiStatus');
@@ -3087,9 +3094,9 @@ async function runAiAnalyze(){
   }, 20000);
 
   try{
-    const r = await fetch(API+'/api/ai/analyze',{
+    const r = await fetch(_aiBaseUrl()+'/api/ai/analyze',{
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({companyId: getViewId(), baseDate, site:_activeSite||undefined})
+      body: JSON.stringify(_aiAugment({companyId: getViewId(), baseDate, site:_activeSite||undefined}))
     });
     let data;
     try{ data = await r.json(); }
@@ -8918,7 +8925,7 @@ function exitMeeting(){
 
 // AI 간섭분석: __MEETING__ 데이터를 inlineProj로 직접 전송 (서버 저장 의존 제거)
 async function runMeetingAi(){
-  if(_IS_LOCAL){ toast('⚠ AI 분석은 서버 연결 모드에서만 사용할 수 있습니다'); return; }
+  if(_IS_LOCAL && !_aiIsPro()){ toast('⚠ AI 분석은 서버 연결 또는 Pro(ai-server.js 실행) 모드에서 사용할 수 있습니다'); return; }
   const proj=gs().projects[MEETING_ID];
   if(!proj){ toast('먼저 [결합 생성/갱신]을 실행하세요'); return; }
   const out=document.getElementById('meetingAiOut');
@@ -8931,9 +8938,9 @@ async function runMeetingAi(){
   // ★ inlineProj로 직접 전송 — 서버 __MEETING__ 저장 여부와 무관하게 정확한 데이터 분석
   const baseDate=(document.getElementById('meetingBaseDate')||{}).value||ds(new Date());
   try{
-    const r=await fetch(API+'/api/ai/analyze',{
+    const r=await fetch(_aiBaseUrl()+'/api/ai/analyze',{
       method:'POST', headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({ inlineProj, baseDate })
+      body:JSON.stringify(_aiAugment({ inlineProj, baseDate }))
     });
     const j=await r.json();
     if(!j.ok){ if(out)out.textContent='분석 실패: '+(j.msg||'알 수 없는 오류'); return; }
@@ -9176,7 +9183,7 @@ async function runEditorAnalyze(){
     body.innerHTML='<div style="color:var(--text3);padding:8px">분석 중...</div>';
     try{
       const _p=getProj(); try{ _p.predLinks=_getPredLinks(); }catch(e){}
-      const r=await fetch(API+'/api/ai/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({inlineProj:_p, baseDate:ds(new Date())})});
+      const r=await fetch(_aiBaseUrl()+'/api/ai/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(_aiAugment({inlineProj:_p, baseDate:ds(new Date())}))});
       const j=await r.json();
       const pn=document.getElementById('analyzePanel'); if(pn)pn.dataset.loaded='1';
       _renderEditorAnalyze(j, body);
@@ -9186,7 +9193,7 @@ async function runEditorAnalyze(){
   if(_IS_LOCAL){ await _runLocalAnalyze(body); return; }
   body.innerHTML='<div style="color:var(--text3);padding:8px">분석 중...</div>';
   try{
-    const r=await fetch(API+'/api/ai/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({companyId:getViewId(),baseDate:ds(new Date()),site:_activeSite||undefined})});
+    const r=await fetch(_aiBaseUrl()+'/api/ai/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(_aiAugment({companyId:getViewId(),baseDate:ds(new Date()),site:_activeSite||undefined}))});
     const j=await r.json();
     const p=document.getElementById('analyzePanel'); if(p)p.dataset.loaded='1';
     _renderEditorAnalyze(j,body);
@@ -9210,7 +9217,7 @@ function _renderEditorAnalyze(j,body){
             _cards.push(['임계경로', _cpm.criticalCount+'개', '#92400e']); }
   if(_vel){ _cards.push(['주당 진척', _vel.velocityPerWeek+'%p'+(_vel.forecastWeeksToFinish!=null?(' · 잔여 ~'+_vel.forecastWeeksToFinish+'주'):''), _vel.stalled?'#b91c1c':'#15803d']); }
   if(_conf!=null){ _cards.push(['분석 신뢰도', _conf+'%', _conf>=70?'#15803d':(_conf>=40?'#92400e':'#b91c1c')]); }
-  if(_cards.length){ h+='<div class="ap-sec-title">📐 핵심 지표</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px">'+_cards.map(c=>`<div style="flex:1;min-width:118px;background:#f8fafc;border:1px solid var(--border);border-radius:6px;padding:6px 8px"><div style="font-size:10px;color:var(--text3)">${c[0]}</div><div style="font-weight:700;color:${c[2]}">${c[1]}</div></div>`).join('')+'</div>'; }
+  if(_cards.length){ h+='<div class="ap-sec-title">📐 핵심 지표</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px">'+_cards.map(c=>`<div class="apc" style="background:#f8fafc;border:1px solid var(--border);border-radius:6px;padding:6px 8px"><div style="font-size:10px;color:var(--text3)">${c[0]}</div><div style="font-weight:700;color:${c[2]}">${c[1]}</div></div>`).join('')+'</div>'; }
   if(cf.length){ h+='<div class="ap-sec-title">⚠ 선후행 충돌</div>'+cf.map(c=>`<div class="ap-item" onclick="jumpToNode('${c.succId||c.predId||''}')"><b>${e(c.predName)}</b> 미완 → <b>${e(c.succName)}</b> 착수(${e(c.succActualStart)})</div>`).join(''); }
   if(dl.length){ h+='<div class="ap-sec-title">⏰ 지연 공종</div>'+dl.map(d=>`<div class="ap-item" onclick="jumpToNode('${d.id||''}')">[${e(d.section)}] <b>${e(d.name)}</b> — ${e(d.type)} ${e(d.daysLate)}일</div>`).join(''); }
   if(!cf.length && !dl.length) h+='<div style="color:#15803d;padding:8px">지연·충돌 없음 👍</div>';
