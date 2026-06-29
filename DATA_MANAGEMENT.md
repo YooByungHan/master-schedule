@@ -1,6 +1,9 @@
-# 마스터 공정표 — 데이터 저장·관리 구조 설명서
+[DATA_MANAGEMENT.md](https://github.com/user-attachments/files/29480818/DATA_MANAGEMENT.md)
+# Terminus 공정표 — 데이터 저장·관리 구조 설명서
 
-> 버전: v62 기준 | 대상: 관리자·개발자·GitHub 참고용
+> **“Terminus — The end of Excel, the beginning of freedom.”**
+>
+> 메인 앱: `Terminus_master_schedule.html` (구 `Terminus_master_schedule.html`) | 대상: 관리자·개발자·GitHub 참고용
 
 ---
 
@@ -45,6 +48,28 @@ data/site_001.json = {
 
 - **실시간 동기화**: WebSocket — 한 명이 저장하면 전원에게 즉시 반영
 - **권한 검사**: 모든 현장 요청에 로그인 ID 동봉 → 서버가 `accounts.json`으로 검사
+
+---
+
+## 1-3. AI 분석 아키텍처 — `ai-core.js` 단일 소스
+
+AI 분석 로직(결정론 지표 + LLM 호출 + 프롬프트)은 **`ai-core.js` 한 파일**에만 있습니다. 서버 버전과 Pro 버전이 **동일한 이 파일**을 사용하므로, 분석을 고칠 때 한 곳만 수정하면 됩니다.
+
+```
+ai-core.js  ←── server.js (Enterprise: /api/ai/analyze 가 위임)
+           ←── ai-server.js (Pro: node ai-server.js, 포트 3100)
+```
+
+| 항목 | 서버(Enterprise) | Pro(개인) |
+|------|------------------|-----------|
+| 실행 | `node server.js` (내장) | `node ai-server.js` (별도, 포트 3100) |
+| 데이터 | 서버 `data/<siteId>.json` | 브라우저가 `inlineProj`로 요청에 동봉 |
+| API 키 | 서버 `config.json` | 요청에 개인 키 동봉(브라우저 localStorage 보관) |
+| 분석 엔진 | `ai-core.js` | `ai-core.js` (동일) |
+
+**제공 지표**: 정식 CPM(Total Float·임계경로·예상준공/슬립), EVM(기성율·SPI·SV), 진척 추세(주당 속도·정체), 지연 무게·선후행 충돌·TF 급감·블라인드 스팟·병행 조합·준공 위험·신뢰도(confidence). 단일턴/멀티턴 모두 동일 지표 사용, 자기검증 2차 패스 적용.
+
+**프롬프트(지시서)**: `prompts/Groq_Llama3.3-70B_작업지시서.md`(무료·빠름) / `prompts/Claude_작업지시서.md`(정밀). 최초 실행 시 없으면 자동 생성되며, provider에 따라 자동 선택됩니다. 환경변수 `AI_SELF_CRITIQUE=0`으로 자기검증 끄기 가능.
 
 ---
 
@@ -161,9 +186,12 @@ data/site_001.json = {
 ## 7. 파일 구조
 
 ```
-master_schedule_v62.html   ← 단일 파일 SPA (공개)
-server.js                  ← 서버 백엔드: 멀티현장·권한·파일함·백업/복원·AI (공개)
-prompts/Groq_Llama3.3-70B_작업지시서.md  ← AI 분석 지시서 (공개)
+Terminus_master_schedule.html   ← 단일 파일 SPA (공개)
+ai-core.js                 ← AI 분석 엔진(단일 소스) — server.js·ai-server.js 공용 (공개)
+ai-server.js               ← Pro용 초경량 AI 서버 (node ai-server.js, 포트 3100) (공개)
+server.js                  ← 서버 백엔드: 멀티현장·권한·파일함·백업/복원 (AI는 ai-core 위임) (공개)
+prompts/Groq_Llama3.3-70B_작업지시서.md   ← Groq AI 지시서 (없으면 자동 생성, 공개)
+prompts/Claude_작업지시서.md             ← Claude 정밀 분석 지시서 (없으면 자동 생성, 공개)
 .gitignore                 ← 아래 비공개 파일 제외
 ─ 비공개(자동 생성) ─
 accounts.json              ← 계정·역할·현장
@@ -175,4 +203,6 @@ config.json                ← API 키
 
 ---
 
-*최종 수정: 2026-06-21 | master_schedule_v62 기준*
+*최종 수정: Terminus 기준 (AI 분석 ai-core.js 단일 소스 · Pro ai-server.js)*
+
+> **Terminus — The end of Excel, the beginning of freedom.**
