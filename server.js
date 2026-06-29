@@ -84,6 +84,8 @@ function siteFileDir(siteId, folder){
 const BACKUP_DIR = path.join(__dirname, '백업');
 try { fs.mkdirSync(BACKUP_DIR, { recursive: true }); } catch(e) {}
 function siteBackupDir(siteId){ const dir=path.join(BACKUP_DIR, siteFolderName(siteId)); try{ fs.mkdirSync(dir,{recursive:true}); }catch(e){} return dir; }
+const aiCore = require('./ai-core');
+try { aiCore.setKeys({ groq: _groqApiKey, claude: _claudeApiKey }); aiCore.setBackupDirResolver(siteBackupDir); } catch(e){ console.error('[ai-core] 주입 실패:', e.message); }
 function backupLog(siteId, entry){ try{ fs.appendFileSync(path.join(siteBackupDir(siteId),'백업로그.jsonl'), JSON.stringify(Object.assign({t:new Date().toISOString()}, entry))+'\n','utf8'); }catch(e){} }
 function isLocalReq(req){ const ip=(req.socket&&req.socket.remoteAddress)||''; return ip==='127.0.0.1'||ip==='::1'||ip==='::ffff:127.0.0.1'; }
 function canBackup(a, userId, siteId){ const u=acctUser(a,userId); if(!u) return false; if(u.role==='master') return true; if(u.role==='manager' && (u.sites||[]).includes(siteId)) return true; return false; }
@@ -1748,193 +1750,14 @@ const server = http.createServer(async (req, res) => {
     try {
       const body = await parseBody(req);
       const companyId = body.companyId;
-      const baseDate = body.baseDate || getKSTDateString(); // 한국 표준시(KST) 기준 오늘
-      const reqProvider = body.provider; // 명시 지정 없으면 자동(기본 ollama, 실패 시 claude로 자동 전환)
-
       let proj;
-      if (body.inlineProj && body.inlineProj.sections) {
-        proj = body.inlineProj;
-      } else {
-        const d = body.site ? readSite(body.site) : readData();
-        proj = d.projects && d.projects[companyId];
-      }
-      if (!proj) {
-        res.writeHead(404, {'Content-Type':'application/json'});
-        res.end(JSON.stringify({ok:false, msg:'프로젝트를 찾을 수 없습니다'}));
-        return;
-      }
-
-      // 1) 결정론적 분석 (날짜/숫자 비교 — AI 개입 없음, 100% 정확)
-      const nodeMap = flattenNodes(proj.sections || []);
-      const delays = computeDelays(nodeMap, baseDate);
-      const conflicts = computeConflicts(nodeMap, proj.predLinks || []);
-      const progressRate = computeOverallProgress(proj.sections || []);
-      const planRate = computePlanRate(proj.sections || [], baseDate);
-      // P2-A: 지연 무게 스코어 (영향 공종 수 × 지연일, CP 여부)
-      const delaysWeighted = computeDelayWeights(delays, nodeMap, proj.predLinks || [], proj.sections || []);
-      // P2-C: TF 급감 공종 + 안심/위험 분류
-      const tfAlerts = computeTfAlerts(nodeMap, proj.predLinks || [], baseDate);
-      const blindSpots = computeBlindSpots(nodeMap, proj.predLinks || [], baseDate);
-
-      // 2) AI 코멘트 생성 — P3-A: 토큰 규모에 따라 단일턴 / 멀티턴 자동 분기
-      // P2-A: 프롬프트에 지연 무게 스코어 포함 (AI가 Top3 선정 근거로 활용)
-      const predLinksText = (proj.predLinks || []).map(l => {
-        const sp = nodeMap.get(l.srcId); if (!sp) return null;
-        const ts = (l.tgtIds || []).map(t => { const x = nodeMap.get(t); return x ? x.path : null; }).filter(Boolean);
-        return ts.length ? `${sp.path} → ${ts.join(', ')}` : null;
-      }).filter(Boolean).join('\n');
-
-      // P3-B: 병행 가능 공종 조합 탐색
-      const parallelCandidates = computeParallelCandidates(nodeMap, proj.predLinks || [], baseDate);
-      // P3-C: 준공일 위험 스코어
-      const completionRiskScore = computeCompletionRiskScore(delaysWeighted, baseDate);
-      const rateGap = Math.round((progressRate - planRate) * 10) / 10;
-
-      // A1/A2/A3 지표
-      const cpm = computeCPM(nodeMap, proj.predLinks || []);
-      const evm = computeEVM(nodeMap, baseDate);
-      const velocity = computeVelocity(body.site);
-      const dataConfidence = computeConfidence(nodeMap, proj.predLinks || []);
-      const instructions = loadAiInstructions();
-      const userMsg = buildAiPrompt({
-        baseDate, progressRate, planRate,
-        delays: delaysWeighted,
-        conflicts, predLinksText,
-        tfAlerts, blindSpots,
-        parallelCandidates,       // P3-B: 병행 가능 조합
-        completionRiskScore,      // P3-C: 준공일 위험 스코어
-        projectName: proj.projectName,
-        cpm, evm, velocity
-      });
-
-      // provider 우선순위: 요청값 > 환경변수 > 기본값(groq)
-      const defaultProvider = process.env.AI_PROVIDER || 'groq';
-      const primary = (['claude','ollama','groq'].includes(reqProvider))
-        ? reqProvider : defaultProvider;
-
-      // 폴백 순서: groq → ollama → claude (실패 시 다음으로)
-      const fallbackOrder = ['groq','ollama','claude'].filter(p => p !== primary);
-      const runProviderFn = (name, sys, usr) => {
-        if (name === 'claude')  return callClaudeApi(sys, usr);
-        if (name === 'groq')    return callGroqApi(sys, usr);
-        return callOllama(sys, usr);
-      };
-      const runProvider = (sys, usr) => {
-        const tryList = [primary, ...fallbackOrder];
-        return tryList.reduce((p, name) =>
-          p.catch(e => {
-            console.error(`[AI] ${name} 실패:`, e.message);
-            const next = tryList[tryList.indexOf(name) + 1];
-            if (!next) throw e;
-            return runProviderFn(next, sys, usr);
-          }),
-          runProviderFn(tryList[0], sys, usr)
-        );
-      };
-
-      // P3-A: 토큰 규모 판단 → 단일턴 or 멀티턴
-      const isMultiTurn = shouldUseMultiTurn(userMsg);
-      console.log(`[AI] 분석 모드: ${isMultiTurn ? '멀티턴(대형)' : '단일턴'}, 추정 ${estimateTokens(userMsg).toLocaleString()} 토큰`);
-
-      let aiRaw = null, aiProvider = primary, aiError = null;
-      let aiRawX = null, multiTurnMeta = null;
-
-      if (isMultiTurn) {
-        // P3-A: 멀티턴 3단계 파이프라인
-        try {
-          const mtResult = await runMultiTurnAnalysis(
-            instructions,
-            { baseDate, progressRate, planRate, delaysWeighted, conflicts,
-              tfAlerts, blindSpots, predLinksText, projectName: proj.projectName },
-            (sys, usr) => runProvider(sys, usr),
-            (step, msg) => console.log(`[AI] 멀티턴 ${step}/3: ${msg}`)
-          );
-          aiRawX = JSON.stringify(mtResult.parsed); // 병합된 결과를 JSON 문자열로
-          multiTurnMeta = {
-            mode: 'multi-turn',
-            focusSections: mtResult.parsed._focusSections,
-            overallRisk: mtResult.parsed._overallRisk
-          };
-        } catch(e) {
-          console.error('[AI] 멀티턴 실패, 단일턴으로 폴백:', e.message);
-          // 멀티턴 실패 시 단일턴으로 폴백
-          try { aiRawX = await runProvider(instructions, userMsg); }
-          catch(e2) { aiError = e2.message; }
-        }
-      } else {
-        // 단일턴 (기존 방식)
-        try { aiRawX = await runProvider(instructions, userMsg); }
-        catch(e) { aiError = e.message; }
-      }
-
-      // 자기검증 2차 패스 (단일턴, 실패 시 초안 유지) — AI_SELF_CRITIQUE=0 으로 끌 수 있음
-      if (!isMultiTurn && aiRawX && !aiError && process.env.AI_SELF_CRITIQUE !== '0') {
-        try {
-          const criticMsg = userMsg + '\n\n[1차 분석 초안 - 자기검증 대상]\n' + aiRawX +
-            '\n\n위 초안을 검증하세요: (1) 데이터에 없는 공종명/수치는 제거 (2) 임계경로/SPI/슬립 근거가 빠졌으면 보강 (3) 위험등급이 데이터와 맞는지 확인. 동일한 JSON 형식으로 최종본만 출력하세요.';
-          const refined = await runProvider(instructions, criticMsg);
-          const rp = parseAiJson(refined);
-          if (rp && (rp.summary || rp.risk || rp.recovery)) { aiRawX = refined; multiTurnMeta = { mode: 'self-critique' }; console.log('[AI] 자기검증 2차 패스 적용'); }
-        } catch(e) { console.error('[AI] 자기검증 실패(초안 유지):', e.message); }
-      }
-
-      let ai = null;
-      if (aiRawX) {
-        const parsed = normalizeAiPayload(parseAiJson(aiRawX));
-        if (parsed) {
-          // P2-B: top3 배열에 server-side 지연 무게 스코어 병합
-          let top3 = Array.isArray(parsed.top3) ? parsed.top3 : [];
-          if (top3.length && delaysWeighted.length) {
-            top3 = top3.map(t => {
-              // AI가 반환한 공종명으로 delaysWeighted에서 매칭해 weight/impactCount 보완
-              const matched = delaysWeighted.find(d =>
-                d.name && t.name && (d.name.includes(t.name) || t.name.includes(d.name))
-              );
-              return matched
-                ? { ...t, weight: matched.weight, impactCount: matched.impactCount, isOnCriticalPath: matched.isOnCriticalPath, delayDays: t.delayDays || matched.daysLate }
-                : t;
-            });
-          }
-          ai = {
-            schemaVersion: parsed.schemaVersion || AI_RESULT_SCHEMA_VERSION,
-            provider: aiProvider,
-            summary: parsed.summary || '',
-            risk: parsed.risk || parsed.completionRisk || '',
-            recovery: parsed.recovery || '',
-            top3,
-            intent: parsed.intent || null,
-            criticalPath: parsed.criticalPath || null,
-            blindSpots: parsed.blindSpots || null,
-            completionRisk: parsed.completionRisk || null,
-            confidence: (typeof parsed.confidence==='number'?Math.max(0,Math.min(100,Math.round(parsed.confidence))):dataConfidence),
-          };
-        } else {
-          ai = { schemaVersion: AI_RESULT_SCHEMA_VERSION, provider: aiProvider, recovery: '', summary: aiRawX.trim(),
-              warning: 'AI 응답을 JSON으로 해석하지 못해 원문을 그대로 표시합니다' };
-        }
-      }
-
-      // AI 호출이 실패해도 결정론적 분석 결과(지연/충돌/진행률)는 항상 응답한다
-      // HTML이 json.result 또는 json.reply 를 읽으므로 result 키로 텍스트 응답 포함
-      const resultText = ai
-        ? [ai.summary && ('📊 종합 의견\n'+ai.summary), ai.risk && ('⚠ 위험 요인\n'+ai.risk), ai.recovery && ('💡 권장 조치\n'+ai.recovery)].filter(Boolean).join('\n\n')
-        : (aiError || '(AI 응답 없음)');
-
+      if (body.inlineProj && body.inlineProj.sections) { proj = body.inlineProj; }
+      else { const d = body.site ? readSite(body.site) : readData(); proj = d.projects && d.projects[companyId]; }
+      if (!proj) { res.writeHead(404, {'Content-Type':'application/json'}); res.end(JSON.stringify({ok:false, msg:'프로젝트를 찾을 수 없습니다'})); return; }
+      // ── 분석은 ai-core.js 단일 소스로 위임 (Pro: ai-server.js 와 동일) ──
+      const out = await aiCore.analyze(proj, { baseDate: body.baseDate, provider: body.provider, apiKey: body.apiKey, site: body.site });
       res.writeHead(200, {'Content-Type':'application/json; charset=utf-8'});
-      res.end(JSON.stringify({
-        ok: true, schemaVersion: 'analysis-response.v2', baseDate, progressRate, planRate,
-        rateGap,
-        delays: delaysWeighted,
-        conflicts,
-        tfAlerts,
-        blindSpots,
-        parallelCandidates,       // P3-B: 병행 가능 공종 조합
-        completionRiskScore,      // P3-C: 준공일 위험 스코어
-        cpm, evm, velocity,       // A1/A2/A3 지표
-        multiTurnMeta,            // P3-A: 멀티턴 메타 정보
-        ai, aiError,
-        result: resultText
-      }));
+      res.end(JSON.stringify(out));
     } catch (e) {
       console.error("[AI/analyze] 오류:", e.message);
       res.writeHead(500, {"Content-Type":"application/json; charset=utf-8"});
@@ -2046,6 +1869,7 @@ const server = http.createServer(async (req, res) => {
         return;
       }
       _groqApiKey = (apiKey || '').trim();
+      try{ aiCore.setKeys({ groq: _groqApiKey }); }catch(e){}
       const cfg = loadConfig();
       if (_groqApiKey) cfg.groqApiKey = _groqApiKey;
       else delete cfg.groqApiKey;
@@ -2076,6 +1900,7 @@ const server = http.createServer(async (req, res) => {
 
       // 메모리 업데이트
       _claudeApiKey = (apiKey || '').trim();
+      try{ aiCore.setKeys({ claude: _claudeApiKey }); }catch(e){}
 
       // config.json 영구 저장
       const cfg = loadConfig();
