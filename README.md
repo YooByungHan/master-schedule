@@ -65,6 +65,7 @@
 
 ---
 <img width="1918" height="959" alt="image" src="https://github.com/user-attachments/assets/6ca7db4b-fc8c-487a-aa09-4824794b46f8" />
+<img width="1904" height="952" alt="image" src="https://github.com/user-attachments/assets/76d99054-7edd-4bde-90ca-7aa4b2c38ccd" />
 
 ## 👤 Pro 사용자 가이드 (중요 · 헷갈리지 않게)
 
