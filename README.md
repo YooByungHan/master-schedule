@@ -64,6 +64,7 @@
 > AI 분석 로직은 **`ai-core.js` 한 파일**에만 있습니다 → 한 곳만 고치면 Pro·서버 양쪽에 동일 적용됩니다.
 
 ---
+<img width="1918" height="959" alt="image" src="https://github.com/user-attachments/assets/6ca7db4b-fc8c-487a-aa09-4824794b46f8" />
 
 ## 👤 Pro 사용자 가이드 (중요 · 헷갈리지 않게)
 
