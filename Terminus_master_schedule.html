@@ -9624,74 +9624,72 @@ function saveAsPng(){
   },400);
 }
 
-function exportExcel(){
-  const p=getProj();
-  p.sections.forEach(s=>s.nodes.forEach(n=>rollupNode(n)));
-  const rows=[];
-  // 헤더
-  rows.push(['대분류','공종(1단계)','공종(2단계)','공종(3단계)','계획 시작일','계획 종료일','실적 시작일','실적 종료일','도급금액','실적율(%)']);
-
-  function flatNodes(nodes, secName, depth, ancestors){
-    nodes.forEach(n=>{
-      const cols=[...ancestors, n.name];
-      // depth에 따라 컬럼 배치 (대분류 / 1~3단계)
-      const row=[
-        secName,
-        cols[0]||'', cols[1]||'', cols[2]||'',
-        n.plan.s||'', n.plan.f||'',
-        n.actual.s||'', n.actual.f||'',
-        n.amount||0,
-        n.actRate||0
-      ];
-      rows.push(row);
-      if(n.ch&&n.ch.length) flatNodes(n.ch, secName, depth+1, cols);
+async function exportExcel(){
+  try{
+    const p=getProj();
+    p.sections.forEach(sx=>sx.nodes.forEach(nn=>rollupNode(nn)));
+    const tplUrl=_aiBaseUrl()+'/api/template';
+    let buf;
+    try{ const r=await fetch(tplUrl); if(!r.ok) throw 0; buf=await r.arrayBuffer(); }
+    catch(e){ toast('⚠ 템플릿을 불러오지 못했습니다'+(_aiIsPro()?' (Pro는 ai-server 실행 필요)':'')); return; }
+    const wb=XLSX.read(new Uint8Array(buf),{bookVBA:true,cellStyles:true,cellDates:true});
+    const wsD=wb.Sheets['공정데이터'], wsC=wb.Sheets['설정'];
+    if(!wsD||!wsC){ toast('⚠ 템플릿 시트 구조가 다릅니다'); return; }
+    const D=v=>(v? new Date(v+'T00:00:00'):'');
+    // 이벤트 맵 (nodeId -> [events])
+    const evByNode={};
+    (p.events||[]).forEach(e=>{ if(!e||!e.nodeId||!e.date) return; (evByNode[e.nodeId]=evByNode[e.nodeId]||[]).push(e); });
+    const projName=(_serverMode&&_siteName)?_siteName:(p.projectName||'');
+    const compName=p.companyName||(CU&&CU.name)||'';
+    let minS='',maxF='';
+    (function sc(ns){ns.forEach(n=>{ if(n.plan&&n.plan.s&&(!minS||n.plan.s<minS))minS=n.plan.s; if(n.plan&&n.plan.f&&(!maxF||n.plan.f>maxF))maxF=n.plan.f; if(n.ch)sc(n.ch);});})(p.sections.reduce((a,s2)=>a.concat(s2.nodes),[]));
+    XLSX.utils.sheet_add_aoa(wsC,[[projName]],{origin:'B3'});
+    XLSX.utils.sheet_add_aoa(wsC,[[D(minS),D(maxF)]],{origin:'A4'});
+    XLSX.utils.sheet_add_aoa(wsC,[[compName]],{origin:'B8'});
+    const rows=[];
+    p.sections.forEach(sec=>{
+      const arr=sec.nodes;
+      const pS=arr.map(n=>n.plan&&n.plan.s).filter(Boolean).sort()[0]||'';
+      const pF=arr.map(n=>n.plan&&n.plan.f).filter(Boolean).sort().slice(-1)[0]||'';
+      const aS=arr.map(n=>n.actual&&n.actual.s).filter(Boolean).sort()[0]||'';
+      const aF=arr.map(n=>n.actual&&n.actual.f).filter(Boolean).sort().slice(-1)[0]||'';
+      const secAmt=arr.reduce((aa,nn)=>aa+(nn.amount||0),0);
+      rows.push(['', '■ '+(sec.name||''), '', '', D(pS), D(pF), D(aS), D(aF), '', (secAmt>0?secAmt:''), '', '']);
+      (function walk(ns,depth){ ns.forEach(n=>{
+        const nm='  '.repeat(depth)+(n.name||'');
+        const qn=(n.qty!==''&&n.qty!=null&&!isNaN(parseFloat(n.qty)))?parseFloat(n.qty):'';
+        const rt=(n.actRate>0)?n.actRate:'';
+        const ev=(evByNode[n.id]||[]).map(e=>((e.date||'')+'|'+(e.shape||'d')+'|'+String(e.memo||'').replace(/[;|]/g,' ')+'|'+(e.type||'P'))).join(';');
+        rows.push([ (n.name2||''), nm, qn, (n.unit||''),
+          D(n.plan&&n.plan.s), D(n.plan&&n.plan.f), D(n.actual&&n.actual.s), D(n.actual&&n.actual.f), rt,
+          (n.amount>0?n.amount:''), ev, (n.id||'') ]);
+        if(n.ch&&n.ch.length) walk(n.ch,depth+1);
+      });})(arr,1);
     });
-  }
-
-  p.sections.forEach(sec=>{
-    flatNodes(sec.nodes, sec.name, 0, []);
-  });
-
-  const ws=XLSX.utils.aoa_to_sheet(rows);
-
-  // 컬럼 너비 설정
-  ws['!cols']=[
-    {wch:12},{wch:22},{wch:22},{wch:22},
-    {wch:12},{wch:12},{wch:12},{wch:12},
-    {wch:16},{wch:10}
-  ];
-
-  // 헤더 행 스타일 (배경색)
-  const range=XLSX.utils.decode_range(ws['!ref']);
-  for(let C=range.s.c;C<=range.e.c;C++){
-    const cell=ws[XLSX.utils.encode_cell({r:0,c:C})];
-    if(cell){
-      cell.s={
-        font:{bold:true,color:{rgb:'FFFFFF'}},
-        fill:{fgColor:{rgb:'1C3A5E'}},
-        alignment:{horizontal:'center',vertical:'center'}
-      };
+    const oldRef=wsD['!ref']?XLSX.utils.decode_range(wsD['!ref']):null;
+    XLSX.utils.sheet_add_aoa(wsD, rows, {origin:'A3'});
+    if(oldRef){ for(let R=3+rows.length; R<=oldRef.e.r+1; R++){ for(let C=0;C<=11;C++){ delete wsD[XLSX.utils.encode_cell({r:R-1,c:C})]; } } }
+    // 선후행: 설정 시트 A19(헤더)+A20~ 에 [선행ID, 후행ID]
+    const pl=[]; (p.predLinks||[]).forEach(l=>{ (l.tgtIds||[]).forEach(t=>{ if(l.srcId&&t) pl.push([l.srcId,t]); }); });
+    if(pl.length){ XLSX.utils.sheet_add_aoa(wsC,[['선행ID','후행ID']],{origin:'A19'}); XLSX.utils.sheet_add_aoa(wsC,pl,{origin:'A20'}); }
+    const out=XLSX.write(wb,{bookType:'xlsb',bookVBA:true,type:'array'});
+    const t=new Date(); const ymd=''+t.getFullYear()+String(t.getMonth()+1).padStart(2,'0')+String(t.getDate()).padStart(2,'0');
+    const fname=(projName||'공정표')+'_간트_'+ymd+'.xlsb';
+    const blob=new Blob([out],{type:'application/vnd.ms-excel.sheet.binary.macroEnabled.12'});
+    let ok=false, savedPath='';
+    try{ ok=await saveToDir(fname,blob); }catch(e){}
+    if(!ok){
+      try{
+        const b64=await new Promise((rs,rj)=>{ const fr=new FileReader(); fr.onload=()=>rs(String(fr.result).split(',')[1]||''); fr.onerror=rj; fr.readAsDataURL(blob); });
+        const rr=await fetch(_aiBaseUrl()+'/api/save-xlsb',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:fname,b64})});
+        const jj=await rr.json();
+        if(jj&&jj.ok){ ok=true; savedPath=jj.path||''; }
+      }catch(e){}
     }
-  }
-
-  const wb=XLSX.utils.book_new();
-  const projName=p.projectName||'공정표';
-  XLSX.utils.book_append_sheet(wb,ws,'공정표');
-
-  // 파일명: 현장명_YYYYMMDD.xlsx
-  const today=new Date();
-  const ymd=`${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}`;
-  const xlsxFilename=`${projName}_${ymd}.xlsx`;
-  const xlsxData=XLSX.write(wb,{bookType:'xlsx',type:'array'});
-  const xlsxBlob=new Blob([xlsxData],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
-  saveToDir(xlsxFilename, xlsxBlob).then(ok=>{
-    if(ok){
-      toast('엑셀 파일이 저장되었습니다');
-    } else {
-      XLSX.writeFile(wb, xlsxFilename);
-      toast('엑셀 파일이 저장되었습니다');
-    }
-  });
+    if(!ok){ const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=fname; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+      toast('📊 다운로드됨 — 차단 시 파일 속성>차단해제 또는 Excel 신뢰할 수 있는 위치 설정'); }
+    else { toast('📊 저장 완료'+(savedPath?(' — '+savedPath):'')+' (Excel에서 Ctrl+Shift+G)'); }
+  }catch(e){ toast('엑셀 생성 오류: '+(e&&e.message||e)); }
 }
 
 // ─────────────────────────────────────────────────────────────
