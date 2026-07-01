@@ -6,6 +6,8 @@
  */
 const http = require('http');
 const aiCore = require('./ai-core');
+const fs = require('fs');
+const path = require('path');
 
 aiCore.ensurePromptFiles();  // 최초 실행 시 prompts/Groq·Claude 지시서 자동 생성
 
@@ -18,6 +20,25 @@ const server = http.createServer((req, res) => {
   if (req.method === 'OPTIONS') { res.writeHead(204); res.end(); return; }
   const url = req.url.split('?')[0];
 
+  if (req.method === 'POST' && url === '/api/save-xlsb') {
+    const _ch = []; req.on('data', c => _ch.push(c)); req.on('end', () => {
+      try {
+        const _bd = JSON.parse(Buffer.concat(_ch).toString('utf8'));
+        const _nm = String(_bd.name || 'output.xlsb').replace(/[\/\\:*?"<>|]/g, '_');
+        const _dir = path.join(__dirname, '출력'); try { fs.mkdirSync(_dir, { recursive: true }); } catch(e) {}
+        const _fp = path.join(_dir, _nm);
+        fs.writeFileSync(_fp, Buffer.from(_bd.b64 || '', 'base64'));
+        res.writeHead(200, {'Content-Type':'application/json; charset=utf-8','Access-Control-Allow-Origin':'*'}); res.end(JSON.stringify({ ok:true, path:_fp }));
+      } catch(e) { res.writeHead(500, {'Content-Type':'application/json; charset=utf-8'}); res.end(JSON.stringify({ ok:false, msg:e.message })); }
+    });
+    return;
+  }
+  if (req.method === 'GET' && url === '/api/template') {
+    try { const _b = fs.readFileSync(path.join(__dirname, 'template', '마스터공정표_간트차트_템플릿.xlsb'));
+      res.writeHead(200, {'Content-Type':'application/vnd.ms-excel.sheet.binary.macroEnabled.12', 'Access-Control-Allow-Origin':'*'}); res.end(_b);
+    } catch(e){ res.writeHead(404); res.end('template not found'); }
+    return;
+  }
   if (req.method === 'GET' && (url === '/' || url === '/health')) {
     res.writeHead(200, {'Content-Type':'application/json; charset=utf-8'});
     res.end(JSON.stringify({ ok:true, service:'ai-server', msg:'POST /api/ai/analyze {inlineProj, baseDate, provider, apiKey}' }));
