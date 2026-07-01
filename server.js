@@ -1,5 +1,5 @@
 /**
- * Terminus master schedule — 서버 v5 (개인 계정, 이름 자동 회사 배치)
+ * MASTER SCHEDULE — 서버 v5 (개인 계정, 이름 자동 회사 배치)
  * 실행: node server.js
  */
 const http  = require('http');
@@ -1366,6 +1366,23 @@ const server = http.createServer(async (req, res) => {
   const url = req.url.split('?')[0];
 
   // ── HTML 서빙 ─────────────────────────────────────────────
+  if (req.method === 'POST' && url === '/api/save-xlsb') {
+    try {
+      const _bd = await parseBody(req);
+      const _nm = String(_bd.name || 'output.xlsb').replace(/[\/\\:*?"<>|]/g, '_');
+      const _dir = path.join(__dirname, '출력'); try { fs.mkdirSync(_dir, { recursive: true }); } catch(e) {}
+      const _fp = path.join(_dir, _nm);
+      fs.writeFileSync(_fp, Buffer.from(_bd.b64 || '', 'base64'));
+      res.writeHead(200, {'Content-Type':'application/json; charset=utf-8'}); res.end(JSON.stringify({ ok:true, path:_fp }));
+    } catch(e) { res.writeHead(500, {'Content-Type':'application/json; charset=utf-8'}); res.end(JSON.stringify({ ok:false, msg:e.message })); }
+    return;
+  }
+  if (req.method === 'GET' && url === '/api/template') {
+    try { const _b = fs.readFileSync(path.join(__dirname, 'template', '마스터공정표_간트차트_템플릿.xlsb'));
+      res.writeHead(200, {'Content-Type':'application/vnd.ms-excel.sheet.binary.macroEnabled.12', 'Access-Control-Allow-Origin':'*'}); res.end(_b);
+    } catch(e){ res.writeHead(404); res.end('template not found'); }
+    return;
+  }
   if (req.method === 'GET' && (url === '/' || url === '/index.html')) {
     try {
       const html = fs.readFileSync(HTML_FILE, 'utf8');
