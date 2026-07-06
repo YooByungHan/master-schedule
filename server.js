@@ -1511,13 +1511,13 @@ const server = http.createServer(async (req, res) => {
   if (req.method === 'POST' && url === '/api/user/pw') {
     try {
       const { userId, oldPw, newPw } = await parseBody(req);
-      const d = readData();
-      const user = (d.users||[]).find(u => u.id === userId);
+      const a = loadAccounts();
+      const user = (a.users||[]).find(u => u.id === userId);
       if (!user || user.pw !== hpw(oldPw)) {
-        res.writeHead(401); res.end(JSON.stringify({ok:false, msg:'현재 비밀번호가 올바르지 않습니다'})); return;
+        res.writeHead(401, {'Content-Type':'application/json'}); res.end(JSON.stringify({ok:false, msg:'현재 비밀번호가 올바르지 않습니다'})); return;
       }
       user.pw = hpw(newPw);
-      writeData(d, err => {
+      saveAccounts(a, err => {
         if (err) { res.writeHead(500); res.end('error'); return; }
         res.writeHead(200, {'Content-Type':'application/json'});
         res.end(JSON.stringify({ok:true}));
