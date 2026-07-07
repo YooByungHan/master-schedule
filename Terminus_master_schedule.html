@@ -10007,34 +10007,61 @@ function _readHistoryFromSheet(ws){
 }
 
 /* ── 덮어쓰기 확인 공통 팝업 ── */
-function _showOverwriteConfirm(baseDate, onYes){
+// 동일 기준일자 시트가 존재할 때의 확인 팝업.
+//  - onYes()        : 현재 기준일자로 그대로 덮어쓰기
+//  - onDateChange(m): 사용자가 기준일자를 바꿔 진행 → 재생성된 meta로 콜백
+// 셋 다(덮어쓰기/취소/날짜변경) 언제든 취소 가능하도록 구성.
+function _showOverwriteConfirm(meta, onYes, onDateChange){
   var prev=document.getElementById('overwriteConfirmModal');
   if(prev) prev.remove();
+  var baseDate=meta.baseDate;
   var ocm=document.createElement('div');
   ocm.id='overwriteConfirmModal';
   ocm.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99999;display:flex;align-items:center;justify-content:center;font-family:"Noto Sans KR",sans-serif;';
   ocm.innerHTML=
-    '<div style="background:#fff;border-radius:10px;box-shadow:0 12px 40px rgba(0,0,0,.28);width:360px;max-width:92vw;overflow:hidden">'+
+    '<div style="background:#fff;border-radius:10px;box-shadow:0 12px 40px rgba(0,0,0,.28);width:390px;max-width:92vw;overflow:hidden">'+
       '<div style="background:#dc2626;color:#fff;padding:12px 16px;font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px">'+
         '<span>⚠ 덮어쓰기 확인</span>'+
       '</div>'+
       '<div style="padding:20px 20px 18px">'+
         '<p style="font-size:13.5px;font-weight:700;color:#1a1816;margin:0 0 8px">'+
-          '동일한 기준일자로 덮어쓰겠습니까?'+
+          '동일한 기준일자 시트가 이미 있습니다.'+
         '</p>'+
-        '<p style="font-size:11.5px;color:#6b6760;margin:0 0 20px;line-height:1.7">'+
-          '기준일자 <b style="color:#dc2626">'+baseDate+'</b> 파일이 이미 존재합니다.<br>'+
-          '기존 파일을 현재 데이터로 교체합니다.'+
+        '<p style="font-size:11.5px;color:#6b6760;margin:0 0 16px;line-height:1.7">'+
+          '기준일자 <b style="color:#dc2626">'+baseDate+'</b> 시트가 파일에 존재합니다.<br>'+
+          '그대로 <b>덮어쓰기</b> 하거나, 기준일자를 잘못 두었다면 아래에서 <b>날짜를 바꿔</b> 저장할 수 있습니다.'+
         '</p>'+
+        '<div style="background:#f7f5f1;border:1px solid #e2ddd7;border-radius:6px;padding:10px 12px;margin-bottom:16px">'+
+          '<label style="font-size:11px;font-weight:700;color:#6b6760;display:block;margin-bottom:5px">기준일자 변경(선택)</label>'+
+          '<div style="display:flex;gap:6px">'+
+            '<input type="date" id="ocm-date" value="'+baseDate+'" style="flex:1;min-width:0;padding:7px 9px;border:1.5px solid #e2ddd7;border-radius:5px;font-size:13px;font-family:inherit">'+
+            '<button id="ocm-date-go" style="padding:7px 12px;border:none;background:#1c3a5e;color:#fff;border-radius:5px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap">이 날짜로 진행</button>'+
+          '</div>'+
+        '</div>'+
         '<div style="display:flex;gap:8px">'+
-          '<button id="ocm-no" style="flex:1;padding:10px;border:1.5px solid #d1ccc7;background:#f5f3ef;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;color:#3a3530">NO (취소)</button>'+
-          '<button id="ocm-yes" style="flex:1;padding:10px;border:none;background:#dc2626;color:#fff;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer">YES (확인)</button>'+
+          '<button id="ocm-no" style="flex:1;padding:10px;border:1.5px solid #d1ccc7;background:#f5f3ef;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;color:#3a3530">취소</button>'+
+          '<button id="ocm-yes" style="flex:1;padding:10px;border:none;background:#dc2626;color:#fff;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer">덮어쓰기</button>'+
         '</div>'+
       '</div>'+
     '</div>';
   document.body.appendChild(ocm);
-  document.getElementById('ocm-no').addEventListener('click',function(){ ocm.remove(); });
-  document.getElementById('ocm-yes').addEventListener('click',function(){ ocm.remove(); onYes(); });
+  function close(){ ocm.remove(); }
+  ocm.addEventListener('click',function(e){ if(e.target===ocm) close(); }); // 바깥 클릭 = 취소
+  document.getElementById('ocm-no').addEventListener('click',close);
+  document.getElementById('ocm-yes').addEventListener('click',function(){ close(); onYes(); });
+  document.getElementById('ocm-date-go').addEventListener('click',function(){
+    var nv=document.getElementById('ocm-date').value;
+    if(!nv){ alert('기준일자를 선택해주세요.'); return; }
+    if(nv===baseDate){ close(); onYes(); return; } // 같은 날짜면 덮어쓰기와 동일
+    // 기준일자 반영 → 간트 기준선 갱신 → 스냅샷(meta) 재생성 후 재시도
+    var mInp=document.getElementById('markerDate');
+    if(mInp) mInp.value=nv;
+    if(typeof renderGanttDebounced==='function') renderGanttDebounced();
+    var newMeta=_buildProgressSnapshotData();
+    close();
+    if(!newMeta){ toast('⚠ 기준일자 반영에 실패했습니다.'); return; }
+    onDateChange(newMeta);
+  });
 }
 
 /* 신규 파일로 저장 */
@@ -10440,7 +10467,10 @@ function _saveSnapshotIntoExisting(meta, file, saveDir){
       }
 
       if(sheetExists){
-        _showOverwriteConfirm(meta.baseDate, doSave);
+        // 덮어쓰기 / 취소 / 기준일자 변경(→ 새 meta로 저장 재시도) 중 선택
+        _showOverwriteConfirm(meta, doSave, function(newMeta){
+          _saveSnapshotIntoExisting(newMeta, file, saveDir);
+        });
       } else {
         doSave();
       }
