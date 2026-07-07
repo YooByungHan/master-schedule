@@ -1358,7 +1358,7 @@ function normalizeAiPayload(parsed) {
 }
 
 // ════════════════════════════════════════════════════════════
-const server = http.createServer(async (req, res) => {
+const requestHandler = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -2221,7 +2221,23 @@ const server = http.createServer(async (req, res) => {
   }
 
   res.writeHead(404); res.end('not found');
-});
+};
+
+// ── HTTP/HTTPS 서버 생성 ───────────────────────────────────
+// certs/server.key + certs/server.crt 가 있으면 HTTPS로 실행한다.
+// HTTPS(보안 컨텍스트)여야 브라우저 "폴더 선택 저장"(File System Access API)이 동작한다.
+// 인증서가 없으면 기존처럼 HTTP로 자동 폴백한다.
+//   인증서 생성:  node scripts/gen-cert.js   (자세히: HTTPS_설정.md)
+const CERT_KEY  = path.join(__dirname, 'certs', 'server.key');
+const CERT_CRT  = path.join(__dirname, 'certs', 'server.crt');
+const USE_HTTPS = fs.existsSync(CERT_KEY) && fs.existsSync(CERT_CRT);
+let server;
+if (USE_HTTPS) {
+  server = https.createServer({ key: fs.readFileSync(CERT_KEY), cert: fs.readFileSync(CERT_CRT) }, requestHandler);
+} else {
+  server = http.createServer(requestHandler);
+}
+const SCHEME = USE_HTTPS ? 'https' : 'http';
 
 // ── WebSocket ─────────────────────────────────────────────
 const wss = new WebSocketServer({ server });
@@ -2240,10 +2256,19 @@ wss.on('connection', (ws) => {
 
 server.listen(PORT, '0.0.0.0', () => {
   console.log('====================================');
-  console.log(' MASTER SCHEDULE 서버 v5');
+  console.log(' MASTER SCHEDULE 서버 v5 ['+SCHEME.toUpperCase()+']');
   console.log('====================================');
-  console.log(' 내 PC 접속: http://localhost:'+PORT);
-  console.log(' 직원 접속:  http://10.10.152.16:'+PORT);
+  console.log(' 내 PC 접속: '+SCHEME+'://localhost:'+PORT);
+  console.log(' 직원 접속:  '+SCHEME+'://10.10.152.16:'+PORT);
+  console.log('------------------------------------');
+  if (USE_HTTPS) {
+    console.log(' 🔒 HTTPS 모드 — 폴더 선택 저장 사용 가능');
+    console.log('   (첫 접속 시 인증서 경고는 "고급 > 계속"으로 진행)');
+  } else {
+    console.log(' ⚠ HTTP 모드 — 브라우저 폴더 선택 저장이 제한됩니다.');
+    console.log('   HTTPS로 켜기: node scripts/gen-cert.js 실행 후 서버 재시작');
+    console.log('   (자세히: HTTPS_설정.md)');
+  }
   console.log('------------------------------------');
   console.log(' 종료: Ctrl + C');
   console.log('====================================');

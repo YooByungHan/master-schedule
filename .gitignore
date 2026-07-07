@@ -8,6 +8,8 @@ config.json
 accounts.json
 # (구) 단일 데이터 저장소
 data.json
+# HTTPS 인증서/개인키 (서버마다 로컬 생성 — 절대 업로드 금지)
+certs/
 # 현장별 공정표 데이터 (data/<siteId>.json)
 data/
 # 하도사 접수·보관 파일

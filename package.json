@@ -4,13 +4,15 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "gen-cert": "node scripts/gen-cert.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "selfsigned": "^2.4.1",
     "ws": "^8.19.0"
   }
 }

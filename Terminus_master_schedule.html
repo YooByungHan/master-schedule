@@ -9558,6 +9558,27 @@ async function saveToDir(filename, blob){
   return true;
 }
 
+// 저장할 때마다 위치·파일명을 묻는 저장창(File System Access API의 showSaveFilePicker).
+// 매 호출마다 사용자가 폴더/이름을 새로 고를 수 있다(폴더를 기억하지 않음 → 매번 다른 경로 가능).
+// 반환값: 'saved'(저장됨) | 'cancel'(사용자 취소) | 'unsupported'(미지원/오류 → 호출부에서 다운로드 폴백)
+async function saveWithPicker(filename, blob, types){
+  if(!window.showSaveFilePicker) return 'unsupported'; // 비보안 http 등 → 폴백
+  let handle;
+  try{
+    handle = await window.showSaveFilePicker({ suggestedName: filename, types: types||[] });
+  }catch(e){
+    return (e && e.name==='AbortError') ? 'cancel' : 'unsupported'; // 사용자가 창을 닫음 → 취소
+  }
+  try{
+    const writable = await handle.createWritable();
+    await writable.write(blob);
+    await writable.close();
+    return 'saved';
+  }catch(e){
+    return 'unsupported'; // 쓰기 실패 → 폴백
+  }
+}
+
 function saveAsPng(){
   // 통합 구조: inputSecs(입력탭 전체)를 캡처 — 연결선·이벤트 포함
   const inputSecs=document.getElementById('inputSecs');
@@ -9676,15 +9697,18 @@ async function exportExcel(){
     const t=new Date(); const ymd=''+t.getFullYear()+String(t.getMonth()+1).padStart(2,'0')+String(t.getDate()).padStart(2,'0');
     const fname=(projName||'공정표')+'_간트_'+ymd+'.xlsb';
     const blob=new Blob([out],{type:'application/vnd.ms-excel.sheet.binary.macroEnabled.12'});
-    // 저장은 항상 "접속한 사용자 본인 PC"로만 한다.
-    // 1) 폴더 선택 저장(File System Access API) — 사용자가 폴더를 직접 지정(https/localhost 지원 브라우저).
-    // 2) 미지원/취소 시 브라우저 일반 다운로드 — 사용자 PC의 다운로드 폴더로 저장.
-    // (서버 출력 폴더 저장 경로는 제거함: 여러 사용자가 각자 PC에서 접속하므로 서버에 남으면 안 됨)
-    let ok=false;
-    try{ ok=await saveToDir(fname,blob); }catch(e){}
-    if(!ok){ const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=fname; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1500);
-      toast('📊 내 PC로 다운로드됨 — 차단 시 파일 속성>차단해제 또는 Excel 신뢰할 수 있는 위치 설정'); }
-    else { toast('📊 내 PC에 저장 완료 (Excel에서 Ctrl+Shift+G)'); }
+    // 저장은 항상 "접속한 사용자 본인 PC"로만 한다. (서버 출력 폴더 저장 경로 제거)
+    // 매 저장마다 위치·파일명을 묻는 저장창을 띄운다 → 사용자가 매번 원하는 폴더에 저장 가능.
+    // 저장창을 못 쓰는 환경(비보안 http 등)에서만 브라우저 기본 다운로드로 폴백.
+    const _res = await saveWithPicker(fname, blob, [
+      { description:'Excel 바이너리 통합 문서(.xlsb)', accept:{ 'application/vnd.ms-excel.sheet.binary.macroEnabled.12':['.xlsb'] } }
+    ]);
+    if(_res==='saved'){ toast('📊 내 PC에 저장 완료 (Excel에서 Ctrl+Shift+G)'); }
+    else if(_res==='cancel'){ toast('저장을 취소했습니다'); }
+    else { // 'unsupported' → 브라우저 다운로드 폴백(비보안 http 등)
+      const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=fname; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+      toast('📊 내 PC로 다운로드됨 — 차단 시 파일 속성>차단해제 또는 Excel 신뢰할 수 있는 위치 설정');
+    }
   }catch(e){ toast('엑셀 생성 오류: '+(e&&e.message||e)); }
 }
 
