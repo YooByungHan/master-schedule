@@ -1,0 +1,4 @@
+# Electron 빌드 산출물/의존성
+node_modules/
+dist/
+package-lock.json

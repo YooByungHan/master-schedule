@@ -1,0 +1,56 @@
+{
+  "name": "terminus-masterschedule-pro",
+  "productName": "Terminus MasterSchedule Pro",
+  "version": "0.1.0",
+  "description": "Terminus MasterSchedule Pro — 개인용 공정표 데스크톱 앱",
+  "author": "유병한",
+  "license": "ISC",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win --publish always",
+    "pack": "electron-builder --win --dir --publish never"
+  },
+  "devDependencies": {
+    "electron": "^31.7.6",
+    "electron-builder": "^24.13.3"
+  },
+  "dependencies": {
+    "electron-updater": "^6.3.9"
+  },
+  "build": {
+    "appId": "com.terminus.masterschedule.pro",
+    "productName": "Terminus MasterSchedule Pro",
+    "asar": true,
+    "files": [
+      "main.js",
+      "preload.js",
+      {
+        "from": "..",
+        "to": ".",
+        "filter": [
+          "Terminus_master_schedule.html",
+          "ai-server.js",
+          "ai-core.js",
+          "마스터공정표_간트차트_템플릿.xlsb"
+        ]
+      }
+    ],
+    "win": {
+      "target": ["nsis"]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "shortcutName": "Terminus MasterSchedule Pro"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "YooByungHan",
+        "repo": "master-schedule"
+      }
+    ]
+  }
+}

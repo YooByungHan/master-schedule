@@ -1377,10 +1377,18 @@ const requestHandler = async (req, res) => {
     } catch(e) { res.writeHead(500, {'Content-Type':'application/json; charset=utf-8'}); res.end(JSON.stringify({ ok:false, msg:e.message })); }
     return;
   }
+  if (req.method === 'GET' && url === '/api/version') {
+    let _v=''; try { _v = require('./package.json').version || ''; } catch(e) {}
+    res.writeHead(200, {'Content-Type':'application/json; charset=utf-8'}); res.end(JSON.stringify({ version:_v }));
+    return;
+  }
   if (req.method === 'GET' && url === '/api/template') {
-    try { const _b = fs.readFileSync(path.join(__dirname, 'template', '마스터공정표_간트차트_템플릿.xlsb'));
-      res.writeHead(200, {'Content-Type':'application/vnd.ms-excel.sheet.binary.macroEnabled.12', 'Access-Control-Allow-Origin':'*'}); res.end(_b);
-    } catch(e){ res.writeHead(404); res.end('template not found'); }
+    // 템플릿 파일: template/ 우선, 없으면 루트에서 탐색(배포 환경에 따라 위치가 다름)
+    const _cands = [ path.join(__dirname,'template','마스터공정표_간트차트_템플릿.xlsb'),
+                     path.join(__dirname,'마스터공정표_간트차트_템플릿.xlsb') ];
+    const _f = _cands.find(p=>{ try{ return fs.existsSync(p); }catch(e){ return false; } });
+    if (_f) { res.writeHead(200, {'Content-Type':'application/vnd.ms-excel.sheet.binary.macroEnabled.12', 'Access-Control-Allow-Origin':'*'}); res.end(fs.readFileSync(_f)); }
+    else { res.writeHead(404); res.end('template not found'); }
     return;
   }
   if (req.method === 'GET' && (url === '/' || url === '/index.html')) {

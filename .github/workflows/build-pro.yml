@@ -1,0 +1,38 @@
+name: Build Pro Desktop App
+
+# Terminus MasterSchedule Pro (Electron) 자동 빌드
+#  - 'pro-v*' 태그를 push 하거나 (예: pro-v0.1.0)
+#  - Actions 탭에서 수동 실행(Run workflow) 하면
+#  Windows용 설치파일(.exe)을 빌드해 GitHub Release(초안)에 업로드한다.
+
+on:
+  push:
+    tags:
+      - 'pro-v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-win:
+    runs-on: windows-latest
+    steps:
+      - name: 소스 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Node.js 설치
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 의존성 설치 (pro)
+        working-directory: pro
+        run: npm install
+
+      - name: 빌드 + Release 업로드 (electron-builder)
+        working-directory: pro
+        run: npm run dist
+        env:
+          # electron-builder 가 GitHub Release 에 업로드할 때 사용하는 토큰
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

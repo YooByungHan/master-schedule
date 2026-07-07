@@ -1857,7 +1857,7 @@ body.pred-edit-mode .nacts{min-width:44px}
             <a href="#" onclick="openMailChoice(event)" style="color:#3d6fa3;text-decoration:none;margin-left:6px;font-family:'JetBrains Mono',monospace;font-size:10px">hanimax4001@gmail.com</a>
           </div>
         </div>
-        <div style="font-size:10px;color:#a09b95">© 2026 All rights reserved</div>
+        <div style="font-size:10px;color:#a09b95">© 2026 All rights reserved <span id="appVersion" style="margin-left:6px;font-family:'JetBrains Mono',monospace"></span></div>
       </div>
     </div>
   </div>
@@ -9558,10 +9558,35 @@ async function saveToDir(filename, blob){
   return true;
 }
 
+// 웹 저장창 types([{description,accept:{mime:[.ext]}}]) → Electron 필터([{name,extensions}]) 변환
+function _electronFilters(types){
+  var out=[];
+  (types||[]).forEach(function(t){
+    var exts=[];
+    var acc=t&&t.accept||{};
+    Object.keys(acc).forEach(function(mime){ (acc[mime]||[]).forEach(function(e){ exts.push(String(e).replace(/^\./,'')); }); });
+    if(exts.length) out.push({ name:(t.description||'파일'), extensions:exts });
+  });
+  out.push({ name:'모든 파일', extensions:['*'] });
+  return out;
+}
+
 // 저장할 때마다 위치·파일명을 묻는 저장창(File System Access API의 showSaveFilePicker).
 // 매 호출마다 사용자가 폴더/이름을 새로 고를 수 있다(폴더를 기억하지 않음 → 매번 다른 경로 가능).
 // 반환값: 'saved'(저장됨) | 'cancel'(사용자 취소) | 'unsupported'(미지원/오류 → 호출부에서 다운로드 폴백)
 async function saveWithPicker(filename, blob, types){
+  // 데스크톱 앱(Terminus MasterSchedule Pro): 네이티브 저장 대화상자 사용.
+  // Electron 렌더러에는 showSaveFilePicker가 없으므로 IPC로 네이티브 저장창을 띄운다.
+  if(window.terminusNative && window.terminusNative.saveFile){
+    try{
+      const buf=new Uint8Array(await blob.arrayBuffer());
+      const filters=_electronFilters(types);
+      const r=await window.terminusNative.saveFile({ suggestedName:filename, data:buf, filters });
+      if(r&&r.status==='saved') return 'saved';
+      if(r&&r.status==='cancel') return 'cancel';
+      return 'unsupported';
+    }catch(e){ return 'unsupported'; }
+  }
   if(!window.showSaveFilePicker) return 'unsupported'; // 비보안 http 등 → 폴백
   let handle;
   try{
@@ -12483,5 +12508,24 @@ window.addEventListener('DOMContentLoaded', async () => {
 });
 </script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+<script>
+/* 앱 버전 자동 표시 — HTML에 버전 숫자를 하드코딩하지 않는다(릴리스마다 수동 수정 불필요).
+   데스크톱 앱: 네이티브(app 버전) / 웹·서버: /api/version 에서 조회 → 푸터에 표기. */
+(function(){
+  function setVer(v){ var el=document.getElementById('appVersion'); if(el&&v) el.textContent='v'+String(v).replace(/^v/,''); }
+  try{
+    if(window.terminusNative&&window.terminusNative.getVersion){
+      window.terminusNative.getVersion().then(setVer).catch(function(){});
+      return;
+    }
+  }catch(e){}
+  try{
+    fetch((typeof _aiBaseUrl==='function'?_aiBaseUrl():'')+'/api/version')
+      .then(function(r){ return r.ok?r.json():null; })
+      .then(function(j){ if(j&&j.version) setVer(j.version); })
+      .catch(function(){});
+  }catch(e){}
+})();
+</script>
 </body>
 </html>
