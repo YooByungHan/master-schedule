@@ -9676,19 +9676,15 @@ async function exportExcel(){
     const t=new Date(); const ymd=''+t.getFullYear()+String(t.getMonth()+1).padStart(2,'0')+String(t.getDate()).padStart(2,'0');
     const fname=(projName||'공정표')+'_간트_'+ymd+'.xlsb';
     const blob=new Blob([out],{type:'application/vnd.ms-excel.sheet.binary.macroEnabled.12'});
-    let ok=false, savedPath='';
+    // 저장은 항상 "접속한 사용자 본인 PC"로만 한다.
+    // 1) 폴더 선택 저장(File System Access API) — 사용자가 폴더를 직접 지정(https/localhost 지원 브라우저).
+    // 2) 미지원/취소 시 브라우저 일반 다운로드 — 사용자 PC의 다운로드 폴더로 저장.
+    // (서버 출력 폴더 저장 경로는 제거함: 여러 사용자가 각자 PC에서 접속하므로 서버에 남으면 안 됨)
+    let ok=false;
     try{ ok=await saveToDir(fname,blob); }catch(e){}
-    if(!ok){
-      try{
-        const b64=await new Promise((rs,rj)=>{ const fr=new FileReader(); fr.onload=()=>rs(String(fr.result).split(',')[1]||''); fr.onerror=rj; fr.readAsDataURL(blob); });
-        const rr=await fetch(_aiBaseUrl()+'/api/save-xlsb',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:fname,b64})});
-        const jj=await rr.json();
-        if(jj&&jj.ok){ ok=true; savedPath=jj.path||''; }
-      }catch(e){}
-    }
     if(!ok){ const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=fname; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1500);
-      toast('📊 다운로드됨 — 차단 시 파일 속성>차단해제 또는 Excel 신뢰할 수 있는 위치 설정'); }
-    else { toast('📊 저장 완료'+(savedPath?(' — '+savedPath):'')+' (Excel에서 Ctrl+Shift+G)'); }
+      toast('📊 내 PC로 다운로드됨 — 차단 시 파일 속성>차단해제 또는 Excel 신뢰할 수 있는 위치 설정'); }
+    else { toast('📊 내 PC에 저장 완료 (Excel에서 Ctrl+Shift+G)'); }
   }catch(e){ toast('엑셀 생성 오류: '+(e&&e.message||e)); }
 }
 
