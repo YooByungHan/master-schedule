@@ -1577,7 +1577,7 @@ body.pred-edit-mode .nacts{min-width:44px}
       <span class="hdr-co" id="hdrCo"></span>
       <span id="hdrUserName" style="font-size:10px;background:rgba(255,255,255,.22);padding:2px 9px;border-radius:20px;display:none;cursor:pointer" onclick="showMyInfo()" title="개인정보 수정"></span>
       <span id="connStatus" style="font-size:10px;padding:2px 9px;border-radius:20px;background:rgba(0,0,0,.18);color:#fbbf24">● 연결 중...</span>
-      <!-- 파일 풀다운 메뉴: 저장/열기/출력(EXCEL·EXCEL VB·PDF·PNG) -->
+      <!-- 파일 풀다운 메뉴: 저장/열기/출력(실적 관리·간트 차트·PDF·PNG) -->
       <div class="hdr-menu-wrap no-print" id="hdrMenuWrap">
         <button class="btn bg-btn btn-xs" onclick="toggleHdrMenu(event)">☰ 메뉴 <span style="font-size:8px">▼</span></button>
         <div class="hdr-menu" id="hdrMenu">
@@ -1585,8 +1585,8 @@ body.pred-edit-mode .nacts{min-width:44px}
           <button class="hdr-mi" id="restoreBtn" style="display:none" onclick="hdrMenuAct(menuOpen)">📂 열기</button>
           <div class="hdr-mi hdr-mi-parent">🖨️ 출력 <span style="margin-left:auto;font-size:9px">▸</span>
             <div class="hdr-submenu">
-              <button class="hdr-mi" onclick="hdrMenuAct(exportProgressSnapshot)">📈 EXCEL</button>
-              <button class="hdr-mi" onclick="hdrMenuAct(exportExcel)">📊 EXCEL VB</button>
+              <button class="hdr-mi" onclick="hdrMenuAct(exportProgressSnapshot)">📈 실적 관리</button>
+              <button class="hdr-mi" onclick="hdrMenuAct(exportExcel)">📊 간트 차트</button>
               <button class="hdr-mi" onclick="hdrMenuAct(doPrint)">📄 PDF</button>
               <button class="hdr-mi" onclick="hdrMenuAct(saveAsPng)">🖼️ PNG</button>
             </div>
@@ -9626,11 +9626,13 @@ function saveAsPng(){
       const ymd=`${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}`;
       const filename=`${projName}_${ymd}.png`;
       canvas.toBlob(async(blob)=>{
-        const ok = await saveToDir(filename, blob);
-        if(ok){
-          toast('PNG 파일이 저장되었습니다');
-        } else {
-          // 폴더 선택 취소 → 기존 방식(다운로드)으로 fallback
+        // 매 저장마다 위치·파일명을 묻는 저장창(현재 방식) → 사용자가 폴더 선택.
+        const _res = await saveWithPicker(filename, blob, [
+          { description:'PNG 이미지(.png)', accept:{ 'image/png':['.png'] } }
+        ]);
+        if(_res==='saved'){ toast('PNG 파일이 저장되었습니다'); }
+        else if(_res==='cancel'){ toast('저장을 취소했습니다'); }
+        else { // 'unsupported' → 브라우저 다운로드 폴백
           const a=document.createElement('a');
           a.download=filename;
           a.href=canvas.toDataURL('image/png');
@@ -10093,33 +10095,18 @@ function _saveSnapshotAsNewFile(meta){
   var xlsxData2=XLSX.write(wb,{bookType:'xlsx',type:'array',cellStyles:true});
   var xlsxBlob2=new Blob([xlsxData2],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
 
-  function doSave(){
-    saveToDir(fname, xlsxBlob2).then(function(ok){
-      if(ok){
-        toast('✅ 신규 파일 저장 완료: '+fname+' (시트: '+meta.ymd+')');
-      } else {
-        XLSX.writeFile(wb, fname);
-        toast('✅ 신규 파일 저장 완료: '+fname+' (시트: '+meta.ymd+')');
-      }
-    });
-  }
-
-  // 저장 폴더에 동일 파일이 이미 있으면 덮어쓰기 확인
-  (async function(){
-    var fileExists=false;
-    if(_saveDir){
-      try{
-        // create:false → 파일 없으면 NotFoundError 발생
-        await _saveDir.getFileHandle(fname, {create:false});
-        fileExists=true;
-      }catch(e){ /* 파일 없음 또는 권한 없음 → 그대로 진행 */ }
+  // 매 저장마다 위치·파일명을 묻는 저장창(현재 방식) → 사용자가 폴더를 직접 선택.
+  // (동일 파일 덮어쓰기 확인은 브라우저 저장창이 자체적으로 처리한다.)
+  saveWithPicker(fname, xlsxBlob2, [
+    { description:'Excel 통합 문서(.xlsx)', accept:{ 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':['.xlsx'] } }
+  ]).then(function(_res){
+    if(_res==='saved'){ toast('✅ 신규 파일 저장 완료: '+fname+' (시트: '+meta.ymd+')'); }
+    else if(_res==='cancel'){ toast('저장을 취소했습니다'); }
+    else { // 'unsupported' → 브라우저 다운로드 폴백
+      XLSX.writeFile(wb, fname);
+      toast('✅ 신규 파일 저장 완료: '+fname+' (시트: '+meta.ymd+')');
     }
-    if(fileExists){
-      _showOverwriteConfirm(meta.baseDate, doSave);
-    } else {
-      doSave();
-    }
-  })();
+  });
 }
 
 /* 기존 파일에 시트 추가/덮어쓰기 */
@@ -11233,11 +11220,13 @@ function _drawGanttPdf(){
   const ymd=`${t.getFullYear()}${String(t.getMonth()+1).padStart(2,'0')}${String(t.getDate()).padStart(2,'0')}`;
   const pdfFilename=`${nm}_${ymd}.pdf`;
   const pdfBlob=pdf.output('blob');
-  saveToDir(pdfFilename, pdfBlob).then(ok=>{
-    if(ok){
-      toast(`PDF 저장 완료 (${pages}페이지)`);
-    } else {
-      // 폴더 선택 취소 → 기존 방식(다운로드)으로 fallback
+  // 매 저장마다 위치·파일명을 묻는 저장창(현재 방식) → 사용자가 폴더 선택.
+  saveWithPicker(pdfFilename, pdfBlob, [
+    { description:'PDF 문서(.pdf)', accept:{ 'application/pdf':['.pdf'] } }
+  ]).then(_res=>{
+    if(_res==='saved'){ toast(`PDF 저장 완료 (${pages}페이지)`); }
+    else if(_res==='cancel'){ toast('저장을 취소했습니다'); }
+    else { // 'unsupported' → 브라우저 다운로드 폴백
       pdf.save(pdfFilename);
       toast(`PDF 저장 완료 (${pages}페이지)`);
     }
