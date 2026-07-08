@@ -27,6 +27,17 @@ const SCOPE = 'openid https://www.googleapis.com/auth/youtube.readonly';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
+// 채널 소유자 예외: 이 목록의 google_account_id는 구독 여부 확인 없이 항상 통과한다.
+// 우선순위: createYoutubeGate({ownerAccountIds}) 명시 > 환경변수 OWNER_ACCOUNT_IDS(콤마구분) > 기본값.
+// 향후 소유자가 여러 명이면 환경변수(OWNER_ACCOUNT_IDS="id1,id2") 또는 ownerAccountIds 배열에 추가하면 된다.
+const DEFAULT_OWNER_ACCOUNT_IDS = ['114743380484253120154']; // 채널 소유자 본인 계정
+function resolveOwnerAccountIds(opts) {
+  if (Array.isArray(opts.ownerAccountIds) && opts.ownerAccountIds.length) return opts.ownerAccountIds;
+  const envVal = process.env.OWNER_ACCOUNT_IDS;
+  if (envVal) return envVal.split(',').map((s) => s.trim()).filter(Boolean);
+  return DEFAULT_OWNER_ACCOUNT_IDS;
+}
+
 function httpJson(url, { method = 'GET', headers = {}, form, json } = {}) {
   const https = require('https');
   return new Promise((resolve, reject) => {
@@ -78,6 +89,8 @@ function createYoutubeGate(opts) {
   const channelId = opts.channelId;
   const trialDays = opts.trialDays || 30;
   const cacheHours = opts.cacheHours != null ? opts.cacheHours : 6;
+  const ownerAccountIds = resolveOwnerAccountIds(opts);
+  const isOwner = (googleAccountId) => !!googleAccountId && ownerAccountIds.includes(googleAccountId);
 
   let writing = false;
   const writeQueue = [];
@@ -90,7 +103,13 @@ function createYoutubeGate(opts) {
     writing = true;
     const data = writeQueue.shift();
     try { fs.mkdirSync(path.dirname(storePath), { recursive: true }); } catch (e) {}
-    fs.writeFile(storePath, JSON.stringify(data, null, 2), 'utf8', () => { writing = false; flushQueue(); });
+    // 임시파일에 먼저 쓰고 rename으로 교체 — rename은 원자적이라, 동시에 loadStore()가
+    // 읽어도 "쓰다 만 파일"을 볼 일이 없다(쓰기 도중 읽기 경합으로 세션이 사라지는 문제 방지).
+    const tmp = storePath + '.tmp';
+    fs.writeFile(tmp, JSON.stringify(data, null, 2), 'utf8', (err) => {
+      if (err) { writing = false; flushQueue(); return; }
+      fs.rename(tmp, storePath, () => { writing = false; flushQueue(); });
+    });
   }
   function saveStore(data) { writeQueue.push(data); flushQueue(); }
 
@@ -192,6 +211,11 @@ function createYoutubeGate(opts) {
     const session = store.sessions[sessionId];
     if (!session) return { allowed: false, reason: 'no_session' };
 
+    // 채널 소유자는 구독 확인 없이 즉시 통과
+    if (isOwner(session.google_account_id)) {
+      return { allowed: true, reason: 'owner', trialDaysLeft: null, subscribed: true };
+    }
+
     const trialDaysLeft = Math.max(0, Math.ceil(trialDays - daysSince(session.trial_started_at)));
     if (trialDaysLeft > 0) {
       return { allowed: true, reason: 'trial', trialDaysLeft, subscribed: !!session.subscribed };
@@ -207,6 +231,12 @@ function createYoutubeGate(opts) {
     const store = loadStore();
     const session = store.sessions[sessionId];
     if (!session) return { allowed: false, reason: 'no_session' };
+
+    // 채널 소유자는 구독 확인 없이 즉시 통과 (refresh_token 호출 자체를 생략)
+    if (isOwner(session.google_account_id)) {
+      return { allowed: true, reason: 'owner', trialDaysLeft: null, subscribed: true };
+    }
+
     if (!session.refresh_token) {
       session.last_checked_at = nowIso();
       saveStore(store);
