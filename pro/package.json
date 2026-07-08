@@ -25,6 +25,7 @@
     "files": [
       "main.js",
       "preload.js",
+      "oauth-obfuscate.js",
       "oauth-config.json",
       {
         "from": "..",

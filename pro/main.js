@@ -28,12 +28,19 @@ try {
 // ── YouTube 구독 게이트 (Device Flow) ───────────────────────────
 // Pro는 1인 전용 설치이므로 세션 저장소에는 사실상 계정 1개만 쌓인다.
 // 자격증명은 CI 빌드 시 GitHub Actions 시크릿으로 생성되는 oauth-config.json
-// (커밋되지 않음, .gitignore) 을 읽는다. 없으면 게이트를 걸지 않는다(개발 중 실행).
+// (커밋되지 않음, .gitignore, XOR+Base64로 가볍게 은폐됨) 을 읽는다.
+// 없으면 게이트를 걸지 않는다(개발 중 실행).
 const { createYoutubeGate } = require(path.join(BASE, 'youtube-gate.js'));
+const { decode: decodeOAuthConfig } = require(path.join(__dirname, 'oauth-obfuscate.js'));
 function loadGoogleOAuthCreds() {
   try {
     const f = JSON.parse(fs.readFileSync(path.join(BASE, 'oauth-config.json'), 'utf8'));
-    if (f.clientId && f.clientSecret) return f;
+    if (f.v === 2 && f.data) {
+      const decoded = decodeOAuthConfig(f.data);
+      if (decoded.clientId && decoded.clientSecret) return decoded;
+    } else if (f.clientId && f.clientSecret) {
+      return f; // 구버전(평문) 호환
+    }
   } catch (e) {}
   return { clientId: process.env.GOOGLE_OAUTH_CLIENT_ID || '', clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET || '' };
 }

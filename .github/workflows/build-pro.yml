@@ -30,21 +30,26 @@ jobs:
         working-directory: pro
         run: npm install
 
-      - name: YouTube 구독 게이트 OAuth 자격증명 파일 생성
+      - name: YouTube 구독 게이트 OAuth 자격증명 파일 생성(난독화)
         # 저장소 Settings → Secrets and variables → Actions 에 등록된
         # GOOGLE_OAUTH_CLIENT_ID / GOOGLE_OAUTH_CLIENT_SECRET (Device Flow용, "TVs and
         # Limited Input devices" 클라이언트) 로 pro/oauth-config.json 을 생성한다.
         # 커밋되지 않고(.gitignore) 빌드마다 새로 만들어져 앱에 번들된다.
+        # oauth-obfuscate.js로 가볍게 은폐(XOR+Base64)해 저장 — 평문 자격증명
+        # 패턴이 파일에 그대로 노출되지 않도록 함(완전한 보안은 아님, 상세는
+        # pro/oauth-obfuscate.js 주석 참고).
         # 시크릿이 없으면 빈 파일이 생성되어 게이트가 비활성화된 채로 빌드된다(개발 편의).
         working-directory: pro
         shell: bash
         run: |
           node -e "
             const fs = require('fs');
+            const { encode } = require('./oauth-obfuscate.js');
             const clientId = process.env.GOOGLE_OAUTH_CLIENT_ID || '';
             const clientSecret = process.env.GOOGLE_OAUTH_CLIENT_SECRET || '';
-            fs.writeFileSync('oauth-config.json', JSON.stringify({ clientId, clientSecret }, null, 2));
-            console.log('oauth-config.json 생성됨 (clientId 설정됨:', !!clientId, ')');
+            const data = encode({ clientId, clientSecret });
+            fs.writeFileSync('oauth-config.json', JSON.stringify({ v: 2, data }));
+            console.log('oauth-config.json 생성됨(난독화) — clientId 설정됨:', !!clientId);
           "
         env:
           GOOGLE_OAUTH_CLIENT_ID: ${{ secrets.GOOGLE_OAUTH_CLIENT_ID }}
