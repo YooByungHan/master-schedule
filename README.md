@@ -9,7 +9,7 @@
 [![HTML5](https://img.shields.io/badge/HTML5-Single%20File-orange)](Terminus_master_schedule.html)
 [![Node.js](https://img.shields.io/badge/Node.js-Server-green)](server.js)
 
-> 메인 앱 파일명은 `Terminus_master_schedule.html` 입니다. (구 `master_schedule_v62.html`에서 변경)
+> 메인 앱 파일명은 `Terminus_master_schedule.html` 입니다.
 
 ---
 
@@ -58,8 +58,10 @@
 |------|----------------|-------------------|
 | 데이터 저장 | 브라우저 + JSON 파일 | 현장별 서버 저장 + 실시간 동기화 |
 | 사용 인원 | 개인 1인 | 다인원·다현장 + 권한 |
-| AI 분석 | **`node ai-server.js` 실행 후 사용** (개인 키) | `node server.js` 내장 (서버 키) |
+| 실행 방법 | **설치형 앱(.exe) 더블클릭** — Node.js 설치 불필요 | `node server.js` 실행 (관리자 PC) |
+| AI 분석 | 앱 내장 AI 서버 자동 구동 (개인 키) | `node server.js` 내장 (서버 키) |
 | AI 분석 엔진 | `ai-core.js` (서버와 **동일**) | `ai-core.js` (Pro와 **동일**) |
+| 업데이트 | 실행 시 자동 확인·설치 | 관리자가 최신 소스 재배포 |
 
 > AI 분석 로직은 **`ai-core.js` 한 파일**에만 있습니다 → 한 곳만 고치면 Pro·서버 양쪽에 동일 적용됩니다.
 
@@ -69,45 +71,29 @@
 
 ## 👤 Pro 사용자 가이드 (중요 · 헷갈리지 않게)
 
-### 1) 다운로드해야 할 파일 — 아래 **4개(+1)**
+### 1) 설치
 
-```
-Terminus_master_schedule.html   ← 메인 앱 (브라우저로 여는 파일) [필수]
-ai-core.js                      ← AI 분석 엔진 [필수]
-ai-server.js                    ← Pro용 AI 실행기 [필수]
-Terminus_Pro_Start.bat           ← 더블클릭 한 번으로 AI서버+앱 실행 [권장]
-prompts/  (폴더)                ← 다운로드 불필요 — 첫 실행 시 자동 생성됨
-```
+**[Releases 페이지](../../releases)** 에서 최신 `Terminus.MasterSchedule.Pro.Setup.x.y.z.exe` 를
+다운로드해 실행하세요. 설치 후 시작메뉴/바탕화면에 **Terminus MasterSchedule Pro** 아이콘이 생깁니다.
 
-> ⚠️ Pro는 **`server.js` 불필요**, **`npm install` 불필요**입니다. (ai-core/ai-server는 Node 내장 모듈만 사용 — Node.js만 설치돼 있으면 끝)
+- Node.js 설치 **불필요** — AI 분석 서버가 앱 안에 내장되어 자동으로 함께 실행됩니다.
+- 검은 콘솔 창 **없음** — 일반 프로그램처럼 자체 창으로 실행됩니다.
+- 실행할 때마다 새 버전이 있는지 자동으로 확인해 **자동 업데이트**됩니다.
+- 서명되지 않은 앱이라 첫 설치 시 Windows/백신 경고가 뜰 수 있습니다 → "추가 정보 → 실행"으로 진행하면 됩니다.
 
-### 2) 폴더 구조 (이대로 한 폴더에 두세요)
+### 2) AI 분석 켜는 법
 
-```
-내폴더/
-├── Terminus_master_schedule.html
-├── ai-core.js
-├── ai-server.js
-├── Terminus_Pro_Start.bat            (더블클릭 런처)
-└── prompts/                         (자동 생성 — 받을 필요 없음)
-    ├── Groq_Llama3.3-70B_작업지시서.md
-    └── Claude_작업지시서.md
-```
+앱 실행 → 상단 **사용자 이름 클릭** → **개인 API 키 입력** (`gsk_`=Groq 무료 / `sk-ant`=Claude, 앞 글자로 자동 구분) → AI 분석 버튼 사용.
 
-### 3) AI 분석 켜는 법
+> 동작 방식: 앱 내부 AI 서버가 **공정 데이터와 개인 키를 자신의 PC(localhost) 안에서만** 주고받습니다. 데이터·키는 **내 PC 밖으로 나가지 않습니다**(LLM 호출 제외). 결과(CPM·EVM·추세·신뢰도)는 서버 버전과 **완전히 동일**합니다(`ai-core.js` 공유).
 
-전제: PC에 **Node.js(v18+)** 설치 ([nodejs.org](https://nodejs.org)). 그 외 설치 없음.
+> AI 없이 작성·저장만 할 거면 API 키를 입력하지 않고 그대로 사용해도 됩니다.
 
-**쉬운 방법 (권장)** — `Terminus_Pro_Start.bat` **더블클릭**
-→ AI 서버(localhost:3100)가 자동 시작되고(첫 실행 시 `prompts/` 지시서 자동 생성) 메인 앱이 브라우저로 열립니다. 앱에서 **개인 API 키 입력**(`gsk_`=Groq 무료 / `sk-ant`=Claude) → AI 분석 버튼 사용. *(AI 서버 검은 창은 분석 쓰는 동안 켜 두세요.)*
+### 3) (개발자용) 소스에서 직접 실행하고 싶다면
 
-**수동 방법** — 폴더에서 `node ai-server.js` 실행 후, `Terminus_master_schedule.html` 더블클릭.
-
-> ❓ HTML만 열면 자동으로 AI 서버가 뜨나요? → **아니요.** 브라우저는 보안상 서버를 못 띄웁니다. 위 `.bat` 또는 `node ai-server.js`로 한 번 켜야 합니다. (`192.168.0.1:3000` 같은 주소 입력은 **서버/Enterprise 사용자용** — Pro는 그냥 HTML 파일을 엽니다. 단, Pro 사용자가 Ai분석을 사용하기 위해서는 ai-core.js, ai-server.js를 동일한 폴더에 다운받고 Terminus_Pro_Start.bat을 실행해야 합니다.)
-
-> 동작 방식: 브라우저가 **공정 데이터(inlineProj)와 개인 키를 localhost:3100 로만** 보냅니다. 데이터·키는 **내 PC 밖으로 나가지 않습니다**(LLM 호출 제외). 결과(CPM·EVM·추세·신뢰도)는 서버 버전과 **완전히 동일**합니다.
-
-> AI 없이 작성·저장만 할 거면 아무것도 실행 없이 `Terminus_master_schedule.html` 만 더블클릭해도 됩니다.
+앱 대신 소스 파일로 직접 돌리려면 `Terminus_master_schedule.html`, `ai-core.js`, `ai-server.js` 를
+한 폴더에 두고 `node ai-server.js` 실행 후 `Terminus_master_schedule.html` 을 더블클릭하세요.
+(`prompts/` 폴더는 첫 실행 시 자동 생성됩니다. `server.js`·`npm install` 은 불필요합니다.)
 
 ---
 
