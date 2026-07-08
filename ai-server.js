@@ -20,19 +20,6 @@ const server = http.createServer((req, res) => {
   if (req.method === 'OPTIONS') { res.writeHead(204); res.end(); return; }
   const url = req.url.split('?')[0];
 
-  if (req.method === 'POST' && url === '/api/save-xlsb') {
-    const _ch = []; req.on('data', c => _ch.push(c)); req.on('end', () => {
-      try {
-        const _bd = JSON.parse(Buffer.concat(_ch).toString('utf8'));
-        const _nm = String(_bd.name || 'output.xlsb').replace(/[\/\\:*?"<>|]/g, '_');
-        const _dir = path.join(__dirname, '출력'); try { fs.mkdirSync(_dir, { recursive: true }); } catch(e) {}
-        const _fp = path.join(_dir, _nm);
-        fs.writeFileSync(_fp, Buffer.from(_bd.b64 || '', 'base64'));
-        res.writeHead(200, {'Content-Type':'application/json; charset=utf-8','Access-Control-Allow-Origin':'*'}); res.end(JSON.stringify({ ok:true, path:_fp }));
-      } catch(e) { res.writeHead(500, {'Content-Type':'application/json; charset=utf-8'}); res.end(JSON.stringify({ ok:false, msg:e.message })); }
-    });
-    return;
-  }
   if (req.method === 'GET' && url === '/api/version') {
     let _v=''; try { _v = require('./package.json').version || ''; } catch(e) {}
     res.writeHead(200, {'Content-Type':'application/json; charset=utf-8','Access-Control-Allow-Origin':'*'}); res.end(JSON.stringify({ version:_v }));

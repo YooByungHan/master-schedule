@@ -10,14 +10,21 @@ const crypto = require('crypto');
 const { WebSocketServer } = require('ws');
 
 const PORT        = 3000;
-const DATA_FILE   = path.join(__dirname, 'data.json');
+// 실데이터(계정/현장데이터/설정/백업/하도사파일 등)를 저장할 위치.
+// git-clone 실행(node server.js)은 예전처럼 이 파일 옆(__dirname)을 그대로 쓰고,
+// Server EXE(Electron 패키징)는 실행 파일 옆의 쓰기 가능한 폴더를 가리키도록
+// TERMINUS_SERVER_DATA_DIR 환경변수를 설정한다(server-app/main.js 참고).
+// 코드/템플릿(HTML, gate.html, oauth-default.json 등)은 항상 __dirname 그대로 유지.
+const DATA_DIR    = process.env.TERMINUS_SERVER_DATA_DIR || __dirname;
+const DATA_FILE   = path.join(DATA_DIR, 'data.json');
 const HTML_FILE   = path.join(__dirname, 'Terminus_master_schedule.html');
-const CONFIG_FILE = path.join(__dirname, 'config.json'); // API키 등 민감 설정 (git 제외)
-const GOOGLE_OAUTH_FILE = path.join(__dirname, 'google-oauth.json'); // YouTube 구독 게이트용 OAuth 자격증명 (git 제외)
-const INBOX_DIR   = path.join(__dirname, '하도업체', '접수'); // 메신저로 받은 하도 파일
-const DIST_DIR    = path.join(__dirname, '하도업체', '배포'); // 회의 결과 배포 파일
+const CONFIG_FILE = path.join(DATA_DIR, 'config.json'); // API키 등 민감 설정 (git 제외)
+const GOOGLE_OAUTH_FILE = path.join(DATA_DIR, 'google-oauth.json'); // YouTube 구독 게이트용 OAuth 자격증명 (git 제외)
+const INBOX_DIR   = path.join(DATA_DIR, '하도업체', '접수'); // 메신저로 받은 하도 파일
+const DIST_DIR    = path.join(DATA_DIR, '하도업체', '배포'); // 회의 결과 배포 파일
 // (구) 전역 접수/배포 자동생성 제거 — 현장별 폴더(하도업체/<공사명>/접수·보관)로 통일
 
+try { fs.mkdirSync(DATA_DIR, { recursive: true }); } catch (e) {}
 if (!fs.existsSync(DATA_FILE)) {
   fs.writeFileSync(DATA_FILE, JSON.stringify({companies:[],users:[],projects:{}},'utf8'));
 }
@@ -68,7 +75,7 @@ function loadGoogleOAuthCreds() {
 const YOUTUBE_CHANNEL_ID = process.env.YOUTUBE_CHANNEL_ID || 'UCN5pilUpAxWgfatwuKGx-LQ';
 const { createYoutubeGate } = require('./youtube-gate');
 const ytGate = createYoutubeGate({
-  storePath: path.join(__dirname, 'data', 'youtube_sessions.json'),
+  storePath: path.join(DATA_DIR, 'data', 'youtube_sessions.json'),
   getCreds: loadGoogleOAuthCreds,
   channelId: YOUTUBE_CHANNEL_ID,
   trialDays: 30,
@@ -117,8 +124,8 @@ function readData() {
 }
 
 // ── 멀티현장: accounts.json(계정·현장·권한) + data/<siteId>.json(현장 스케줄) ──
-const ACCOUNTS_FILE = path.join(__dirname, 'accounts.json');
-const SITES_DIR = path.join(__dirname, 'data');
+const ACCOUNTS_FILE = path.join(DATA_DIR, 'accounts.json');
+const SITES_DIR = path.join(DATA_DIR, 'data');
 try { fs.mkdirSync(SITES_DIR, { recursive: true }); } catch(e) {}
 function loadAccounts() {
   try { return JSON.parse(fs.readFileSync(ACCOUNTS_FILE, 'utf8')); }
@@ -128,7 +135,7 @@ function saveAccounts(a, cb) {
   fs.writeFile(ACCOUNTS_FILE, JSON.stringify(a, null, 2), 'utf8', cb || (function(){}));
 }
 function sitePath(siteId) { return path.join(SITES_DIR, path.basename(String(siteId)) + '.json'); }
-const FILES_DIR = path.join(__dirname, '하도업체');
+const FILES_DIR = path.join(DATA_DIR, '하도업체');
 try { fs.mkdirSync(FILES_DIR, { recursive: true }); } catch(e) {}
 function siteFolderName(siteId){
   try { const a=loadAccounts(); const st=(a.sites||[]).find(s=>s.id===siteId); const nm=(st&&st.name)||String(siteId); return (nm.replace(/[\/\\:*?"<>|]/g,'_').trim())||String(siteId); } catch(e){ return path.basename(String(siteId)); }
@@ -140,7 +147,7 @@ function siteFileDir(siteId, folder){
   return dir;
 }
 // ── 원도급 공정표 백업/복원 ──
-const BACKUP_DIR = path.join(__dirname, '백업');
+const BACKUP_DIR = path.join(DATA_DIR, '백업');
 try { fs.mkdirSync(BACKUP_DIR, { recursive: true }); } catch(e) {}
 function siteBackupDir(siteId){ const dir=path.join(BACKUP_DIR, siteFolderName(siteId)); try{ fs.mkdirSync(dir,{recursive:true}); }catch(e){} return dir; }
 const aiCore = require('./ai-core');
@@ -664,7 +671,7 @@ function computeOverallProgress(sections) {
   return 0;
 }
 
-const PROMPT_FILE = path.join(__dirname, 'prompts', 'Groq_Llama3.3-70B_작업지시서.md');
+const PROMPT_FILE = path.join(DATA_DIR, 'prompts', 'Groq_Llama3.3-70B_작업지시서.md');
 const AI_RESULT_SCHEMA_VERSION = 'ai-analysis.v2';
 const AI_RESULT_SCHEMA_APPENDIX = [
   '',
@@ -1425,19 +1432,12 @@ const requestHandler = async (req, res) => {
   const url = req.url.split('?')[0];
 
   // ── HTML 서빙 ─────────────────────────────────────────────
-  if (req.method === 'POST' && url === '/api/save-xlsb') {
-    try {
-      const _bd = await parseBody(req);
-      const _nm = String(_bd.name || 'output.xlsb').replace(/[\/\\:*?"<>|]/g, '_');
-      const _dir = path.join(__dirname, '출력'); try { fs.mkdirSync(_dir, { recursive: true }); } catch(e) {}
-      const _fp = path.join(_dir, _nm);
-      fs.writeFileSync(_fp, Buffer.from(_bd.b64 || '', 'base64'));
-      res.writeHead(200, {'Content-Type':'application/json; charset=utf-8'}); res.end(JSON.stringify({ ok:true, path:_fp }));
-    } catch(e) { res.writeHead(500, {'Content-Type':'application/json; charset=utf-8'}); res.end(JSON.stringify({ ok:false, msg:e.message })); }
-    return;
-  }
   if (req.method === 'GET' && url === '/api/version') {
-    let _v=''; try { _v = require('./package.json').version || ''; } catch(e) {}
+    // Server EXE(server-app)는 자신의 package.json 버전을 env로 넘겨준다(패키징 시
+    // 루트 package.json을 번들하면 Electron 앱 매니페스트와 경로가 겹쳐서 피함).
+    // git-clone 실행(node server.js)은 그대로 이 파일 옆 package.json을 읽는다.
+    let _v = process.env.TERMINUS_SERVER_VERSION || '';
+    if (!_v) { try { _v = require('./package.json').version || ''; } catch(e) {} }
     res.writeHead(200, {'Content-Type':'application/json; charset=utf-8'}); res.end(JSON.stringify({ version:_v }));
     return;
   }
@@ -2355,8 +2355,8 @@ const requestHandler = async (req, res) => {
 // HTTPS(보안 컨텍스트)여야 브라우저 "폴더 선택 저장"(File System Access API)이 동작한다.
 // 인증서가 없으면 기존처럼 HTTP로 자동 폴백한다.
 //   인증서 생성:  node scripts/gen-cert.js   (자세히: HTTPS_설정.md)
-const CERT_KEY  = path.join(__dirname, 'certs', 'server.key');
-const CERT_CRT  = path.join(__dirname, 'certs', 'server.crt');
+const CERT_KEY  = path.join(DATA_DIR, 'certs', 'server.key');
+const CERT_CRT  = path.join(DATA_DIR, 'certs', 'server.crt');
 const USE_HTTPS = fs.existsSync(CERT_KEY) && fs.existsSync(CERT_CRT);
 let server;
 if (USE_HTTPS) {

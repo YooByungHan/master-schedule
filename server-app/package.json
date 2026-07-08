@@ -1,0 +1,62 @@
+{
+  "name": "terminus-masterschedule-server",
+  "productName": "Terminus MasterSchedule Server",
+  "version": "1.0.0",
+  "description": "Terminus MasterSchedule Server — 사내 LAN 서버 트레이 앱",
+  "author": "유병한",
+  "license": "ISC",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win --publish always",
+    "pack": "electron-builder --win --dir --publish never"
+  },
+  "devDependencies": {
+    "electron": "^31.7.6",
+    "electron-builder": "^24.13.3"
+  },
+  "dependencies": {
+    "electron-updater": "^6.3.9",
+    "selfsigned": "^2.4.1",
+    "ws": "^8.19.0"
+  },
+  "build": {
+    "appId": "com.terminus.masterschedule.server",
+    "productName": "Terminus MasterSchedule Server",
+    "asar": true,
+    "files": [
+      "main.js",
+      {
+        "from": "..",
+        "to": ".",
+        "filter": [
+          "server.js",
+          "ai-core.js",
+          "youtube-gate.js",
+          "oauth-obfuscate.js",
+          "oauth-default.json",
+          "cert-gen.js",
+          "gate.html",
+          "Terminus_master_schedule.html",
+          "마스터공정표_간트차트_템플릿.xlsb"
+        ]
+      }
+    ],
+    "win": {
+      "target": ["nsis"]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "shortcutName": "Terminus MasterSchedule Server"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "YooByungHan",
+        "repo": "master-schedule"
+      }
+    ]
+  }
+}
