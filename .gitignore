@@ -26,6 +26,8 @@ node_modules/
 npm-debug.log*
 server.log
 *.log
+# start_master.sh 가 생성하는 실행 PID 파일
+server.pid
 
 # ── 백업·복구 잔여물 ──
 *.bak_*
