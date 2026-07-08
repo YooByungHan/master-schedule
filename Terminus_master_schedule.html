@@ -1591,6 +1591,7 @@ body.pred-edit-mode .nacts{min-width:44px}
               <button class="hdr-mi" onclick="hdrMenuAct(saveAsPng)">🖼️ PNG</button>
             </div>
           </div>
+          <button class="hdr-mi" onclick="hdrMenuAct(showHolidayModal)">🗓️ 공휴일 관리</button>
         </div>
       </div>
       <button class="btn bg-btn btn-xs no-print" id="logoutBtn" onclick="doLogout()">로그아웃</button>
@@ -1850,7 +1851,7 @@ body.pred-edit-mode .nacts{min-width:44px}
       <div style="margin-top:16px;padding:12px 16px;background:#fff;border:1px solid #e2ddd7;border-radius:5px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
         <div style="display:flex;align-items:center;gap:12px">
           <div style="background:#1c3a5e;color:#fff;border-radius:6px;padding:4px 12px;font-size:11px;font-weight:700;letter-spacing:.06em;font-family:'JetBrains Mono',monospace">
-            MASTER SCHEDULE <span style="background:rgba(255,255,255,.22);border-radius:3px;padding:1px 7px;margin-left:5px">v1.2</span>
+            MASTER SCHEDULE
           </div>
           <div style="font-size:11px;color:#6b6760">
             Made by <strong style="color:#1c3a5e">유병한</strong>
@@ -7724,16 +7725,6 @@ async function _renderAdminServer(){
         </table>
       </div>
       <div class="admin-sec">
-        <div class="admin-title">내 비밀번호 변경</div>
-        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-          <input type="password" class="pi" id="svOldPw" placeholder="현재 비밀번호" style="width:150px">
-          <input type="password" class="pi" id="svNewPw" placeholder="새 비밀번호" style="width:150px">
-          <input type="password" class="pi" id="svNewPw2" placeholder="확인" style="width:150px">
-          <button class="btn bp btn-xs" onclick="_changeServerPw()">변경</button>
-        </div>
-        <div id="svPwErr" class="auth-err"></div>
-      </div>
-      <div class="admin-sec">
         <div class="admin-title">🤖 Claude API Key</div>
         <p style="font-size:11px;color:var(--text2);margin-bottom:6px">
           키는 <b>서버(config.json)</b>에 저장됩니다. 직원 브라우저에는 절대 노출되지 않습니다.
@@ -7861,26 +7852,6 @@ async function _deleteServerUser(userId, userName){
       _renderAdminServer();
     }catch(e){ toast('서버 오류'); }
   });
-}
-
-async function _changeServerPw(){
-  const oldPw=document.getElementById('svOldPw').value;
-  const newPw=document.getElementById('svNewPw').value;
-  const newPw2=document.getElementById('svNewPw2').value;
-  const err=document.getElementById('svPwErr');
-  if(!oldPw||!newPw){err.textContent='비밀번호를 입력하세요';return}
-  if(newPw!==newPw2){err.textContent='새 비밀번호가 일치하지 않습니다';return}
-  try{
-    const r=await fetch('/api/user/pw',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({userId:CU.userId, oldPw, newPw})});
-    const result=await r.json();
-    if(!result.ok){err.textContent=result.msg;return}
-    err.textContent='';
-    toast('비밀번호가 변경되었습니다');
-    document.getElementById('svOldPw').value='';
-    document.getElementById('svNewPw').value='';
-    document.getElementById('svNewPw2').value='';
-  }catch(e){ err.textContent='서버 오류'; }
 }
 
 // ══════════════════════════════════════════════
