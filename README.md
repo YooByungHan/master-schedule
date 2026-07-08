@@ -99,13 +99,30 @@
 
 ## 🚀 빠른 시작 (서버/Enterprise)
 
+### 최초 설치 (한 번만)
 ```bash
+git clone https://github.com/YooByungHan/master-schedule.git
+cd master-schedule
 npm install
 node server.js
 ```
 브라우저에서 `http://localhost:3000` 접속.
 - 관리자 탭 → API 키(Groq 무료 / Claude) 등록 시 AI 분석 사용(직원 포함 전원).
 - Windows 자동시작: `자동시작_설치.bat` 실행.
+
+### 이후 업데이트 (평소에는 이것만)
+```bash
+bash scripts/update-server.sh
+```
+실데이터(`accounts.json`/`data/`/`백업/`/`하도업체/` 등)를 저장소 **바깥**
+(`../master-schedule_backups/`)에 자동 백업한 뒤 `git pull` + `npm install`을
+진행합니다. 저장소 폴더 자체를 절대 삭제하지 않으며, 만에 하나 폴더가 통째로
+사라지는 사고가 나도 바깥의 백업은 영향받지 않습니다. 완료 후 `node server.js`를
+재시작해주세요.
+
+> ⚠️ 파일을 GitHub에서 하나씩 내려받아 수동으로 교체하는 예전 방식은 더 이상
+> 쓰지 마세요. 위 두 단계(최초 1회 `git clone`, 이후 `update-server.sh`)만
+> 사용합니다.
 
 ---
 
@@ -118,6 +135,8 @@ node server.js
 | `ai-server.js` | **Pro용 초경량 AI 서버** (`node ai-server.js`, 포트 3100) |
 | `server.js` | Node.js 서버 (멀티 현장·권한·파일함·백업/복원·AI는 ai-core 위임) |
 | `package.json` | Node.js 패키지 정보 |
+| `scripts/update-server.sh` | 서버 최신화(백업 → git pull → npm install) — 평소 업데이트는 이것만 실행 |
+| `scripts/backup-data.sh` | 실데이터를 저장소 바깥에 스냅샷 백업(update-server.sh가 자동 호출) |
 | `prompts/Groq_Llama3.3-70B_작업지시서.md` | Groq용 AI 지시서 (없으면 자동 생성) |
 | `prompts/Claude_작업지시서.md` | Claude용 정밀 분석 지시서 (없으면 자동 생성) |
 | `자동시작_설치.bat` / `자동시작_제거.bat` | Windows 서버 자동시작 등록/제거 |
