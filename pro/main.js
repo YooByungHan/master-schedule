@@ -25,7 +25,47 @@ try {
   console.error('[Pro] AI 서버 시작 실패:', e && e.message);
 }
 
+// ── YouTube 구독 게이트 (Device Flow) ───────────────────────────
+// Pro는 1인 전용 설치이므로 세션 저장소에는 사실상 계정 1개만 쌓인다.
+// 자격증명은 CI 빌드 시 GitHub Actions 시크릿으로 생성되는 oauth-config.json
+// (커밋되지 않음, .gitignore) 을 읽는다. 없으면 게이트를 걸지 않는다(개발 중 실행).
+const { createYoutubeGate } = require(path.join(BASE, 'youtube-gate.js'));
+function loadGoogleOAuthCreds() {
+  try {
+    const f = JSON.parse(fs.readFileSync(path.join(BASE, 'oauth-config.json'), 'utf8'));
+    if (f.clientId && f.clientSecret) return f;
+  } catch (e) {}
+  return { clientId: process.env.GOOGLE_OAUTH_CLIENT_ID || '', clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET || '' };
+}
+const GATE_STORE_PATH = path.join(app.getPath('userData'), 'youtube_sessions.json');
+const ytGate = createYoutubeGate({
+  storePath: GATE_STORE_PATH,
+  getCreds: loadGoogleOAuthCreds,
+  channelId: process.env.YOUTUBE_CHANNEL_ID || 'UCN5pilUpAxWgfatwuKGx-LQ',
+  trialDays: 30,
+  cacheHours: 6,
+});
+const gateEnabled = !!loadGoogleOAuthCreds().clientId;
+
+// Pro는 1인용이라 세션 저장소의 "가장 최근 세션"을 그대로 현재 사용자로 취급한다.
+function getSoleSessionId() {
+  try {
+    const store = JSON.parse(fs.readFileSync(GATE_STORE_PATH, 'utf8'));
+    const ids = Object.keys(store.sessions || {});
+    if (!ids.length) return null;
+    ids.sort((a, b) => new Date(store.sessions[b].last_checked_at || 0) - new Date(store.sessions[a].last_checked_at || 0));
+    return ids[0];
+  } catch (e) { return null; }
+}
+async function checkGateForLaunch() {
+  if (!gateEnabled) return { allowed: true, reason: 'gate_disabled' };
+  const sid = getSoleSessionId();
+  if (!sid) return { allowed: false, reason: 'no_session' };
+  return ytGate.checkGate(sid);
+}
+
 let mainWindow = null;
+let gateWindow = null;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -53,6 +93,37 @@ function createWindow() {
     return { action: 'allow' };
   });
 }
+
+function createGateWindow() {
+  gateWindow = new BrowserWindow({
+    width: 460, height: 420, resizable: false, title: 'Terminus MasterSchedule Pro',
+    backgroundColor: '#0f1720',
+    webPreferences: { preload: path.join(__dirname, 'preload.js'), contextIsolation: true, nodeIntegration: false },
+  });
+  gateWindow.setMenuBarVisibility(false);
+  gateWindow.loadFile(path.join(BASE, 'gate.html'));
+  gateWindow.on('closed', () => { gateWindow = null; if (!mainWindow) app.quit(); });
+}
+
+// ── YouTube 구독 게이트 IPC (gate.html이 window.terminusNative 로 호출) ──
+ipcMain.handle('terminus:gate:status', async () => checkGateForLaunch());
+ipcMain.handle('terminus:gate:start', async () => {
+  const f = await ytGate.startDeviceFlow();
+  return { flowId: f.deviceCode, userCode: f.userCode, verificationUrl: f.verificationUrl, expiresIn: f.expiresIn, interval: f.interval };
+});
+ipcMain.handle('terminus:gate:poll', async (evt, flowId) => {
+  const r = await ytGate.pollDeviceFlow(flowId);
+  return { status: r.status === 'slow_down' ? 'pending' : r.status, trialDaysLeft: r.trialDaysLeft };
+});
+ipcMain.handle('terminus:gate:recheck', async () => {
+  const sid = getSoleSessionId();
+  if (!sid) return { allowed: false, reason: 'no_session' };
+  return ytGate.forceRecheck(sid);
+});
+ipcMain.handle('terminus:gate:proceed', () => {
+  createWindow();
+  if (gateWindow) { const w = gateWindow; gateWindow = null; w.close(); }
+});
 
 // ── 네이티브 저장 대화상자 (렌더러 → 메인) ─────────────────────
 // 렌더러의 saveWithPicker()가 window.terminusNative.saveFile 를 우선 사용한다.
@@ -100,10 +171,13 @@ function setupAutoUpdate() {
   try { autoUpdater.checkForUpdates(); } catch (e) { /* 오프라인 등 무시 */ }
 }
 
-app.whenReady().then(() => {
-  createWindow();
+app.whenReady().then(async () => {
+  const gate = await checkGateForLaunch().catch(() => ({ allowed: true, reason: 'gate_error' }));
+  if (gate.allowed) { createWindow(); } else { createGateWindow(); }
   setupAutoUpdate();
-  app.on('activate', () => { if (BrowserWindow.getAllWindows().length === 0) createWindow(); });
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) { createWindow(); }
+  });
 });
 
 app.on('window-all-closed', () => { if (process.platform !== 'darwin') app.quit(); });

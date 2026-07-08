@@ -25,11 +25,14 @@
     "files": [
       "main.js",
       "preload.js",
+      "oauth-config.json",
       {
         "from": "..",
         "to": ".",
         "filter": [
           "Terminus_master_schedule.html",
+          "gate.html",
+          "youtube-gate.js",
           "ai-server.js",
           "ai-core.js",
           "마스터공정표_간트차트_템플릿.xlsb"

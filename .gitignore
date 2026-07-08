@@ -36,3 +36,5 @@ server.log
 # ── OS ──
 .DS_Store
 Thumbs.db
+# Google Device Flow OAuth 클라이언트 자격증명 (서버용, 로컬 생성)
+google-oauth.json

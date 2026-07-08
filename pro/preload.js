@@ -10,5 +10,11 @@ contextBridge.exposeInMainWorld('terminusNative', {
   saveFile: (opts) => ipcRenderer.invoke('terminus:saveFile', opts),
   // 앱 버전(package.json version)
   getVersion: () => ipcRenderer.invoke('terminus:getVersion'),
+  // YouTube 구독 게이트 (gate.html + 메인 앱 체험판 배너가 공용으로 사용)
+  gateStatus: () => ipcRenderer.invoke('terminus:gate:status'),
+  gateStart: () => ipcRenderer.invoke('terminus:gate:start'),
+  gatePoll: (flowId) => ipcRenderer.invoke('terminus:gate:poll', flowId),
+  gateRecheck: () => ipcRenderer.invoke('terminus:gate:recheck'),
+  gateProceed: () => ipcRenderer.invoke('terminus:gate:proceed'),
   isDesktop: true,
 });

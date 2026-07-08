@@ -2,3 +2,5 @@
 node_modules/
 dist/
 package-lock.json
+# YouTube 구독 게이트 OAuth 자격증명 (CI 빌드 시 GitHub Actions 시크릿으로 생성 — 절대 커밋 금지)
+oauth-config.json

@@ -6,12 +6,14 @@ const http  = require('http');
 const https = require('https');
 const fs    = require('fs');
 const path  = require('path');
+const crypto = require('crypto');
 const { WebSocketServer } = require('ws');
 
 const PORT        = 3000;
 const DATA_FILE   = path.join(__dirname, 'data.json');
 const HTML_FILE   = path.join(__dirname, 'Terminus_master_schedule.html');
 const CONFIG_FILE = path.join(__dirname, 'config.json'); // API키 등 민감 설정 (git 제외)
+const GOOGLE_OAUTH_FILE = path.join(__dirname, 'google-oauth.json'); // YouTube 구독 게이트용 OAuth 자격증명 (git 제외)
 const INBOX_DIR   = path.join(__dirname, '하도업체', '접수'); // 메신저로 받은 하도 파일
 const DIST_DIR    = path.join(__dirname, '하도업체', '배포'); // 회의 결과 배포 파일
 // (구) 전역 접수/배포 자동생성 제거 — 현장별 폴더(하도업체/<공사명>/접수·보관)로 통일
@@ -37,6 +39,50 @@ if (_claudeApiKey) console.log('[Claude] API Key 로드됨 (끝 4자리: ...'+_c
 // Groq API키: 환경변수 우선, 없으면 config.json
 let _groqApiKey = process.env.GROQ_API_KEY || loadConfig().groqApiKey || '';
 if (_groqApiKey) console.log('[Groq]   API Key 로드됨 (끝 4자리: ...'+_groqApiKey.slice(-4)+')');
+
+// ── YouTube 구독 게이트 (Device Flow) ───────────────────────────
+// 자격증명: google-oauth.json { clientId, clientSecret } 우선, 없으면 환경변수
+function loadGoogleOAuthCreds() {
+  try {
+    const f = JSON.parse(fs.readFileSync(GOOGLE_OAUTH_FILE, 'utf8'));
+    if (f.clientId && f.clientSecret) return f;
+  } catch (e) {}
+  return {
+    clientId: process.env.GOOGLE_OAUTH_CLIENT_ID || '',
+    clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET || '',
+  };
+}
+const YOUTUBE_CHANNEL_ID = process.env.YOUTUBE_CHANNEL_ID || 'UCN5pilUpAxWgfatwuKGx-LQ';
+const { createYoutubeGate } = require('./youtube-gate');
+const ytGate = createYoutubeGate({
+  storePath: path.join(__dirname, 'data', 'youtube_sessions.json'),
+  getCreds: loadGoogleOAuthCreds,
+  channelId: YOUTUBE_CHANNEL_ID,
+  trialDays: 30,
+  cacheHours: 6,
+});
+if (loadGoogleOAuthCreds().clientId) console.log('[Gate] YouTube 구독 게이트 활성화됨 (채널: '+YOUTUBE_CHANNEL_ID+')');
+else console.log('[Gate] ⚠ google-oauth.json 없음 — 구독 게이트 비활성화(누구나 통과)');
+
+const GATE_COOKIE = 'terminus_gate';
+function parseCookies(req) {
+  const out = {};
+  const raw = req.headers.cookie;
+  if (!raw) return out;
+  raw.split(';').forEach((p) => {
+    const i = p.indexOf('=');
+    if (i < 0) return;
+    out[p.slice(0, i).trim()] = decodeURIComponent(p.slice(i + 1).trim());
+  });
+  return out;
+}
+function setGateCookie(res, sessionId) {
+  const parts = [GATE_COOKIE + '=' + encodeURIComponent(sessionId), 'HttpOnly', 'Path=/', 'SameSite=Lax', 'Max-Age=' + (400 * 24 * 60 * 60)];
+  if (USE_HTTPS) parts.push('Secure'); // USE_HTTPS는 파일 하단에서 선언되지만 요청 처리 시점엔 이미 초기화됨
+  res.setHeader('Set-Cookie', parts.join('; '));
+}
+// device flow 진행 중인 flow_id -> {deviceCode, interval, lastPollAt} (메모리, 서버 재시작 시 소실 — 재시도하면 됨)
+const _deviceFlows = {};
 
 // ── 파일 입출력 ──────────────────────────────────────────────
 let writing = false;
@@ -1391,8 +1437,68 @@ const requestHandler = async (req, res) => {
     else { res.writeHead(404); res.end('template not found'); }
     return;
   }
+  // ── YouTube 구독 게이트 API ──────────────────────────────────
+  if (req.method === 'GET' && url === '/auth/device/start') {
+    try {
+      const f = await ytGate.startDeviceFlow();
+      const flowId = crypto.randomUUID();
+      _deviceFlows[flowId] = { deviceCode: f.deviceCode, interval: f.interval, lastPollAt: 0 };
+      res.writeHead(200, {'Content-Type':'application/json; charset=utf-8'});
+      res.end(JSON.stringify({ flowId, userCode: f.userCode, verificationUrl: f.verificationUrl, expiresIn: f.expiresIn, interval: f.interval }));
+    } catch (e) { res.writeHead(500, {'Content-Type':'application/json; charset=utf-8'}); res.end(JSON.stringify({ ok:false, msg:e.message })); }
+    return;
+  }
+  if (req.method === 'GET' && url === '/auth/device/status') {
+    const flowId = new URL(req.url, 'http://x').searchParams.get('flow_id');
+    const flow = flowId && _deviceFlows[flowId];
+    if (!flow) { res.writeHead(200, {'Content-Type':'application/json; charset=utf-8'}); res.end(JSON.stringify({ status:'expired' })); return; }
+    // Google이 안내한 interval(초)보다 자주 폴링하지 않도록 서버가 자체적으로 속도 제한
+    if (Date.now() - flow.lastPollAt < flow.interval * 1000) {
+      res.writeHead(200, {'Content-Type':'application/json; charset=utf-8'}); res.end(JSON.stringify({ status:'pending' })); return;
+    }
+    flow.lastPollAt = Date.now();
+    try {
+      const r = await ytGate.pollDeviceFlow(flow.deviceCode);
+      if (r.status === 'slow_down') flow.interval += 5;
+      if (r.status === 'complete') { setGateCookie(res, r.sessionId); delete _deviceFlows[flowId]; }
+      if (r.status === 'expired' || r.status === 'denied') delete _deviceFlows[flowId];
+      res.writeHead(200, {'Content-Type':'application/json; charset=utf-8'});
+      res.end(JSON.stringify({ status: r.status === 'slow_down' ? 'pending' : r.status, trialDaysLeft: r.trialDaysLeft }));
+    } catch (e) { res.writeHead(200, {'Content-Type':'application/json; charset=utf-8'}); res.end(JSON.stringify({ status:'pending' })); }
+    return;
+  }
+  if (req.method === 'GET' && url === '/api/gate/status') {
+    const sid = parseCookies(req)[GATE_COOKIE];
+    try {
+      const g = sid ? await ytGate.checkGate(sid) : { allowed:false, reason:'no_session' };
+      res.writeHead(200, {'Content-Type':'application/json; charset=utf-8'}); res.end(JSON.stringify(g));
+    } catch (e) { res.writeHead(200, {'Content-Type':'application/json; charset=utf-8'}); res.end(JSON.stringify({ allowed:false, reason:'error' })); }
+    return;
+  }
+  if (req.method === 'POST' && url === '/auth/gate/recheck') {
+    const sid = parseCookies(req)[GATE_COOKIE];
+    if (!sid) { res.writeHead(200, {'Content-Type':'application/json; charset=utf-8'}); res.end(JSON.stringify({ allowed:false, reason:'no_session' })); return; }
+    try {
+      const g = await ytGate.forceRecheck(sid);
+      res.writeHead(200, {'Content-Type':'application/json; charset=utf-8'}); res.end(JSON.stringify(g));
+    } catch (e) { res.writeHead(200, {'Content-Type':'application/json; charset=utf-8'}); res.end(JSON.stringify({ allowed:false, reason:'error' })); }
+    return;
+  }
+
   if (req.method === 'GET' && (url === '/' || url === '/index.html')) {
     try {
+      // google-oauth.json 자격증명이 없으면 게이트를 아예 걸지 않는다(설정 전 정상 동작 보장)
+      const gateEnabled = !!loadGoogleOAuthCreds().clientId;
+      if (gateEnabled) {
+        const sid = parseCookies(req)[GATE_COOKIE];
+        const g = sid ? await ytGate.checkGate(sid) : { allowed:false, reason:'no_session' };
+        if (!g.allowed) {
+          const gateHtml = fs.readFileSync(path.join(__dirname, 'gate.html'), 'utf8');
+          res.writeHead(200, {'Content-Type':'text/html; charset=utf-8'});
+          res.end(gateHtml);
+          return;
+        }
+      }
       const html = fs.readFileSync(HTML_FILE, 'utf8');
       res.writeHead(200, {'Content-Type':'text/html; charset=utf-8'});
       res.end(html);

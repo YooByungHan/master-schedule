@@ -12526,6 +12526,44 @@ window.addEventListener('DOMContentLoaded', async () => {
       .catch(function(){});
   }catch(e){}
 })();
+
+/* 체험판 배너 — 구독 게이트가 활성화된 환경에서 체험판 기간 중일 때만 표시.
+   구독 게이트 자체가 없거나(개발/구버전 서버) 이미 구독자면 아무것도 하지 않는다. */
+(function(){
+  var DISMISS_KEY = 'terminus_trial_banner_dismissed_at';
+  function render(g){
+    if(!g || g.reason!=='trial' || !(g.trialDaysLeft>0)) return;
+    try{
+      var dismissedAt = sessionStorage.getItem(DISMISS_KEY);
+      if(dismissedAt) return; // 이번 세션에서 이미 닫았으면 다시 안 띄움
+    }catch(e){}
+    var bar=document.createElement('div');
+    bar.style.cssText='position:fixed;top:0;left:0;right:0;z-index:99998;background:#1c3a5e;color:#fff;'+
+      'font-family:"Noto Sans KR",sans-serif;font-size:12.5px;padding:8px 14px;display:flex;'+
+      'align-items:center;justify-content:center;gap:10px;box-shadow:0 2px 8px rgba(0,0,0,.15)';
+    bar.innerHTML =
+      '<span>체험판 D-'+g.trialDaysLeft+'일 남음</span>'+
+      '<a href="https://www.youtube.com/channel/UCN5pilUpAxWgfatwuKGx-LQ?sub_confirmation=1" target="_blank" rel="noopener" '+
+        'style="color:#7dc8ff;text-decoration:underline">채널 구독하고 계속 이용하기</a>'+
+      '<span id="_trialBannerClose" style="cursor:pointer;opacity:.7;margin-left:6px">×</span>';
+    document.body.appendChild(bar);
+    document.body.style.paddingTop = (document.body.style.paddingTop ? parseInt(document.body.style.paddingTop) : 0) + 34 + 'px';
+    var closeBtn=document.getElementById('_trialBannerClose');
+    if(closeBtn) closeBtn.addEventListener('click', function(){
+      bar.remove();
+      try{ sessionStorage.setItem(DISMISS_KEY, String(Date.now())); }catch(e){}
+    });
+  }
+  try{
+    if(window.terminusNative && window.terminusNative.gateStatus){
+      window.terminusNative.gateStatus().then(render).catch(function(){});
+      return;
+    }
+  }catch(e){}
+  try{
+    fetch('/api/gate/status').then(function(r){ return r.ok?r.json():null; }).then(render).catch(function(){});
+  }catch(e){}
+})();
 </script>
 </body>
 </html>

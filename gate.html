@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terminus MasterSchedule</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    font-family:'Segoe UI','Noto Sans KR',sans-serif;background:#0f1720;color:#e8ecf1}
+  .card{background:#1a2531;border:1px solid #2a3a4a;border-radius:14px;padding:36px 32px;
+    width:420px;max-width:92vw;box-shadow:0 20px 60px rgba(0,0,0,.4);text-align:center}
+  h1{font-size:17px;margin:0 0 6px;color:#fff}
+  p{font-size:13px;line-height:1.7;color:#9fb0c0;margin:0 0 18px}
+  .code{font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:700;letter-spacing:3px;
+    background:#0f1720;border:1.5px dashed #3d6fa3;border-radius:10px;padding:16px 10px;margin:14px 0;color:#7dc8ff}
+  a.btn,button.btn{display:inline-block;margin-top:8px;padding:11px 22px;border-radius:8px;border:none;
+    background:#3d6fa3;color:#fff;font-size:13.5px;font-weight:600;text-decoration:none;cursor:pointer}
+  a.btn:hover,button.btn:hover{background:#4a7db5}
+  .sub{background:#c62828}
+  .sub:hover{background:#d32f2f}
+  .status{font-size:12px;color:#6b7c8c;margin-top:14px}
+  .spin{display:inline-block;width:12px;height:12px;border:2px solid #3d6fa3;border-top-color:transparent;
+    border-radius:50%;animation:sp .8s linear infinite;vertical-align:-2px;margin-right:6px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+  <div class="card" id="card">
+    <div id="loading">
+      <p><span class="spin"></span>확인 중...</p>
+    </div>
+
+    <div id="deviceFlow" class="hidden">
+      <h1>계속하려면 로그인하세요</h1>
+      <p>아래 코드를 구글 인증 페이지에 입력하면 자동으로 진행됩니다.</p>
+      <div class="code" id="userCode">------</div>
+      <a class="btn" id="verifyLink" href="#" target="_blank" rel="noopener">인증 페이지 열기</a>
+      <div class="status" id="flowStatus"><span class="spin"></span>인증 대기 중...</div>
+    </div>
+
+    <div id="blocked" class="hidden">
+      <h1>구독자 전용 기능입니다</h1>
+      <p>Terminus MasterSchedule 은 채널 구독자에게 제공됩니다.<br>체험판 기간이 종료되었습니다.</p>
+      <a class="btn sub" href="https://www.youtube.com/channel/UCN5pilUpAxWgfatwuKGx-LQ?sub_confirmation=1" target="_blank" rel="noopener">채널 구독하기</a>
+      <div><button class="btn" id="recheckBtn" style="margin-top:10px;background:#2a3a4a">지금 구독 확인하기</button></div>
+      <div class="status" id="recheckStatus"></div>
+    </div>
+  </div>
+
+<script>
+(function(){
+  var el = { loading: document.getElementById('loading'), device: document.getElementById('deviceFlow'),
+    blocked: document.getElementById('blocked'), code: document.getElementById('userCode'),
+    link: document.getElementById('verifyLink'), flowStatus: document.getElementById('flowStatus'),
+    recheckBtn: document.getElementById('recheckBtn'), recheckStatus: document.getElementById('recheckStatus') };
+
+  function show(which){
+    el.loading.classList.add('hidden'); el.device.classList.add('hidden'); el.blocked.classList.add('hidden');
+    el[which].classList.remove('hidden');
+  }
+
+  // 데스크톱 앱(Electron)에서는 window.terminusNative IPC로, 웹/서버에서는 fetch로 동작한다.
+  // (다른 화면의 saveWithPicker()와 동일한 네이티브 우선·웹 폴백 패턴)
+  var NATIVE = (typeof window!=='undefined' && window.terminusNative && window.terminusNative.gateStart) ? window.terminusNative : null;
+
+  function apiGateStatus(){
+    return NATIVE ? NATIVE.gateStatus() : fetch('/api/gate/status').then(function(r){ return r.json(); });
+  }
+  function apiDeviceStart(){
+    return NATIVE ? NATIVE.gateStart() : fetch('/auth/device/start').then(function(r){ return r.json(); });
+  }
+  function apiDeviceStatus(flowId){
+    return NATIVE ? NATIVE.gatePoll(flowId) : fetch('/auth/device/status?flow_id='+encodeURIComponent(flowId)).then(function(r){ return r.json(); });
+  }
+  function apiRecheck(){
+    return NATIVE ? NATIVE.gateRecheck() : fetch('/auth/gate/recheck', { method:'POST' }).then(function(r){ return r.json(); });
+  }
+
+  function startDeviceFlow(){
+    apiDeviceStart().then(function(f){
+      if(!f || !f.userCode){ el.flowStatus.textContent = '시작 실패 — 새로고침 후 다시 시도해주세요'; return; }
+      el.code.textContent = f.userCode;
+      el.link.href = f.verificationUrl;
+      show('device');
+      poll(f.flowId, (f.interval||5)*1000);
+    }).catch(function(){ el.flowStatus.textContent = '연결 실패 — 새로고침 후 다시 시도해주세요'; });
+  }
+
+  // 웹/서버: 새로고침하면 서버가 쿠키를 보고 실제 앱을 내려줌.
+  // 데스크톱(Electron): 같은 파일을 다시 불러와봐야 소용없으므로, 메인 프로세스에
+  // "게이트 통과 → 실제 앱 창으로 전환"을 IPC로 직접 요청한다.
+  function proceedOrReload(){
+    if(NATIVE && NATIVE.gateProceed){ NATIVE.gateProceed(); } else { location.reload(); }
+  }
+
+  function poll(flowId, intervalMs){
+    apiDeviceStatus(flowId).then(function(s){
+      if(s.status === 'complete'){ proceedOrReload(); return; }
+      if(s.status === 'expired'){ el.flowStatus.textContent = '코드가 만료되었습니다. 새로고침 후 다시 시도해주세요'; return; }
+      if(s.status === 'denied'){ el.flowStatus.textContent = '인증이 거부되었습니다. 새로고침 후 다시 시도해주세요'; return; }
+      setTimeout(function(){ poll(flowId, intervalMs); }, intervalMs);
+    }).catch(function(){ setTimeout(function(){ poll(flowId, intervalMs); }, intervalMs); });
+  }
+
+  el.recheckBtn.addEventListener('click', function(){
+    el.recheckStatus.innerHTML = '<span class="spin"></span>확인 중...';
+    apiRecheck().then(function(g){
+      if(g.allowed){ proceedOrReload(); }
+      else { el.recheckStatus.textContent = '아직 구독이 확인되지 않았습니다. 구독 후 잠시 뒤 다시 시도해주세요.'; }
+    }).catch(function(){ el.recheckStatus.textContent = '확인 실패 — 다시 시도해주세요'; });
+  });
+
+  apiGateStatus().then(function(g){
+    if(g.allowed){ proceedOrReload(); return; }
+    if(g.reason === 'no_session'){ startDeviceFlow(); }
+    else { show('blocked'); }
+  }).catch(function(){ startDeviceFlow(); });
+})();
+</script>
+</body>
+</html>
