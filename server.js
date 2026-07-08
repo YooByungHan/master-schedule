@@ -41,15 +41,28 @@ let _groqApiKey = process.env.GROQ_API_KEY || loadConfig().groqApiKey || '';
 if (_groqApiKey) console.log('[Groq]   API Key 로드됨 (끝 4자리: ...'+_groqApiKey.slice(-4)+')');
 
 // ── YouTube 구독 게이트 (Device Flow) ───────────────────────────
-// 자격증명: google-oauth.json { clientId, clientSecret } 우선, 없으면 환경변수
+// 자격증명 우선순위: google-oauth.json(로컬, .gitignore — 운영자가 다른 채널로
+// 게이트하고 싶을 때) > 환경변수 > oauth-default.json(저장소에 커밋된 난독화
+// 기본값 — git clone만 해도 자동으로 게이트가 켜지도록 함, Pro EXE와 동일 자격증명)
+const { decode: decodeOAuthConfig } = require('./oauth-obfuscate');
 function loadGoogleOAuthCreds() {
   try {
     const f = JSON.parse(fs.readFileSync(GOOGLE_OAUTH_FILE, 'utf8'));
     if (f.clientId && f.clientSecret) return f;
   } catch (e) {}
+  if (process.env.GOOGLE_OAUTH_CLIENT_ID && process.env.GOOGLE_OAUTH_CLIENT_SECRET) {
+    return { clientId: process.env.GOOGLE_OAUTH_CLIENT_ID, clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET };
+  }
+  try {
+    const d = JSON.parse(fs.readFileSync(path.join(__dirname, 'oauth-default.json'), 'utf8'));
+    if (d.v === 2 && d.data) {
+      const decoded = decodeOAuthConfig(d.data);
+      if (decoded.clientId && decoded.clientSecret) return decoded;
+    }
+  } catch (e) {}
   return {
-    clientId: process.env.GOOGLE_OAUTH_CLIENT_ID || '',
-    clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET || '',
+    clientId: '',
+    clientSecret: '',
   };
 }
 const YOUTUBE_CHANNEL_ID = process.env.YOUTUBE_CHANNEL_ID || 'UCN5pilUpAxWgfatwuKGx-LQ';

@@ -31,7 +31,7 @@ try {
 // (커밋되지 않음, .gitignore, XOR+Base64로 가볍게 은폐됨) 을 읽는다.
 // 없으면 게이트를 걸지 않는다(개발 중 실행).
 const { createYoutubeGate } = require(path.join(BASE, 'youtube-gate.js'));
-const { decode: decodeOAuthConfig } = require(path.join(__dirname, 'oauth-obfuscate.js'));
+const { decode: decodeOAuthConfig } = require(path.join(BASE, 'oauth-obfuscate.js'));
 function loadGoogleOAuthCreds() {
   try {
     const f = JSON.parse(fs.readFileSync(path.join(BASE, 'oauth-config.json'), 'utf8'));

@@ -25,7 +25,6 @@
     "files": [
       "main.js",
       "preload.js",
-      "oauth-obfuscate.js",
       "oauth-config.json",
       {
         "from": "..",
@@ -34,6 +33,7 @@
           "Terminus_master_schedule.html",
           "gate.html",
           "youtube-gate.js",
+          "oauth-obfuscate.js",
           "ai-server.js",
           "ai-core.js",
           "마스터공정표_간트차트_템플릿.xlsb"
