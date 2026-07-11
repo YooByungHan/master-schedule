@@ -9293,7 +9293,14 @@ async function doServerBackup(){
     const r=await fetch(API+'/api/backup/create',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:CU.userId,site:_activeSite})});
     const j=await r.json();
     if(!j.ok){ toast('백업 실패: '+(j.msg||'')); return; }
-    if(j.content){ _downloadText(j.name, j.content); }   // 로컬 PC에도 동시 저장
+    if(j.content){
+      // 서버 백업과 별개로, 개인 PC에도 원하는 폴더를 골라 저장(매번 저장창 표시).
+      const blob=new Blob([j.content],{type:'application/json'});
+      const _res=await saveWithPicker(j.name, blob, [{ description:'JSON 백업 파일(.json)', accept:{ 'application/json':['.json'] } }]);
+      if(_res==='saved'){ toast('✅ 백업 완료 (서버 + 내 PC): '+j.name); return; }
+      if(_res==='cancel'){ toast('✅ 서버 백업 완료 (내 PC 저장은 취소됨): '+j.name); return; }
+      _downloadText(j.name, j.content); // 'unsupported' → 브라우저 다운로드 폴백(비보안 http 등)
+    }
     toast('✅ 백업 완료 (서버 + 내 PC): '+j.name);
   }catch(e){ toast('백업 오류: '+(e.message||'')); }
 }
@@ -9341,10 +9348,10 @@ function saveJSON(){
   if(typeof _getPredLinks==='function') _getPredLinks();
   p.predLinks=_predLinks||[];
   saveProj(p);
-  // 백업 파일명: MasterSchedule백업_동부건설(주)_20260319.json
   const today=ds(new Date()).replace(/-/g,'');
   const coName=CU.name.replace(/[\/\\:*?"<>|]/g,'_'); // 파일명 금지문자만 제거
-  const filename=`MasterSchedule백업_${coName}_${today}.json`;
+  // Pro: 회사명_생성일자_Pro.json / 로컬 Enterprise: 기존 형식 유지
+  const filename=(CU&&CU.ver==='pro')?`${coName}_${today}_Pro.json`:`MasterSchedule백업_${coName}_${today}.json`;
   // 회의용 임시 슬롯(__MEETING__)은 백업에서 제외
   const _full=gs();
   let _backup;
@@ -9499,6 +9506,15 @@ function showConf(msg,fn){
 let _saveDir = null;
 
 async function getSaveDir(){
+  // 데스크톱 앱(Pro): showDirectoryPicker가 없으므로 IPC로 네이티브 폴더 선택창을 띄운다.
+  if(window.terminusNative && window.terminusNative.selectFolder){
+    if(_saveDir && _saveDir.__native) return _saveDir;
+    try{
+      const r = await window.terminusNative.selectFolder();
+      if(r && !r.canceled && r.path){ _saveDir = {__native:true, path:r.path}; return _saveDir; }
+    }catch(e){}
+    return null; // 사용자 취소
+  }
   if(_saveDir){
     try{
       const perm = await _saveDir.queryPermission({mode:'readwrite'});
@@ -9522,6 +9538,11 @@ async function getSaveDir(){
 async function saveToDir(filename, blob){
   const dir = await getSaveDir();
   if(!dir) return false; // 취소됨
+  if(dir.__native){
+    const buf = new Uint8Array(await blob.arrayBuffer());
+    const r = await window.terminusNative.writeFileToDir({ folder:dir.path, name:filename, data:buf });
+    return !!(r && r.ok);
+  }
   const fh = await dir.getFileHandle(filename,{create:true});
   const writable = await fh.createWritable();
   await writable.write(blob);
@@ -9724,7 +9745,8 @@ function _buildProgressSnapshotData(){
   var baseDate=(mInp&&mInp.value)?mInp.value:'';
   if(!baseDate) return null; // 기준선 없음 → 호출부에서 달력 팝업
   var ymd=baseDate.replace(/-/g,'');
-  var projName=p.projectName||'공정표';
+  // 서버 접속 모드에서는 현장(공사)명이 p.projectName이 아니라 _siteName에 있다 (exportExcel과 동일 규칙)
+  var projName=(_serverMode&&_siteName)?_siteName:(p.projectName||'공정표');
 
   // 전체 노드 순회: 코드 자동생성 + 데이터행 수집
   var totalAmt=0, totalActAmtRaw=0;
@@ -10447,7 +10469,14 @@ function _saveSnapshotIntoExisting(meta, file, saveDir){
         var xlsxBlob3=new Blob([xlsxData3],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
         var _msg='✅ "'+newName+'" 저장 완료 ('+existedAction+' · 통합현황 갱신)';
 
-        if(saveDir){
+        if(saveDir && saveDir.__native){
+          // 데스크톱 앱(Pro): IPC로 같은 폴더에 바로 저장
+          xlsxBlob3.arrayBuffer().then(function(ab){
+            return window.terminusNative.writeFileToDir({ folder:saveDir.path, name:newName, data:new Uint8Array(ab) });
+          }).then(function(r){
+            if(r&&r.ok) toast(_msg); else toast('⚠ 저장 실패: '+((r&&r.msg)||''));
+          }).catch(function(e){ toast('⚠ 저장 실패: '+(e.message||e)); });
+        } else if(saveDir){
           // 폴더 핸들 있음: 추가 다이얼로그 없이 바로 저장
           saveDir.getFileHandle(newName,{create:true}).then(function(fh){
             return fh.createWritable();
@@ -10574,6 +10603,29 @@ function exportProgressSnapshot(){
   var fileInp=document.getElementById('pms-file');
   document.getElementById('pms-open').addEventListener('click',async function(){
     closeM();
+    if(window.terminusNative && window.terminusNative.selectFolder){
+      // 데스크톱 앱(Pro): IPC로 폴더 선택 + 목록 조회
+      try{
+        var ndir=(_saveDir&&_saveDir.__native)?_saveDir:null;
+        if(!ndir){
+          var r=await window.terminusNative.selectFolder();
+          if(!r||r.canceled||!r.path) return; // 사용자 취소
+          ndir={__native:true,path:r.path};
+          _saveDir=ndir;
+        }
+        var names=await window.terminusNative.listDirFiles({folder:ndir.path,exts:['.xlsx']});
+        if(!names||!names.length){ toast('⚠ 폴더에 xlsx 파일이 없습니다.'); return; }
+        var nXlsxFiles=names.map(function(nm){ return {name:nm}; });
+        nXlsxFiles.sort(function(a,b){ return a.name.localeCompare(b.name,'ko'); });
+        _showFileListModal(nXlsxFiles,async function(sel){
+          var buf=await window.terminusNative.readFileFromDir({folder:ndir.path,name:sel.name});
+          if(!buf){ toast('⚠ 파일을 읽지 못했습니다.'); return; }
+          var f=new Blob([buf]);
+          _saveSnapshotIntoExisting(meta,f,ndir);
+        });
+      }catch(e){ toast('파일 열기 실패: '+(e.message||e)); }
+      return;
+    }
     if(window.showDirectoryPicker){
       try{
         // 이미 저장 폴더가 지정되어 있으면 재사용, 없으면 한 번만 선택

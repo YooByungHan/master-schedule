@@ -153,6 +153,49 @@ ipcMain.handle('terminus:saveFile', async (evt, opts) => {
   }
 });
 
+// ── 네이티브 폴더 선택/조회 (렌더러 → 메인) ───────────────────
+// Electron 렌더러에는 showDirectoryPicker가 없으므로, 폴더를 기억해 두고
+// 반복 저장/기존 파일 조회(실적관리 등)에 재사용할 수 있도록 IPC로 제공한다.
+ipcMain.handle('terminus:selectFolder', async (evt) => {
+  const win = BrowserWindow.fromWebContents(evt.sender) || mainWindow;
+  const ret = await dialog.showOpenDialog(win, { properties: ['openDirectory'] });
+  if (ret.canceled || !ret.filePaths || !ret.filePaths[0]) return { canceled: true };
+  return { canceled: false, path: ret.filePaths[0] };
+});
+ipcMain.handle('terminus:listDirFiles', (evt, opts) => {
+  opts = opts || {};
+  try {
+    const exts = (opts.exts || []).map((e) => String(e).toLowerCase());
+    const names = fs.readdirSync(opts.folder).filter((n) => {
+      if (!exts.length) return true;
+      const lower = n.toLowerCase();
+      return exts.some((e) => lower.endsWith(e));
+    });
+    return names;
+  } catch (e) {
+    return [];
+  }
+});
+ipcMain.handle('terminus:readFileFromDir', (evt, opts) => {
+  opts = opts || {};
+  try {
+    const buf = fs.readFileSync(path.join(opts.folder, opts.name));
+    return new Uint8Array(buf);
+  } catch (e) {
+    return null;
+  }
+});
+ipcMain.handle('terminus:writeFileToDir', (evt, opts) => {
+  opts = opts || {};
+  try {
+    const buf = Buffer.from(opts.data);
+    fs.writeFileSync(path.join(opts.folder, opts.name), buf);
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, msg: e && e.message };
+  }
+});
+
 // 앱 버전 조회(렌더러가 화면에 자동 표기)
 ipcMain.handle('terminus:getVersion', () => app.getVersion());
 
