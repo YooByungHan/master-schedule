@@ -197,10 +197,15 @@ function createYoutubeGate(opts) {
 
   function gateResultFor(session) {
     const trialDaysLeft = Math.max(0, Math.ceil(trialDays - daysSince(session.trial_started_at)));
-    if (trialDaysLeft > 0) {
-      return { allowed: true, reason: 'trial', trialDaysLeft, subscribed: !!session.subscribed, sessionId: session.session_id };
+    // 이미 구독 중이면 체험판 기간이 남아 있어도 'trial'이 아니라 'subscribed'로 알려야
+    // 클라이언트의 체험판 배너가 즉시 사라진다(구독자에게 "체험판 D-n일" 표시되는 버그 방지).
+    if (session.subscribed) {
+      return { allowed: true, reason: 'subscribed', trialDaysLeft, subscribed: true, sessionId: session.session_id };
     }
-    return { allowed: !!session.subscribed, reason: session.subscribed ? 'subscribed' : 'blocked', trialDaysLeft: 0, subscribed: !!session.subscribed, sessionId: session.session_id };
+    if (trialDaysLeft > 0) {
+      return { allowed: true, reason: 'trial', trialDaysLeft, subscribed: false, sessionId: session.session_id };
+    }
+    return { allowed: false, reason: 'blocked', trialDaysLeft: 0, subscribed: false, sessionId: session.session_id };
   }
 
   // ── 게이트 확인 (미들웨어에서 매 요청/앱시작 시 호출) ──
@@ -216,12 +221,18 @@ function createYoutubeGate(opts) {
       return { allowed: true, reason: 'owner', trialDaysLeft: null, subscribed: true };
     }
 
+    // 구독 중이거나 체험판 기간 이내면 즉시 통과(구독 중이면 'subscribed'로 응답해
+    // 클라이언트 체험판 배너가 뜨지 않도록 한다 — gateResultFor()와 동일 규칙).
+    if (session.subscribed) {
+      const trialDaysLeft = Math.max(0, Math.ceil(trialDays - daysSince(session.trial_started_at)));
+      return { allowed: true, reason: 'subscribed', trialDaysLeft, subscribed: true };
+    }
     const trialDaysLeft = Math.max(0, Math.ceil(trialDays - daysSince(session.trial_started_at)));
     if (trialDaysLeft > 0) {
-      return { allowed: true, reason: 'trial', trialDaysLeft, subscribed: !!session.subscribed };
+      return { allowed: true, reason: 'trial', trialDaysLeft, subscribed: false };
     }
     if (hoursSince(session.last_checked_at) < cacheHours) {
-      return { allowed: !!session.subscribed, reason: 'cache', trialDaysLeft: 0, subscribed: !!session.subscribed };
+      return { allowed: false, reason: 'cache', trialDaysLeft: 0, subscribed: false };
     }
     return forceRecheck(sessionId);
   }
@@ -248,8 +259,9 @@ function createYoutubeGate(opts) {
     session.last_checked_at = nowIso();
     saveStore(store);
     const trialDaysLeft = Math.max(0, Math.ceil(trialDays - daysSince(session.trial_started_at)));
-    if (trialDaysLeft > 0) return { allowed: true, reason: 'trial', trialDaysLeft, subscribed };
-    return { allowed: subscribed, reason: subscribed ? 'subscribed' : 'blocked', trialDaysLeft: 0, subscribed };
+    if (subscribed) return { allowed: true, reason: 'subscribed', trialDaysLeft, subscribed: true };
+    if (trialDaysLeft > 0) return { allowed: true, reason: 'trial', trialDaysLeft, subscribed: false };
+    return { allowed: false, reason: 'blocked', trialDaysLeft: 0, subscribed: false };
   }
 
   return { startDeviceFlow, pollDeviceFlow, checkGate, forceRecheck };

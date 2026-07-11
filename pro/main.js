@@ -103,8 +103,9 @@ function createWindow() {
 
 function createGateWindow() {
   gateWindow = new BrowserWindow({
-    width: 460, height: 420, resizable: false, title: 'Terminus MasterSchedule Pro',
-    backgroundColor: '#0f1720',
+    // gate.html이 좌(로그인)+우(기능 소개) 2단 구성이라 폭이 필요함(밝은 배경으로 변경됨).
+    width: 820, height: 560, resizable: false, title: 'Terminus MasterSchedule Pro',
+    backgroundColor: '#f0ede8',
     webPreferences: { preload: path.join(__dirname, 'preload.js'), contextIsolation: true, nodeIntegration: false },
   });
   gateWindow.setMenuBarVisibility(false);

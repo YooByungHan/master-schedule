@@ -5,50 +5,104 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Terminus MasterSchedule</title>
 <style>
+  :root{
+    --bg:#f0ede8;--surface:#fff;--surface2:#f7f5f2;--border:#e2ddd7;
+    --text:#1a1816;--text2:#6b6760;--text3:#a09b95;
+    --navy:#1c3a5e;--navy2:#2a5080;--navy3:#3d6fa3;--green:#1a6b3a;
+  }
   *{box-sizing:border-box}
   body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
-    font-family:'Segoe UI','Noto Sans KR',sans-serif;background:#0f1720;color:#e8ecf1}
-  .card{background:#1a2531;border:1px solid #2a3a4a;border-radius:14px;padding:36px 32px;
-    width:420px;max-width:92vw;box-shadow:0 20px 60px rgba(0,0,0,.4);text-align:center}
-  h1{font-size:17px;margin:0 0 6px;color:#fff}
-  p{font-size:13px;line-height:1.7;color:#9fb0c0;margin:0 0 18px}
-  .code{font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:700;letter-spacing:3px;
-    background:#0f1720;border:1.5px dashed #3d6fa3;border-radius:10px;padding:16px 10px;margin:14px 0;color:#7dc8ff}
-  a.btn,button.btn{display:inline-block;margin-top:8px;padding:11px 22px;border-radius:8px;border:none;
-    background:#3d6fa3;color:#fff;font-size:13.5px;font-weight:600;text-decoration:none;cursor:pointer}
-  a.btn:hover,button.btn:hover{background:#4a7db5}
+    font-family:'Noto Sans KR','Segoe UI',sans-serif;background:var(--bg);color:var(--text);padding:20px}
+  .wrap{display:flex;width:820px;max-width:100%;background:var(--surface);border-radius:16px;
+    box-shadow:0 16px 48px rgba(28,58,94,.14);overflow:hidden;border:1px solid var(--border)}
+  .panel-l{width:360px;flex:none;padding:34px 30px;display:flex;flex-direction:column;justify-content:center}
+  .panel-r{flex:1;background:linear-gradient(160deg,var(--navy) 0%,var(--navy2) 100%);color:#fff;
+    padding:34px 30px;display:flex;flex-direction:column;justify-content:center;gap:14px}
+  @media (max-width:640px){ .wrap{flex-direction:column;width:420px} .panel-r{order:-1} }
+
+  .brand{font-size:15px;font-weight:800;color:var(--navy);letter-spacing:.02em;margin-bottom:2px}
+  .brand small{display:block;font-size:11px;font-weight:500;color:var(--text3);letter-spacing:.03em;margin-top:2px}
+  h1{font-size:16px;margin:18px 0 6px;color:var(--text)}
+  p{font-size:12.5px;line-height:1.7;color:var(--text2);margin:0 0 14px}
+  .steps{text-align:left;font-size:12px;color:var(--text2);background:var(--surface2);
+    border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin:0 0 16px;line-height:1.8}
+  .steps b{color:var(--navy)}
+  .code-wrap{margin:6px 0 14px}
+  .code{font-family:'JetBrains Mono',Consolas,monospace;font-size:28px;font-weight:700;letter-spacing:3px;
+    background:var(--surface2);border:1.5px dashed var(--navy3);border-radius:10px;padding:14px 10px;color:var(--navy);
+    cursor:pointer;transition:background .15s}
+  .code:hover{background:#eef3f9}
+  .copy-hint{font-size:11px;color:var(--green);margin-top:6px;min-height:14px;font-weight:600}
+  .btn{display:inline-block;width:100%;margin-top:8px;padding:11px 20px;border-radius:8px;border:none;
+    background:var(--navy3);color:#fff;font-size:13.5px;font-weight:700;text-decoration:none;cursor:pointer;text-align:center}
+  .btn:hover{background:var(--navy2)}
+  .btn-ghost{background:var(--surface2);color:var(--text2);border:1px solid var(--border)!important}
+  .btn-ghost:hover{background:var(--border)}
   .sub{background:#c62828}
-  .sub:hover{background:#d32f2f}
-  .status{font-size:12px;color:#6b7c8c;margin-top:14px}
-  .spin{display:inline-block;width:12px;height:12px;border:2px solid #3d6fa3;border-top-color:transparent;
-    border-radius:50%;animation:sp .8s linear infinite;vertical-align:-2px;margin-right:6px}
+  .sub:hover{background:#b71c1c}
+  .status{font-size:11.5px;color:var(--text3);margin-top:12px}
+  .spin{display:inline-block;width:11px;height:11px;border:2px solid var(--navy3);border-top-color:transparent;
+    border-radius:50%;animation:sp .8s linear infinite;vertical-align:-1px;margin-right:6px}
   @keyframes sp{to{transform:rotate(360deg)}}
   .hidden{display:none}
+
+  .feat-title{font-size:17px;font-weight:800;margin-bottom:4px}
+  .feat-sub{font-size:12px;color:#c9d8ea;margin-bottom:8px}
+  .feat-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+  .feat-list li{display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.5;
+    border-top:1px solid rgba(255,255,255,.14);padding-top:10px}
+  .feat-list li:first-child{border-top:none;padding-top:0}
+  .feat-list .ic{flex:none;width:20px;text-align:center}
+  .feat-list b{display:block;font-size:13px}
+  .feat-list span{display:block;font-size:11px;color:#c9d8ea;margin-top:1px}
 </style>
 </head>
 <body>
-  <div class="card" id="card">
-    <div id="loading">
-      <p><span class="spin"></span>확인 중...</p>
-    </div>
+  <div class="wrap">
+    <div class="panel-l card" id="card">
+      <div id="loading">
+        <div class="brand">MASTER SCHEDULE<small>Terminus</small></div>
+        <p style="margin-top:18px"><span class="spin"></span>확인 중...</p>
+      </div>
 
-    <div id="deviceFlow" class="hidden">
-      <h1>계속하려면 로그인하세요</h1>
-      <p>아래 코드를 구글 인증 페이지에 입력하면 자동으로 진행됩니다.</p>
-      <div class="code" id="userCode">------</div>
-      <a class="btn" id="verifyLink" href="#" target="_blank" rel="noopener">인증 페이지 열기</a>
-      <div class="status" id="flowStatus"><span class="spin"></span>인증 대기 중...</div>
-      <div style="margin-top:18px;padding-top:16px;border-top:1px solid #2a3a4a">
-        <a class="btn sub" href="https://www.youtube.com/channel/UCN5pilUpAxWgfatwuKGx-LQ?sub_confirmation=1" target="_blank" rel="noopener">▶ 채널 구독하기</a>
+      <div id="deviceFlow" class="hidden">
+        <div class="brand">MASTER SCHEDULE<small>Terminus</small></div>
+        <h1>기기 등록</h1>
+        <div class="steps">
+          <b>①</b> 아래 코드가 자동으로 복사됩니다<br>
+          <b>②</b> "인증 페이지 열기" 클릭<br>
+          <b>③</b> 구글 페이지에서 <b>Ctrl+V</b>로 붙여넣기
+        </div>
+        <div class="code-wrap">
+          <div class="code" id="userCode" title="클릭하면 다시 복사됩니다">------</div>
+          <div class="copy-hint" id="copyHint">&nbsp;</div>
+        </div>
+        <a class="btn" id="verifyLink" href="#" target="_blank" rel="noopener">인증 페이지 열기 →</a>
+        <div class="status" id="flowStatus"><span class="spin"></span>인증 대기 중...</div>
+        <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border)">
+          <a class="btn sub" href="https://www.youtube.com/channel/UCN5pilUpAxWgfatwuKGx-LQ?sub_confirmation=1" target="_blank" rel="noopener">▶ 채널 구독하기</a>
+        </div>
+      </div>
+
+      <div id="blocked" class="hidden">
+        <div class="brand">MASTER SCHEDULE<small>Terminus</small></div>
+        <h1>구독자 전용 기능입니다</h1>
+        <p>체험판 기간이 종료되었습니다.<br>채널을 구독하면 계속 사용할 수 있습니다.</p>
+        <a class="btn sub" href="https://www.youtube.com/channel/UCN5pilUpAxWgfatwuKGx-LQ?sub_confirmation=1" target="_blank" rel="noopener">채널 구독하기</a>
+        <button class="btn btn-ghost" id="recheckBtn" style="margin-top:8px">지금 구독 확인하기</button>
+        <div class="status" id="recheckStatus"></div>
       </div>
     </div>
 
-    <div id="blocked" class="hidden">
-      <h1>구독자 전용 기능입니다</h1>
-      <p>Terminus MasterSchedule 은 채널 구독자에게 제공됩니다.<br>체험판 기간이 종료되었습니다.</p>
-      <a class="btn sub" href="https://www.youtube.com/channel/UCN5pilUpAxWgfatwuKGx-LQ?sub_confirmation=1" target="_blank" rel="noopener">채널 구독하기</a>
-      <div><button class="btn" id="recheckBtn" style="margin-top:10px;background:#2a3a4a">지금 구독 확인하기</button></div>
-      <div class="status" id="recheckStatus"></div>
+    <div class="panel-r">
+      <div class="feat-title">Create your Gantt chart today!</div>
+      <div class="feat-sub">공정률까지 한 번에 관리하는 건설 공정표</div>
+      <ul class="feat-list">
+        <li><span class="ic">📈</span><div><b>실적 관리</b><span>기준일별 실적률·금액을 자동 집계</span></div></li>
+        <li><span class="ic">📊</span><div><b>엑셀 간트 차트</b><span>매크로 연동 xlsb로 바로 출력</span></div></li>
+        <li><span class="ic">🤖</span><div><b>AI 분석</b><span>지연 구간·리스크 요약 설명</span></div></li>
+        <li><span class="ic">🤝</span><div><b>공정회의</b><span>서버 사용 시 여러 업체 통합 비교</span></div></li>
+      </ul>
     </div>
   </div>
 
@@ -57,6 +111,7 @@
   var el = { loading: document.getElementById('loading'), device: document.getElementById('deviceFlow'),
     blocked: document.getElementById('blocked'), code: document.getElementById('userCode'),
     link: document.getElementById('verifyLink'), flowStatus: document.getElementById('flowStatus'),
+    copyHint: document.getElementById('copyHint'),
     recheckBtn: document.getElementById('recheckBtn'), recheckStatus: document.getElementById('recheckStatus') };
 
   function show(which){
@@ -81,15 +136,26 @@
     return NATIVE ? NATIVE.gateRecheck() : fetch('/auth/gate/recheck', { method:'POST' }).then(function(r){ return r.json(); });
   }
 
+  // 코드를 클립보드에 복사 + "복사됨" 안내(사용자가 붙여넣기 단계를 놓치지 않도록).
+  function copyCode(code){
+    function ok(){ el.copyHint.textContent = '✓ 복사되었습니다 — 인증 페이지에 Ctrl+V로 붙여넣으세요'; }
+    function fail(){ el.copyHint.textContent = '코드를 직접 선택해 복사해주세요'; }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(code).then(ok).catch(fail);
+    } else { fail(); }
+  }
+
   function startDeviceFlow(){
     apiDeviceStart().then(function(f){
       if(!f || !f.userCode){ el.flowStatus.textContent = '시작 실패 — 새로고침 후 다시 시도해주세요'; return; }
       el.code.textContent = f.userCode;
       el.link.href = f.verificationUrl;
       show('device');
+      copyCode(f.userCode); // 표시되자마자 자동 복사
       poll(f.flowId, (f.interval||5)*1000);
     }).catch(function(){ el.flowStatus.textContent = '연결 실패 — 새로고침 후 다시 시도해주세요'; });
   }
+  el.code.addEventListener('click', function(){ copyCode(el.code.textContent); });
 
   // 웹/서버: 새로고침하면 서버가 쿠키를 보고 실제 앱을 내려줌.
   // 데스크톱(Electron): 같은 파일을 다시 불러와봐야 소용없으므로, 메인 프로세스에
