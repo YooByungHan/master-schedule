@@ -1571,7 +1571,7 @@ body.pred-edit-mode .nacts{min-width:44px}
   <header class="app-hdr">
     <div class="hdr-l">
       <span class="hdr-logo">MASTER SCHEDULE</span>
-      <input class="hdr-proj-inp" id="projName" placeholder="ㅇㅇㅇ공사" title="현장명 입력" autocomplete="off">
+      <input class="hdr-proj-inp" id="projName" placeholder="ㅇㅇㅇ공사" title="현장명 입력" autocomplete="off" onchange="onProjNameEdit(this.value)">
     </div>
     <div class="hdr-r">
       <span class="hdr-co" id="hdrCo"></span>
@@ -2901,6 +2901,12 @@ function onCoNameEdit(v){
   const hc=document.getElementById('hdrCo'); if(hc)hc.textContent=v;
   ss(gs());
   toast('회사명 저장: '+v);
+}
+function onProjNameEdit(v){
+  if(!CU || CU.ver!=='pro') return;   // Pro 버전만 공사명 직접 수정(서버는 현장명이 별도 관리됨)
+  v=(v||'').trim();
+  const p=getProj(); if(p) p.projectName=v;
+  ss(gs());
 }
 function initApp(){
   const p=getProj();
@@ -9401,8 +9407,8 @@ function importJSON(inp){
         const vid=getViewId();
         const pick=_pickPrimaryFromFile(d, _fileCompanyHint(f.name));
         if(pick && pick.proj){
-          const nm=pick.companyName||CU.name;
-          restoreData={ companies:[{id:vid, name:nm}], projects:{[vid]:pick.proj} };
+          const nm=pick.companyName||pick.proj.companyName||CU.name;
+          restoreData={ companies:[{id:vid, name:nm}], projects:{[vid]:{...pick.proj, companyName:nm}} };
           CU.name=nm;   // 연 파일의 회사명으로 표시(이번 세션)
         }
       } else if(d.companies && d.projects){
@@ -9453,6 +9459,7 @@ function importJSON(inp){
             _cache=restoreData;
             _saveLocalStorage();
             renderInput();markGanttDirty();
+            initApp(); // 상단 공사명/업체명 입력란 등 화면을 불러온 파일 값으로 새로고침
             toast('✅ 백업복원 완료: '+f.name);
           } else {
             fetch(API+'/api/data',{
@@ -9462,6 +9469,7 @@ function importJSON(inp){
             }).then(()=>{
               _cache=restoreData;
               renderInput();markGanttDirty();
+              initApp();
               toast('✅ 백업복원 완료: '+f.name);
             }).catch(()=>toast('❌ 서버 복원 실패'));
           }
@@ -9849,7 +9857,7 @@ function _buildProgressSheet(meta){
   var FIXED=8, DCOLS=3; // 기본 8컬럼 + 날짜별 3컬럼
   var TOTAL_COLS=FIXED+DCOLS; // 11
 
-  var titleCell=(meta.projName||'')+(meta.coName?'  '+meta.coName:'');
+  var titleCell=(meta.projName||'')+(meta.coName?' ['+meta.coName+']':'');
   // row0: 빈행, row1: 제목, row2: hdr1, row3: hdr2, row4: 합계, row5~: 데이터
   var rowEmpty   = Array(TOTAL_COLS).fill('');
   var rowTitle   = [titleCell].concat(Array(TOTAL_COLS-1).fill(''));
@@ -10246,7 +10254,7 @@ function _buildConsolidatedSheet(wb, meta){
 
   // ── 6) AOA 구성 (새 포맷: FIXED=8 + DATE_COLS=3)
   var FIXED=8, DATE_COLS=3;
-  var titleCell=(meta.projName||'')+(meta.coName?'  '+meta.coName:'');
+  var titleCell=(meta.projName||'')+(meta.coName?' ['+meta.coName+']':'');
   var totalCols=FIXED+allDates.length*DATE_COLS;
   var rowEmpty=Array(totalCols).fill('');
   var rowTitle=[titleCell].concat(Array(totalCols-1).fill(''));
