@@ -40,3 +40,14 @@ jobs:
         env:
           # electron-builder 가 GitHub Release 에 업로드할 때 사용하는 토큰
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Release 제목에 "Server" 표시 (Pro 릴리즈와 구분)
+        # 태그(v1.1.0 등)는 electron-updater가 semver로 파싱해야 하므로 그대로 두고,
+        # 화면에 보이는 제목만 "Terminus MasterSchedule Server vX.Y.Z"로 바꿔 Releases
+        # 목록에서 Pro 빌드와 한눈에 구분되게 한다(자동업데이트 동작에는 영향 없음).
+        working-directory: server-app
+        shell: bash
+        run: node ../scripts/set-release-name.js Server "$(node -p "require('./package.json').version")"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}

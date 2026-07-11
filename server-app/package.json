@@ -1,7 +1,7 @@
 {
   "name": "terminus-masterschedule-server",
   "productName": "Terminus MasterSchedule Server",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Terminus MasterSchedule Server — 사내 LAN 서버 트레이 앱",
   "author": "유병한",
   "license": "ISC",
@@ -55,7 +55,8 @@
       {
         "provider": "github",
         "owner": "YooByungHan",
-        "repo": "master-schedule"
+        "repo": "master-schedule",
+        "channel": "server"
       }
     ]
   }
