@@ -46,9 +46,22 @@ function api(method, path, body) {
   });
 }
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 (async () => {
-  const list = await api('GET', `/repos/${owner}/${repo}/releases?per_page=30`);
-  const rel = (list.json || []).find((r) => r.tag_name === tag);
+  // electron-builder가 방금 만든 release가 목록 API에 바로 안 잡히는 경우가 있어
+  // (GitHub 쪽 반영 지연) 몇 초 간격으로 재시도한다.
+  let rel = null;
+  for (let attempt = 1; attempt <= 5 && !rel; attempt++) {
+    const list = await api('GET', `/repos/${owner}/${repo}/releases?per_page=30`);
+    rel = (list.json || []).find((r) => r.tag_name === tag);
+    if (!rel && attempt < 5) {
+      console.log(`릴리즈를 아직 못 찾음(태그: ${tag}, 시도 ${attempt}/5) — 3초 후 재시도`);
+      await sleep(3000);
+    }
+  }
   if (!rel) {
     console.log(`릴리즈를 찾지 못함(태그: ${tag}) — 건너뜀`);
     return;
