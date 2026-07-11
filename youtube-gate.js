@@ -195,6 +195,39 @@ function createYoutubeGate(opts) {
     return r.data.access_token;
   }
 
+  // ── 채널 최신 영상 조회 (설정 > 구독 탭 썸네일용) ──
+  // 이미 인증된 세션의 refresh_token(youtube.readonly 스코프)을 재사용하므로
+  // 별도의 YouTube Data API 키 발급이 필요 없다.
+  async function getRecentVideos(sessionId, limit) {
+    const max = limit || 2;
+    const store = loadStore();
+    const session = sessionId && store.sessions[sessionId];
+    if (!session || !session.refresh_token) return { videos: [] };
+    const accessToken = await refreshAccessToken(session.refresh_token);
+    if (!accessToken) return { videos: [] };
+    const headers = { Authorization: 'Bearer ' + accessToken };
+    const chUrl = `https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${encodeURIComponent(channelId)}`;
+    const chRes = await httpJson(chUrl, { headers });
+    const uploadsId = chRes.status === 200
+      && chRes.data.items && chRes.data.items[0]
+      && chRes.data.items[0].contentDetails
+      && chRes.data.items[0].contentDetails.relatedPlaylists
+      && chRes.data.items[0].contentDetails.relatedPlaylists.uploads;
+    if (!uploadsId) return { videos: [] };
+    const plUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=${max}&playlistId=${encodeURIComponent(uploadsId)}`;
+    const plRes = await httpJson(plUrl, { headers });
+    if (plRes.status !== 200) return { videos: [] };
+    const items = Array.isArray(plRes.data.items) ? plRes.data.items : [];
+    const videos = items.map((it) => {
+      const sn = it.snippet || {};
+      const videoId = sn.resourceId && sn.resourceId.videoId;
+      const thumbs = sn.thumbnails || {};
+      const thumb = (thumbs.medium || thumbs.default || {}).url || '';
+      return videoId ? { videoId, title: sn.title || '', thumbnail: thumb, url: `https://www.youtube.com/watch?v=${videoId}` } : null;
+    }).filter(Boolean);
+    return { videos };
+  }
+
   function gateResultFor(session) {
     const trialDaysLeft = Math.max(0, Math.ceil(trialDays - daysSince(session.trial_started_at)));
     // 이미 구독 중이면 체험판 기간이 남아 있어도 'trial'이 아니라 'subscribed'로 알려야
@@ -264,7 +297,7 @@ function createYoutubeGate(opts) {
     return { allowed: false, reason: 'blocked', trialDaysLeft: 0, subscribed: false };
   }
 
-  return { startDeviceFlow, pollDeviceFlow, checkGate, forceRecheck };
+  return { startDeviceFlow, pollDeviceFlow, checkGate, forceRecheck, getRecentVideos };
 }
 
 module.exports = { createYoutubeGate };

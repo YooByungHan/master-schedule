@@ -1488,6 +1488,14 @@ const requestHandler = async (req, res) => {
     } catch (e) { res.writeHead(200, {'Content-Type':'application/json; charset=utf-8'}); res.end(JSON.stringify({ allowed:false, reason:'error' })); }
     return;
   }
+  if (req.method === 'GET' && url === '/auth/gate/videos') {
+    const sid = parseCookies(req)[GATE_COOKIE];
+    try {
+      const v = sid ? await ytGate.getRecentVideos(sid) : { videos: [] };
+      res.writeHead(200, {'Content-Type':'application/json; charset=utf-8'}); res.end(JSON.stringify(v));
+    } catch (e) { res.writeHead(200, {'Content-Type':'application/json; charset=utf-8'}); res.end(JSON.stringify({ videos: [] })); }
+    return;
+  }
   if (req.method === 'POST' && url === '/auth/gate/recheck') {
     const sid = parseCookies(req)[GATE_COOKIE];
     if (!sid) { res.writeHead(200, {'Content-Type':'application/json; charset=utf-8'}); res.end(JSON.stringify({ allowed:false, reason:'no_session' })); return; }

@@ -25,5 +25,6 @@ contextBridge.exposeInMainWorld('terminusNative', {
   gatePoll: (flowId) => ipcRenderer.invoke('terminus:gate:poll', flowId),
   gateRecheck: () => ipcRenderer.invoke('terminus:gate:recheck'),
   gateProceed: () => ipcRenderer.invoke('terminus:gate:proceed'),
+  gateVideos: () => ipcRenderer.invoke('terminus:gate:videos'),
   isDesktop: true,
 });

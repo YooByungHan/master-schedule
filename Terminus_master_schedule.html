@@ -1485,45 +1485,46 @@ body.pred-edit-mode .nacts{min-width:44px}
   <div class="card" style="width:400px">
     <div class="card-logo">
       <h1>▣ MASTER SCHEDULE</h1>
-      <p style="font-size:11px;color:#8a9bb5">공정 관리 시스템</p>
+      <p style="font-size:11px;color:#8a9bb5">Schedule Management System</p>
     </div>
 
-    <!-- 환영 배너 (로컬 신규 사용자) -->
+    <!-- 환영 배너 (로컬 신규 사용자) — 로그인 화면은 항상 영어 고정 -->
     <div class="welcome-banner" id="welcomeBanner">
-      <div class="wb-title">👋 환영합니다!</div>
+      <div class="wb-title">👋 Welcome!</div>
       <div id="welcomeMsg"></div>
     </div>
 
-    <div class="fg"><label>이름</label>
-      <input type="text" id="loginNamePro" class="fc" placeholder="홍길동"
+    <div class="fg"><label>Name</label>
+      <input type="text" id="loginNamePro" class="fc" placeholder="John Doe"
         onkeydown="if(event.key==='Enter')doLoginPro()">
     </div>
-    <div class="fg"><label>비밀번호</label>
-      <input type="password" id="loginPwPro" class="fc" placeholder="비밀번호 입력"
+    <div class="fg"><label>Password</label>
+      <input type="password" id="loginPwPro" class="fc" placeholder="Enter password"
         onkeydown="if(event.key==='Enter')doLoginPro()">
     </div>
 
     <!-- 관리자 코드 입력란
          로컬: 버튼 5회 클릭 후 표시 (setupScreen 전환용)
-         서버: 관리자 계정 확인 후 자동 표시 -->
+         서버: 관리자 계정 확인 후 자동 표시
+         로그인 화면은 항상 영어 고정 -->
     <div id="adminCodeArea" style="display:none">
       <div class="fg" style="margin-bottom:0">
-        <label>관리자 코드</label>
+        <label>Admin code</label>
         <div style="display:flex;gap:6px;align-items:center">
           <input type="password" id="loginAdminCode" class="fc"
-            placeholder="관리자 코드 입력"
+            placeholder="Enter admin code"
             onkeydown="if(event.key==='Enter')doLoginWithAdmin()"
             style="flex:1">
           <button class="btn-login" onclick="doLoginWithAdmin()"
-            style="width:auto;padding:8px 14px;margin-top:0;flex-shrink:0">로그인</button>
+            style="width:auto;padding:8px 14px;margin-top:0;flex-shrink:0">Log In</button>
         </div>
       </div>
       <div style="font-size:10px;color:var(--text3);margin-top:4px;margin-bottom:10px">
-        코드 없이 로그인하려면 아래 버튼을 클릭하세요
+        Click the button below to log in without a code
       </div>
     </div>
 
-    <button class="btn-login" id="btnLoginPro" onclick="doLoginPro()">로그인</button>
+    <button class="btn-login" id="btnLoginPro" onclick="doLoginPro()">Log In</button>
     <div id="loginErrPro" class="auth-err"></div>
 
     <!-- 소셜 링크 -->
@@ -1538,7 +1539,7 @@ body.pred-edit-mode .nacts{min-width:44px}
       </a>
       <a class="social-btn" href="mailto:hanimax4001@gmail.com" id="emailLink">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
-        문의
+        Contact
       </a>
     </div>
   </div>
@@ -1575,7 +1576,7 @@ body.pred-edit-mode .nacts{min-width:44px}
     </div>
     <div class="hdr-r">
       <span class="hdr-co" id="hdrCo"></span>
-      <span id="hdrUserName" style="font-size:10px;background:rgba(255,255,255,.22);padding:2px 9px;border-radius:20px;display:none;cursor:pointer" onclick="showMyInfo()" title="개인정보 수정"></span>
+      <span id="hdrUserName" style="font-size:10px;background:rgba(255,255,255,.22);padding:2px 9px;border-radius:20px;display:none"></span>
       <span id="connStatus" style="font-size:10px;padding:2px 9px;border-radius:20px;background:rgba(0,0,0,.18);color:#fbbf24">● 연결 중...</span>
       <!-- 파일 풀다운 메뉴: 저장/열기/출력(실적 관리·간트 차트·PDF·PNG) -->
       <div class="hdr-menu-wrap no-print" id="hdrMenuWrap">
@@ -1594,7 +1595,7 @@ body.pred-edit-mode .nacts{min-width:44px}
           <button class="hdr-mi" onclick="hdrMenuAct(showHolidayModal)">🗓️ 공휴일 관리</button>
         </div>
       </div>
-      <button class="btn bg-btn btn-xs no-print" id="logoutBtn" onclick="doLogout()">로그아웃</button>
+      <button class="btn bg-btn btn-xs no-print" id="settingsBtn" onclick="showSettingsModal('account')">⚙ 설정</button>
     </div>
   </header>
 
@@ -1942,6 +1943,54 @@ const HOLIDAYS={
 // ══════════════════════════════════════════════
 //  STATE
 // ══════════════════════════════════════════════
+// ══════════════════════════════════════════════
+//  I18N (언어팩) — 새 언어 추가 시 아래 딕셔너리에 언어 키(예: 'ja','es','de')만
+//  추가하면 된다. 로그인 화면(loginScreen)과 gate.html은 별도(하드코딩 영문/이중언어),
+//  여기 적용 범위는 헤더·탭바·설정 화면 등 로그인 이후 UI.
+// ══════════════════════════════════════════════
+const I18N = {
+  ko: {
+    menu:'☰ 메뉴', settings:'⚙ 설정',
+    tabInput:'✏️ 데이터 입력', tabMerge:'🗂️ 취합', tabMeeting:'🤝 통합 비교(회의)',
+    tabTimeline:'📋 공정 흐름', tabAi:'🤖 AI 분석', tabAdmin:'⚙️ 관리자',
+    stgTitle:'설정', stgAccount:'계정', stgLang:'언어', stgApiKey:'API 키', stgSub:'구독', stgLogout:'로그아웃',
+    stgName:'이름', stgPwCur:'현재 비밀번호', stgPwNew:'새 비밀번호', stgPwNew2:'새 비밀번호 확인',
+    stgSave:'저장', stgClose:'닫기', stgCloseWin:'✕ 창 닫기',
+    subDesc:'구독하면 앱을 최신 상태로 유지할 수 있도록 자동 업데이트 알림을 받을 수 있습니다.',
+    subYes:'✅ 구독 중', subNo:'❌ 구독 중이 아닙니다', subRecent:'최근 영상', subLoading:'불러오는 중...', subNone:'표시할 영상이 없습니다',
+  },
+  en: {
+    menu:'☰ Menu', settings:'⚙ Settings',
+    tabInput:'✏️ Data Input', tabMerge:'🗂️ Merge', tabMeeting:'🤝 Compare (Meeting)',
+    tabTimeline:'📋 Flow', tabAi:'🤖 AI Analysis', tabAdmin:'⚙️ Admin',
+    stgTitle:'Settings', stgAccount:'Account', stgLang:'Language', stgApiKey:'API Key', stgSub:'Subscription', stgLogout:'Log out',
+    stgName:'Name', stgPwCur:'Current password', stgPwNew:'New password', stgPwNew2:'Confirm new password',
+    stgSave:'Save', stgClose:'Close', stgCloseWin:'✕ Close window',
+    subDesc:'Subscribing lets you receive auto-update notifications so the app always stays current.',
+    subYes:'✅ Subscribed', subNo:'❌ Not subscribed', subRecent:'Recent videos', subLoading:'Loading...', subNone:'No videos to show',
+  },
+};
+let _lang = (function(){ try{ return localStorage.getItem('ms_lang')||'ko'; }catch(e){ return 'ko'; } })();
+function t(key){ return (I18N[_lang]&&I18N[_lang][key]) || I18N.ko[key] || key; }
+function setLang(lang){
+  if(!I18N[lang]) return;
+  _lang=lang;
+  try{ localStorage.setItem('ms_lang', lang); }catch(e){}
+  applyI18n();
+  showSettingsModal('lang'); // 라벨 갱신 반영해 다시 그림
+}
+function applyI18n(){
+  var mb=document.querySelector('#hdrMenuWrap > button');
+  if(mb) mb.innerHTML=t('menu')+' <span style="font-size:8px">▼</span>';
+  var sb=document.getElementById('settingsBtn'); if(sb) sb.textContent=t('settings');
+  var tIn=document.querySelector('.tab-bar [data-tab="input"]'); if(tIn) tIn.textContent=t('tabInput');
+  var tMg=document.getElementById('mergeTabBtn'); if(tMg) tMg.textContent=t('tabMerge');
+  var tMt=document.getElementById('meetingTabBtn'); if(tMt) tMt.textContent=t('tabMeeting');
+  var tTl=document.getElementById('timelineTabBtn'); if(tTl) tTl.textContent=t('tabTimeline');
+  var tAi=document.getElementById('aiTabBtn'); if(tAi) tAi.textContent=t('tabAi');
+  var tAd=document.getElementById('adminTabBtn'); if(tAd) tAd.textContent=t('tabAdmin');
+}
+
 let CU=null;
 let VCID=null;
 let GM='day';
@@ -2303,9 +2352,7 @@ function _bootLocalWindow(){
   document.getElementById('loginScreen').style.display='none';
   document.getElementById('app').style.display='block';
   try{ document.title='🗔 로컬 공정표 — '+(payload.company||payload.name||''); }catch(e){}
-  // 로컬 전용 창: 로그아웃 대신 "창 닫기"
-  const _lo=document.getElementById('logoutBtn');
-  if(_lo){ _lo.textContent='✕ 창 닫기'; _lo.onclick=function(){ try{ window.close(); }catch(e){} }; }
+  // 로컬 전용 창(?localwin=1)에서는 설정 > 로그아웃 섹션이 "창 닫기"로 표시됨(showSettingsModal 참고)
   initApp();
 }
 // 공정표 파일에서 "진짜" 주 프로젝트 선택 (만든 사람 키와 무관하게 portable)
@@ -2437,8 +2484,8 @@ function _doLocalLogin(){
   const name=(document.getElementById('loginNamePro').value||'').trim();
   const pw=document.getElementById('loginPwPro').value;
   const err=document.getElementById('loginErrPro');
-  if(!name){err.textContent='이름을 입력하세요';return}
-  if(!pw){err.textContent='비밀번호를 입력하세요';return}
+  if(!name){err.textContent='Please enter your name';return}
+  if(!pw){err.textContent='Please enter your password';return}
 
   const STORE_KEY='ms_pro_users';
   let users={};
@@ -2448,14 +2495,14 @@ function _doLocalLogin(){
   const wMsg=document.getElementById('welcomeMsg');
 
   if(users[name]){
-    if(users[name].pw!==hashed){err.textContent='비밀번호가 올바르지 않습니다';return}
+    if(users[name].pw!==hashed){err.textContent='Incorrect password';return}
     banner.style.display='none';
     _enterLocalApp(name);
   } else {
     users[name]={pw:hashed, created:Date.now()};
     try{ localStorage.setItem(STORE_KEY, JSON.stringify(users)); }catch(e){}
     banner.style.display='block';
-    wMsg.textContent=`${name}님, 처음 오셨군요! 계정이 생성되었습니다. 다음부터는 같은 이름과 비밀번호로 바로 입장하실 수 있습니다.`;
+    wMsg.textContent=`Welcome, ${name}! Your account has been created. Next time, just log in with the same name and password.`;
     setTimeout(()=>_enterLocalApp(name), 1800);
   }
 }
@@ -2466,16 +2513,16 @@ function _checkAdminCode(){
   const pw=document.getElementById('loginPwPro').value;
   const val=(document.getElementById('loginAdminCode').value||'').trim();
   const err=document.getElementById('loginErrPro');
-  if(!name){err.textContent='이름을 입력하세요';return}
-  if(!pw){err.textContent='비밀번호를 입력하세요';return}
-  if(!val){err.textContent='관리자 코드를 입력하세요';return}
+  if(!name){err.textContent='Please enter your name';return}
+  if(!pw){err.textContent='Please enter your password';return}
+  if(!val){err.textContent='Please enter the admin code';return}
 
   // ① 관리자 코드 검증
   const hashedCode=hpw(val);
   let storedCode='';
   try{ storedCode=localStorage.getItem('ms_adminCode')||''; }catch(e){}
   const codeValid=storedCode ? (hashedCode===storedCode) : (hashedCode===_DEFAULT_MASTER_CODE);
-  if(!codeValid){err.textContent='관리자 코드가 올바르지 않습니다';return}
+  if(!codeValid){err.textContent='Incorrect admin code';return}
 
   // ② 기존 enterprise 계정 확인 (d.companies에서 adminName 검색)
   const d=gs();
@@ -2483,7 +2530,7 @@ function _checkAdminCode(){
 
   if(byName){
     // 계정은 있음 — 비밀번호 확인
-    if(byName.pw!==hpw(pw)){err.textContent='비밀번호가 올바르지 않습니다';return}
+    if(byName.pw!==hpw(pw)){err.textContent='Incorrect password';return}
     // 이름+비번+코드 모두 일치 → enterprise 모드 로그인
     CU={id:byName.id,name:byName.name,isPrimary:true,userName:name,ver:'ent'};
     VCID=null;
@@ -2511,8 +2558,8 @@ async function _doServerLogin(withAdminCode){
   const name=(document.getElementById('loginNamePro').value||'').trim();
   const pw=document.getElementById('loginPwPro').value;
   const err=document.getElementById('loginErrPro');
-  if(!name){err.textContent='이름을 입력하세요';return}
-  if(!pw){err.textContent='비밀번호를 입력하세요';return}
+  if(!name){err.textContent='Please enter your name';return}
+  if(!pw){err.textContent='Please enter your password';return}
 
   const body={userName:name, pw};
   if(withAdminCode){
@@ -2527,7 +2574,7 @@ async function _doServerLogin(withAdminCode){
     const r=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
     const result=await r.json();
     document.getElementById('btnLoginPro').disabled=false;
-    if(!result.ok){err.textContent=result.msg||'로그인 실패';return}
+    if(!result.ok){err.textContent=result.msg||'Login failed';return}
 
     const u=result.user;
     // 관리자 계정이고 아직 코드 입력란이 안 보인 상태 → 입력란 표시 + 기존 로그인 버튼 숨김
@@ -2542,7 +2589,7 @@ async function _doServerLogin(withAdminCode){
     _enterServerApp(u);
   }catch(e){
     document.getElementById('btnLoginPro').disabled=false;
-    err.textContent='서버 연결 오류: '+e.message;
+    err.textContent='Server connection error: '+e.message;
   }
 }
 
@@ -2919,10 +2966,11 @@ function initApp(){
     const _bE=document.getElementById('ctog-EVBTN'); if(_bE)_bE.classList.toggle('on',_EV_BTN_VIS);
   }catch(e){}
   document.getElementById('hdrCo').textContent=CU.name;
-  // 이름 배지 표시
+  // 이름 배지 표시(라벨 전용 — 회사명과 동일하게 클릭해도 아무 동작 없음. 계정 수정은 ⚙ 설정)
   const nameEl=document.getElementById('hdrUserName');
   if(CU.userName){nameEl.textContent='👤 '+CU.userName;nameEl.style.display='';}
   else{nameEl.style.display='none';}
+  applyI18n();
   // 공사명(현장명)은 최상단(projName), 업체명(coNameInp)은 회사명
   document.getElementById('projName').value = _privateLocal ? (p.projectName||(_localDoc&&_localDoc.name)||'') : ((_serverMode && _siteName) ? _siteName : (p.projectName||''));
   document.getElementById('coNameInp').value = _privateLocal ? (p.companyName||CU.name) : CU.name;
@@ -7872,28 +7920,64 @@ async function _saveMyAdminCode(){
     else toast('실패: '+(j.msg||''));
   }catch(e){ toast('서버 오류'); }
 }
-function showMyInfo(){
+// ══════════════════════════════════════════════
+//  ⚙ 설정 모달 — 계정 / 언어 / API 키(Pro) / 구독 / 로그아웃
+// ══════════════════════════════════════════════
+let _settingsSection='account';
+function showSettingsModal(section){
   if(!CU) return;
-  const isPro = (CU.ver==='pro');
-  const savedKey = localStorage.getItem('ms_claude_key')||''; // Pro/Ent 모두 localStorage 사용
+  section = section || _settingsSection || 'account';
+  _settingsSection = section;
+  const isPro=(CU.ver==='pro');
+  const isLocalWin=new URLSearchParams(location.search).get('localwin')==='1';
+  const nav=[
+    {key:'account', label:t('stgAccount'), ic:'👤'},
+    {key:'lang',    label:t('stgLang'),    ic:'🌐'},
+  ];
+  if(isPro) nav.push({key:'apikey', label:t('stgApiKey'), ic:'🔑'});
+  nav.push({key:'sub',    label:t('stgSub'),    ic:'▶'});
+  nav.push({key:'logout', label:isLocalWin?t('stgCloseWin'):t('stgLogout'), ic:'🚪'});
+
+  const navHtml=nav.map(n=>
+    `<button class="hdr-mi" style="justify-content:flex-start;${n.key===section?'background:var(--surface2);font-weight:700;':''}" onclick="showSettingsModal('${n.key}')">${n.ic} ${esc(n.label)}</button>`
+  ).join('');
+
+  let body='';
+  if(section==='account') body=_renderSettingsAccount(isPro);
+  else if(section==='lang') body=_renderSettingsLang();
+  else if(section==='apikey' && isPro) body=_renderSettingsApiKey();
+  else if(section==='sub') body=_renderSettingsSub();
+  else if(section==='logout') body=_renderSettingsLogout(isLocalWin);
+
   showModal(`
-    <div class="modal-title">👤 개인정보 수정</div>
-    <div class="fg" style="margin-bottom:8px">
-      <label style="font-size:11px;color:var(--text3)">이름</label>
-      <div style="font-size:13px;font-weight:600;padding:4px 0">${esc(CU.userName||'')}</div>
+    <div class="modal-title">⚙ ${esc(t('stgTitle'))}</div>
+    <div style="display:flex;gap:14px;min-height:260px">
+      <div style="display:flex;flex-direction:column;gap:2px;width:128px;flex:none;border-right:1px solid var(--border);padding-right:10px">${navHtml}</div>
+      <div style="flex:1;min-width:0">${body}</div>
     </div>
-    <div style="border-top:1px solid var(--border);padding-top:12px;margin-top:4px">
-      <div style="font-size:12px;font-weight:600;margin-bottom:10px;color:var(--text2)">🔑 비밀번호 변경</div>
-      <div class="fg"><label>현재 비밀번호</label>
-        <input type="password" id="myOldPw" class="fc" placeholder="현재 비밀번호">
+    <div class="modal-acts"><button class="btn bgray" onclick="closeModal()">${esc(t('stgClose'))}</button></div>
+  `);
+  if(section==='sub') _loadSubscriptionInfo();
+}
+
+function _renderSettingsAccount(isPro){
+  return `
+    <div class="fg" style="margin-bottom:8px">
+      <label style="font-size:11px;color:var(--text3)">${esc(t('stgName'))}</label>
+      <div style="font-size:13px;font-weight:600;padding:4px 0">${esc((CU&&CU.userName)||'')}</div>
+    </div>
+    <div>
+      <div class="fg"><label>${esc(t('stgPwCur'))}</label>
+        <input type="password" id="myOldPw" class="fc" placeholder="${esc(t('stgPwCur'))}">
       </div>
-      <div class="fg"><label>새 비밀번호</label>
-        <input type="password" id="myNewPw" class="fc" placeholder="새 비밀번호">
+      <div class="fg"><label>${esc(t('stgPwNew'))}</label>
+        <input type="password" id="myNewPw" class="fc" placeholder="${esc(t('stgPwNew'))}">
       </div>
-      <div class="fg"><label>새 비밀번호 확인</label>
-        <input type="password" id="myNewPw2" class="fc" placeholder="새 비밀번호 재입력">
+      <div class="fg"><label>${esc(t('stgPwNew2'))}</label>
+        <input type="password" id="myNewPw2" class="fc" placeholder="${esc(t('stgPwNew2'))}">
       </div>
       <div id="myInfoErr" class="auth-err"></div>
+      <button class="btn bp btn-xs" onclick="_doChangePw(${isPro})">${esc(t('stgSave'))}</button>
     </div>
     ${(_myRole==='master'||_myRole==='manager')?`<div style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
       <div style="font-size:12px;font-weight:600;margin-bottom:8px;color:var(--text2)">🔐 관리자 탭 접근 코드</div>
@@ -7901,21 +7985,7 @@ function showMyInfo(){
       <button class="btn bp btn-xs" onclick="_saveMyAdminCode()" style="margin-top:6px">코드 저장</button>
       <div style="font-size:10px;color:var(--text3);margin-top:4px">관리자 탭을 열 때 입력하는 코드입니다. (비우면 코드 없이 접근)</div>
     </div>`:''}
-    ${isPro?`<div style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
-      <div style="font-size:12px;font-weight:600;margin-bottom:8px;color:var(--text2)">🤖 AI API Key <span style="font-weight:400;color:var(--text3)">(공급자 자동 인식)</span></div>
-      <div class="fg">
-        <input type="password" id="myClaudeKey" class="fc" style="width:100%;font-family:monospace;font-size:11px"
-          placeholder="gsk_... (Groq) / sk-ant-... (Claude) / sk-... (OpenAI)" value="${esc(savedKey)}">
-      </div>
-      <div style="font-size:10px;color:var(--text3);margin-top:5px">키 앞글자로 공급자를 자동 인식합니다 — gsk_=Groq(무료), sk-ant=Claude, sk-=OpenAI. 저장하면 AI 분석에 사용됩니다. (키 없이도 지연·충돌 분석은 표시됩니다.)</div>
-    </div>`:''}
-    ${!isPro?`<div style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px;font-size:11px;color:var(--text3)">
-      🤖 Claude API Key 설정은 <b>관리자 탭</b>에서 관리합니다.
-    </div>`:''}
-    <div class="modal-acts">
-      <button class="btn bgray" onclick="closeModal()">닫기</button>
-      <button class="btn bp" onclick="_doChangePw(${isPro})">저장</button>
-    </div>`);
+  `;
 }
 
 async function _doChangePw(isPro){
@@ -7938,12 +8008,6 @@ async function _doChangePw(isPro){
     }
     users[name].pw=hpw(newPw);
     try{ localStorage.setItem(STORE_KEY, JSON.stringify(users)); }catch(e){}
-    // Claude API Key 저장 (Pro 버전 전용)
-    const ckEl=document.getElementById('myClaudeKey');
-    if(ckEl){
-      const ck=ckEl.value.trim();
-      try{ if(ck) localStorage.setItem('ms_claude_key',ck); else localStorage.removeItem('ms_claude_key'); }catch(e){}
-    }
     closeModal();
     toast('저장되었습니다');
   } else {
@@ -7958,6 +8022,83 @@ async function _doChangePw(isPro){
       toast('저장되었습니다');
     }catch(e){ err.textContent='서버 오류: '+e.message; }
   }
+}
+
+function _renderSettingsLang(){
+  const opts=[{code:'ko',label:'한국어'},{code:'en',label:'English'}];
+  return `
+    <div style="font-size:12px;color:var(--text2);margin-bottom:12px">${esc(t('stgLang'))}</div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      ${opts.map(o=>`<button class="btn ${o.code===_lang?'bp':'bgray'} btn-xs" style="justify-content:flex-start;text-align:left" onclick="setLang('${o.code}')">${o.code===_lang?'✓ ':''}${esc(o.label)}</button>`).join('')}
+    </div>
+    <div style="font-size:10px;color:var(--text3);margin-top:10px">선택한 언어는 저장되어 다음에 앱을 열 때도 그대로 적용됩니다.</div>
+  `;
+}
+
+function _renderSettingsApiKey(){
+  const savedKey=localStorage.getItem('ms_claude_key')||'';
+  return `
+    <div style="font-size:12px;font-weight:600;margin-bottom:8px;color:var(--text2)">🤖 AI API Key <span style="font-weight:400;color:var(--text3)">(공급자 자동 인식)</span></div>
+    <div class="fg">
+      <input type="password" id="myClaudeKey" class="fc" style="width:100%;font-family:monospace;font-size:11px"
+        placeholder="gsk_... (Groq) / sk-ant-... (Claude) / sk-... (OpenAI)" value="${esc(savedKey)}">
+    </div>
+    <div style="font-size:10px;color:var(--text3);margin:5px 0 10px">키 앞글자로 공급자를 자동 인식합니다 — gsk_=Groq(무료), sk-ant=Claude, sk-=OpenAI. 저장하면 AI 분석에 사용됩니다. (키 없이도 지연·충돌 분석은 표시됩니다.)</div>
+    <button class="btn bp btn-xs" onclick="_saveMyApiKey()">${esc(t('stgSave'))}</button>
+    <div id="myApiKeyMsg" style="font-size:11px;color:var(--green,#1a6b3a);margin-top:6px"></div>
+  `;
+}
+function _saveMyApiKey(){
+  const el=document.getElementById('myClaudeKey');
+  const ck=(el&&el.value||'').trim();
+  try{ if(ck) localStorage.setItem('ms_claude_key',ck); else localStorage.removeItem('ms_claude_key'); }catch(e){}
+  const msg=document.getElementById('myApiKeyMsg'); if(msg) msg.textContent='저장되었습니다';
+}
+
+function _renderSettingsSub(){
+  return `
+    <div style="font-size:12px;font-weight:600;margin-bottom:6px;color:var(--text2)">▶ YouTube</div>
+    <div style="font-size:11.5px;color:var(--text2);line-height:1.6;margin-bottom:10px">${esc(t('subDesc'))}</div>
+    <div id="stgSubStatus" style="font-size:12px;font-weight:600;margin-bottom:12px">${esc(t('subLoading'))}</div>
+    <a class="btn bp btn-xs" style="display:inline-block;width:auto;padding:6px 14px" href="https://www.youtube.com/channel/UCN5pilUpAxWgfatwuKGx-LQ?sub_confirmation=1" target="_blank" rel="noopener">▶ 채널 열기</a>
+    <div style="font-size:11px;font-weight:700;color:var(--text2);margin:16px 0 8px">${esc(t('subRecent'))}</div>
+    <div id="stgSubVideos" style="display:flex;gap:10px">${esc(t('subLoading'))}</div>
+  `;
+}
+async function _loadSubscriptionInfo(){
+  const statusEl=document.getElementById('stgSubStatus');
+  const vidEl=document.getElementById('stgSubVideos');
+  try{
+    const g = window.terminusNative&&window.terminusNative.gateStatus
+      ? await window.terminusNative.gateStatus()
+      : await fetch('/api/gate/status').then(r=>r.json());
+    if(statusEl) statusEl.textContent = g && g.subscribed ? t('subYes') : t('subNo');
+  }catch(e){ if(statusEl) statusEl.textContent=t('subNo'); }
+  try{
+    const v = window.terminusNative&&window.terminusNative.gateVideos
+      ? await window.terminusNative.gateVideos()
+      : await fetch('/auth/gate/videos').then(r=>r.json());
+    const videos=(v&&v.videos)||[];
+    if(!vidEl) return;
+    if(!videos.length){ vidEl.textContent=t('subNone'); return; }
+    vidEl.innerHTML=videos.map(vv=>`
+      <a href="${esc(vv.url)}" target="_blank" rel="noopener" style="display:block;width:120px;text-decoration:none;color:var(--text)">
+        <img src="${esc(vv.thumbnail)}" style="width:120px;height:68px;object-fit:cover;border-radius:6px;border:1px solid var(--border)">
+        <div style="font-size:10.5px;line-height:1.4;margin-top:4px;color:var(--text2);overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">${esc(vv.title)}</div>
+      </a>`).join('');
+  }catch(e){ if(vidEl) vidEl.textContent=t('subNone'); }
+}
+
+function _renderSettingsLogout(isLocalWin){
+  return `
+    <div style="font-size:12px;color:var(--text2);margin-bottom:14px">${isLocalWin?'로컬 전용 창을 닫습니다.':'현재 계정에서 로그아웃합니다.'}</div>
+    <button class="btn bd btn-xs" onclick="_doSettingsLogout(${isLocalWin})">${esc(isLocalWin?t('stgCloseWin'):t('stgLogout'))}</button>
+  `;
+}
+function _doSettingsLogout(isLocalWin){
+  closeModal();
+  if(isLocalWin){ try{ window.close(); }catch(e){} return; }
+  doLogout();
 }
 
 // ══════════════════════════════════════════════
