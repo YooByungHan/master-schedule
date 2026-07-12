@@ -20,17 +20,21 @@
     font-family:'Noto Sans KR','Segoe UI',sans-serif;background:var(--bg);color:var(--text);padding:20px}
   .wrap{display:flex;width:820px;max-width:100%;background:var(--surface);border-radius:16px;
     box-shadow:0 16px 48px rgba(28,58,94,.14);overflow:hidden;border:1px solid var(--border)}
-  .panel-l{width:360px;flex:none;padding:34px 30px;display:flex;flex-direction:column;justify-content:center}
+  .panel-l{width:360px;flex:none;padding:24px 30px;display:flex;flex-direction:column;justify-content:center}
   .panel-r{flex:1;background:linear-gradient(160deg,var(--navy) 0%,var(--navy2) 100%);color:#fff;
-    padding:34px 30px;display:flex;flex-direction:column;justify-content:center;gap:14px}
+    padding:26px 30px;display:flex;flex-direction:column;justify-content:center;gap:12px}
   @media (max-width:640px){ .wrap{flex-direction:column;width:420px} .panel-r{order:-1} }
 
-  .brand{font-size:15px;font-weight:800;color:var(--navy);letter-spacing:.02em;margin-bottom:2px}
-  .brand small{display:block;font-size:11px;font-weight:500;color:var(--text3);letter-spacing:.03em;margin-top:2px}
-  h1{font-size:16px;margin:18px 0 6px;color:var(--text)}
+  .logo-mark{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .logo-icon{flex:none;width:44px;height:44px;border-radius:11px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center}
+  .logo-text{line-height:1.2}
+  .logo-text .lt-sub{display:block;font-size:11px;font-weight:600;letter-spacing:.18em;color:#c9d8ea}
+  .logo-text .lt-main{display:block;font-size:19px;font-weight:800;color:#fff;letter-spacing:.005em}
+  .logo-text .lt-line{display:block;width:34px;height:3px;background:#d1483c;border-radius:2px;margin-top:5px}
+  h1{font-size:16px;margin:0 0 6px;color:var(--text)}
   p{font-size:12.5px;line-height:1.7;color:var(--text2);margin:0 0 14px}
   .steps{text-align:left;font-size:12px;color:var(--text2);background:var(--surface2);
-    border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin:0 0 16px;line-height:1.8}
+    border:1px solid var(--border);border-radius:10px;padding:11px 14px;margin:0 0 14px;line-height:1.45}
   .steps b{color:var(--navy)}
   .code-wrap{margin:6px 0 14px}
   .code{font-family:'JetBrains Mono',Consolas,monospace;font-size:28px;font-weight:700;letter-spacing:3px;
@@ -69,17 +73,15 @@
   <div class="wrap">
     <div class="panel-l card" id="card">
       <div id="loading">
-        <div class="brand">MASTER SCHEDULE<small>Terminus</small></div>
         <p style="margin-top:18px"><span class="spin"></span>확인 중...<span class="bi-en">Checking...</span></p>
       </div>
 
       <div id="deviceFlow" class="hidden">
-        <div class="brand">MASTER SCHEDULE<small>Terminus</small></div>
         <h1>기기 등록<span class="bi-en">Device Registration</span></h1>
         <div class="steps">
-          <b>①</b> 아래 코드가 자동으로 복사됩니다<span class="bi-en">Code below is copied automatically</span><br><br>
-          <b>②</b> "인증 페이지 열기" 클릭<span class="bi-en">Click "Open verification page"</span><br><br>
-          <b>③</b> 구글 페이지에서 <b>Ctrl+V</b>로 붙여넣기<span class="bi-en">Paste with <b>Ctrl+V</b> on the Google page</span>
+          <div style="margin-bottom:7px"><b>①</b> 아래 코드가 자동으로 복사됩니다<span class="bi-en">Code below is copied automatically</span></div>
+          <div style="margin-bottom:7px"><b>②</b> "인증 페이지 열기" 클릭<span class="bi-en">Click "Open verification page"</span></div>
+          <div><b>③</b> 구글 페이지에서 <b>Ctrl+V</b>로 붙여넣기<span class="bi-en">Paste with <b>Ctrl+V</b> on the Google page</span></div>
         </div>
         <div class="code-wrap">
           <div class="code" id="userCode" title="클릭하면 다시 복사됩니다 / Click to copy again">------</div>
@@ -93,7 +95,6 @@
       </div>
 
       <div id="blocked" class="hidden">
-        <div class="brand">MASTER SCHEDULE<small>Terminus</small></div>
         <h1>구독자 전용 기능입니다<span class="bi-en">Subscribers only</span></h1>
         <p>체험판 기간이 종료되었습니다.<br>채널을 구독하면 계속 사용할 수 있습니다.
           <span class="bi-en" style="margin-top:8px">Your trial period has ended.<br>Subscribe to the channel to keep using the app.</span>
@@ -105,6 +106,23 @@
     </div>
 
     <div class="panel-r">
+      <div class="logo-mark">
+        <div class="logo-icon">
+          <svg width="26" height="26" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="9" width="20" height="5" rx="2.5" fill="#1c3a5e"/>
+            <rect x="14" y="19" width="20" height="5" rx="2.5" fill="#6f9fc4"/>
+            <rect x="8" y="29" width="15" height="5" rx="2.5" fill="#d1483c"/>
+            <path d="M28 11.5L21 22" stroke="#1c3a5e" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M21 22L8 29.5" stroke="#d1483c" stroke-width="1.6" stroke-linecap="round"/>
+            <circle cx="21" cy="22" r="3" fill="#1c3a5e"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="lt-sub">TERMINUS</span>
+          <span class="lt-main">MASTER SCHEDULE</span>
+          <span class="lt-line"></span>
+        </div>
+      </div>
       <div class="feat-title">Create your Gantt chart today!</div>
       <div class="feat-sub">공정률까지 한 번에 관리하는 건설 공정표<span class="bi-en" style="color:#c9d8ea">Construction schedules with progress tracking, all in one place</span></div>
       <ul class="feat-list">
