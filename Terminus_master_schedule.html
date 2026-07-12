@@ -1548,22 +1548,22 @@ body.pred-edit-mode .nacts{min-width:44px}
 <!-- ══ SETUP ══ -->
 <div id="setupScreen" class="overlay" style="display:none">
   <div class="card">
-    <div class="card-logo"><h1>⚙️ 관리자 설정</h1><p>관리자 계정을 생성합니다</p></div>
+    <div class="card-logo"><h1 id="setupTitleEl">⚙️ 관리자 설정</h1><p id="setupSubtitleEl">관리자 계정을 생성합니다</p></div>
     <!-- 서버 전용: 마스터 코드 확인 필드 -->
     <div id="setupMasterWrap" style="display:none" class="fg">
-      <label>마스터 코드 <span style="font-size:9px;color:#a09b95">(최초 서버 등록용)</span></label>
+      <label id="setupMasterLblEl">마스터 코드 <span id="setupMasterNoteEl" style="font-size:9px;color:#a09b95">(최초 서버 등록용)</span></label>
       <input type="password" id="setupMasterCode" class="fc" placeholder="마스터 코드 입력">
     </div>
-    <div class="fg"><label>회사명</label><input type="text" id="setupCo" class="fc" placeholder="회사명 입력"></div>
-    <div class="fg"><label>관리자 이름</label><input type="text" id="setupAdminName" class="fc" placeholder="홍길동"></div>
-    <div class="fg"><label>비밀번호</label><input type="password" id="setupPw" class="fc" placeholder="비밀번호"></div>
-    <div class="fg"><label>비밀번호 확인</label><input type="password" id="setupPw2" class="fc" placeholder="비밀번호 재입력"></div>
-    <div class="fg"><label>관리자 코드 <span style="font-size:9px;color:#a09b95;font-weight:400">(관리자 탭 진입 코드 — 변경 가능)</span></label>
+    <div class="fg"><label id="setupCoLblEl">회사명</label><input type="text" id="setupCo" class="fc" placeholder="회사명 입력"></div>
+    <div class="fg"><label id="setupAdminNameLblEl">관리자 이름</label><input type="text" id="setupAdminName" class="fc" placeholder="홍길동"></div>
+    <div class="fg"><label id="setupPwLblEl">비밀번호</label><input type="password" id="setupPw" class="fc" placeholder="비밀번호"></div>
+    <div class="fg"><label id="setupPw2LblEl">비밀번호 확인</label><input type="password" id="setupPw2" class="fc" placeholder="비밀번호 재입력"></div>
+    <div class="fg"><label id="setupAdminCodeLblEl">관리자 코드 <span id="setupAdminCodeNoteEl" style="font-size:9px;color:#a09b95;font-weight:400">(관리자 탭 진입 코드 — 변경 가능)</span></label>
       <input type="password" id="setupAdminCode" class="fc" placeholder="관리자 전용 코드 설정"></div>
-    <div class="fg"><label>관리자 코드 확인</label><input type="password" id="setupAdminCode2" class="fc" placeholder="관리자 코드 재입력"></div>
-    <button class="btn-login" onclick="doSetup()">설정 완료</button>
+    <div class="fg"><label id="setupAdminCode2LblEl">관리자 코드 확인</label><input type="password" id="setupAdminCode2" class="fc" placeholder="관리자 코드 재입력"></div>
+    <button class="btn-login" id="setupCompleteBtnEl" onclick="doSetup()">설정 완료</button>
     <div id="setupErr" class="auth-err"></div>
-    <div class="auth-link"><button onclick="showLogin()">← 돌아가기</button></div>
+    <div class="auth-link"><button id="setupBackBtnEl" onclick="showLogin()">← 돌아가기</button></div>
   </div>
 </div>
 
@@ -2025,6 +2025,24 @@ const I18N = {
     chartTooLargeMsg:'⚠ 차트가 너무 큽니다 — 단위를 주/10일로 바꾸거나 [범위]를 지정 후 다시 시도하세요', pdfLibLoadFailMsg:'⚠ PDF 라이브러리 로드 실패 — 인터넷 연결 확인 후 다시 시도하세요', pdfGenFailRetryMsg:'⚠ PDF 생성 실패 — 단위를 주/10일로 바꾸거나 [범위]를 지정 후 다시 시도하세요',
     pdfSavedMsg:'PDF 저장 완료 ({pages}페이지)',
     noSiteInfoBackupMsg:'현장 정보가 없습니다', backupFailMsg:'백업 실패: {msg}', backupDoneMsg:'✅ 백업 완료 (서버 + 내 PC): {name}',
+    setupTitle:'⚙️ 관리자 설정', setupSubtitle:'관리자 계정을 생성합니다', setupMasterLbl:'마스터 코드',
+    setupMasterNote:'(최초 서버 등록용)', setupMasterPh:'마스터 코드 입력', setupCoLbl:'회사명',
+    setupCoPh:'회사명 입력', setupAdminNameLbl:'관리자 이름', setupAdminNamePh:'홍길동',
+    setupPwLbl:'비밀번호', setupPwPh:'비밀번호', setupPw2Lbl:'비밀번호 확인',
+    setupPw2Ph:'비밀번호 재입력', setupAdminCodeLbl:'관리자 코드', setupAdminCodeNote:'(관리자 탭 진입 코드 — 변경 가능)',
+    setupAdminCodePh:'관리자 전용 코드 설정', setupAdminCode2Lbl:'관리자 코드 확인', setupAdminCode2Ph:'관리자 코드 재입력',
+    setupCompleteBtn:'설정 완료', setupBackBtn:'← 돌아가기', setupCoNameEmptyErr:'회사명을 입력하세요',
+    setupAdminNameEmptyErr:'관리자 이름을 입력하세요', setupPwEmptyErr:'비밀번호를 입력하세요', setupPwMismatchErr:'비밀번호가 일치하지 않습니다',
+    setupAdminCodeEmptyErr:'관리자 코드를 입력하세요', setupAdminCodeMismatchErr:'관리자 코드가 일치하지 않습니다', setupCoExistsMsg:'⚠️ "{co}" 이름의 업체가 이미 있습니다.',
+    setupCoExistsYesBtn:'예, 추가 생성', setupAdminCreatedMsg:'관리자 계정이 생성되었습니다', setupMasterCodeEmptyErr:'마스터 코드를 입력하세요',
+    setupCreateFailErr:'생성 실패', setupServerConnErr:'서버 연결 오류',
+    serverConnFailStartLocalMsg:'⚠ 서버 연결 실패 — 로컬 데이터로 시작합니다',
+    localFileScheduleNotFoundMsg:'이 파일에서 공정표를 찾지 못했습니다', localFileReadFailMsg:'파일 읽기 실패: {msg}', switchLocalDocEditMsg:'💻 로컬 파일(비공개) 편집 — 서버에 저장되지 않습니다. 저장은 메뉴 💾(파일 다운로드)',
+    adminTabCodeSectionTitle:'🔐 관리자 탭 접근 코드', adminTabCodeNewPh:'새 관리자 코드', adminTabCodeSaveBtn:'코드 저장',
+    adminTabCodeHint:'관리자 탭을 열 때 입력하는 코드입니다. (비우면 코드 없이 접근)', myAdminCodeSavedMsg:'관리자 코드 저장됨', genFailWithMsg:'실패: {msg}',
+    curPwEmptyErr:'현재 비밀번호를 입력하세요', newPwEmptyErr:'새 비밀번호를 입력하세요', newPwMismatchErr:'새 비밀번호가 일치하지 않습니다',
+    curPwWrongErr:'현재 비밀번호가 올바르지 않습니다', pwSavedMsg:'저장되었습니다', pwChangeFailErr:'변경 실패',
+    serverErrWithMsg:'서버 오류: {msg}',
     serverBackupOnlyDoneMsg:'✅ 서버 백업 완료 (내 PC 저장은 취소됨): {name}', backupErrMsg:'백업 오류: {msg}', backupListErrMsg:'백업 목록 오류: {msg}',
     restoreModalTitle:'복원', noBackupFilesMsg:'백업 파일이 없습니다.', restoreBtnLabel:'복원',
     deleteBtnLabel:'삭제', restoreSelectModalTitle:'복원 — 백업 선택', restoreSelectHint:'선택한 백업으로 현재 공정표를 교체합니다(복원 직전 자동백업 생성, 전원 영향).',
@@ -2238,6 +2256,24 @@ const I18N = {
     chartTooLargeMsg:'⚠ The chart is too large — switch the unit to week/10-day or set a [Range] and try again', pdfLibLoadFailMsg:'⚠ Failed to load the PDF library — check your internet connection and try again', pdfGenFailRetryMsg:'⚠ PDF generation failed — switch the unit to week/10-day or set a [Range] and try again',
     pdfSavedMsg:'PDF saved ({pages} pages)',
     noSiteInfoBackupMsg:'No site information available', backupFailMsg:'Backup failed: {msg}', backupDoneMsg:'✅ Backup complete (server + my PC): {name}',
+    setupTitle:'⚙️ Admin Setup', setupSubtitle:'Create an administrator account', setupMasterLbl:'Master Code',
+    setupMasterNote:'(for initial server registration)', setupMasterPh:'Enter master code', setupCoLbl:'Company Name',
+    setupCoPh:'Enter company name', setupAdminNameLbl:'Administrator Name', setupAdminNamePh:'John Doe',
+    setupPwLbl:'Password', setupPwPh:'Password', setupPw2Lbl:'Confirm Password',
+    setupPw2Ph:'Re-enter password', setupAdminCodeLbl:'Admin Code', setupAdminCodeNote:'(code to access the admin tab — can be changed later)',
+    setupAdminCodePh:'Set an admin-only code', setupAdminCode2Lbl:'Confirm Admin Code', setupAdminCode2Ph:'Re-enter admin code',
+    setupCompleteBtn:'Complete Setup', setupBackBtn:'← Back', setupCoNameEmptyErr:'Please enter a company name',
+    setupAdminNameEmptyErr:'Please enter the administrator name', setupPwEmptyErr:'Please enter a password', setupPwMismatchErr:'Passwords do not match',
+    setupAdminCodeEmptyErr:'Please enter an admin code', setupAdminCodeMismatchErr:'Admin codes do not match', setupCoExistsMsg:'⚠️ A company named "{co}" already exists.',
+    setupCoExistsYesBtn:'Yes, create anyway', setupAdminCreatedMsg:'Administrator account created', setupMasterCodeEmptyErr:'Please enter the master code',
+    setupCreateFailErr:'Creation failed', setupServerConnErr:'Server connection error',
+    serverConnFailStartLocalMsg:'⚠ Server connection failed — starting with local data',
+    localFileScheduleNotFoundMsg:'Could not find a schedule in this file', localFileReadFailMsg:'Failed to read file: {msg}', switchLocalDocEditMsg:'💻 Editing local file (private) — not saved to the server. Use the menu 💾 to save (file download)',
+    adminTabCodeSectionTitle:'🔐 Admin Tab Access Code', adminTabCodeNewPh:'New admin code', adminTabCodeSaveBtn:'Save Code',
+    adminTabCodeHint:'This is the code you enter to open the admin tab. (Leave blank to access without a code)', myAdminCodeSavedMsg:'Admin code saved', genFailWithMsg:'Failed: {msg}',
+    curPwEmptyErr:'Please enter your current password', newPwEmptyErr:'Please enter a new password', newPwMismatchErr:'The new passwords do not match',
+    curPwWrongErr:'The current password is incorrect', pwSavedMsg:'Saved', pwChangeFailErr:'Change failed',
+    serverErrWithMsg:'Server error: {msg}',
     serverBackupOnlyDoneMsg:'✅ Server backup complete (saving to my PC was cancelled): {name}', backupErrMsg:'Backup error: {msg}', backupListErrMsg:'Backup list error: {msg}',
     restoreModalTitle:'Restore', noBackupFilesMsg:'There are no backup files.', restoreBtnLabel:'Restore',
     deleteBtnLabel:'Delete', restoreSelectModalTitle:'Restore — Select Backup', restoreSelectHint:'This replaces the current schedule with the selected backup (an automatic backup is created right before restoring, and it affects everyone).',
@@ -2451,6 +2487,24 @@ const I18N = {
     chartTooLargeMsg:'⚠ El gráfico es demasiado grande — cambie la unidad a semana/10 días o defina un [Rango] e intente de nuevo', pdfLibLoadFailMsg:'⚠ Error al cargar la biblioteca PDF — verifique su conexión a internet e intente de nuevo', pdfGenFailRetryMsg:'⚠ Error al generar PDF — cambie la unidad a semana/10 días o defina un [Rango] e intente de nuevo',
     pdfSavedMsg:'PDF guardado ({pages} páginas)',
     noSiteInfoBackupMsg:'No hay información del sitio disponible', backupFailMsg:'Error de respaldo: {msg}', backupDoneMsg:'✅ Copia de seguridad completa (servidor + mi PC): {name}',
+    setupTitle:'⚙️ Configuración de Administrador', setupSubtitle:'Crea una cuenta de administrador', setupMasterLbl:'Código Maestro',
+    setupMasterNote:'(para el registro inicial del servidor)', setupMasterPh:'Ingrese el código maestro', setupCoLbl:'Nombre de la Empresa',
+    setupCoPh:'Ingrese el nombre de la empresa', setupAdminNameLbl:'Nombre del Administrador', setupAdminNamePh:'Juan Pérez',
+    setupPwLbl:'Contraseña', setupPwPh:'Contraseña', setupPw2Lbl:'Confirmar Contraseña',
+    setupPw2Ph:'Vuelva a ingresar la contraseña', setupAdminCodeLbl:'Código de Administrador', setupAdminCodeNote:'(código para acceder a la pestaña de administrador — se puede cambiar luego)',
+    setupAdminCodePh:'Configure un código exclusivo de administrador', setupAdminCode2Lbl:'Confirmar Código de Administrador', setupAdminCode2Ph:'Vuelva a ingresar el código de administrador',
+    setupCompleteBtn:'Completar Configuración', setupBackBtn:'← Volver', setupCoNameEmptyErr:'Ingrese el nombre de la empresa',
+    setupAdminNameEmptyErr:'Ingrese el nombre del administrador', setupPwEmptyErr:'Ingrese una contraseña', setupPwMismatchErr:'Las contraseñas no coinciden',
+    setupAdminCodeEmptyErr:'Ingrese un código de administrador', setupAdminCodeMismatchErr:'Los códigos de administrador no coinciden', setupCoExistsMsg:'⚠️ Ya existe una empresa llamada "{co}".',
+    setupCoExistsYesBtn:'Sí, crear de todos modos', setupAdminCreatedMsg:'Cuenta de administrador creada', setupMasterCodeEmptyErr:'Ingrese el código maestro',
+    setupCreateFailErr:'Error de creación', setupServerConnErr:'Error de conexión con el servidor',
+    serverConnFailStartLocalMsg:'⚠ Error de conexión al servidor — iniciando con datos locales',
+    localFileScheduleNotFoundMsg:'No se pudo encontrar un cronograma en este archivo', localFileReadFailMsg:'Error al leer el archivo: {msg}', switchLocalDocEditMsg:'💻 Editando archivo local (privado) — no se guarda en el servidor. Use el menú 💾 para guardar (descarga de archivo)',
+    adminTabCodeSectionTitle:'🔐 Código de Acceso a la Pestaña de Administrador', adminTabCodeNewPh:'Nuevo código de administrador', adminTabCodeSaveBtn:'Guardar Código',
+    adminTabCodeHint:'Este es el código que ingresa para abrir la pestaña de administrador. (Déjelo en blanco para acceder sin código)', myAdminCodeSavedMsg:'Código de administrador guardado', genFailWithMsg:'Error: {msg}',
+    curPwEmptyErr:'Ingrese su contraseña actual', newPwEmptyErr:'Ingrese una nueva contraseña', newPwMismatchErr:'Las nuevas contraseñas no coinciden',
+    curPwWrongErr:'La contraseña actual es incorrecta', pwSavedMsg:'Guardado', pwChangeFailErr:'Error al cambiar',
+    serverErrWithMsg:'Error del servidor: {msg}',
     serverBackupOnlyDoneMsg:'✅ Copia de seguridad del servidor completa (se canceló el guardado en mi PC): {name}', backupErrMsg:'Error de respaldo: {msg}', backupListErrMsg:'Error de lista de copias de seguridad: {msg}',
     restoreModalTitle:'Restaurar', noBackupFilesMsg:'No hay archivos de respaldo.', restoreBtnLabel:'Restaurar',
     deleteBtnLabel:'Eliminar', restoreSelectModalTitle:'Restaurar — Seleccionar Copia de Seguridad', restoreSelectHint:'Esto reemplaza el cronograma actual con la copia de seguridad seleccionada (se crea una copia de seguridad automática justo antes de restaurar, y afecta a todos).',
@@ -2664,6 +2718,24 @@ const I18N = {
     chartTooLargeMsg:'⚠ Das Diagramm ist zu groß — stellen Sie die Einheit auf Woche/10 Tage um oder legen Sie einen [Bereich] fest und versuchen Sie es erneut', pdfLibLoadFailMsg:'⚠ PDF-Bibliothek konnte nicht geladen werden — Internetverbindung prüfen und erneut versuchen', pdfGenFailRetryMsg:'⚠ PDF-Erstellung fehlgeschlagen — stellen Sie die Einheit auf Woche/10 Tage um oder legen Sie einen [Bereich] fest und versuchen Sie es erneut',
     pdfSavedMsg:'PDF gespeichert ({pages} Seiten)',
     noSiteInfoBackupMsg:'Keine Standortinformationen verfügbar', backupFailMsg:'Sicherung fehlgeschlagen: {msg}', backupDoneMsg:'✅ Sicherung abgeschlossen (Server + mein PC): {name}',
+    setupTitle:'⚙️ Administrator-Einrichtung', setupSubtitle:'Erstellen Sie ein Administratorkonto', setupMasterLbl:'Master-Code',
+    setupMasterNote:'(für die erstmalige Serverregistrierung)', setupMasterPh:'Master-Code eingeben', setupCoLbl:'Firmenname',
+    setupCoPh:'Firmenname eingeben', setupAdminNameLbl:'Administratorname', setupAdminNamePh:'Max Mustermann',
+    setupPwLbl:'Passwort', setupPwPh:'Passwort', setupPw2Lbl:'Passwort bestätigen',
+    setupPw2Ph:'Passwort erneut eingeben', setupAdminCodeLbl:'Admin-Code', setupAdminCodeNote:'(Code für den Zugriff auf den Admin-Tab — später änderbar)',
+    setupAdminCodePh:'Nur-Admin-Code festlegen', setupAdminCode2Lbl:'Admin-Code bestätigen', setupAdminCode2Ph:'Admin-Code erneut eingeben',
+    setupCompleteBtn:'Einrichtung abschließen', setupBackBtn:'← Zurück', setupCoNameEmptyErr:'Bitte geben Sie einen Firmennamen ein',
+    setupAdminNameEmptyErr:'Bitte geben Sie den Administratornamen ein', setupPwEmptyErr:'Bitte geben Sie ein Passwort ein', setupPwMismatchErr:'Passwörter stimmen nicht überein',
+    setupAdminCodeEmptyErr:'Bitte geben Sie einen Admin-Code ein', setupAdminCodeMismatchErr:'Admin-Codes stimmen nicht überein', setupCoExistsMsg:'⚠️ Es existiert bereits eine Firma namens "{co}".',
+    setupCoExistsYesBtn:'Ja, trotzdem erstellen', setupAdminCreatedMsg:'Administratorkonto erstellt', setupMasterCodeEmptyErr:'Bitte geben Sie den Master-Code ein',
+    setupCreateFailErr:'Erstellung fehlgeschlagen', setupServerConnErr:'Serververbindungsfehler',
+    serverConnFailStartLocalMsg:'⚠ Serververbindung fehlgeschlagen — Start mit lokalen Daten',
+    localFileScheduleNotFoundMsg:'In dieser Datei wurde kein Zeitplan gefunden', localFileReadFailMsg:'Datei konnte nicht gelesen werden: {msg}', switchLocalDocEditMsg:'💻 Lokale Datei (privat) wird bearbeitet — wird nicht auf dem Server gespeichert. Zum Speichern das Menü 💾 verwenden (Dateidownload)',
+    adminTabCodeSectionTitle:'🔐 Zugriffscode für Admin-Tab', adminTabCodeNewPh:'Neuer Admin-Code', adminTabCodeSaveBtn:'Code speichern',
+    adminTabCodeHint:'Dies ist der Code, den Sie zum Öffnen des Admin-Tabs eingeben. (Leer lassen für Zugriff ohne Code)', myAdminCodeSavedMsg:'Admin-Code gespeichert', genFailWithMsg:'Fehlgeschlagen: {msg}',
+    curPwEmptyErr:'Bitte geben Sie Ihr aktuelles Passwort ein', newPwEmptyErr:'Bitte geben Sie ein neues Passwort ein', newPwMismatchErr:'Die neuen Passwörter stimmen nicht überein',
+    curPwWrongErr:'Das aktuelle Passwort ist falsch', pwSavedMsg:'Gespeichert', pwChangeFailErr:'Änderung fehlgeschlagen',
+    serverErrWithMsg:'Serverfehler: {msg}',
     serverBackupOnlyDoneMsg:'✅ Serversicherung abgeschlossen (Speichern auf meinem PC wurde abgebrochen): {name}', backupErrMsg:'Sicherungsfehler: {msg}', backupListErrMsg:'Fehler bei der Sicherungsliste: {msg}',
     restoreModalTitle:'Wiederherstellen', noBackupFilesMsg:'Es sind keine Sicherungsdateien vorhanden.', restoreBtnLabel:'Wiederherstellen',
     deleteBtnLabel:'Löschen', restoreSelectModalTitle:'Wiederherstellen — Sicherung auswählen', restoreSelectHint:'Dadurch wird der aktuelle Zeitplan durch die ausgewählte Sicherung ersetzt (unmittelbar vor der Wiederherstellung wird automatisch eine Sicherung erstellt, betrifft alle Benutzer).',
@@ -2877,6 +2949,24 @@ const I18N = {
     chartTooLargeMsg:'⚠ チャートが大きすぎます — 単位を週／10日に変更するか［範囲］を指定して再試行してください', pdfLibLoadFailMsg:'⚠ PDFライブラリの読み込みに失敗しました — インターネット接続を確認して再試行してください', pdfGenFailRetryMsg:'⚠ PDF生成に失敗しました — 単位を週／10日に変更するか［範囲］を指定して再試行してください',
     pdfSavedMsg:'PDF保存完了（{pages}ページ）',
     noSiteInfoBackupMsg:'現場情報がありません', backupFailMsg:'バックアップ失敗：{msg}', backupDoneMsg:'✅ バックアップ完了（サーバー＋PC）：{name}',
+    setupTitle:'⚙️ 管理者設定', setupSubtitle:'管理者アカウントを作成します', setupMasterLbl:'マスターコード',
+    setupMasterNote:'（初回サーバー登録用）', setupMasterPh:'マスターコードを入力', setupCoLbl:'会社名',
+    setupCoPh:'会社名を入力', setupAdminNameLbl:'管理者名', setupAdminNamePh:'山田太郎',
+    setupPwLbl:'パスワード', setupPwPh:'パスワード', setupPw2Lbl:'パスワード確認',
+    setupPw2Ph:'パスワードを再入力', setupAdminCodeLbl:'管理者コード', setupAdminCodeNote:'（管理者タブ入室コード — 変更可能）',
+    setupAdminCodePh:'管理者専用コードを設定', setupAdminCode2Lbl:'管理者コード確認', setupAdminCode2Ph:'管理者コードを再入力',
+    setupCompleteBtn:'設定完了', setupBackBtn:'← 戻る', setupCoNameEmptyErr:'会社名を入力してください',
+    setupAdminNameEmptyErr:'管理者名を入力してください', setupPwEmptyErr:'パスワードを入力してください', setupPwMismatchErr:'パスワードが一致しません',
+    setupAdminCodeEmptyErr:'管理者コードを入力してください', setupAdminCodeMismatchErr:'管理者コードが一致しません', setupCoExistsMsg:'⚠️「{co}」という名前の業者は既に存在します。',
+    setupCoExistsYesBtn:'はい、追加作成', setupAdminCreatedMsg:'管理者アカウントが作成されました', setupMasterCodeEmptyErr:'マスターコードを入力してください',
+    setupCreateFailErr:'作成失敗', setupServerConnErr:'サーバー接続エラー',
+    serverConnFailStartLocalMsg:'⚠ サーバー接続に失敗しました — ローカルデータで開始します',
+    localFileScheduleNotFoundMsg:'このファイルから工程表が見つかりませんでした', localFileReadFailMsg:'ファイル読み込み失敗：{msg}', switchLocalDocEditMsg:'💻 ローカルファイル（非公開）編集中 — サーバーには保存されません。保存はメニュー💾（ファイルダウンロード）から',
+    adminTabCodeSectionTitle:'🔐 管理者タブアクセスコード', adminTabCodeNewPh:'新しい管理者コード', adminTabCodeSaveBtn:'コード保存',
+    adminTabCodeHint:'管理者タブを開く際に入力するコードです。（空欄にするとコードなしでアクセス）', myAdminCodeSavedMsg:'管理者コードが保存されました', genFailWithMsg:'失敗：{msg}',
+    curPwEmptyErr:'現在のパスワードを入力してください', newPwEmptyErr:'新しいパスワードを入力してください', newPwMismatchErr:'新しいパスワードが一致しません',
+    curPwWrongErr:'現在のパスワードが正しくありません', pwSavedMsg:'保存されました', pwChangeFailErr:'変更失敗',
+    serverErrWithMsg:'サーバーエラー：{msg}',
     serverBackupOnlyDoneMsg:'✅ サーバーバックアップ完了（PC保存はキャンセルされました）：{name}', backupErrMsg:'バックアップエラー：{msg}', backupListErrMsg:'バックアップ一覧エラー：{msg}',
     restoreModalTitle:'復元', noBackupFilesMsg:'バックアップファイルがありません。', restoreBtnLabel:'復元',
     deleteBtnLabel:'削除', restoreSelectModalTitle:'復元 — バックアップ選択', restoreSelectHint:'選択したバックアップで現在の工程表を置き換えます（復元直前に自動バックアップを作成、全員に影響）。',
@@ -3059,6 +3149,23 @@ function applyI18n(){
   var apReBtn=document.getElementById('apReanalyzeBtn'); if(apReBtn) apReBtn.textContent=t('apReanalyzeBtn');
   var apHintEl=document.getElementById('apStartHintEl'); if(apHintEl) apHintEl.textContent=t('apStartHint');
   var magBtnEl=document.getElementById('meetingAgendaBtn'); if(magBtnEl){ magBtnEl.textContent=t('meetingAgendaBtn'); magBtnEl.title=t('meetingAgendaBtnTitle'); }
+  // 관리자 설정(setupScreen) 화면
+  var _setupTextMap={setupTitleEl:'setupTitle', setupSubtitleEl:'setupSubtitle',
+    setupCoLblEl:'setupCoLbl', setupAdminNameLblEl:'setupAdminNameLbl', setupPwLblEl:'setupPwLbl', setupPw2LblEl:'setupPw2Lbl',
+    setupAdminCode2LblEl:'setupAdminCode2Lbl', setupCompleteBtnEl:'setupCompleteBtn', setupBackBtnEl:'setupBackBtn'};
+  Object.keys(_setupTextMap).forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=t(_setupTextMap[id]); });
+  // 뒤에 안내용 <span>이 붙어있는 라벨은 첫 텍스트 노드만 교체(span 보존)
+  var _setupLblWithNoteMap={setupMasterLblEl:'setupMasterLbl', setupAdminCodeLblEl:'setupAdminCodeLbl'};
+  Object.keys(_setupLblWithNoteMap).forEach(function(id){
+    var el=document.getElementById(id); if(!el) return;
+    var firstChild=el.firstChild;
+    if(firstChild && firstChild.nodeType===3){ firstChild.textContent=t(_setupLblWithNoteMap[id])+' '; }
+  });
+  var _setupNoteMap={setupMasterNoteEl:'setupMasterNote', setupAdminCodeNoteEl:'setupAdminCodeNote'};
+  Object.keys(_setupNoteMap).forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=t(_setupNoteMap[id]); });
+  var _setupPhMap={setupMasterCode:'setupMasterPh', setupCo:'setupCoPh', setupAdminName:'setupAdminNamePh',
+    setupPw:'setupPwPh', setupPw2:'setupPw2Ph', setupAdminCode:'setupAdminCodePh', setupAdminCode2:'setupAdminCode2Ph'};
+  Object.keys(_setupPhMap).forEach(function(id){ var el=document.getElementById(id); if(el) el.placeholder=t(_setupPhMap[id]); });
   if(typeof _updateConnStatusLabel==='function') try{ _updateConnStatusLabel(); }catch(e){}
   if(typeof _updateMenuSaveOpenLabels==='function') try{ _updateMenuSaveOpenLabels(); }catch(e){}
 
@@ -3486,11 +3593,11 @@ function openLocalWindowFile(input){
       const d=JSON.parse(e.target.result);
       const hint=_fileCompanyHint(f.name);
       const pick=_pickPrimaryFromFile(d, hint);
-      if(!pick||!pick.proj){ toast('이 파일에서 공정표를 찾지 못했습니다'); if(win)win.close(); return; }
+      if(!pick||!pick.proj){ toast(t('localFileScheduleNotFoundMsg')); if(win)win.close(); return; }
       _stashLocalWin({name:f.name.replace(/\.json$/i,''), company:pick.companyName||hint||'로컬', proj:pick.proj});
       if(win) win.location.href=location.pathname+'?localwin=1';
       else window.open(location.pathname+'?localwin=1','_blank','width=1280,height=860');
-    }catch(err){ toast('파일 읽기 실패: '+(err.message||'')); if(win)win.close(); }
+    }catch(err){ toast(t('localFileReadFailMsg',{msg:(err.message||'')})); if(win)win.close(); }
   };
   r.readAsText(f); input.value='';
 }
@@ -3538,7 +3645,7 @@ async function switchDoc(which){
     _cache=_localDoc.data;
     if(!_cache.users)_cache.users=[]; if(!_cache.companies)_cache.companies=[]; if(!_cache.projects)_cache.projects={};
     initApp();
-    toast('💻 로컬 파일(비공개) 편집 — 서버에 저장되지 않습니다. 저장은 메뉴 💾(파일 다운로드)');
+    toast(t('switchLocalDocEditMsg'));
   } else {
     _activeDoc='server'; _privateLocal=false; _localPrimary=null; VCID=null;
     try{ await loadFromServer(); }catch(e){}
@@ -3875,18 +3982,18 @@ function _doSetupLocal(force){
   const adminCode=document.getElementById('setupAdminCode').value;
   const adminCode2=document.getElementById('setupAdminCode2').value;
   const err=document.getElementById('setupErr');
-  if(!co){err.textContent='회사명을 입력하세요';return}
-  if(!adminName){err.textContent='관리자 이름을 입력하세요';return}
-  if(!pw){err.textContent='비밀번호를 입력하세요';return}
-  if(pw!==pw2){err.textContent='비밀번호가 일치하지 않습니다';return}
-  if(!adminCode){err.textContent='관리자 코드를 입력하세요';return}
-  if(adminCode!==adminCode2){err.textContent='관리자 코드가 일치하지 않습니다';return}
+  if(!co){err.textContent=t('setupCoNameEmptyErr');return}
+  if(!adminName){err.textContent=t('setupAdminNameEmptyErr');return}
+  if(!pw){err.textContent=t('setupPwEmptyErr');return}
+  if(pw!==pw2){err.textContent=t('setupPwMismatchErr');return}
+  if(!adminCode){err.textContent=t('setupAdminCodeEmptyErr');return}
+  if(adminCode!==adminCode2){err.textContent=t('setupAdminCodeMismatchErr');return}
   const d=gs();
   if(!force && d.companies.find(c=>c.name===co)){
-    err.innerHTML=`⚠️ "${esc(co)}" 이름의 업체가 이미 있습니다.<br>
-      <button class="btn bp btn-xs" style="margin-top:6px" onclick="doSetup(true)">예, 추가 생성</button>
+    err.innerHTML=`${esc(t('setupCoExistsMsg',{co}))}<br>
+      <button class="btn bp btn-xs" style="margin-top:6px" onclick="doSetup(true)">${esc(t('setupCoExistsYesBtn'))}</button>
       <button class="btn bgray btn-xs" style="margin-top:6px;margin-left:4px"
-        onclick="document.getElementById('setupErr').innerHTML=''">취소</button>`;
+        onclick="document.getElementById('setupErr').innerHTML=''">${esc(t('wordCancel'))}</button>`;
     return;
   }
   const c={id:uid(),name:co,pw:hpw(pw),adminCode:hpw(adminCode),isPrimary:true,adminName:adminName,contractName:'',contractStart:'',contractEnd:''};
@@ -3894,7 +4001,7 @@ function _doSetupLocal(force){
   d.projects[c.id]=mkProj(co);
   ss(d);
   try{ localStorage.setItem('ms_adminCode',hpw(adminCode)); }catch(e){}
-  toast('관리자 계정이 생성되었습니다');
+  toast(t('setupAdminCreatedMsg'));
   CU={id:c.id,name:co,isPrimary:true,userName:adminName,ver:'ent'};
   VCID=null;
   document.getElementById('setupScreen').style.display='none';
@@ -3911,25 +4018,25 @@ async function _doSetupServer(){
   const adminCode=document.getElementById('setupAdminCode').value;
   const adminCode2=document.getElementById('setupAdminCode2').value;
   const err=document.getElementById('setupErr');
-  if(!masterCode){err.textContent='마스터 코드를 입력하세요';return}
-  if(!co){err.textContent='회사명을 입력하세요';return}
-  if(!adminName){err.textContent='관리자 이름을 입력하세요';return}
-  if(!pw){err.textContent='비밀번호를 입력하세요';return}
-  if(pw!==pw2){err.textContent='비밀번호가 일치하지 않습니다';return}
-  if(!adminCode){err.textContent='관리자 코드를 입력하세요';return}
-  if(adminCode!==adminCode2){err.textContent='관리자 코드가 일치하지 않습니다';return}
+  if(!masterCode){err.textContent=t('setupMasterCodeEmptyErr');return}
+  if(!co){err.textContent=t('setupCoNameEmptyErr');return}
+  if(!adminName){err.textContent=t('setupAdminNameEmptyErr');return}
+  if(!pw){err.textContent=t('setupPwEmptyErr');return}
+  if(pw!==pw2){err.textContent=t('setupPwMismatchErr');return}
+  if(!adminCode){err.textContent=t('setupAdminCodeEmptyErr');return}
+  if(adminCode!==adminCode2){err.textContent=t('setupAdminCodeMismatchErr');return}
   try{
     const r=await fetch('/api/company',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({companyName:co,adminName,pw,adminCode,masterCode})});
     const result=await r.json();
-    if(!result.ok){err.textContent=result.msg||'생성 실패';return}
-    toast('관리자 계정이 생성되었습니다');
+    if(!result.ok){err.textContent=result.msg||t('setupCreateFailErr');return}
+    toast(t('setupAdminCreatedMsg'));
     CU={id:result.companyId,name:co,isPrimary:true,userName:adminName,userId:result.userId,ver:'ent'};
     VCID=null;
     document.getElementById('setupScreen').style.display='none';
     document.getElementById('app').style.display='block';
     initApp();
-  }catch(e){ err.textContent='서버 연결 오류'; }
+  }catch(e){ err.textContent=t('setupServerConnErr'); }
 }
 
 function doLogout(){
@@ -9185,9 +9292,9 @@ async function _saveMyAdminCode(){
   try{
     const r=await fetch(API+'/api/account/set-code',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:CU.userId,code})});
     const j=await r.json();
-    if(j.ok){ toast('관리자 코드 저장됨'); const el=document.getElementById('myAdminCode'); if(el)el.value=''; }
-    else toast('실패: '+(j.msg||''));
-  }catch(e){ toast('서버 오류'); }
+    if(j.ok){ toast(t('myAdminCodeSavedMsg')); const el=document.getElementById('myAdminCode'); if(el)el.value=''; }
+    else toast(t('genFailWithMsg',{msg:(j.msg||'')}));
+  }catch(e){ toast(t('genServerErrMsg')); }
 }
 // ══════════════════════════════════════════════
 //  ⚙ 설정 모달 — 계정 / 언어 / API 키(Pro) / 구독 / 로그아웃
@@ -9249,10 +9356,10 @@ function _renderSettingsAccount(isPro){
       <button class="btn bp btn-xs" onclick="_doChangePw(${isPro})">${esc(t('stgSave'))}</button>
     </div>
     ${(_myRole==='master'||_myRole==='manager')?`<div style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
-      <div style="font-size:12px;font-weight:600;margin-bottom:8px;color:var(--text2)">🔐 관리자 탭 접근 코드</div>
-      <div class="fg"><input type="password" id="myAdminCode" class="fc" placeholder="새 관리자 코드"></div>
-      <button class="btn bp btn-xs" onclick="_saveMyAdminCode()" style="margin-top:6px">코드 저장</button>
-      <div style="font-size:10px;color:var(--text3);margin-top:4px">관리자 탭을 열 때 입력하는 코드입니다. (비우면 코드 없이 접근)</div>
+      <div style="font-size:12px;font-weight:600;margin-bottom:8px;color:var(--text2)">${esc(t('adminTabCodeSectionTitle'))}</div>
+      <div class="fg"><input type="password" id="myAdminCode" class="fc" placeholder="${esc(t('adminTabCodeNewPh'))}"></div>
+      <button class="btn bp btn-xs" onclick="_saveMyAdminCode()" style="margin-top:6px">${esc(t('adminTabCodeSaveBtn'))}</button>
+      <div style="font-size:10px;color:var(--text3);margin-top:4px">${esc(t('adminTabCodeHint'))}</div>
     </div>`:''}
   `;
 }
@@ -9262,9 +9369,9 @@ async function _doChangePw(isPro){
   const newPw = document.getElementById('myNewPw').value;
   const newPw2= document.getElementById('myNewPw2').value;
   const err   = document.getElementById('myInfoErr');
-  if(!oldPw){err.textContent='현재 비밀번호를 입력하세요';return}
-  if(!newPw){err.textContent='새 비밀번호를 입력하세요';return}
-  if(newPw!==newPw2){err.textContent='새 비밀번호가 일치하지 않습니다';return}
+  if(!oldPw){err.textContent=t('curPwEmptyErr');return}
+  if(!newPw){err.textContent=t('newPwEmptyErr');return}
+  if(newPw!==newPw2){err.textContent=t('newPwMismatchErr');return}
 
   if(isPro){
     // 로컬 Pro: localStorage에서 검증 후 변경
@@ -9273,12 +9380,12 @@ async function _doChangePw(isPro){
     try{ users=JSON.parse(localStorage.getItem(STORE_KEY)||'{}'); }catch(e){}
     const name=CU.userName;
     if(!users[name] || users[name].pw!==hpw(oldPw)){
-      err.textContent='현재 비밀번호가 올바르지 않습니다';return;
+      err.textContent=t('curPwWrongErr');return;
     }
     users[name].pw=hpw(newPw);
     try{ localStorage.setItem(STORE_KEY, JSON.stringify(users)); }catch(e){}
     closeModal();
-    toast('저장되었습니다');
+    toast(t('pwSavedMsg'));
   } else {
     // 서버(Enterprise): 비밀번호만 변경 — API Key는 관리자 탭에서 관리
     try{
@@ -9286,10 +9393,10 @@ async function _doChangePw(isPro){
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify({userId:CU.userId, oldPw, newPw})});
       const result=await r.json();
-      if(!result.ok){err.textContent=result.msg||'변경 실패';return}
+      if(!result.ok){err.textContent=result.msg||t('pwChangeFailErr');return}
       closeModal();
-      toast('저장되었습니다');
-    }catch(e){ err.textContent='서버 오류: '+e.message; }
+      toast(t('pwSavedMsg'));
+    }catch(e){ err.textContent=t('serverErrWithMsg',{msg:e.message}); }
   }
 }
 
@@ -13948,8 +14055,11 @@ window.addEventListener('DOMContentLoaded', async () => {
   ]);
 
   if(!connOk){
-    toast('⚠ 서버 연결 실패 — 로컬 데이터로 시작합니다');
+    toast(t('serverConnFailStartLocalMsg'));
   }
+
+  // 로그인 전에도 setupScreen 등 언어팩 적용 대상 화면이 있으므로 미리 1회 적용
+  applyI18n();
 
   // 회사(companies) 등록 여부와 무관하게 항상 로그인 화면을 먼저 표시한다.
   // 관리자 설정(setupScreen)은 로그인 화면에서 버튼 5회 클릭으로만 진입 가능해야 함
