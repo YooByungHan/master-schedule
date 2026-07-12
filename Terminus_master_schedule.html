@@ -1584,10 +1584,10 @@ body.pred-edit-mode .nacts{min-width:44px}
         <div class="hdr-menu" id="hdrMenu">
           <button class="hdr-mi" id="saveMenuBtn" onclick="hdrMenuAct(menuSave)">💾 저장</button>
           <button class="hdr-mi" id="restoreBtn" style="display:none" onclick="hdrMenuAct(menuOpen)">📂 열기</button>
-          <div class="hdr-mi hdr-mi-parent">🖨️ 출력 <span style="margin-left:auto;font-size:9px">▸</span>
+          <div class="hdr-mi hdr-mi-parent"><span id="menuExportLbl">🖨️ 출력</span> <span style="margin-left:auto;font-size:9px">▸</span>
             <div class="hdr-submenu">
-              <button class="hdr-mi" onclick="hdrMenuAct(exportProgressSnapshot)">📈 실적 관리</button>
-              <button class="hdr-mi" onclick="hdrMenuAct(exportExcel)">📊 간트 차트</button>
+              <button class="hdr-mi" id="menuExportProgressBtn" onclick="hdrMenuAct(exportProgressSnapshot)">📈 실적 관리</button>
+              <button class="hdr-mi" id="menuExportGanttBtn" onclick="hdrMenuAct(exportExcel)">📊 간트 차트</button>
               <button class="hdr-mi" onclick="hdrMenuAct(doPrint)">📄 PDF</button>
               <button class="hdr-mi" onclick="hdrMenuAct(saveAsPng)">🖼️ PNG</button>
             </div>
@@ -2073,6 +2073,12 @@ const I18N = {
     fmUploadedMsg:'📤 {n}개 파일 접수 폴더 업로드', fmSelectMoveErr:'이동할 파일을 선택하세요', fmMovedMsg:'{n}개 이동: {from} → {to}',
     fmSelectDelErr:'삭제할 파일을 선택하세요', fmDelConfirm:'{n}개 파일을 삭제할까요?', fmSelectDlErr:'다운로드할 파일을 선택하세요',
     fmDlFailMsg:'다운로드 실패: {name}', distNoTargetMsg:'배포할 하도사가 없습니다 (업체 선택 후 사용)', distDoneMsg:'📤 {n}개 하도사 파일을 배포 폴더에 저장했습니다 (하도업체/배포)',
+    connConnecting:'● 연결 중...', connConnected:'● 연결됨', connDisconnected:'● 연결 끊김',
+    connLocalOnly:'● 로컬 단독 모드', connLocalFilePrivate:'💻 로컬 파일(비공개): {name}', connLocalPro:'💻 로컬 (PRO)',
+    connServerSite:'🌐 서버: {site}', connServer:'🌐 서버', connLocal:'💻 로컬',
+    menuSaveBtn:'💾 저장', menuBackupBtn:'💾 백업', menuOpenBtn:'📂 열기',
+    menuRestoreBtn:'↩ 복원', menuExportLbl:'🖨️ 출력', menuExportProgress:'📈 실적 관리',
+    menuExportGantt:'📊 간트 차트',
     holNoneMsg:'등록된 공휴일 없음', holCustomBadge:'사용자 지정', holDefaultBadge:'기본값', holModalTitle:'📅 공휴일 관리',
     holNamePh:'공휴일명', holDesc:'날짜와 공휴일명을 입력하세요. 저장 시 이 기기의 모든 공정표에 적용됩니다.',
     holResetWarn:'⚠ 기본값 초기화를 누르면 하드코딩된 2026년 공휴일로 되돌아갑니다.', holAddRowBtn:'+ 행 추가', holResetBtn:'기본값 초기화',
@@ -2204,6 +2210,12 @@ const I18N = {
     fmUploadedMsg:'📤 {n} file(s) uploaded to Inbox', fmSelectMoveErr:'Please select files to move', fmMovedMsg:'{n} moved: {from} → {to}',
     fmSelectDelErr:'Please select files to delete', fmDelConfirm:'Delete {n} file(s)?', fmSelectDlErr:'Please select files to download',
     fmDlFailMsg:'Download failed: {name}', distNoTargetMsg:'No subcontractors to distribute to (select companies first)', distDoneMsg:'📤 Saved files for {n} subcontractor(s) to the distribution folder',
+    connConnecting:'● Connecting...', connConnected:'● Connected', connDisconnected:'● Disconnected',
+    connLocalOnly:'● Local Standalone Mode', connLocalFilePrivate:'💻 Local File (Private): {name}', connLocalPro:'💻 Local (PRO)',
+    connServerSite:'🌐 Server: {site}', connServer:'🌐 Server', connLocal:'💻 Local',
+    menuSaveBtn:'💾 Save', menuBackupBtn:'💾 Backup', menuOpenBtn:'📂 Open',
+    menuRestoreBtn:'↩ Restore', menuExportLbl:'🖨️ Export', menuExportProgress:'📈 Progress Report',
+    menuExportGantt:'📊 Gantt Chart',
     holNoneMsg:'No holidays registered', holCustomBadge:'Custom', holDefaultBadge:'Default', holModalTitle:'📅 Manage Holidays',
     holNamePh:'Holiday name', holDesc:'Enter the date and holiday name. Saved changes apply to all schedules on this device.',
     holResetWarn:'⚠ Resetting to default reverts to the hardcoded 2026 holidays.', holAddRowBtn:'+ Add Row', holResetBtn:'Reset to Default',
@@ -2335,6 +2347,12 @@ const I18N = {
     fmUploadedMsg:'📤 {n} archivo(s) subidos a Recibidos', fmSelectMoveErr:'Seleccione archivos para mover', fmMovedMsg:'{n} movidos: {from} → {to}',
     fmSelectDelErr:'Seleccione archivos para eliminar', fmDelConfirm:'¿Eliminar {n} archivo(s)?', fmSelectDlErr:'Seleccione archivos para descargar',
     fmDlFailMsg:'Error al descargar: {name}', distNoTargetMsg:'No hay subcontratistas para distribuir (seleccione empresas primero)', distDoneMsg:'📤 Se guardaron archivos de {n} subcontratista(s) en la carpeta de distribución',
+    connConnecting:'● Conectando...', connConnected:'● Conectado', connDisconnected:'● Desconectado',
+    connLocalOnly:'● Modo Local Independiente', connLocalFilePrivate:'💻 Archivo Local (Privado): {name}', connLocalPro:'💻 Local (PRO)',
+    connServerSite:'🌐 Servidor: {site}', connServer:'🌐 Servidor', connLocal:'💻 Local',
+    menuSaveBtn:'💾 Guardar', menuBackupBtn:'💾 Copia de Seguridad', menuOpenBtn:'📂 Abrir',
+    menuRestoreBtn:'↩ Restaurar', menuExportLbl:'🖨️ Exportar', menuExportProgress:'📈 Informe de Avance',
+    menuExportGantt:'📊 Diagrama de Gantt',
     holNoneMsg:'No hay días festivos registrados', holCustomBadge:'Personalizado', holDefaultBadge:'Predeterminado', holModalTitle:'📅 Gestionar Días Festivos',
     holNamePh:'Nombre del día festivo', holDesc:'Ingrese la fecha y el nombre del día festivo. Al guardar se aplica a todos los cronogramas de este dispositivo.',
     holResetWarn:'⚠ Al restablecer los valores predeterminados, se vuelve a los días festivos de 2026 predefinidos.', holAddRowBtn:'+ Agregar Fila', holResetBtn:'Restablecer Predeterminados',
@@ -2466,6 +2484,12 @@ const I18N = {
     fmUploadedMsg:'📤 {n} Datei(en) in den Eingang hochgeladen', fmSelectMoveErr:'Bitte Dateien zum Verschieben auswählen', fmMovedMsg:'{n} verschoben: {from} → {to}',
     fmSelectDelErr:'Bitte Dateien zum Löschen auswählen', fmDelConfirm:'{n} Datei(en) löschen?', fmSelectDlErr:'Bitte Dateien zum Herunterladen auswählen',
     fmDlFailMsg:'Download fehlgeschlagen: {name}', distNoTargetMsg:'Keine Subunternehmer zum Verteilen (zuerst Firmen auswählen)', distDoneMsg:'📤 Dateien für {n} Subunternehmer im Verteilungsordner gespeichert',
+    connConnecting:'● Verbinde...', connConnected:'● Verbunden', connDisconnected:'● Verbindung getrennt',
+    connLocalOnly:'● Lokaler Standalone-Modus', connLocalFilePrivate:'💻 Lokale Datei (Privat): {name}', connLocalPro:'💻 Lokal (PRO)',
+    connServerSite:'🌐 Server: {site}', connServer:'🌐 Server', connLocal:'💻 Lokal',
+    menuSaveBtn:'💾 Speichern', menuBackupBtn:'💾 Sicherung', menuOpenBtn:'📂 Öffnen',
+    menuRestoreBtn:'↩ Wiederherstellen', menuExportLbl:'🖨️ Export', menuExportProgress:'📈 Fortschrittsbericht',
+    menuExportGantt:'📊 Gantt-Diagramm',
     holNoneMsg:'Keine Feiertage registriert', holCustomBadge:'Benutzerdefiniert', holDefaultBadge:'Standard', holModalTitle:'📅 Feiertage verwalten',
     holNamePh:'Feiertagsname', holDesc:'Geben Sie Datum und Feiertagsname ein. Beim Speichern gilt dies für alle Zeitpläne auf diesem Gerät.',
     holResetWarn:'⚠ Beim Zurücksetzen auf Standard werden die fest codierten Feiertage 2026 wiederhergestellt.', holAddRowBtn:'+ Zeile hinzufügen', holResetBtn:'Auf Standard zurücksetzen',
@@ -2597,6 +2621,12 @@ const I18N = {
     fmUploadedMsg:'📤 {n}件のファイルを受付フォルダにアップロード', fmSelectMoveErr:'移動するファイルを選択してください', fmMovedMsg:'{n}件移動：{from} → {to}',
     fmSelectDelErr:'削除するファイルを選択してください', fmDelConfirm:'{n}件のファイルを削除しますか？', fmSelectDlErr:'ダウンロードするファイルを選択してください',
     fmDlFailMsg:'ダウンロード失敗：{name}', distNoTargetMsg:'配布先の下請業者がありません（業者選択後に使用）', distDoneMsg:'📤 {n}件の下請業者ファイルを配布フォルダに保存しました',
+    connConnecting:'● 接続中...', connConnected:'● 接続済み', connDisconnected:'● 接続切断',
+    connLocalOnly:'● ローカル単独モード', connLocalFilePrivate:'💻 ローカルファイル（非公開）：{name}', connLocalPro:'💻 ローカル（PRO）',
+    connServerSite:'🌐 サーバー：{site}', connServer:'🌐 サーバー', connLocal:'💻 ローカル',
+    menuSaveBtn:'💾 保存', menuBackupBtn:'💾 バックアップ', menuOpenBtn:'📂 開く',
+    menuRestoreBtn:'↩ 復元', menuExportLbl:'🖨️ 出力', menuExportProgress:'📈 実績管理',
+    menuExportGantt:'📊 ガントチャート',
     holNoneMsg:'登録された祝日がありません', holCustomBadge:'カスタム', holDefaultBadge:'デフォルト', holModalTitle:'📅 祝日管理',
     holNamePh:'祝日名', holDesc:'日付と祝日名を入力してください。保存するとこの端末のすべての工程表に適用されます。',
     holResetWarn:'⚠ デフォルトにリセットすると、ハードコードされた2026年の祝日に戻ります。', holAddRowBtn:'+ 行追加', holResetBtn:'デフォルトにリセット',
@@ -2641,6 +2671,11 @@ function applyI18n(){
   var tAi=document.getElementById('aiTabBtn'); if(tAi) tAi.textContent=t('tabAi');
   var tAd=document.getElementById('adminTabBtn'); if(tAd) tAd.textContent=t('tabAdmin');
   var hmHol=document.getElementById('hdrMiHoliday'); if(hmHol) hmHol.innerHTML='🗓️ '+esc(t('adminHolTitle'));
+  var mExpLbl=document.getElementById('menuExportLbl'); if(mExpLbl) mExpLbl.textContent=t('menuExportLbl');
+  var mExpProg=document.getElementById('menuExportProgressBtn'); if(mExpProg) mExpProg.textContent=t('menuExportProgress');
+  var mExpGantt=document.getElementById('menuExportGanttBtn'); if(mExpGantt) mExpGantt.textContent=t('menuExportGantt');
+  if(typeof _updateConnStatusLabel==='function') try{ _updateConnStatusLabel(); }catch(e){}
+  if(typeof _updateMenuSaveOpenLabels==='function') try{ _updateMenuSaveOpenLabels(); }catch(e){}
 
   // 고정 헤드(pbar) — 프로젝트 정보 라벨
   ['pbLblCo','pbLblDate','pbLblBudget','pbLblActAmt','pbLblActRate'].forEach(function(id){
@@ -2978,8 +3013,31 @@ function showSyncBadge(){
 function updateConnStatus(ok){
   const el=document.getElementById('connStatus');
   if(!el) return;
-  el.textContent = ok?'● 연결됨':'● 연결 끊김';
+  el.textContent = ok?t('connConnected'):t('connDisconnected');
   el.style.color  = ok?'#4ade80':'#f87171';
+}
+
+// 로그인 후 작업 위치 표시(서버(현장)/로컬파일/PRO) — 언어 전환 시에도 다시 그려야 하므로 별도 함수로 분리
+function _updateConnStatusLabel(){
+  if(!CU) return;
+  const _cs=document.getElementById('connStatus');
+  if(!_cs) return;
+  if(_privateLocal){ _cs.textContent=t('connLocalFilePrivate',{name:(_localDoc&&_localDoc.name)||''}); _cs.style.color='#fbbf24'; }
+  else if(CU.ver==='pro'){ _cs.textContent=t('connLocalPro'); _cs.style.color='#fbbf24'; }
+  else if(_serverMode && _siteName){ _cs.textContent=t('connServerSite',{site:_siteName}); _cs.style.color='#4ade80'; }
+  else if(_serverMode){ _cs.textContent=t('connServer'); _cs.style.color='#4ade80'; }
+  else { _cs.textContent=t('connLocal'); _cs.style.color='#fbbf24'; }
+}
+
+// ☰ 메뉴의 저장/열기(백업/복원) 라벨 — 서버/Pro 여부에 따라 문구가 달라지므로 별도 함수로 분리
+function _updateMenuSaveOpenLabels(){
+  if(!CU) return;
+  const restoreBtn=document.getElementById('restoreBtn');
+  const _saveBtn=document.getElementById('saveMenuBtn');
+  const _isPro=(CU.ver==='pro');
+  const _srvMode = _serverMode && !_privateLocal && CU.ver!=='pro';
+  if(_saveBtn){ _saveBtn.textContent=_srvMode?t('menuBackupBtn'):t('menuSaveBtn'); _saveBtn.style.display=(_srvMode && !CU.isPrimary)?'none':''; }
+  if(restoreBtn){ restoreBtn.textContent=_srvMode?t('menuRestoreBtn'):t('menuOpenBtn'); restoreBtn.style.display=(_isPro || CU.isPrimary)?'':'none'; }
 }
 
 async function initServerConnection(){
@@ -2999,7 +3057,7 @@ async function initServerConnection(){
     }catch{}
     // 로컬 모드 표시
     const el=document.getElementById('connStatus');
-    if(el){ el.textContent='● 로컬 단독 모드'; el.style.color='#f59e0b'; }
+    if(el){ el.textContent=t('connLocalOnly'); el.style.color='#f59e0b'; }
     return false;
   }
 }
@@ -3674,14 +3732,7 @@ function initApp(){
   document.getElementById('coNameInp').readOnly = (CU.ver!=='pro');   // Pro만 회사명 직접 수정 가능
   document.getElementById('writeDate').value=p.writeDate||ds(new Date());
   // 작업 위치 표시: 서버(현장)/로컬파일/PRO
-  const _cs=document.getElementById('connStatus');
-  if(_cs){
-    if(_privateLocal){ _cs.textContent='💻 로컬 파일(비공개): '+((_localDoc&&_localDoc.name)||''); _cs.style.color='#fbbf24'; }
-    else if(CU.ver==='pro'){ _cs.textContent='💻 로컬 (PRO)'; _cs.style.color='#fbbf24'; }
-    else if(_serverMode && _siteName){ _cs.textContent='🌐 서버: '+_siteName; _cs.style.color='#4ade80'; }
-    else if(_serverMode){ _cs.textContent='🌐 서버'; _cs.style.color='#4ade80'; }
-    else { _cs.textContent='💻 로컬'; _cs.style.color='#fbbf24'; }
-  }
+  _updateConnStatusLabel();
   renderDocTabs();
   const _tbEl=document.getElementById('totalBudget');
   if(_tbEl)_tbEl.value=p.totalBudget>0?fmtAmt(p.totalBudget):'';
@@ -3701,13 +3752,9 @@ function initApp(){
   const _aiDateEl=document.getElementById('aiBaseDate');
   if(_aiDateEl && !_aiDateEl.value) _aiDateEl.value=ds(new Date());
   // 백업복원은 관리자(Enterprise)만 표시
-  const restoreBtn=document.getElementById('restoreBtn');
   // 백업복원: Pro는 항상 표시, Enterprise는 관리자만
   // 저장/열기 라벨 분기: 서버=백업·복원, Pro/로컬=저장·열기 / 직원은 백업 차단
-  const _srvMode = _serverMode && !_privateLocal && CU.ver!=='pro';
-  const _saveBtn=document.getElementById('saveMenuBtn');
-  if(_saveBtn){ _saveBtn.textContent=_srvMode?'💾 백업':'💾 저장'; _saveBtn.style.display=(_srvMode && !CU.isPrimary)?'none':''; }
-  if(restoreBtn){ restoreBtn.textContent=_srvMode?'↩ 복원':'📂 열기'; restoreBtn.style.display=(_isPro || CU.isPrimary)?'':'none'; }
+  _updateMenuSaveOpenLabels();
   { const _vw=document.getElementById('viewCoWrap'); if(_vw)_vw.style.display='none'; }  // 조회업체 목록 제거(로컬 열기/공정회의 업체선택으로 대체)
   // 저장된 클립이 있으면 가장 최근 클립 자동 복원
   const clips = p.viewClips||[];
