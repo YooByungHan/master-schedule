@@ -2006,6 +2006,11 @@ const I18N = {
     predMoveTgtOptLabel:'🔀 후행 이동 #{num}: [{src} → {move}]', predMoveTgtOptHint:'→ 후행이 [{tgt}]로 바뀝니다 (다른 후행 유지)', predNoMoveOptMsg:'이동 가능한 연결이 없습니다',
     predMoveModalTitle:'이동 방식 선택', predMoveModalHint:'선택한 연결만 변경, 나머지 유지', predNotFoundMsg:'연결을 찾을 수 없습니다',
     predMoveDoneMsg:'이동 완료', predClearAllConfirmMsg:'모든 선후행 연결을 초기화하시겠습니까?', predClearAllDoneMsg:'모든 선후행 연결이 초기화되었습니다',
+    nodeAddedMsg:'공종이 추가되었습니다', childNodeAddedMsg:'하위 공종이 추가되었습니다', parentValMovedMsg:'💡 부모 공종 값을 첫 하위로 이동했습니다(손실 방지)',
+    nodeDelConfirmMsg:'이 공종을 삭제하시겠습니까?', nodeDeletedMsg:'삭제되었습니다', clearAllConfirmMsg:'⚠ 초기화\n\n현재 프로젝트의 모든 공종 트리와 대분류를 삭제합니다.\n\n이 작업은 되돌릴 수 없습니다.',
+    projResetMsg:'프로젝트가 초기화되었습니다', secOrderChangedMsg:'대분류 순서가 변경되었습니다', dragNeedDatesMsg:'시작/종료일이 있어야 드래그할 수 있습니다',
+    dragBarKindActual:'실적', dragBarKindPlan:'계획', dragBarModeStart:'시작일',
+    dragBarModeEnd:'종료일', dragBarModeMove:'이동', dragBarResultMsg:'📅 {kind} {mode}: {ns} ~ {nf}',
     pbLblCo:'업체명', pbLblDate:'작성일', pbLblBudget:'총 공사금액', pbLblActAmt:'실적금액', pbLblActRate:'실적율',
     hgLblTask:'공종', colQty:'물량', colAmt:'금액', colRate:'실적', colEvent:'이벤트',
     predSrc:'선행', predTgt:'후행', predConn:'노드연결', predEdit:'노드편집', predClose:'✕ 완료',
@@ -2190,6 +2195,11 @@ const I18N = {
     predMoveTgtOptLabel:'🔀 Move successor #{num}: [{src} → {move}]', predMoveTgtOptHint:'→ The successor will change to [{tgt}] (other successors kept)', predNoMoveOptMsg:'No links available to move',
     predMoveModalTitle:'Select Move Method', predMoveModalHint:'Only the selected link changes, the rest are kept', predNotFoundMsg:'Link not found',
     predMoveDoneMsg:'Move complete', predClearAllConfirmMsg:'Reset all predecessor/successor links?', predClearAllDoneMsg:'All predecessor/successor links have been reset',
+    nodeAddedMsg:'Task added', childNodeAddedMsg:'Sub-task added', parentValMovedMsg:'💡 Moved the parent task\'s values to its first sub-task (to prevent data loss)',
+    nodeDelConfirmMsg:'Delete this task?', nodeDeletedMsg:'Deleted', clearAllConfirmMsg:'⚠ Reset\n\nThis will delete all task trees and section groups in the current project.\n\nThis action cannot be undone.',
+    projResetMsg:'Project has been reset', secOrderChangedMsg:'Section order changed', dragNeedDatesMsg:'Start/end dates are required to drag',
+    dragBarKindActual:'Actual', dragBarKindPlan:'Plan', dragBarModeStart:'start date',
+    dragBarModeEnd:'end date', dragBarModeMove:'move', dragBarResultMsg:'📅 {kind} {mode}: {ns} ~ {nf}',
     pbLblCo:'Company', pbLblDate:'Date', pbLblBudget:'Total Budget', pbLblActAmt:'Actual Amount', pbLblActRate:'Actual Rate',
     hgLblTask:'Tasks', colQty:'Qty', colAmt:'Amount', colRate:'Actual', colEvent:'Events',
     predSrc:'Pred', predTgt:'Succ', predConn:'Link', predEdit:'Edit', predClose:'✕ Done',
@@ -2374,6 +2384,11 @@ const I18N = {
     predMoveTgtOptLabel:'🔀 Mover sucesor #{num}: [{src} → {move}]', predMoveTgtOptHint:'→ El sucesor cambiará a [{tgt}] (se mantienen los demás sucesores)', predNoMoveOptMsg:'No hay enlaces disponibles para mover',
     predMoveModalTitle:'Seleccionar Método de Movimiento', predMoveModalHint:'Solo cambia el enlace seleccionado, el resto se mantiene', predNotFoundMsg:'Enlace no encontrado',
     predMoveDoneMsg:'Movimiento completado', predClearAllConfirmMsg:'¿Restablecer todos los enlaces de predecesor/sucesor?', predClearAllDoneMsg:'Todos los enlaces de predecesor/sucesor se han restablecido',
+    nodeAddedMsg:'Tarea agregada', childNodeAddedMsg:'Subtarea agregada', parentValMovedMsg:'💡 Se movieron los valores de la tarea principal a su primera subtarea (para evitar pérdida de datos)',
+    nodeDelConfirmMsg:'¿Eliminar esta tarea?', nodeDeletedMsg:'Eliminado', clearAllConfirmMsg:'⚠ Restablecer\n\nEsto eliminará todos los árboles de tareas y grupos de secciones del proyecto actual.\n\nEsta acción no se puede deshacer.',
+    projResetMsg:'El proyecto se ha restablecido', secOrderChangedMsg:'Se cambió el orden de las secciones', dragNeedDatesMsg:'Se requieren fechas de inicio/fin para arrastrar',
+    dragBarKindActual:'Real', dragBarKindPlan:'Plan', dragBarModeStart:'fecha de inicio',
+    dragBarModeEnd:'fecha de fin', dragBarModeMove:'mover', dragBarResultMsg:'📅 {kind} {mode}: {ns} ~ {nf}',
     pbLblCo:'Empresa', pbLblDate:'Fecha', pbLblBudget:'Presupuesto Total', pbLblActAmt:'Monto Real', pbLblActRate:'Avance Real',
     hgLblTask:'Tareas', colQty:'Cant.', colAmt:'Monto', colRate:'Avance', colEvent:'Eventos',
     predSrc:'Prec.', predTgt:'Suc.', predConn:'Vincular', predEdit:'Editar', predClose:'✕ Listo',
@@ -2558,6 +2573,11 @@ const I18N = {
     predMoveTgtOptLabel:'🔀 Nachfolger verschieben #{num}: [{src} → {move}]', predMoveTgtOptHint:'→ Der Nachfolger wird zu [{tgt}] (andere Nachfolger bleiben erhalten)', predNoMoveOptMsg:'Keine Verknüpfungen zum Verschieben verfügbar',
     predMoveModalTitle:'Verschiebemethode wählen', predMoveModalHint:'Nur die ausgewählte Verknüpfung ändert sich, der Rest bleibt erhalten', predNotFoundMsg:'Verknüpfung nicht gefunden',
     predMoveDoneMsg:'Verschieben abgeschlossen', predClearAllConfirmMsg:'Alle Vorgänger-/Nachfolgerverknüpfungen zurücksetzen?', predClearAllDoneMsg:'Alle Vorgänger-/Nachfolgerverknüpfungen wurden zurückgesetzt',
+    nodeAddedMsg:'Vorgang hinzugefügt', childNodeAddedMsg:'Untervorgang hinzugefügt', parentValMovedMsg:'💡 Werte des übergeordneten Vorgangs wurden auf den ersten Untervorgang verschoben (zur Vermeidung von Datenverlust)',
+    nodeDelConfirmMsg:'Diesen Vorgang löschen?', nodeDeletedMsg:'Gelöscht', clearAllConfirmMsg:'⚠ Zurücksetzen\n\nDadurch werden alle Vorgangsbäume und Abschnittsgruppen im aktuellen Projekt gelöscht.\n\nDiese Aktion kann nicht rückgängig gemacht werden.',
+    projResetMsg:'Projekt wurde zurückgesetzt', secOrderChangedMsg:'Abschnittsreihenfolge geändert', dragNeedDatesMsg:'Start-/Enddatum erforderlich, um zu ziehen',
+    dragBarKindActual:'Ist', dragBarKindPlan:'Plan', dragBarModeStart:'Startdatum',
+    dragBarModeEnd:'Enddatum', dragBarModeMove:'verschieben', dragBarResultMsg:'📅 {kind} {mode}: {ns} ~ {nf}',
     pbLblCo:'Firma', pbLblDate:'Datum', pbLblBudget:'Gesamtbudget', pbLblActAmt:'Ist-Betrag', pbLblActRate:'Ist-Fortschritt',
     hgLblTask:'Vorgänge', colQty:'Menge', colAmt:'Betrag', colRate:'Ist', colEvent:'Ereignisse',
     predSrc:'Vorg.', predTgt:'Nachf.', predConn:'Verknüpfen', predEdit:'Bearbeiten', predClose:'✕ Fertig',
@@ -2742,6 +2762,11 @@ const I18N = {
     predMoveTgtOptLabel:'🔀 後行移動 #{num}: [{src} → {move}]', predMoveTgtOptHint:'→ 後行が［{tgt}］に変わります（他の後行は維持）', predNoMoveOptMsg:'移動可能な連結がありません',
     predMoveModalTitle:'移動方式選択', predMoveModalHint:'選択した連結のみ変更、残りは維持', predNotFoundMsg:'連結が見つかりません',
     predMoveDoneMsg:'移動完了', predClearAllConfirmMsg:'すべての先行・後行連結を初期化しますか？', predClearAllDoneMsg:'すべての先行・後行連結が初期化されました',
+    nodeAddedMsg:'工種が追加されました', childNodeAddedMsg:'下位工種が追加されました', parentValMovedMsg:'💡 親工種の値を最初の下位工種に移動しました（データ消失防止）',
+    nodeDelConfirmMsg:'この工種を削除しますか？', nodeDeletedMsg:'削除されました', clearAllConfirmMsg:'⚠ 初期化\n\n現在のプロジェクトのすべての工種ツリーと大分類を削除します。\n\nこの操作は取り消せません。',
+    projResetMsg:'プロジェクトが初期化されました', secOrderChangedMsg:'大分類の順序が変更されました', dragNeedDatesMsg:'開始・終了日がないとドラッグできません',
+    dragBarKindActual:'実績', dragBarKindPlan:'計画', dragBarModeStart:'開始日',
+    dragBarModeEnd:'終了日', dragBarModeMove:'移動', dragBarResultMsg:'📅 {kind} {mode}: {ns} ~ {nf}',
     pbLblCo:'会社名', pbLblDate:'作成日', pbLblBudget:'総工事金額', pbLblActAmt:'実績金額', pbLblActRate:'実績率',
     hgLblTask:'工種', colQty:'数量', colAmt:'金額', colRate:'実績', colEvent:'イベント',
     predSrc:'先行', predTgt:'後行', predConn:'ノード接続', predEdit:'ノード編集', predClose:'✕ 完了',
@@ -5415,7 +5440,7 @@ function buildSec(sec,totalBudget){
     const [moved]=p.sections.splice(fi,1);
     const newTi=p.sections.findIndex(s=>s.id===sec.id);
     p.sections.splice(before?newTi:newTi+1,0,moved);
-    saveProj(p);renderInput();toast('대분류 순서가 변경되었습니다');
+    saveProj(p);renderInput();toast(t('secOrderChangedMsg'));
   });
   // ── 통합 차트: sec 요약 막대 데이터 계산 ──
   const _secAllNodes=[];
@@ -6916,7 +6941,7 @@ function addRoot(secId){
   _rebuildSecTree(s,p.totalBudget||0);
   document.getElementById('meta_'+secId).textContent=t('secNodeCount',{n:cntNodes(s.nodes)});
   populatePredSelectors();
-  toast('공종이 추가되었습니다');
+  toast(t('nodeAddedMsg'));
 }
 
 // 클릭한 공종 바로 다음(같은 레벨)에 삽입
@@ -6934,7 +6959,7 @@ function addSiblingAfter(secId,nodeId){
   _rebuildSecTree(s,p.totalBudget||0);
   document.getElementById('meta_'+secId).textContent=t('secNodeCount',{n:cntNodes(s.nodes)});
   populatePredSelectors();
-  toast('공종이 추가되었습니다');
+  toast(t('nodeAddedMsg'));
 }
 
 function addCh(secId,pid){
@@ -6952,7 +6977,7 @@ function addCh(secId,pid){
       n.plan={s:(par.plan&&par.plan.s)||'',f:(par.plan&&par.plan.f)||''};
       n.actual={s:(par.actual&&par.actual.s)||'',f:(par.actual&&par.actual.f)||''};
       par.qty='';par.unit='';par.amount=0;par.actRate=0;par.plan={s:'',f:''};par.actual={s:'',f:''};
-      setTimeout(()=>toast('💡 부모 공종 값을 첫 하위로 이동했습니다(손실 방지)'),2700);
+      setTimeout(()=>toast(t('parentValMovedMsg')),2700);
     }
   }
   par.ch.push(n);par.open=true;
@@ -6960,7 +6985,7 @@ function addCh(secId,pid){
   _rebuildSecTree(s,p.totalBudget||0);
   document.getElementById('meta_'+secId).textContent=t('secNodeCount',{n:cntNodes(s.nodes)});
   populatePredSelectors();
-  toast('하위 공종이 추가되었습니다');
+  toast(t('childNodeAddedMsg'));
 }
 
 
@@ -6981,7 +7006,7 @@ function _patchParentInputs(nid){
 }
 
 function delNode(secId,nid){
-  showConf('이 공종을 삭제하시겠습니까?',()=>{
+  showConf(t('nodeDelConfirmMsg'),()=>{
     const p=getProj();const s=p.sections.find(x=>x.id===secId);
     const f=findPA(s.nodes,nid);
     if(f){f.a.splice(f.i,1);}
@@ -6992,14 +7017,14 @@ function delNode(secId,nid){
     rollupSection(s);saveProj(p);
     const el=document.getElementById('nd_'+nid);if(el)el.remove();
     renderInput();
-    toast('삭제되었습니다');
+    toast(t('nodeDeletedMsg'));
   });
 }
 
 function clearAllData(){
   const vid=getViewId();
   showConf(
-    '⚠ 초기화\n\n현재 프로젝트의 모든 공종 트리와 대분류를 삭제합니다.\n\n이 작업은 되돌릴 수 없습니다.',
+    t('clearAllConfirmMsg'),
     ()=>{
       const d2=gs();
       if(d2.projects[vid]){
@@ -7009,7 +7034,7 @@ function clearAllData(){
       }
       ss(d2);
       renderInput();markGanttDirty();
-      toast('프로젝트가 초기화되었습니다');
+      toast(t('projResetMsg'));
     }
   );
 }
@@ -7549,7 +7574,7 @@ function _pbDragEnd(e){
     for(const s of p.sections){ const n=findNode(s.nodes,d.nid); if(n){sec=s;node=n;break;} }
     if(node){ node[d.kind]=node[d.kind]||{}; node[d.kind].s=d.ns; node[d.kind].f=d.nf;
       if(d.mode==='C'){ const _et=(d.kind==='actual')?'A':'P'; (p.events||[]).forEach(ev=>{ if(ev.nodeId===d.nid&&ev.type===_et&&ev.date) ev.date=ds(addD(pd(ev.date),d.dd)); }); }
-      if(typeof rollupSection==='function')rollupSection(sec); saveProj(p); _skipWidthSync=true; renderInput(); _skipWidthSync=false; toast('📅 '+(d.kind==='actual'?'실적':'계획')+' '+(d.mode==='L'?'시작일':d.mode==='R'?'종료일':'이동')+': '+d.ns+' ~ '+d.nf); return; }
+      if(typeof rollupSection==='function')rollupSection(sec); saveProj(p); _skipWidthSync=true; renderInput(); _skipWidthSync=false; toast(t('dragBarResultMsg',{kind:(d.kind==='actual'?t('dragBarKindActual'):t('dragBarKindPlan')),mode:(d.mode==='L'?t('dragBarModeStart'):d.mode==='R'?t('dragBarModeEnd'):t('dragBarModeMove')),ns:d.ns,nf:d.nf})); return; }
   }
   d.el.style.zIndex=''; d.el.style.cursor='grab'; d.el.style.left=d.startLeft+'px'; d.el.style.width=d.startWidth+'px';
 }
@@ -7558,7 +7583,7 @@ function _pbDragStart(e){
   const el=e.target.closest&&e.target.closest('.pb-drag'); if(!el) return;
   if(document.body.classList.contains('pred-edit-mode')) return;
   const ps=el.dataset.ps, pf=el.dataset.pf, nid=el.dataset.nid, sid=el.dataset.sid, kind=el.dataset.kind||'plan';
-  if(!ps||!pf){ toast('시작/종료일이 있어야 드래그할 수 있습니다'); return; }
+  if(!ps||!pf){ toast(t('dragNeedDatesMsg')); return; }
   e.preventDefault(); e.stopPropagation();
   const r=el.getBoundingClientRect(), ox=e.clientX-r.left, w=r.width, edge=Math.min(8,w/3);
   const mode = ox<edge?'L':ox>w-edge?'R':'C';
