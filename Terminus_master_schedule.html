@@ -1658,6 +1658,7 @@ body.pred-edit-mode .nacts{min-width:44px}
             <button class="hbn hbn-danger" id="btnResetAll" onclick="clearAllData()" title="전체 초기화">🗑 초기화</button>
             <span class="hsep"></span>
             <button class="hbn" id="analyzeBtn" onclick="toggleAnalyzePanel()" title="현재 활성 공정표를 AI로 지연·충돌 분석(우측 패널)" style="background:#0e7490;color:#fff;font-weight:700;border-color:#0e7490">AI 분석</button>
+            <button class="hbn" id="meetingAgendaBtn" onclick="runMeetingAgenda()" title="현재 지연·충돌 분석을 바탕으로 공정회의 안건 초안을 새 창에 생성" style="display:none;color:#7c3aed;font-weight:700;border-color:#7c3aed">📋 안건 생성</button>
           </div>
           <!-- 차트 그룹 -->
           <div class="chart-head-ctrl hg-chart">
@@ -1978,6 +1979,15 @@ const I18N = {
     apConfidenceLbl:'분석 신뢰도', apConflictItem:'{pred} 미완 → {succ} 착수({date})', apDelayItem:'[{section}] {name} — {type} {days}일',
     delayTypeCompletedLate:'완료지연', delayTypeIncomplete:'미완료', delayTypeNotStarted:'미착수',
     apNoLocationMsg:'이 항목은 위치 정보가 없습니다', apNodeNotFoundMsg:'해당 공종을 찾지 못했습니다(회의뷰가 종료됐을 수 있음)',
+    meetingAgendaBtn:'📋 안건 생성', meetingAgendaBtnTitle:'현재 지연·충돌 분석을 바탕으로 공정회의 안건 초안을 새 창에 생성', agendaGenerating:'📋 안건 생성 중...',
+    agendaWindowTitle:'공정회의 안건', agendaPopupBlockedMsg:'⚠ 팝업이 차단되었습니다. 팝업 허용 후 다시 시도해주세요', agendaGenFailMsg:'⚠ 안건 생성 실패: {msg}',
+    agendaNoDataMsg:'안건 데이터를 받지 못했습니다', agendaLoadingMsg:'📋 공정회의 안건을 생성하는 중입니다...', riskCritical:'🔴 위험',
+    riskHigh:'🟠 높음', riskMedium:'🟡 보통', riskLow:'🟢 양호',
+    agendaCompletionRiskLbl:'준공일 위험 {risk}', agendaMaxCpDelaySuffix:'CP 지연 최대 {n}일', agendaEstSlipSuffix:'예상 슬립 {n}일',
+    agendaItemsSecTitle:'📌 안건 목록', agendaOwnerLbl:'담당', agendaDeadlineLbl:'조치 기한',
+    agendaScenariosSecTitle:'🔄 만회 시나리오', agendaScenarioPrefix:'시나리오 {n}.', agendaExpectedEffectLbl:'📈 예상 효과',
+    agendaParallelSecTitle:'⚡ 병행 가능 공종 조합', agendaOverlapSuffix:'겹침 {n}일', agendaConclusionSecTitle:'📝 종합 결론',
+    agendaCopyBtn:'📄 안건 복사', agendaCopiedMsg:'📄 안건이 복사되었습니다', agendaServerOnlyMsg:'⚠ 서버 연결 모드에서만 사용할 수 있습니다',
     pbLblCo:'업체명', pbLblDate:'작성일', pbLblBudget:'총 공사금액', pbLblActAmt:'실적금액', pbLblActRate:'실적율',
     hgLblTask:'공종', colQty:'물량', colAmt:'금액', colRate:'실적', colEvent:'이벤트',
     predSrc:'선행', predTgt:'후행', predConn:'노드연결', predEdit:'노드편집', predClose:'✕ 완료',
@@ -2135,6 +2145,15 @@ const I18N = {
     apConfidenceLbl:'Analysis Confidence', apConflictItem:'{pred} incomplete → {succ} started ({date})', apDelayItem:'[{section}] {name} — {type} {days}d',
     delayTypeCompletedLate:'Completed Late', delayTypeIncomplete:'Incomplete', delayTypeNotStarted:'Not Started',
     apNoLocationMsg:'This item has no location information', apNodeNotFoundMsg:'Could not find this task (the meeting view may have ended)',
+    meetingAgendaBtn:'📋 Generate Agenda', meetingAgendaBtnTitle:'Generate a schedule-meeting agenda draft in a new window, based on the current delay/conflict analysis', agendaGenerating:'📋 Generating agenda...',
+    agendaWindowTitle:'Schedule Meeting Agenda', agendaPopupBlockedMsg:'⚠ Popup blocked. Please allow popups and try again', agendaGenFailMsg:'⚠ Failed to generate agenda: {msg}',
+    agendaNoDataMsg:'No agenda data received', agendaLoadingMsg:'📋 Generating the schedule meeting agenda...', riskCritical:'🔴 Critical',
+    riskHigh:'🟠 High', riskMedium:'🟡 Medium', riskLow:'🟢 Good',
+    agendaCompletionRiskLbl:'Completion Risk {risk}', agendaMaxCpDelaySuffix:'Max CP delay {n}d', agendaEstSlipSuffix:'Est. slip {n}d',
+    agendaItemsSecTitle:'📌 Agenda Items', agendaOwnerLbl:'Owner', agendaDeadlineLbl:'Deadline',
+    agendaScenariosSecTitle:'🔄 Recovery Scenarios', agendaScenarioPrefix:'Scenario {n}.', agendaExpectedEffectLbl:'📈 Expected Effect',
+    agendaParallelSecTitle:'⚡ Parallelizable Task Combinations', agendaOverlapSuffix:'Overlap {n}d', agendaConclusionSecTitle:'📝 Overall Conclusion',
+    agendaCopyBtn:'📄 Copy Agenda', agendaCopiedMsg:'📄 Agenda copied', agendaServerOnlyMsg:'⚠ Only available in server connection mode',
     pbLblCo:'Company', pbLblDate:'Date', pbLblBudget:'Total Budget', pbLblActAmt:'Actual Amount', pbLblActRate:'Actual Rate',
     hgLblTask:'Tasks', colQty:'Qty', colAmt:'Amount', colRate:'Actual', colEvent:'Events',
     predSrc:'Pred', predTgt:'Succ', predConn:'Link', predEdit:'Edit', predClose:'✕ Done',
@@ -2292,6 +2311,15 @@ const I18N = {
     apConfidenceLbl:'Confianza del Análisis', apConflictItem:'{pred} incompleto → {succ} iniciado ({date})', apDelayItem:'[{section}] {name} — {type} {days}d',
     delayTypeCompletedLate:'Finalizado con Retraso', delayTypeIncomplete:'Incompleto', delayTypeNotStarted:'No Iniciado',
     apNoLocationMsg:'Este elemento no tiene información de ubicación', apNodeNotFoundMsg:'No se pudo encontrar esta tarea (la vista de reunión pudo haber terminado)',
+    meetingAgendaBtn:'📋 Generar Agenda', meetingAgendaBtnTitle:'Genera un borrador de agenda de reunión de cronograma en una nueva ventana, basado en el análisis actual de retrasos/conflictos', agendaGenerating:'📋 Generando agenda...',
+    agendaWindowTitle:'Agenda de Reunión de Cronograma', agendaPopupBlockedMsg:'⚠ Ventana emergente bloqueada. Permita las ventanas emergentes e intente de nuevo', agendaGenFailMsg:'⚠ Error al generar la agenda: {msg}',
+    agendaNoDataMsg:'No se recibieron datos de la agenda', agendaLoadingMsg:'📋 Generando la agenda de la reunión de cronograma...', riskCritical:'🔴 Crítico',
+    riskHigh:'🟠 Alto', riskMedium:'🟡 Medio', riskLow:'🟢 Bueno',
+    agendaCompletionRiskLbl:'Riesgo de Finalización {risk}', agendaMaxCpDelaySuffix:'Retraso máx. CP {n}d', agendaEstSlipSuffix:'Retraso estimado {n}d',
+    agendaItemsSecTitle:'📌 Puntos de la Agenda', agendaOwnerLbl:'Responsable', agendaDeadlineLbl:'Plazo',
+    agendaScenariosSecTitle:'🔄 Escenarios de Recuperación', agendaScenarioPrefix:'Escenario {n}.', agendaExpectedEffectLbl:'📈 Efecto Esperado',
+    agendaParallelSecTitle:'⚡ Combinaciones de Tareas Paralelizables', agendaOverlapSuffix:'Superposición {n}d', agendaConclusionSecTitle:'📝 Conclusión General',
+    agendaCopyBtn:'📄 Copiar Agenda', agendaCopiedMsg:'📄 Agenda copiada', agendaServerOnlyMsg:'⚠ Solo disponible en modo de conexión al servidor',
     pbLblCo:'Empresa', pbLblDate:'Fecha', pbLblBudget:'Presupuesto Total', pbLblActAmt:'Monto Real', pbLblActRate:'Avance Real',
     hgLblTask:'Tareas', colQty:'Cant.', colAmt:'Monto', colRate:'Avance', colEvent:'Eventos',
     predSrc:'Prec.', predTgt:'Suc.', predConn:'Vincular', predEdit:'Editar', predClose:'✕ Listo',
@@ -2449,6 +2477,15 @@ const I18N = {
     apConfidenceLbl:'Analysevertrauen', apConflictItem:'{pred} unvollständig → {succ} begonnen ({date})', apDelayItem:'[{section}] {name} — {type} {days}T',
     delayTypeCompletedLate:'Verspätet abgeschlossen', delayTypeIncomplete:'Unvollständig', delayTypeNotStarted:'Nicht begonnen',
     apNoLocationMsg:'Für dieses Element sind keine Standortinformationen vorhanden', apNodeNotFoundMsg:'Dieser Vorgang wurde nicht gefunden (die Besprechungsansicht wurde möglicherweise beendet)',
+    meetingAgendaBtn:'📋 Agenda erstellen', meetingAgendaBtnTitle:'Erstellt einen Entwurf für die Terminbesprechungsagenda in einem neuen Fenster, basierend auf der aktuellen Verzögerungs-/Konfliktanalyse', agendaGenerating:'📋 Agenda wird erstellt...',
+    agendaWindowTitle:'Terminbesprechungsagenda', agendaPopupBlockedMsg:'⚠ Popup blockiert. Bitte Popups zulassen und erneut versuchen', agendaGenFailMsg:'⚠ Agenda-Erstellung fehlgeschlagen: {msg}',
+    agendaNoDataMsg:'Keine Agenda-Daten empfangen', agendaLoadingMsg:'📋 Terminbesprechungsagenda wird erstellt...', riskCritical:'🔴 Kritisch',
+    riskHigh:'🟠 Hoch', riskMedium:'🟡 Mittel', riskLow:'🟢 Gut',
+    agendaCompletionRiskLbl:'Fertigstellungsrisiko {risk}', agendaMaxCpDelaySuffix:'Max. CP-Verzug {n}T', agendaEstSlipSuffix:'Geschätzter Verzug {n}T',
+    agendaItemsSecTitle:'📌 Tagesordnungspunkte', agendaOwnerLbl:'Verantwortlich', agendaDeadlineLbl:'Frist',
+    agendaScenariosSecTitle:'🔄 Aufholszenarien', agendaScenarioPrefix:'Szenario {n}.', agendaExpectedEffectLbl:'📈 Erwartete Wirkung',
+    agendaParallelSecTitle:'⚡ Parallelisierbare Vorgangskombinationen', agendaOverlapSuffix:'Überschneidung {n}T', agendaConclusionSecTitle:'📝 Gesamtfazit',
+    agendaCopyBtn:'📄 Agenda kopieren', agendaCopiedMsg:'📄 Agenda kopiert', agendaServerOnlyMsg:'⚠ Nur im Server-Verbindungsmodus verfügbar',
     pbLblCo:'Firma', pbLblDate:'Datum', pbLblBudget:'Gesamtbudget', pbLblActAmt:'Ist-Betrag', pbLblActRate:'Ist-Fortschritt',
     hgLblTask:'Vorgänge', colQty:'Menge', colAmt:'Betrag', colRate:'Ist', colEvent:'Ereignisse',
     predSrc:'Vorg.', predTgt:'Nachf.', predConn:'Verknüpfen', predEdit:'Bearbeiten', predClose:'✕ Fertig',
@@ -2606,6 +2643,15 @@ const I18N = {
     apConfidenceLbl:'分析信頼度', apConflictItem:'{pred}未完了 → {succ}着手（{date}）', apDelayItem:'[{section}] {name} — {type} {days}日',
     delayTypeCompletedLate:'完了遅延', delayTypeIncomplete:'未完了', delayTypeNotStarted:'未着手',
     apNoLocationMsg:'この項目には位置情報がありません', apNodeNotFoundMsg:'該当の工種が見つかりませんでした（会議ビューが終了している可能性があります）',
+    meetingAgendaBtn:'📋 議題作成', meetingAgendaBtnTitle:'現在の遅延・衝突分析をもとに、工程会議の議題案を新しいウィンドウに生成します', agendaGenerating:'📋 議題生成中...',
+    agendaWindowTitle:'工程会議 議題', agendaPopupBlockedMsg:'⚠ ポップアップがブロックされました。ポップアップを許可して再試行してください', agendaGenFailMsg:'⚠ 議題生成に失敗しました：{msg}',
+    agendaNoDataMsg:'議題データを受信できませんでした', agendaLoadingMsg:'📋 工程会議の議題を生成しています...', riskCritical:'🔴 危険',
+    riskHigh:'🟠 高', riskMedium:'🟡 普通', riskLow:'🟢 良好',
+    agendaCompletionRiskLbl:'竣工リスク {risk}', agendaMaxCpDelaySuffix:'CP最大遅延 {n}日', agendaEstSlipSuffix:'予想遅延 {n}日',
+    agendaItemsSecTitle:'📌 議題リスト', agendaOwnerLbl:'担当', agendaDeadlineLbl:'対応期限',
+    agendaScenariosSecTitle:'🔄 挽回シナリオ', agendaScenarioPrefix:'シナリオ{n}.', agendaExpectedEffectLbl:'📈 予想効果',
+    agendaParallelSecTitle:'⚡ 並行可能工種の組み合わせ', agendaOverlapSuffix:'重複{n}日', agendaConclusionSecTitle:'📝 総合結論',
+    agendaCopyBtn:'📄 議題コピー', agendaCopiedMsg:'📄 議題がコピーされました', agendaServerOnlyMsg:'⚠ サーバー接続モードでのみ使用できます',
     pbLblCo:'会社名', pbLblDate:'作成日', pbLblBudget:'総工事金額', pbLblActAmt:'実績金額', pbLblActRate:'実績率',
     hgLblTask:'工種', colQty:'数量', colAmt:'金額', colRate:'実績', colEvent:'イベント',
     predSrc:'先行', predTgt:'後行', predConn:'ノード接続', predEdit:'ノード編集', predClose:'✕ 完了',
@@ -2777,6 +2823,7 @@ function applyI18n(){
   var apTitleEl=document.getElementById('apPanelTitle'); if(apTitleEl) apTitleEl.textContent=t('apPanelTitle');
   var apReBtn=document.getElementById('apReanalyzeBtn'); if(apReBtn) apReBtn.textContent=t('apReanalyzeBtn');
   var apHintEl=document.getElementById('apStartHintEl'); if(apHintEl) apHintEl.textContent=t('apStartHint');
+  var magBtnEl=document.getElementById('meetingAgendaBtn'); if(magBtnEl){ magBtnEl.textContent=t('meetingAgendaBtn'); magBtnEl.title=t('meetingAgendaBtnTitle'); }
   if(typeof _updateConnStatusLabel==='function') try{ _updateConnStatusLabel(); }catch(e){}
   if(typeof _updateMenuSaveOpenLabels==='function') try{ _updateMenuSaveOpenLabels(); }catch(e){}
 
@@ -3865,6 +3912,9 @@ function initApp(){
   document.getElementById('adminTabBtn').style.display = (!_isPro && CU.isPrimary) ? '' : 'none';
   // AI 분석 탭: Ollama/Claude 호출이 server.js를 거쳐야 하므로 서버 연결 모드에서만 노출
   document.getElementById('aiTabBtn').style.display = 'none'; // AI 분석 탭 숨김(공정 흐름 탭에 통합)
+  // 공정회의 안건 생성: 서버 연결 모드에서만 노출(runMeetingAgenda()와 동일 조건)
+  const _magBtn=document.getElementById('meetingAgendaBtn');
+  if(_magBtn) _magBtn.style.display = _IS_LOCAL ? 'none' : '';
   const _aiDateEl=document.getElementById('aiBaseDate');
   if(_aiDateEl && !_aiDateEl.value) _aiDateEl.value=ds(new Date());
   // 백업복원은 관리자(Enterprise)만 표시
@@ -4033,28 +4083,120 @@ async function runAiAnalyze(){
 
 // P3-C: 공정회의 안건 초안 생성
 async function runMeetingAgenda(){
-  if(_IS_LOCAL){ toast('⚠ 서버 연결 모드에서만 사용할 수 있습니다'); return; }
-  const btn = document.getElementById('agendaBtn');
-  const baseDate = document.getElementById('aiBaseDate').value || ds(new Date());
-  btn.disabled = true;
-  btn.textContent = '📋 안건 생성 중...';
+  if(_IS_LOCAL){ toast(t('agendaServerOnlyMsg')); return; }
+  const btn = document.getElementById('meetingAgendaBtn');
+  const baseDate = ds(new Date());
+  // 파일 선택 팝업 등과 동일한 이유: fetch가 끝난 뒤 window.open()을 부르면 사용자
+  // 제스처가 만료돼 팝업이 차단될 수 있어, 클릭 즉시(동기 구간) 빈 창부터 먼저 연다.
+  const win = window.open('about:blank','_blank','width=760,height=860');
+  if(!win){ toast(t('agendaPopupBlockedMsg')); return; }
+  win.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>${esc(t('agendaWindowTitle'))}</title></head><body style="font-family:'Noto Sans KR',sans-serif;padding:40px;color:#6b6760">${esc(t('agendaLoadingMsg'))}</body></html>`);
+  win.document.close();
+  if(btn){ btn.disabled = true; btn.textContent = t('agendaGenerating'); }
   try{
     const r = await fetch(API+'/api/ai/meeting-agenda',{
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({companyId: getViewId(), baseDate, site:_activeSite||undefined})
+      body: JSON.stringify({companyId: getViewId(), baseDate, site:_activeSite||undefined, lang:_lang})
     });
     const data = await r.json();
-    if(!r.ok || data.ok===false) throw new Error(data.msg || '서버 오류');
-    renderMeetingAgenda(data);
+    if(!r.ok || data.ok===false) throw new Error(data.msg || t('agendaNoDataMsg'));
+    _renderMeetingAgendaWindow(win, data);
   }catch(err){
-    toast('⚠ 안건 생성 실패: '+(err&&err.message||err));
+    toast(t('agendaGenFailMsg',{msg:(err&&err.message)||err}));
+    try{ win.close(); }catch(e){}
   }finally{
-    btn.disabled = false;
-    btn.textContent = '📋 공정회의 안건 생성';
+    if(btn){ btn.disabled = false; btn.textContent = t('meetingAgendaBtn'); }
   }
 }
 
-// P3-C: 공정회의 안건 UI 렌더링
+// 공정회의 안건 — 새 창에 자체완결(self-contained) HTML로 렌더링.
+// 앱 CSS/스크립트를 로드하지 않는 별도 창이므로 문구는 현재 언어(_lang)로 미리 번역해
+// 정적 텍스트로 삽입하고, 복사 버튼도 새 창 안에서 독립적으로 동작하도록 구성한다.
+function _renderMeetingAgendaWindow(win, data){
+  const ag = data.agenda;
+  if(!ag){
+    win.document.body.innerHTML = `<div style="font-family:'Noto Sans KR',sans-serif;padding:24px;color:#dc2626">${esc(t('agendaNoDataMsg'))}</div>`;
+    return;
+  }
+  const riskCls = data.completionRiskScore ? data.completionRiskScore.riskLevel : 'low';
+  const riskLabel = {critical:t('riskCritical'),high:t('riskHigh'),medium:t('riskMedium'),low:t('riskLow')}[riskCls]||'';
+  const riskColors = {
+    critical:{bg:'#fff1f2',border:'#fecdd3',color:'#be123c'},
+    high:{bg:'#fff7ed',border:'#fed7aa',color:'#c2410c'},
+    medium:{bg:'#fffbeb',border:'#fde68a',color:'#92400e'},
+    low:{bg:'#f0fdf4',border:'#bbf7d0',color:'#15803d'},
+  }[riskCls] || {bg:'#f0fdf4',border:'#bbf7d0',color:'#15803d'};
+
+  const agendaItemsHtml = (ag.agendaItems||[]).map(a=>`
+    <div style="padding:8px 10px;border:1px solid #e2ddd7;border-radius:4px;margin-bottom:7px;font-size:12px">
+      <div style="display:flex;align-items:flex-start;gap:6px">
+        <span style="display:inline-block;width:20px;height:20px;background:#7c3aed;color:#fff;border-radius:50%;text-align:center;line-height:20px;font-size:10px;font-weight:700;flex-shrink:0">${esc(a.no||'')}</span>
+        <div>
+          <div style="font-weight:700;color:#1c3a5e">${esc(a.title||'')}</div>
+          <div style="color:#6b6760;margin-top:3px">${esc(a.detail||'')}</div>
+          <div style="font-size:10.5px;color:#a09b95;margin-top:3px">${esc(t('agendaOwnerLbl'))}: ${esc(a.owner||'')} &nbsp;|&nbsp; ${esc(t('agendaDeadlineLbl'))}: ${esc(a.deadline||'')}</div>
+        </div>
+      </div>
+    </div>`).join('');
+
+  const scenariosHtml = (ag.scenarios||[]).map((s,i)=>`
+    <div style="padding:8px 10px;border:1px solid #e0f2fe;border-left:3px solid #0ea5e9;border-radius:4px;background:#f0f9ff;margin-bottom:6px;font-size:12px">
+      <div style="font-weight:700;color:#0369a1">${esc(t('agendaScenarioPrefix',{n:i+1}))} ${esc(s.title||'')}</div>
+      <div style="color:#6b6760;margin-top:2px">${esc(s.description||'')}</div>
+      <div style="color:#0e7490;font-size:11px;margin-top:2px">${esc(t('agendaExpectedEffectLbl'))}: ${esc(s.expectedEffect||'')}</div>
+    </div>`).join('');
+
+  const parallelHtml = (data.parallelCandidates||[]).slice(0,5).map(p=>`
+    <div style="padding:7px 10px;border:1px solid #e0f2fe;border-left:3px solid #0ea5e9;border-radius:4px;background:#f0f9ff;font-size:11.5px;margin-bottom:5px">
+      <b style="color:#0369a1">[${esc(p.aSection)}] ${esc(p.aName)}</b> + <b style="color:#0369a1">[${esc(p.bSection)}] ${esc(p.bName)}</b>
+      <span style="color:#a09b95;margin-left:6px">${esc(t('agendaOverlapSuffix',{n:p.overlapDays}))} · ${esc(p.note||'')}</span>
+    </div>`).join('');
+
+  const body = `
+    <div style="border-bottom:2px solid #7c3aed;padding-bottom:12px;margin-bottom:16px">
+      <div style="font-size:16px;font-weight:700;color:#7c3aed">📋 ${esc(t('agendaWindowTitle'))}</div>
+      <div style="font-size:11px;color:#a09b95;margin-top:3px">${esc(ag.meetingTitle||'')} · ${esc(data.baseDate||'')}</div>
+    </div>
+    <div style="padding:8px 12px;border-radius:6px;font-size:12.5px;font-weight:700;margin-bottom:14px;display:flex;flex-direction:column;gap:4px;background:${riskColors.bg};border:1px solid ${riskColors.border};color:${riskColors.color}">
+      <div>${esc(t('agendaCompletionRiskLbl',{risk:riskLabel}))}
+        &nbsp;|&nbsp; ${esc(t('agendaMaxCpDelaySuffix',{n:(data.completionRiskScore||{}).maxDelay!=null?(data.completionRiskScore||{}).maxDelay:'-'}))}
+        &nbsp;|&nbsp; ${esc(t('agendaEstSlipSuffix',{n:(data.completionRiskScore||{}).estimatedSlip!=null?(data.completionRiskScore||{}).estimatedSlip:'-'}))}</div>
+      <div style="font-size:11px;font-weight:400">${esc(ag.completionForecast||'')}</div>
+    </div>
+    ${agendaItemsHtml ? `<div style="font-size:13px;font-weight:700;margin-bottom:8px;color:#1c3a5e">${esc(t('agendaItemsSecTitle'))}</div>${agendaItemsHtml}` : ''}
+    ${scenariosHtml ? `<div style="font-size:13px;font-weight:700;margin:14px 0 8px;color:#0369a1">${esc(t('agendaScenariosSecTitle'))}</div>${scenariosHtml}` : ''}
+    ${parallelHtml ? `<div style="font-size:13px;font-weight:700;margin:14px 0 8px;color:#1c3a5e">${esc(t('agendaParallelSecTitle'))}</div>${parallelHtml}` : ''}
+    ${ag.conclusion ? `<div style="font-size:13px;font-weight:700;margin:14px 0 6px">${esc(t('agendaConclusionSecTitle'))}</div><div style="white-space:pre-wrap;background:#f7f5f2;border:1px solid #e2ddd7;border-radius:4px;padding:12px 14px">${esc(ag.conclusion)}</div>` : ''}
+    <div style="text-align:right;margin-top:16px">
+      <button id="copyBtn" onclick="copyAgenda()" style="font-family:inherit;font-size:12px;padding:6px 14px;border-radius:5px;border:1px solid #b8b2aa;background:#f7f5f2;color:#1a1816;cursor:pointer">${esc(t('agendaCopyBtn'))}</button>
+    </div>`;
+
+  win.document.open();
+  win.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>${esc(t('agendaWindowTitle'))}</title>
+    <style>body{font-family:'Noto Sans KR',sans-serif;font-size:12px;color:#1a1816;padding:28px;max-width:680px;margin:0 auto;line-height:1.5}</style>
+    </head><body><div id="agendaContent">${body}</div>
+    <script>
+      function copyAgenda(){
+        var text = document.getElementById('agendaContent').innerText;
+        var done = function(){
+          var b=document.getElementById('copyBtn');
+          if(b){ var orig=b.textContent; b.textContent=${JSON.stringify(t('agendaCopiedMsg'))}; setTimeout(function(){b.textContent=orig;},1500); }
+        };
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(text).then(done).catch(function(){
+            var ta=document.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.opacity='0';
+            document.body.appendChild(ta); ta.select();
+            try{ document.execCommand('copy'); done(); }catch(e){}
+            document.body.removeChild(ta);
+          });
+        }
+      }
+    <\/script>
+    </body></html>`);
+  win.document.close();
+}
+
+// P3-C: 공정회의 안건 UI 렌더링(레거시 — 예전 AI 분석 탭용, 현재 탭 자체가 숨김 처리되어 도달 불가)
 function renderMeetingAgenda(data){
   const panel = document.getElementById('aiReportPanel');
   const ag = data.agenda;

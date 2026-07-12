@@ -1323,4 +1323,5 @@ async function analyze(proj, opts){
 }
 
 module.exports = { analyze, ensurePromptFiles, setKeys, setBackupDirResolver,
-  computeCPM, computeEVM, computeVelocity, computeConfidence, flattenNodes, getKSTDateString };
+  computeCPM, computeEVM, computeVelocity, computeConfidence, flattenNodes, getKSTDateString,
+  langDirective: _langDirective };

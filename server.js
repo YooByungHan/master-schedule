@@ -1963,11 +1963,12 @@ const requestHandler = async (req, res) => {
       const defaultProvider = process.env.AI_PROVIDER || 'groq';
       const primary = (['claude','ollama','groq'].includes(reqProvider)) ? reqProvider : defaultProvider;
       const fallbackOrder = ['groq','ollama','claude'].filter(p => p !== primary);
+      const agendaSys = '당신은 건설 공정관리 전문가입니다. 요청한 JSON만 출력하십시오.' + aiCore.langDirective(body.lang);
       const callP = name => name === 'claude'
-        ? callClaudeApi('당신은 건설 공정관리 전문가입니다. 요청한 JSON만 출력하십시오.', agendaPrompt)
+        ? callClaudeApi(agendaSys, agendaPrompt)
         : name === 'groq'
-          ? callGroqApi('당신은 건설 공정관리 전문가입니다. 요청한 JSON만 출력하십시오.', agendaPrompt)
-          : callOllama('당신은 건설 공정관리 전문가입니다. 요청한 JSON만 출력하십시오.', agendaPrompt);
+          ? callGroqApi(agendaSys, agendaPrompt)
+          : callOllama(agendaSys, agendaPrompt);
 
       let agendaRaw = null, agendaError = null;
       try { agendaRaw = await callP(primary); }
