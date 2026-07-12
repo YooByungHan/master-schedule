@@ -1973,6 +1973,14 @@ const I18N = {
     unitPickTitle:'단위 선택', bohwalLbl:'보활',
     btnAddSibling:'+공종', btnAddSiblingTitle:'같은 레벨 공종 추가', btnAddChild:'+하위', btnAddChildTitle:'하위 공종 추가',
     btnEventTitle:'이벤트 추가/관리', nodeDelTitle:'삭제', namePh:'이름 입력', mgrNoneTitle:'담당자 없음', mgrClickAssignTitle:'담당자 클릭하여 지정', mgrChildHasTitle:'하위 공종에 담당자 있음',
+    ctxCopy:'📋 복사', ctxCut:'✂️ 잘라내기', ctxPaste:'📌 붙여넣기 (자식으로)', ctxUndo:'↩ 되돌리기', ctxCancel:'✖ 취소 / 선택해제', ctxColorChange:'🎨 색상 변경…',
+    colorNodeTitle:'🎨 공종 색상 변경', colorNodeDesc:'선택 공종 + 하위 트리만 변경<br>상위/형제 트리는 유지됨',
+    colorPickLbl:'색상 선택', colorApplyBtn:'✔ 적용 (하위 전체 반영)', colorGrayBtn:'⬜ 회색으로 변경',
+    colorSecTitle:'🎨 대분류 색상 변경', colorSecDesc:'대분류 + 전체 하위 공종에 반영<br>개별 지정된 색상은 유지됨',
+    toastCopied:'📋 복사됨 — 붙여넣을 공종을 우클릭(또는 Ctrl+클릭) 후 Ctrl+V',
+    toastCut:'✂️ 잘라내기됨 — 붙여넣을 공종을 우클릭(또는 Ctrl+클릭) 후 Ctrl+V (Ctrl+Z로 취소)',
+    toastClipEmpty:'클립보드가 비어있습니다', toastPasteSelf:'⚠ 자기 자신에게 붙여넣을 수 없습니다', toastPasteDescendant:'⚠ 자기 자손에게 붙여넣을 수 없습니다',
+    toastPasteDone:'📌 붙여넣기 완료', toastNoUndo:'되돌릴 작업이 없습니다', toastUndoDone:'↩ 되돌리기 완료',
   },
   en: {
     menu:'☰ Menu', settings:'⚙ Settings',
@@ -1998,6 +2006,14 @@ const I18N = {
     unitPickTitle:'Select Unit', bohwalLbl:'Wt%',
     btnAddSibling:'+Task', btnAddSiblingTitle:'Add Task at Same Level', btnAddChild:'+Sub', btnAddChildTitle:'Add Sub-task',
     btnEventTitle:'Add/Manage Events', nodeDelTitle:'Delete', namePh:'Enter name', mgrNoneTitle:'No manager', mgrClickAssignTitle:'Click to assign manager', mgrChildHasTitle:'Sub-task has a manager',
+    ctxCopy:'📋 Copy', ctxCut:'✂️ Cut', ctxPaste:'📌 Paste (as child)', ctxUndo:'↩ Undo', ctxCancel:'✖ Cancel / Deselect', ctxColorChange:'🎨 Change Color…',
+    colorNodeTitle:'🎨 Change Task Color', colorNodeDesc:'Applies to selected task + sub-tree only<br>Parent/sibling trees stay unchanged',
+    colorPickLbl:'Pick Color', colorApplyBtn:'✔ Apply (to all sub-items)', colorGrayBtn:'⬜ Set to Gray',
+    colorSecTitle:'🎨 Change Group Color', colorSecDesc:'Applies to group + all sub-tasks<br>Individually set colors are kept',
+    toastCopied:'📋 Copied — right-click (or Ctrl+click) the target task, then Ctrl+V',
+    toastCut:'✂️ Cut — right-click (or Ctrl+click) the target task, then Ctrl+V (Ctrl+Z to undo)',
+    toastClipEmpty:'Clipboard is empty', toastPasteSelf:'⚠ Cannot paste onto itself', toastPasteDescendant:'⚠ Cannot paste onto its own descendant',
+    toastPasteDone:'📌 Paste complete', toastNoUndo:'Nothing to undo', toastUndoDone:'↩ Undo complete',
   },
   es: {
     menu:'☰ Menú', settings:'⚙ Ajustes',
@@ -2023,6 +2039,14 @@ const I18N = {
     unitPickTitle:'Seleccionar Unidad', bohwalLbl:'Peso%',
     btnAddSibling:'+Tarea', btnAddSiblingTitle:'Agregar Tarea al Mismo Nivel', btnAddChild:'+Sub', btnAddChildTitle:'Agregar Subtarea',
     btnEventTitle:'Agregar/Gestionar Eventos', nodeDelTitle:'Eliminar', namePh:'Ingresar nombre', mgrNoneTitle:'Sin encargado', mgrClickAssignTitle:'Clic para asignar encargado', mgrChildHasTitle:'Subtarea tiene encargado',
+    ctxCopy:'📋 Copiar', ctxCut:'✂️ Cortar', ctxPaste:'📌 Pegar (como hijo)', ctxUndo:'↩ Deshacer', ctxCancel:'✖ Cancelar / Deseleccionar', ctxColorChange:'🎨 Cambiar Color…',
+    colorNodeTitle:'🎨 Cambiar Color de Tarea', colorNodeDesc:'Aplica solo a la tarea seleccionada + subárbol<br>Los árboles padre/hermanos no cambian',
+    colorPickLbl:'Elegir Color', colorApplyBtn:'✔ Aplicar (a todos los subítems)', colorGrayBtn:'⬜ Cambiar a Gris',
+    colorSecTitle:'🎨 Cambiar Color de Grupo', colorSecDesc:'Aplica al grupo + todas las subtareas<br>Los colores individuales se conservan',
+    toastCopied:'📋 Copiado — clic derecho (o Ctrl+clic) en la tarea destino, luego Ctrl+V',
+    toastCut:'✂️ Cortado — clic derecho (o Ctrl+clic) en la tarea destino, luego Ctrl+V (Ctrl+Z para deshacer)',
+    toastClipEmpty:'El portapapeles está vacío', toastPasteSelf:'⚠ No se puede pegar sobre sí mismo', toastPasteDescendant:'⚠ No se puede pegar sobre su propio descendiente',
+    toastPasteDone:'📌 Pegado completo', toastNoUndo:'No hay nada que deshacer', toastUndoDone:'↩ Deshecho',
   },
   de: {
     menu:'☰ Menü', settings:'⚙ Einstellungen',
@@ -2048,6 +2072,14 @@ const I18N = {
     unitPickTitle:'Einheit wählen', bohwalLbl:'Anteil%',
     btnAddSibling:'+Vorgang', btnAddSiblingTitle:'Vorgang auf gleicher Ebene hinzufügen', btnAddChild:'+Unter', btnAddChildTitle:'Untervorgang hinzufügen',
     btnEventTitle:'Ereignisse hinzufügen/verwalten', nodeDelTitle:'Löschen', namePh:'Namen eingeben', mgrNoneTitle:'Kein Verantwortlicher', mgrClickAssignTitle:'Klicken zum Zuweisen', mgrChildHasTitle:'Untervorgang hat Verantwortlichen',
+    ctxCopy:'📋 Kopieren', ctxCut:'✂️ Ausschneiden', ctxPaste:'📌 Einfügen (als Unterelement)', ctxUndo:'↩ Rückgängig', ctxCancel:'✖ Abbrechen / Auswahl aufheben', ctxColorChange:'🎨 Farbe ändern…',
+    colorNodeTitle:'🎨 Vorgangsfarbe ändern', colorNodeDesc:'Gilt nur für gewählten Vorgang + Unterbaum<br>Übergeordnete/Geschwister-Bäume bleiben unverändert',
+    colorPickLbl:'Farbe wählen', colorApplyBtn:'✔ Anwenden (auf alle Unterelemente)', colorGrayBtn:'⬜ Auf Grau setzen',
+    colorSecTitle:'🎨 Gruppenfarbe ändern', colorSecDesc:'Gilt für Gruppe + alle Untervorgänge<br>Individuell gesetzte Farben bleiben erhalten',
+    toastCopied:'📋 Kopiert — Zielvorgang rechtsklicken (oder Strg+Klick), dann Strg+V',
+    toastCut:'✂️ Ausgeschnitten — Zielvorgang rechtsklicken (oder Strg+Klick), dann Strg+V (Strg+Z zum Rückgängigmachen)',
+    toastClipEmpty:'Zwischenablage ist leer', toastPasteSelf:'⚠ Kann nicht auf sich selbst eingefügt werden', toastPasteDescendant:'⚠ Kann nicht auf eigenen Nachkommen eingefügt werden',
+    toastPasteDone:'📌 Einfügen abgeschlossen', toastNoUndo:'Nichts rückgängig zu machen', toastUndoDone:'↩ Rückgängig gemacht',
   },
   ja: {
     menu:'☰ メニュー', settings:'⚙ 設定',
@@ -2073,6 +2105,14 @@ const I18N = {
     unitPickTitle:'単位選択', bohwalLbl:'構成比',
     btnAddSibling:'+工種', btnAddSiblingTitle:'同レベル工種追加', btnAddChild:'+下位', btnAddChildTitle:'下位工種追加',
     btnEventTitle:'イベント追加・管理', nodeDelTitle:'削除', namePh:'名前を入力', mgrNoneTitle:'担当者なし', mgrClickAssignTitle:'クリックして担当者指定', mgrChildHasTitle:'下位工種に担当者あり',
+    ctxCopy:'📋 コピー', ctxCut:'✂️ 切り取り', ctxPaste:'📌 貼り付け（子として）', ctxUndo:'↩ 元に戻す', ctxCancel:'✖ キャンセル/選択解除', ctxColorChange:'🎨 色を変更…',
+    colorNodeTitle:'🎨 工種の色を変更', colorNodeDesc:'選択した工種＋下位ツリーのみ変更<br>上位・兄弟ツリーは維持されます',
+    colorPickLbl:'色を選択', colorApplyBtn:'✔ 適用（下位全体に反映）', colorGrayBtn:'⬜ グレーに変更',
+    colorSecTitle:'🎨 大分類の色を変更', colorSecDesc:'大分類＋全下位工種に反映<br>個別指定した色は維持されます',
+    toastCopied:'📋 コピーしました — 貼り付け先の工種を右クリック（またはCtrl+クリック）後、Ctrl+V',
+    toastCut:'✂️ 切り取りました — 貼り付け先の工種を右クリック（またはCtrl+クリック）後、Ctrl+V（Ctrl+Zで取り消し）',
+    toastClipEmpty:'クリップボードが空です', toastPasteSelf:'⚠ 自分自身には貼り付けできません', toastPasteDescendant:'⚠ 自分の下位工種には貼り付けできません',
+    toastPasteDone:'📌 貼り付け完了', toastNoUndo:'元に戻す操作がありません', toastUndoDone:'↩ 元に戻しました',
   },
 };
 let _lang = (function(){ try{ return localStorage.getItem('ms_lang')||'ko'; }catch(e){ return 'ko'; } })();
@@ -4611,14 +4651,14 @@ function nodeCtxMenu(e,secId,nodeId){
   menu.className='clip-ctx-menu';
   menu.style.cssText=`left:${x}px;top:${y}px;`;
   menu.innerHTML=`
-    <div class="clip-ctx-item" id="_ctxCopy"><span>📋 복사</span><span class="clip-ctx-shortcut">Ctrl+C</span></div>
-    <div class="clip-ctx-item" id="_ctxCut"><span>✂️ 잘라내기</span><span class="clip-ctx-shortcut">Ctrl+X</span></div>
-    <div class="clip-ctx-item${hasPaste?'':' disabled'}" id="_ctxPaste"><span>📌 붙여넣기 (자식으로)</span><span class="clip-ctx-shortcut">Ctrl+V</span></div>
-    <div class="clip-ctx-item${hasUndo?'':' disabled'}" id="_ctxUndo"><span>↩ 되돌리기</span><span class="clip-ctx-shortcut">Ctrl+Z</span></div>
+    <div class="clip-ctx-item" id="_ctxCopy"><span>${esc(t('ctxCopy'))}</span><span class="clip-ctx-shortcut">Ctrl+C</span></div>
+    <div class="clip-ctx-item" id="_ctxCut"><span>${esc(t('ctxCut'))}</span><span class="clip-ctx-shortcut">Ctrl+X</span></div>
+    <div class="clip-ctx-item${hasPaste?'':' disabled'}" id="_ctxPaste"><span>${esc(t('ctxPaste'))}</span><span class="clip-ctx-shortcut">Ctrl+V</span></div>
+    <div class="clip-ctx-item${hasUndo?'':' disabled'}" id="_ctxUndo"><span>${esc(t('ctxUndo'))}</span><span class="clip-ctx-shortcut">Ctrl+Z</span></div>
     <div class="clip-ctx-sep"></div>
-    <div class="clip-ctx-item" id="_ctxCancel"><span>✖ 취소 / 선택해제</span><span class="clip-ctx-shortcut">Esc</span></div>
+    <div class="clip-ctx-item" id="_ctxCancel"><span>${esc(t('ctxCancel'))}</span><span class="clip-ctx-shortcut">Esc</span></div>
     <div class="clip-ctx-sep"></div>
-    <div class="clip-ctx-item" id="_ctxColor" style="font-size:11px;color:var(--text2)">🎨 색상 변경…</div>`;
+    <div class="clip-ctx-item" id="_ctxColor" style="font-size:11px;color:var(--text2)">${esc(t('ctxColorChange'))}</div>`;
   document.body.appendChild(menu);
   _clipCtxEl=menu;
   menu.addEventListener('click',e2=>e2.stopPropagation());
@@ -4636,14 +4676,14 @@ function nodeCtxMenu(e,secId,nodeId){
     menu2.className='color-ctx-menu';
     menu2.style.cssText=`left:${Math.min(x+10,window.innerWidth-210)}px;top:${Math.min(y+10,window.innerHeight-180)}px;`;
     menu2.innerHTML=`
-      <div class="color-ctx-title">🎨 공종 색상 변경</div>
-      <div style="font-size:9px;color:var(--text3);margin-bottom:7px;line-height:1.4">선택 공종 + 하위 트리만 변경<br>상위/형제 트리는 유지됨</div>
-      <div class="color-ctx-row"><label>색상 선택</label>
+      <div class="color-ctx-title">${esc(t('colorNodeTitle'))}</div>
+      <div style="font-size:9px;color:var(--text3);margin-bottom:7px;line-height:1.4">${t('colorNodeDesc')}</div>
+      <div class="color-ctx-row"><label>${esc(t('colorPickLbl'))}</label>
         <input type="color" class="color-ctx-inp" id="ctxColorInp" value="${curColor}">
       </div>
-      <button class="color-ctx-btn" id="ctxColorApply">✔ 적용 (하위 전체 반영)</button>
-      <button class="color-ctx-btn" id="ctxColorGray" style="background:#6b7280;margin-top:4px">⬜ 회색으로 변경</button>
-      <button class="color-ctx-close" id="ctxColorClose">닫기</button>`;
+      <button class="color-ctx-btn" id="ctxColorApply">${esc(t('colorApplyBtn'))}</button>
+      <button class="color-ctx-btn" id="ctxColorGray" style="background:#6b7280;margin-top:4px">${esc(t('colorGrayBtn'))}</button>
+      <button class="color-ctx-close" id="ctxColorClose">${esc(t('stgClose'))}</button>`;
     document.body.appendChild(menu2);
     _colorCtxEl=menu2;
     menu2.addEventListener('click',e2=>e2.stopPropagation());
@@ -4720,7 +4760,7 @@ function _clipCopy(secId, nodeId){
     if(nr){ nr.classList.remove('sel-ctx'); nr.classList.add('sel-copy'); }
     if(lf){ lf.classList.remove('sel-ctx'); lf.classList.add('sel-copy'); }
   }
-  toast('📋 복사됨 — 붙여넣을 공종을 우클릭(또는 Ctrl+클릭) 후 Ctrl+V');
+  toast(t('toastCopied'));
 }
 
 // ── 잘라내기 ──
@@ -4739,7 +4779,7 @@ function _clipCut(secId, nodeId){
     if(nr) nr.classList.remove('sel-ctx','sel-copy');
     if(lf) lf.classList.remove('sel-ctx','sel-copy');
   }
-  toast('✂️ 잘라내기됨 — 붙여넣을 공종을 우클릭(또는 Ctrl+클릭) 후 Ctrl+V (Ctrl+Z로 취소)');
+  toast(t('toastCut'));
 }
 
 function _clearCutGhost(){
@@ -4751,15 +4791,15 @@ function _clearCutGhost(){
 
 // ── 붙여넣기 ──
 function _clipPaste(secId, nodeId){
-  if(!_clip){ toast('클립보드가 비어있습니다'); return; }
+  if(!_clip){ toast(t('toastClipEmpty')); return; }
   const p=getProj();
   const destSec=p.sections.find(s=>s.id===secId); if(!destSec)return;
   const destNode=findNode(destSec.nodes, nodeId); if(!destNode)return;
 
   // 순환 방지: cut 모드에서 목적지가 자기 자신이거나 자손이면 거부
   if(_clip.mode==='cut'){
-    if(_clip.nodeId===nodeId){ toast('⚠ 자기 자신에게 붙여넣을 수 없습니다'); return; }
-    if(_isDescendant(_clip.node, nodeId)){ toast('⚠ 자기 자손에게 붙여넣을 수 없습니다'); return; }
+    if(_clip.nodeId===nodeId){ toast(t('toastPasteSelf')); return; }
+    if(_isDescendant(_clip.node, nodeId)){ toast(t('toastPasteDescendant')); return; }
   }
 
   if(!destNode.ch) destNode.ch=[];
@@ -4834,13 +4874,13 @@ function _clipPaste(secId, nodeId){
   // cut-sel 잔류 정리
   document.querySelectorAll('.tree-node.cut-sel').forEach(el=>el.classList.remove('cut-sel'));
   document.querySelectorAll('.nrow.sel-copy,.nrow-left-fixed.sel-copy').forEach(el=>el.classList.remove('sel-copy'));
-  toast('📌 붙여넣기 완료');
+  toast(t('toastPasteDone'));
   if(_serverMode){ setTimeout(flushToServer, 0); }
 }
 
 // ── 되돌리기 (마지막 잘라내기 1건) ──
 function _clipUndoCut(){
-  if(!_cutUndo){ toast('되돌릴 작업이 없습니다'); return; }
+  if(!_cutUndo){ toast(t('toastNoUndo')); return; }
   const {secId, parentArr, index, node}=_cutUndo;
   const p=getProj();
   const sec=p.sections.find(s=>s.id===secId);
@@ -4865,7 +4905,7 @@ function _clipUndoCut(){
   document.querySelectorAll('.tree-node.cut-sel').forEach(el=>el.classList.remove('cut-sel'));
   document.querySelectorAll('.nrow.sel-copy,.nrow-left-fixed.sel-copy').forEach(el=>el.classList.remove('sel-copy'));
   _clearSelPick();
-  toast('↩ 되돌리기 완료');
+  toast(t('toastUndoDone'));
   if(_serverMode) setTimeout(flushToServer, 0);
 }
 
@@ -4920,17 +4960,17 @@ function secCtxMenu(e,secId){
   menu.className='color-ctx-menu';
   menu.style.cssText=`left:${Math.min(e.clientX,window.innerWidth-210)}px;top:${Math.min(e.clientY,window.innerHeight-160)}px;`;
   menu.innerHTML=`
-    <div class="color-ctx-title">🎨 대분류 색상 변경</div>
+    <div class="color-ctx-title">${esc(t('colorSecTitle'))}</div>
     <div style="font-size:9px;color:var(--text3);margin-bottom:7px;line-height:1.4">
-      대분류 + 전체 하위 공종에 반영<br>개별 지정된 색상은 유지됨
+      ${t('colorSecDesc')}
     </div>
     <div class="color-ctx-row">
-      <label>색상 선택</label>
+      <label>${esc(t('colorPickLbl'))}</label>
       <input type="color" class="color-ctx-inp" id="ctxSecColorInp" value="${curColor}">
     </div>
-    <button class="color-ctx-btn" id="ctxSecColorApply">✔ 적용 (하위 전체 반영)</button>
-    <button class="color-ctx-btn" id="ctxSecColorGray" style="background:#6b7280;margin-top:4px">⬜ 회색으로 변경</button>
-    <button class="color-ctx-close" id="ctxSecColorClose">닫기</button>`;
+    <button class="color-ctx-btn" id="ctxSecColorApply">${esc(t('colorApplyBtn'))}</button>
+    <button class="color-ctx-btn" id="ctxSecColorGray" style="background:#6b7280;margin-top:4px">${esc(t('colorGrayBtn'))}</button>
+    <button class="color-ctx-close" id="ctxSecColorClose">${esc(t('stgClose'))}</button>`;
   document.body.appendChild(menu);
   _colorCtxEl=menu;
   menu.addEventListener('click', e2=>e2.stopPropagation());
