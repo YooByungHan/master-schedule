@@ -1617,11 +1617,11 @@ body.pred-edit-mode .nacts{min-width:44px}
       <div class="pbar">
         <!-- ── 1행: 프로젝트 정보 ── -->
         <div class="pbar-info">
-          <div class="pf"><span class="pl">업체명</span><input class="pi" id="coNameInp" style="width:150px" readonly onchange="onCoNameEdit(this.value)" title="Pro 버전은 회사명을 직접 입력할 수 있습니다"></div>
-          <div class="pf"><span class="pl">작성일</span><input type="date" class="pi" id="writeDate"></div>
-          <div class="pf"><span class="pl">총 공사금액</span><input class="pi" id="totalBudget" type="text" style="width:140px;text-align:right;background:#fff7ed;border-color:#fed7aa" readonly placeholder="자동계산"></div>
-          <div class="pf"><span class="pl">실적금액</span><input class="pi" id="totalActAmount" type="text" style="width:140px;text-align:right;background:#fff7ed;border-color:#fed7aa" readonly placeholder="자동계산"></div>
-          <div class="pf"><span class="pl">실적율</span><input class="pi" id="totalActRate" type="text" style="width:80px;text-align:right;background:#fff7ed;border-color:#fed7aa" readonly placeholder="0.00%"></div>
+          <div class="pf"><span class="pl" id="pbLblCo">업체명</span><input class="pi" id="coNameInp" style="width:150px" readonly onchange="onCoNameEdit(this.value)" title="Pro 버전은 회사명을 직접 입력할 수 있습니다"></div>
+          <div class="pf"><span class="pl" id="pbLblDate">작성일</span><input type="date" class="pi" id="writeDate"></div>
+          <div class="pf"><span class="pl" id="pbLblBudget">총 공사금액</span><input class="pi" id="totalBudget" type="text" style="width:140px;text-align:right;background:#fff7ed;border-color:#fed7aa" readonly placeholder="자동계산"></div>
+          <div class="pf"><span class="pl" id="pbLblActAmt">실적금액</span><input class="pi" id="totalActAmount" type="text" style="width:140px;text-align:right;background:#fff7ed;border-color:#fed7aa" readonly placeholder="자동계산"></div>
+          <div class="pf"><span class="pl" id="pbLblActRate">실적율</span><input class="pi" id="totalActRate" type="text" style="width:80px;text-align:right;background:#fff7ed;border-color:#fed7aa" readonly placeholder="0.00%"></div>
           <!-- Primary: company selector -->
           <div class="pf" id="viewCoWrap" style="display:none">
             <span class="pl">📋 조회 업체</span>
@@ -1635,7 +1635,7 @@ body.pred-edit-mode .nacts{min-width:44px}
         <div class="pbar-tools no-print">
           <!-- 공종 그룹 -->
           <div class="hgrp hg-task col-toggle-bar">
-            <span class="hgrp-lbl">공종</span>
+            <span class="hgrp-lbl" id="hgLblTask">공종</span>
             <button class="ctog on" id="ctog-QTY" onclick="toggleCol('QTY',this)" title="물량/단위 표시·숨기기">물량</button>
             <button class="ctog on" id="ctog-P" onclick="toggleCol('P',this)" title="계획일정 P">P</button>
             <button class="ctog on" id="ctog-A" onclick="toggleCol('A',this)" title="실적일정 A">A</button>
@@ -1648,54 +1648,54 @@ body.pred-edit-mode .nacts{min-width:44px}
               <button class="pgb" id="pgbTgt"  onclick="setPredSubMode('tgt')"  title="후행 공종 선택">후행</button>
               <button class="pgb" id="pgbConn" onclick="confirmPredLink()"      title="선택된 선행→후행 연결 저장">노드연결</button>
               <button class="pgb pgb-edit" id="pgbEdit" onclick="setPredSubMode('edit')" title="연결 삭제/이동 편집">노드편집</button>
-              <button class="pgb pgb-close"    onclick="endPredMode()"          title="선후행 모드 종료 (ESC)">✕ 완료</button>
+              <button class="pgb pgb-close" id="pgbClose" onclick="endPredMode()"          title="선후행 모드 종료 (ESC)">✕ 완료</button>
             </span>
             <span class="hsep"></span>
-            <button class="hbn" onclick="gCollapseAll()" title="전체 접기">－전체</button>
-            <button class="hbn" onclick="gExpandAll()" title="전체 펼치기">＋전체</button>
-            <button class="hbn" onclick="showClipModal()" title="뷰 클립 — 현재 펼침/접힘 상태를 저장하고 불러옵니다" style="color:#7c3aed;font-weight:700">📌 클립</button>
+            <button class="hbn" id="btnCollapseAll" onclick="gCollapseAll()" title="전체 접기">－전체</button>
+            <button class="hbn" id="btnExpandAll" onclick="gExpandAll()" title="전체 펼치기">＋전체</button>
+            <button class="hbn" id="btnClip" onclick="showClipModal()" title="뷰 클립 — 현재 펼침/접힘 상태를 저장하고 불러옵니다" style="color:#7c3aed;font-weight:700">📌 클립</button>
             <span class="hsep"></span>
-            <button class="hbn hbn-danger" onclick="clearAllData()" title="전체 초기화">🗑 초기화</button>
+            <button class="hbn hbn-danger" id="btnResetAll" onclick="clearAllData()" title="전체 초기화">🗑 초기화</button>
             <span class="hsep"></span>
             <button class="hbn" id="analyzeBtn" onclick="toggleAnalyzePanel()" title="현재 활성 공정표를 AI로 지연·충돌 분석(우측 패널)" style="background:#0e7490;color:#fff;font-weight:700;border-color:#0e7490">AI 분석</button>
           </div>
           <!-- 차트 그룹 -->
           <div class="chart-head-ctrl hg-chart">
-            <span class="hgrp-lbl">차트</span>
-            <span class="chc-lbl">단위</span>
+            <span class="hgrp-lbl" id="hgLblChart">차트</span>
+            <span class="chc-lbl" id="chcLblUnit">단위</span>
             <div class="mbns">
               <button class="mbn on" data-mode="day" onclick="setMode('day',this)">일</button>
               <button class="mbn" data-mode="week" onclick="setMode('week',this)">주</button>
               <button class="mbn" data-mode="decade" onclick="setMode('decade',this)">10일</button>
             </div>
             <div class="chc-sep"></div>
-            <span class="chc-lbl">공종명폭</span>
+            <span class="chc-lbl" id="chcLblWidth">공종명폭</span>
             <input type="range" class="chc-slider" min="100" max="420" value="195" id="lwSlider" title="공종명 폭 조절"
               oninput="GLW=+this.value;document.querySelectorAll('#inputSecs .nblock').forEach(el=>{el.style.width=GLW+'px';el.style.minWidth=GLW+'px';el.style.maxWidth=GLW+'px';el.style.flex='0 0 '+GLW+'px';});if(typeof _syncLeftWidthFromDOM==='function')_syncLeftWidthFromDOM();renderGanttDebounced()">
 
             <div class="chc-sep"></div>
-            <span class="chc-lbl">범위</span>
+            <span class="chc-lbl" id="chcLblRange">범위</span>
             <input type="date" class="marker-input chc-date" id="gRangeS" placeholder="시작" oninput="renderGanttDebounced()">
             <span style="font-size:10px;color:var(--text3)">~</span>
             <input type="date" class="marker-input chc-date" id="gRangeE" placeholder="종료" oninput="renderGanttDebounced()">
-            <button class="gexp-btn" onclick="document.getElementById('gRangeS').value='';document.getElementById('gRangeE').value='';renderGantt()">초기화</button>
+            <button class="gexp-btn" id="btnRangeReset" onclick="document.getElementById('gRangeS').value='';document.getElementById('gRangeE').value='';renderGantt()">초기화</button>
             <div class="chc-sep"></div>
-            <span class="chc-lbl">📍기준선</span>
+            <span class="chc-lbl" id="chcLblBaseline">📍기준선</span>
             <input type="date" class="marker-input chc-date" id="markerDate" oninput="renderGanttDebounced()">
-            <button class="gexp-btn" onclick="document.getElementById('markerDate').value='';renderGantt()">삭제</button>
+            <button class="gexp-btn" id="btnBaselineDel" onclick="document.getElementById('markerDate').value='';renderGantt()">삭제</button>
             <div class="chc-sep"></div>
             <button class="ctog ev-tog-p on" id="evtog-P" onclick="toggleEvVis('P',this)" title="계획 이벤트 표시/숨기기">◆P</button>
             <button class="ctog ev-tog-a on" id="evtog-A" onclick="toggleEvVis('A',this)" title="실적 이벤트 표시/숨기기">◆A</button>
             <div class="chc-sep"></div>
-            <button class="hbn hbn-accent" onclick="renderInput()" title="차트 막대 즉시 갱신">🔄 새로고침</button>
+            <button class="hbn hbn-accent" id="btnChartRefresh" onclick="renderInput()" title="차트 막대 즉시 갱신">🔄 새로고침</button>
           </div>
           <div class="hgrp hg-meeting" id="hgMeeting">
-            <span class="hgrp-lbl">공정회의</span>
+            <span class="hgrp-lbl" id="hgLblMeeting">공정회의</span>
             <button class="hbn" id="mtgMainBtn" onclick="enterMeetingMode()" style="background:#7c3aed;color:#fff;font-weight:700;border-color:#7c3aed">공정회의</button>
             <span id="mtgSubBtns" style="display:none">
-              <button class="hbn" onclick="showMemberModal()" title="비교할 업체 선택 후 적용">업체 선택</button>
-              <button class="hbn" onclick="mtgDistribute()" title="참여사 최신 공정표를 보관 폴더로 배포(파일명에 '배포' 추가) + 접수에서 제거">📤 배포</button>
-              <button class="hbn hbn-danger" onclick="mtgEnd()" title="공정회의 종료 — 내 데이터로 복귀">종료</button>
+              <button class="hbn" id="btnMeetingMembers" onclick="showMemberModal()" title="비교할 업체 선택 후 적용">업체 선택</button>
+              <button class="hbn" id="btnMeetingDist" onclick="mtgDistribute()" title="참여사 최신 공정표를 보관 폴더로 배포(파일명에 '배포' 추가) + 접수에서 제거">📤 배포</button>
+              <button class="hbn hbn-danger" id="btnMeetingEnd" onclick="mtgEnd()" title="공정회의 종료 — 내 데이터로 복귀">종료</button>
             </span>
           </div>
         </div>
@@ -1958,6 +1958,15 @@ const I18N = {
     stgSave:'저장', stgClose:'닫기', stgCloseWin:'✕ 창 닫기',
     subDesc:'구독하면 앱을 최신 상태로 유지할 수 있도록 자동 업데이트 알림을 받을 수 있습니다.',
     subYes:'✅ 구독 중', subNo:'❌ 구독 중이 아닙니다', subRecent:'최근 영상', subLoading:'불러오는 중...', subNone:'표시할 영상이 없습니다',
+    pbLblCo:'업체명', pbLblDate:'작성일', pbLblBudget:'총 공사금액', pbLblActAmt:'실적금액', pbLblActRate:'실적율',
+    hgLblTask:'공종', colQty:'물량', colAmt:'금액', colRate:'실적', colEvent:'이벤트',
+    predSrc:'선행', predTgt:'후행', predConn:'노드연결', predEdit:'노드편집', predClose:'✕ 완료',
+    btnCollapseAll:'－전체', btnExpandAll:'＋전체', btnClip:'📌 클립', btnResetAll:'🗑 초기화', analyzeBtn:'AI 분석',
+    hgLblChart:'차트', chcLblUnit:'단위', unitDay:'일', unitWeek:'주', unitDecade:'10일',
+    chcLblWidth:'공종명폭', chcLblRange:'범위', btnRangeReset:'초기화', chcLblBaseline:'📍기준선', btnBaselineDel:'삭제',
+    btnChartRefresh:'🔄 새로고침',
+    hgLblMeeting:'공정회의', mtgMainBtn:'공정회의', btnMeetingMembers:'업체 선택', btnMeetingDist:'📤 배포', btnMeetingEnd:'종료',
+    docLocalFile:'🗔 로컬 파일(새 창)', docNewLocal:'🗔 새 공정표(새 창)',
   },
   en: {
     menu:'☰ Menu', settings:'⚙ Settings',
@@ -1968,6 +1977,72 @@ const I18N = {
     stgSave:'Save', stgClose:'Close', stgCloseWin:'✕ Close window',
     subDesc:'Subscribing lets you receive auto-update notifications so the app always stays current.',
     subYes:'✅ Subscribed', subNo:'❌ Not subscribed', subRecent:'Recent videos', subLoading:'Loading...', subNone:'No videos to show',
+    pbLblCo:'Company', pbLblDate:'Date', pbLblBudget:'Total Budget', pbLblActAmt:'Actual Amount', pbLblActRate:'Actual Rate',
+    hgLblTask:'Tasks', colQty:'Qty', colAmt:'Amount', colRate:'Actual', colEvent:'Events',
+    predSrc:'Pred', predTgt:'Succ', predConn:'Link', predEdit:'Edit', predClose:'✕ Done',
+    btnCollapseAll:'－All', btnExpandAll:'＋All', btnClip:'📌 Clip', btnResetAll:'🗑 Reset', analyzeBtn:'AI Analysis',
+    hgLblChart:'Chart', chcLblUnit:'Unit', unitDay:'Day', unitWeek:'Week', unitDecade:'10-Day',
+    chcLblWidth:'Label Width', chcLblRange:'Range', btnRangeReset:'Reset', chcLblBaseline:'📍Baseline', btnBaselineDel:'Delete',
+    btnChartRefresh:'🔄 Refresh',
+    hgLblMeeting:'Meeting', mtgMainBtn:'Meeting', btnMeetingMembers:'Select Companies', btnMeetingDist:'📤 Distribute', btnMeetingEnd:'End',
+    docLocalFile:'🗔 Local File (New Window)', docNewLocal:'🗔 New Schedule (New Window)',
+  },
+  es: {
+    menu:'☰ Menú', settings:'⚙ Ajustes',
+    tabInput:'✏️ Entrada de datos', tabMerge:'🗂️ Combinar', tabMeeting:'🤝 Comparar (Reunión)',
+    tabTimeline:'📋 Flujo', tabAi:'🤖 Análisis IA', tabAdmin:'⚙️ Admin',
+    stgTitle:'Ajustes', stgAccount:'Cuenta', stgLang:'Idioma', stgApiKey:'Clave API', stgSub:'Suscripción', stgLogout:'Cerrar sesión',
+    stgName:'Nombre', stgPwCur:'Contraseña actual', stgPwNew:'Nueva contraseña', stgPwNew2:'Confirmar nueva contraseña',
+    stgSave:'Guardar', stgClose:'Cerrar', stgCloseWin:'✕ Cerrar ventana',
+    subDesc:'Suscribirte te permite recibir notificaciones de actualización para mantener la app siempre al día.',
+    subYes:'✅ Suscrito', subNo:'❌ No suscrito', subRecent:'Videos recientes', subLoading:'Cargando...', subNone:'No hay videos para mostrar',
+    pbLblCo:'Empresa', pbLblDate:'Fecha', pbLblBudget:'Presupuesto Total', pbLblActAmt:'Monto Real', pbLblActRate:'Avance Real',
+    hgLblTask:'Tareas', colQty:'Cant.', colAmt:'Monto', colRate:'Avance', colEvent:'Eventos',
+    predSrc:'Prec.', predTgt:'Suc.', predConn:'Vincular', predEdit:'Editar', predClose:'✕ Listo',
+    btnCollapseAll:'－Todo', btnExpandAll:'＋Todo', btnClip:'📌 Clip', btnResetAll:'🗑 Reiniciar', analyzeBtn:'Análisis IA',
+    hgLblChart:'Gráfico', chcLblUnit:'Unidad', unitDay:'Día', unitWeek:'Semana', unitDecade:'10 días',
+    chcLblWidth:'Ancho Nombre', chcLblRange:'Rango', btnRangeReset:'Reiniciar', chcLblBaseline:'📍Línea base', btnBaselineDel:'Eliminar',
+    btnChartRefresh:'🔄 Actualizar',
+    hgLblMeeting:'Reunión', mtgMainBtn:'Reunión', btnMeetingMembers:'Seleccionar Empresas', btnMeetingDist:'📤 Distribuir', btnMeetingEnd:'Finalizar',
+    docLocalFile:'🗔 Archivo Local (Ventana Nueva)', docNewLocal:'🗔 Nuevo Cronograma (Ventana Nueva)',
+  },
+  de: {
+    menu:'☰ Menü', settings:'⚙ Einstellungen',
+    tabInput:'✏️ Dateneingabe', tabMerge:'🗂️ Zusammenführen', tabMeeting:'🤝 Vergleich (Meeting)',
+    tabTimeline:'📋 Ablauf', tabAi:'🤖 KI-Analyse', tabAdmin:'⚙️ Admin',
+    stgTitle:'Einstellungen', stgAccount:'Konto', stgLang:'Sprache', stgApiKey:'API-Schlüssel', stgSub:'Abo', stgLogout:'Abmelden',
+    stgName:'Name', stgPwCur:'Aktuelles Passwort', stgPwNew:'Neues Passwort', stgPwNew2:'Neues Passwort bestätigen',
+    stgSave:'Speichern', stgClose:'Schließen', stgCloseWin:'✕ Fenster schließen',
+    subDesc:'Mit einem Abo erhältst du Auto-Update-Benachrichtigungen, damit die App immer aktuell bleibt.',
+    subYes:'✅ Abonniert', subNo:'❌ Nicht abonniert', subRecent:'Neueste Videos', subLoading:'Wird geladen...', subNone:'Keine Videos vorhanden',
+    pbLblCo:'Firma', pbLblDate:'Datum', pbLblBudget:'Gesamtbudget', pbLblActAmt:'Ist-Betrag', pbLblActRate:'Ist-Fortschritt',
+    hgLblTask:'Vorgänge', colQty:'Menge', colAmt:'Betrag', colRate:'Ist', colEvent:'Ereignisse',
+    predSrc:'Vorg.', predTgt:'Nachf.', predConn:'Verknüpfen', predEdit:'Bearbeiten', predClose:'✕ Fertig',
+    btnCollapseAll:'－Alle', btnExpandAll:'＋Alle', btnClip:'📌 Clip', btnResetAll:'🗑 Zurücksetzen', analyzeBtn:'KI-Analyse',
+    hgLblChart:'Diagramm', chcLblUnit:'Einheit', unitDay:'Tag', unitWeek:'Woche', unitDecade:'10 Tage',
+    chcLblWidth:'Namensbreite', chcLblRange:'Bereich', btnRangeReset:'Zurücksetzen', chcLblBaseline:'📍Basislinie', btnBaselineDel:'Löschen',
+    btnChartRefresh:'🔄 Aktualisieren',
+    hgLblMeeting:'Meeting', mtgMainBtn:'Meeting', btnMeetingMembers:'Firmen auswählen', btnMeetingDist:'📤 Verteilen', btnMeetingEnd:'Beenden',
+    docLocalFile:'🗔 Lokale Datei (Neues Fenster)', docNewLocal:'🗔 Neuer Zeitplan (Neues Fenster)',
+  },
+  ja: {
+    menu:'☰ メニュー', settings:'⚙ 設定',
+    tabInput:'✏️ データ入力', tabMerge:'🗂️ 統合', tabMeeting:'🤝 統合比較（会議）',
+    tabTimeline:'📋 工程フロー', tabAi:'🤖 AI分析', tabAdmin:'⚙️ 管理者',
+    stgTitle:'設定', stgAccount:'アカウント', stgLang:'言語', stgApiKey:'APIキー', stgSub:'登録', stgLogout:'ログアウト',
+    stgName:'名前', stgPwCur:'現在のパスワード', stgPwNew:'新しいパスワード', stgPwNew2:'新しいパスワード確認',
+    stgSave:'保存', stgClose:'閉じる', stgCloseWin:'✕ ウィンドウを閉じる',
+    subDesc:'登録すると、アプリを常に最新の状態に保つための自動更新通知を受け取れます。',
+    subYes:'✅ 登録済み', subNo:'❌ 未登録', subRecent:'最近の動画', subLoading:'読み込み中...', subNone:'表示する動画がありません',
+    pbLblCo:'会社名', pbLblDate:'作成日', pbLblBudget:'総工事金額', pbLblActAmt:'実績金額', pbLblActRate:'実績率',
+    hgLblTask:'工種', colQty:'数量', colAmt:'金額', colRate:'実績', colEvent:'イベント',
+    predSrc:'先行', predTgt:'後行', predConn:'ノード接続', predEdit:'ノード編集', predClose:'✕ 完了',
+    btnCollapseAll:'－全体', btnExpandAll:'＋全体', btnClip:'📌 クリップ', btnResetAll:'🗑 初期化', analyzeBtn:'AI分析',
+    hgLblChart:'チャート', chcLblUnit:'単位', unitDay:'日', unitWeek:'週', unitDecade:'10日',
+    chcLblWidth:'工種名幅', chcLblRange:'範囲', btnRangeReset:'初期化', chcLblBaseline:'📍基準線', btnBaselineDel:'削除',
+    btnChartRefresh:'🔄 更新',
+    hgLblMeeting:'工程会議', mtgMainBtn:'工程会議', btnMeetingMembers:'会社選択', btnMeetingDist:'📤 配布', btnMeetingEnd:'終了',
+    docLocalFile:'🗔 ローカルファイル（新規ウィンドウ）', docNewLocal:'🗔 新規工程表（新規ウィンドウ）',
   },
 };
 let _lang = (function(){ try{ return localStorage.getItem('ms_lang')||'ko'; }catch(e){ return 'ko'; } })();
@@ -1989,6 +2064,28 @@ function applyI18n(){
   var tTl=document.getElementById('timelineTabBtn'); if(tTl) tTl.textContent=t('tabTimeline');
   var tAi=document.getElementById('aiTabBtn'); if(tAi) tAi.textContent=t('tabAi');
   var tAd=document.getElementById('adminTabBtn'); if(tAd) tAd.textContent=t('tabAdmin');
+
+  // 고정 헤드(pbar) — 프로젝트 정보 라벨
+  ['pbLblCo','pbLblDate','pbLblBudget','pbLblActAmt','pbLblActRate'].forEach(function(id){
+    var el=document.getElementById(id); if(el) el.textContent=t(id);
+  });
+  // 고정 헤드(pbar) — 도구 모음(공종/차트/공정회의 그룹)
+  var map={
+    hgLblTask:'hgLblTask', 'ctog-QTY':'colQty', 'ctog-AMT':'colAmt', 'ctog-RATE':'colRate', 'ctog-EVBTN':'colEvent',
+    pgbSrc:'predSrc', pgbTgt:'predTgt', pgbConn:'predConn', pgbEdit:'predEdit', pgbClose:'predClose',
+    btnCollapseAll:'btnCollapseAll', btnExpandAll:'btnExpandAll', btnClip:'btnClip', btnResetAll:'btnResetAll', analyzeBtn:'analyzeBtn',
+    hgLblChart:'hgLblChart', chcLblUnit:'chcLblUnit', chcLblWidth:'chcLblWidth', chcLblRange:'chcLblRange',
+    btnRangeReset:'btnRangeReset', chcLblBaseline:'chcLblBaseline', btnBaselineDel:'btnBaselineDel', btnChartRefresh:'btnChartRefresh',
+    hgLblMeeting:'hgLblMeeting', mtgMainBtn:'mtgMainBtn', btnMeetingMembers:'btnMeetingMembers', btnMeetingDist:'btnMeetingDist', btnMeetingEnd:'btnMeetingEnd',
+  };
+  Object.keys(map).forEach(function(id){
+    var el=document.getElementById(id); if(el) el.textContent=t(map[id]);
+  });
+  var dDay=document.querySelector('.mbns [data-mode="day"]'); if(dDay) dDay.textContent=t('unitDay');
+  var dWeek=document.querySelector('.mbns [data-mode="week"]'); if(dWeek) dWeek.textContent=t('unitWeek');
+  var dDecade=document.querySelector('.mbns [data-mode="decade"]'); if(dDecade) dDecade.textContent=t('unitDecade');
+  // 로컬/서버 문서 전환 바(동적 렌더 — t()를 직접 써서 매번 최신 언어로 그려짐)
+  if(typeof renderDocTabs==='function') try{ renderDocTabs(); }catch(e){}
 }
 
 let CU=null;
@@ -2315,8 +2412,8 @@ function renderDocTabs(){
   const ts=on=>`padding:4px 12px;border:1px solid var(--border);border-bottom:${on?'1px solid #fff':'1px solid var(--border)'};border-radius:7px 7px 0 0;font-size:11px;cursor:pointer;margin-right:3px;background:${on?'#fff':'#e5e7eb'};color:${on?'#111':'#555'};font-weight:${on?'700':'400'};position:relative;top:1px`;
   let h=`<span onclick="switchDoc('server')" style="${ts(_activeDoc==='server')}">🌐 ${esc(_siteName||'서버 현장')}</span>`;
   if(_localDoc){ h+=`<span onclick="switchDoc('local')" style="${ts(_activeDoc==='local')}">💻 ${esc(_localDoc.name)} <span onclick="event.stopPropagation();closeLocalDoc()" style="margin-left:5px;color:#b91c1c;font-weight:700">✕</span></span>`; }
-  h+=`<span onclick="openLocalDocPick()" title="내 PC의 .json 공정표를 새 창에서 열기(서버 미반영 — 대조용)" style="padding:4px 10px;font-size:11px;cursor:pointer;color:var(--text2)">🗔 로컬 파일(새 창)</span>`;
-  h+=`<span onclick="openLocalWindowNew()" title="빈 공정표를 새 창에서 작성(로컬 전용)" style="padding:4px 10px;font-size:11px;cursor:pointer;color:var(--text2)">🗔 새 공정표(새 창)</span>`;
+  h+=`<span onclick="openLocalDocPick()" title="내 PC의 .json 공정표를 새 창에서 열기(서버 미반영 — 대조용)" style="padding:4px 10px;font-size:11px;cursor:pointer;color:var(--text2)">${esc(t('docLocalFile'))}</span>`;
+  h+=`<span onclick="openLocalWindowNew()" title="빈 공정표를 새 창에서 작성(로컬 전용)" style="padding:4px 10px;font-size:11px;cursor:pointer;color:var(--text2)">${esc(t('docNewLocal'))}</span>`;
   bar.innerHTML=h;
 }
 function openLocalDocPick(){ const i=document.getElementById('localDocInp'); if(i)i.click(); }
@@ -8025,7 +8122,7 @@ async function _doChangePw(isPro){
 }
 
 function _renderSettingsLang(){
-  const opts=[{code:'ko',label:'한국어'},{code:'en',label:'English'}];
+  const opts=[{code:'ko',label:'한국어'},{code:'en',label:'English'},{code:'es',label:'Español'},{code:'de',label:'Deutsch'},{code:'ja',label:'日本語'}];
   return `
     <div style="font-size:12px;color:var(--text2);margin-bottom:12px">${esc(t('stgLang'))}</div>
     <div style="display:flex;flex-direction:column;gap:6px">
