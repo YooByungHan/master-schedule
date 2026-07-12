@@ -1991,6 +1991,21 @@ const I18N = {
     mtgViewProjectName:'공정회의 통합뷰 ({n}개사)', mtgViewCompanyName:'통합비교', mtgViewBannerMsg:'🤝 공정회의 통합뷰 (편집값은 회의 종료 후 [원본 저장] 필요)',
     mtgGanttEmptyMsg:'결합을 먼저 생성하세요.', mtgExitDoneMsg:'회의뷰를 종료하고 내 데이터로 돌아왔습니다', mtgAdminOnlyMsg:'관리자만 사용할 수 있습니다',
     mtgUnnamedCoLabel:'업체',
+    predBadgeSrcTitle:'선행 #{num}→후행 {n}개 (클릭=삭제)', predBadgeTgtTitle:'후행 #{num} (클릭=이 공종만 연결삭제)', predStepSrcDone:'선행: {name}',
+    predStepSrcEmpty:'선행 —', predStepTgtDone:'후행: {n}개 선택', predStepTgtEmpty:'후행 —',
+    predModeMsgSrc:'공종을 클릭하여 선행 지정 (진한 파란색)', predModeMsgTgt:'공종을 클릭하여 후행 추가/해제 (재클릭=해제)', predModeMsgEdit:'[연결삭제] 또는 [이동] 버튼을 사용하세요',
+    predModeMsgMove:'교체할 공종을 클릭하세요 → 선행교체 or 후행이동 선택', predDelBtnTitle:'연결 삭제', predMoveBtnTitle:'이동',
+    predTgtNotSrcMsg:'선행 공종은 후행으로 선택할 수 없습니다', predSelectSrcFirstMsg:'선행 공종을 먼저 선택하세요', predSelectTgtFirstMsg:'후행 공종을 1개 이상 선택하세요',
+    predLinkSavedMsg:'✅ {n}개 연결 저장됨', predAlreadyExistsMsg:'이미 동일한 연결이 존재합니다', predDelGroupConfirmMsg:'#{num} 그룹 전체 삭제\n선행: {src}\n후행: {tgt}\n\n이 그룹의 모든 연결을 삭제하시겠습니까?',
+    predGroupDeletedMsg:'그룹 연결이 삭제되었습니다', predDelOneConfirmMsg:'"{name}"의 연결만 삭제하시겠습니까?\n(다른 후행 연결은 유지됩니다)', predLinkDeletedMsg:'연결이 삭제되었습니다',
+    predNoLinkMsg:'이 공종에 연결된 선후행이 없습니다', predLinkSrcTag:'선행', predGroupDelSuffix:'(그룹 전체 삭제)',
+    predLinkTgtTag:'후행', predOneDelSuffix:'(이 공종만 삭제)', predDelModalTitle:'연결 삭제 — {name}',
+    predDelModalHint:'삭제할 연결을 선택하세요', predSelectAllBtn:'전체선택', predDeselectAllBtn:'전체해제',
+    predDelSelectedBtn:'선택 삭제', predNoSelToDelMsg:'삭제할 연결이 없습니다', predDelDoneMsg:'삭제 완료',
+    predMoveSelectedMsg:'"{name}" 선택됨 — 이동할 대상 공종을 클릭하세요', predMoveSrcOptLabel:'📌 선행 이동 #{num}: [{move} → {tgts}]', predMoveSrcOptHint:'→ 선행이 [{tgt}]로 바뀝니다',
+    predMoveTgtOptLabel:'🔀 후행 이동 #{num}: [{src} → {move}]', predMoveTgtOptHint:'→ 후행이 [{tgt}]로 바뀝니다 (다른 후행 유지)', predNoMoveOptMsg:'이동 가능한 연결이 없습니다',
+    predMoveModalTitle:'이동 방식 선택', predMoveModalHint:'선택한 연결만 변경, 나머지 유지', predNotFoundMsg:'연결을 찾을 수 없습니다',
+    predMoveDoneMsg:'이동 완료', predClearAllConfirmMsg:'모든 선후행 연결을 초기화하시겠습니까?', predClearAllDoneMsg:'모든 선후행 연결이 초기화되었습니다',
     pbLblCo:'업체명', pbLblDate:'작성일', pbLblBudget:'총 공사금액', pbLblActAmt:'실적금액', pbLblActRate:'실적율',
     hgLblTask:'공종', colQty:'물량', colAmt:'금액', colRate:'실적', colEvent:'이벤트',
     predSrc:'선행', predTgt:'후행', predConn:'노드연결', predEdit:'노드편집', predClose:'✕ 완료',
@@ -2160,6 +2175,21 @@ const I18N = {
     mtgViewProjectName:'Combined Schedule Meeting View ({n} companies)', mtgViewCompanyName:'Combined Comparison', mtgViewBannerMsg:'🤝 Schedule Meeting Combined View (edits require [Save to Source] after ending the meeting)',
     mtgGanttEmptyMsg:'Please create the combined view first.', mtgExitDoneMsg:'Meeting view ended — returned to my data', mtgAdminOnlyMsg:'Only administrators can use this',
     mtgUnnamedCoLabel:'Company',
+    predBadgeSrcTitle:'Predecessor #{num}→{n} successors (click to delete)', predBadgeTgtTitle:'Successor #{num} (click to remove only this link)', predStepSrcDone:'Predecessor: {name}',
+    predStepSrcEmpty:'Predecessor —', predStepTgtDone:'Successors: {n} selected', predStepTgtEmpty:'Successor —',
+    predModeMsgSrc:'Click a task to set it as the predecessor (dark blue)', predModeMsgTgt:'Click tasks to add/remove successors (click again to remove)', predModeMsgEdit:'Use the [Delete Link] or [Move] buttons',
+    predModeMsgMove:'Click the task to replace with → choose predecessor swap or successor move', predDelBtnTitle:'Delete link', predMoveBtnTitle:'Move',
+    predTgtNotSrcMsg:'The predecessor task cannot be selected as a successor', predSelectSrcFirstMsg:'Please select a predecessor task first', predSelectTgtFirstMsg:'Please select at least one successor task',
+    predLinkSavedMsg:'✅ {n} link(s) saved', predAlreadyExistsMsg:'This link already exists', predDelGroupConfirmMsg:'Delete entire group #{num}\nPredecessor: {src}\nSuccessors: {tgt}\n\nDelete all links in this group?',
+    predGroupDeletedMsg:'Group link deleted', predDelOneConfirmMsg:'Delete only the link for "{name}"?\n(Other successor links are kept)', predLinkDeletedMsg:'Link deleted',
+    predNoLinkMsg:'This task has no predecessor/successor links', predLinkSrcTag:'Predecessor', predGroupDelSuffix:'(deletes entire group)',
+    predLinkTgtTag:'Successor', predOneDelSuffix:'(deletes only this task)', predDelModalTitle:'Delete Link — {name}',
+    predDelModalHint:'Select the links to delete', predSelectAllBtn:'Select All', predDeselectAllBtn:'Deselect All',
+    predDelSelectedBtn:'Delete Selected', predNoSelToDelMsg:'No links selected to delete', predDelDoneMsg:'Deleted',
+    predMoveSelectedMsg:'"{name}" selected — click the target task to move to', predMoveSrcOptLabel:'📌 Move predecessor #{num}: [{move} → {tgts}]', predMoveSrcOptHint:'→ The predecessor will change to [{tgt}]',
+    predMoveTgtOptLabel:'🔀 Move successor #{num}: [{src} → {move}]', predMoveTgtOptHint:'→ The successor will change to [{tgt}] (other successors kept)', predNoMoveOptMsg:'No links available to move',
+    predMoveModalTitle:'Select Move Method', predMoveModalHint:'Only the selected link changes, the rest are kept', predNotFoundMsg:'Link not found',
+    predMoveDoneMsg:'Move complete', predClearAllConfirmMsg:'Reset all predecessor/successor links?', predClearAllDoneMsg:'All predecessor/successor links have been reset',
     pbLblCo:'Company', pbLblDate:'Date', pbLblBudget:'Total Budget', pbLblActAmt:'Actual Amount', pbLblActRate:'Actual Rate',
     hgLblTask:'Tasks', colQty:'Qty', colAmt:'Amount', colRate:'Actual', colEvent:'Events',
     predSrc:'Pred', predTgt:'Succ', predConn:'Link', predEdit:'Edit', predClose:'✕ Done',
@@ -2329,6 +2359,21 @@ const I18N = {
     mtgViewProjectName:'Vista Combinada de Reunión de Cronograma ({n} empresas)', mtgViewCompanyName:'Comparación Combinada', mtgViewBannerMsg:'🤝 Vista Combinada de Reunión (las ediciones requieren [Guardar en Origen] tras finalizar la reunión)',
     mtgGanttEmptyMsg:'Primero cree la vista combinada.', mtgExitDoneMsg:'Vista de reunión finalizada — se volvió a mis datos', mtgAdminOnlyMsg:'Solo los administradores pueden usar esto',
     mtgUnnamedCoLabel:'Empresa',
+    predBadgeSrcTitle:'Predecesor #{num}→{n} sucesores (clic para eliminar)', predBadgeTgtTitle:'Sucesor #{num} (clic para eliminar solo este enlace)', predStepSrcDone:'Predecesor: {name}',
+    predStepSrcEmpty:'Predecesor —', predStepTgtDone:'Sucesores: {n} seleccionados', predStepTgtEmpty:'Sucesor —',
+    predModeMsgSrc:'Haga clic en una tarea para establecerla como predecesor (azul oscuro)', predModeMsgTgt:'Haga clic en tareas para agregar/quitar sucesores (vuelva a hacer clic para quitar)', predModeMsgEdit:'Use los botones [Eliminar enlace] o [Mover]',
+    predModeMsgMove:'Haga clic en la tarea de reemplazo → elija reemplazar predecesor o mover sucesor', predDelBtnTitle:'Eliminar enlace', predMoveBtnTitle:'Mover',
+    predTgtNotSrcMsg:'La tarea predecesora no se puede seleccionar como sucesora', predSelectSrcFirstMsg:'Seleccione primero una tarea predecesora', predSelectTgtFirstMsg:'Seleccione al menos una tarea sucesora',
+    predLinkSavedMsg:'✅ {n} enlace(s) guardado(s)', predAlreadyExistsMsg:'Este enlace ya existe', predDelGroupConfirmMsg:'Eliminar todo el grupo #{num}\nPredecesor: {src}\nSucesores: {tgt}\n\n¿Eliminar todos los enlaces de este grupo?',
+    predGroupDeletedMsg:'Enlace de grupo eliminado', predDelOneConfirmMsg:'¿Eliminar solo el enlace de "{name}"?\n(Se mantienen los demás enlaces de sucesores)', predLinkDeletedMsg:'Enlace eliminado',
+    predNoLinkMsg:'Esta tarea no tiene enlaces de predecesor/sucesor', predLinkSrcTag:'Predecesor', predGroupDelSuffix:'(elimina todo el grupo)',
+    predLinkTgtTag:'Sucesor', predOneDelSuffix:'(elimina solo esta tarea)', predDelModalTitle:'Eliminar Enlace — {name}',
+    predDelModalHint:'Seleccione los enlaces a eliminar', predSelectAllBtn:'Seleccionar Todo', predDeselectAllBtn:'Deseleccionar Todo',
+    predDelSelectedBtn:'Eliminar Seleccionados', predNoSelToDelMsg:'No hay enlaces seleccionados para eliminar', predDelDoneMsg:'Eliminado',
+    predMoveSelectedMsg:'"{name}" seleccionado — haga clic en la tarea de destino', predMoveSrcOptLabel:'📌 Mover predecesor #{num}: [{move} → {tgts}]', predMoveSrcOptHint:'→ El predecesor cambiará a [{tgt}]',
+    predMoveTgtOptLabel:'🔀 Mover sucesor #{num}: [{src} → {move}]', predMoveTgtOptHint:'→ El sucesor cambiará a [{tgt}] (se mantienen los demás sucesores)', predNoMoveOptMsg:'No hay enlaces disponibles para mover',
+    predMoveModalTitle:'Seleccionar Método de Movimiento', predMoveModalHint:'Solo cambia el enlace seleccionado, el resto se mantiene', predNotFoundMsg:'Enlace no encontrado',
+    predMoveDoneMsg:'Movimiento completado', predClearAllConfirmMsg:'¿Restablecer todos los enlaces de predecesor/sucesor?', predClearAllDoneMsg:'Todos los enlaces de predecesor/sucesor se han restablecido',
     pbLblCo:'Empresa', pbLblDate:'Fecha', pbLblBudget:'Presupuesto Total', pbLblActAmt:'Monto Real', pbLblActRate:'Avance Real',
     hgLblTask:'Tareas', colQty:'Cant.', colAmt:'Monto', colRate:'Avance', colEvent:'Eventos',
     predSrc:'Prec.', predTgt:'Suc.', predConn:'Vincular', predEdit:'Editar', predClose:'✕ Listo',
@@ -2498,6 +2543,21 @@ const I18N = {
     mtgViewProjectName:'Kombinierte Terminbesprechungsansicht ({n} Firmen)', mtgViewCompanyName:'Kombinierter Vergleich', mtgViewBannerMsg:'🤝 Kombinierte Besprechungsansicht (Änderungen erfordern nach Beendigung [In Quelle speichern])',
     mtgGanttEmptyMsg:'Bitte zuerst die kombinierte Ansicht erstellen.', mtgExitDoneMsg:'Besprechungsansicht beendet — zu meinen Daten zurückgekehrt', mtgAdminOnlyMsg:'Nur Administratoren können dies verwenden',
     mtgUnnamedCoLabel:'Firma',
+    predBadgeSrcTitle:'Vorgänger #{num}→{n} Nachfolger (Klicken zum Löschen)', predBadgeTgtTitle:'Nachfolger #{num} (Klicken, um nur diese Verknüpfung zu entfernen)', predStepSrcDone:'Vorgänger: {name}',
+    predStepSrcEmpty:'Vorgänger —', predStepTgtDone:'Nachfolger: {n} ausgewählt', predStepTgtEmpty:'Nachfolger —',
+    predModeMsgSrc:'Klicken Sie auf einen Vorgang, um ihn als Vorgänger festzulegen (dunkelblau)', predModeMsgTgt:'Klicken Sie auf Vorgänge, um Nachfolger hinzuzufügen/zu entfernen (erneut klicken zum Entfernen)', predModeMsgEdit:'Verwenden Sie die Schaltflächen [Verknüpfung löschen] oder [Verschieben]',
+    predModeMsgMove:'Klicken Sie auf den zu ersetzenden Vorgang → Vorgänger-Tausch oder Nachfolger-Verschiebung wählen', predDelBtnTitle:'Verknüpfung löschen', predMoveBtnTitle:'Verschieben',
+    predTgtNotSrcMsg:'Der Vorgängervorgang kann nicht als Nachfolger ausgewählt werden', predSelectSrcFirstMsg:'Bitte wählen Sie zuerst einen Vorgängervorgang', predSelectTgtFirstMsg:'Bitte wählen Sie mindestens einen Nachfolgervorgang',
+    predLinkSavedMsg:'✅ {n} Verknüpfung(en) gespeichert', predAlreadyExistsMsg:'Diese Verknüpfung existiert bereits', predDelGroupConfirmMsg:'Gesamte Gruppe #{num} löschen\nVorgänger: {src}\nNachfolger: {tgt}\n\nAlle Verknüpfungen dieser Gruppe löschen?',
+    predGroupDeletedMsg:'Gruppenverknüpfung gelöscht', predDelOneConfirmMsg:'Nur die Verknüpfung für "{name}" löschen?\n(Andere Nachfolgerverknüpfungen bleiben erhalten)', predLinkDeletedMsg:'Verknüpfung gelöscht',
+    predNoLinkMsg:'Dieser Vorgang hat keine Vorgänger-/Nachfolgerverknüpfungen', predLinkSrcTag:'Vorgänger', predGroupDelSuffix:'(löscht die gesamte Gruppe)',
+    predLinkTgtTag:'Nachfolger', predOneDelSuffix:'(löscht nur diesen Vorgang)', predDelModalTitle:'Verknüpfung löschen — {name}',
+    predDelModalHint:'Wählen Sie die zu löschenden Verknüpfungen', predSelectAllBtn:'Alle auswählen', predDeselectAllBtn:'Alle abwählen',
+    predDelSelectedBtn:'Ausgewählte löschen', predNoSelToDelMsg:'Keine Verknüpfungen zum Löschen ausgewählt', predDelDoneMsg:'Gelöscht',
+    predMoveSelectedMsg:'"{name}" ausgewählt — klicken Sie auf den Zielvorgang', predMoveSrcOptLabel:'📌 Vorgänger verschieben #{num}: [{move} → {tgts}]', predMoveSrcOptHint:'→ Der Vorgänger wird zu [{tgt}]',
+    predMoveTgtOptLabel:'🔀 Nachfolger verschieben #{num}: [{src} → {move}]', predMoveTgtOptHint:'→ Der Nachfolger wird zu [{tgt}] (andere Nachfolger bleiben erhalten)', predNoMoveOptMsg:'Keine Verknüpfungen zum Verschieben verfügbar',
+    predMoveModalTitle:'Verschiebemethode wählen', predMoveModalHint:'Nur die ausgewählte Verknüpfung ändert sich, der Rest bleibt erhalten', predNotFoundMsg:'Verknüpfung nicht gefunden',
+    predMoveDoneMsg:'Verschieben abgeschlossen', predClearAllConfirmMsg:'Alle Vorgänger-/Nachfolgerverknüpfungen zurücksetzen?', predClearAllDoneMsg:'Alle Vorgänger-/Nachfolgerverknüpfungen wurden zurückgesetzt',
     pbLblCo:'Firma', pbLblDate:'Datum', pbLblBudget:'Gesamtbudget', pbLblActAmt:'Ist-Betrag', pbLblActRate:'Ist-Fortschritt',
     hgLblTask:'Vorgänge', colQty:'Menge', colAmt:'Betrag', colRate:'Ist', colEvent:'Ereignisse',
     predSrc:'Vorg.', predTgt:'Nachf.', predConn:'Verknüpfen', predEdit:'Bearbeiten', predClose:'✕ Fertig',
@@ -2667,6 +2727,21 @@ const I18N = {
     mtgViewProjectName:'工程会議統合ビュー（{n}社）', mtgViewCompanyName:'統合比較', mtgViewBannerMsg:'🤝 工程会議統合ビュー（編集内容は会議終了後に［原本保存］が必要）',
     mtgGanttEmptyMsg:'先に結合を作成してください。', mtgExitDoneMsg:'会議ビューを終了し、自分のデータに戻りました', mtgAdminOnlyMsg:'管理者のみ使用できます',
     mtgUnnamedCoLabel:'会社',
+    predBadgeSrcTitle:'先行#{num}→後行{n}件（クリックで削除）', predBadgeTgtTitle:'後行#{num}（クリックでこの工種のみ連結削除）', predStepSrcDone:'先行: {name}',
+    predStepSrcEmpty:'先行 —', predStepTgtDone:'後行: {n}件選択', predStepTgtEmpty:'後行 —',
+    predModeMsgSrc:'工種をクリックして先行に指定（濃い青）', predModeMsgTgt:'工種をクリックして後行を追加/解除（再クリックで解除）', predModeMsgEdit:'［連結削除］または［移動］ボタンを使用してください',
+    predModeMsgMove:'置き換える工種をクリック → 先行置換または後行移動を選択', predDelBtnTitle:'連結削除', predMoveBtnTitle:'移動',
+    predTgtNotSrcMsg:'先行工種は後行として選択できません', predSelectSrcFirstMsg:'先に先行工種を選択してください', predSelectTgtFirstMsg:'後行工種を1つ以上選択してください',
+    predLinkSavedMsg:'✅ {n}件の連結を保存しました', predAlreadyExistsMsg:'既に同じ連結が存在します', predDelGroupConfirmMsg:'#{num} グループ全体削除\n先行: {src}\n後行: {tgt}\n\nこのグループの全連結を削除しますか？',
+    predGroupDeletedMsg:'グループ連結が削除されました', predDelOneConfirmMsg:'「{name}」の連結のみ削除しますか？\n（他の後行連結は維持されます）', predLinkDeletedMsg:'連結が削除されました',
+    predNoLinkMsg:'この工種には先行・後行の連結がありません', predLinkSrcTag:'先行', predGroupDelSuffix:'（グループ全体削除）',
+    predLinkTgtTag:'後行', predOneDelSuffix:'（この工種のみ削除）', predDelModalTitle:'連結削除 — {name}',
+    predDelModalHint:'削除する連結を選択してください', predSelectAllBtn:'全選択', predDeselectAllBtn:'全解除',
+    predDelSelectedBtn:'選択削除', predNoSelToDelMsg:'削除する連結がありません', predDelDoneMsg:'削除完了',
+    predMoveSelectedMsg:'「{name}」選択済み — 移動先の工種をクリックしてください', predMoveSrcOptLabel:'📌 先行移動 #{num}: [{move} → {tgts}]', predMoveSrcOptHint:'→ 先行が［{tgt}］に変わります',
+    predMoveTgtOptLabel:'🔀 後行移動 #{num}: [{src} → {move}]', predMoveTgtOptHint:'→ 後行が［{tgt}］に変わります（他の後行は維持）', predNoMoveOptMsg:'移動可能な連結がありません',
+    predMoveModalTitle:'移動方式選択', predMoveModalHint:'選択した連結のみ変更、残りは維持', predNotFoundMsg:'連結が見つかりません',
+    predMoveDoneMsg:'移動完了', predClearAllConfirmMsg:'すべての先行・後行連結を初期化しますか？', predClearAllDoneMsg:'すべての先行・後行連結が初期化されました',
     pbLblCo:'会社名', pbLblDate:'作成日', pbLblBudget:'総工事金額', pbLblActAmt:'実績金額', pbLblActRate:'実績率',
     hgLblTask:'工種', colQty:'数量', colAmt:'金額', colRate:'実績', colEvent:'イベント',
     predSrc:'先行', predTgt:'後行', predConn:'ノード接続', predEdit:'ノード編集', predClose:'✕ 完了',
@@ -12771,13 +12846,13 @@ function buildPredBadges(nodeId){
     if(grp.srcId===nodeId){
       // 선행 배지: 연한(role-s)
       html+=`<span class="pred-badge ${col} role-s"
-        title="선행 #${num}→후행 ${grp.tgtIds.length}개 (클릭=삭제)"
+        title="${esc(t('predBadgeSrcTitle',{num,n:grp.tgtIds.length}))}"
         onclick="event.stopPropagation();removePredGroup('${grp.id}')">${num}</span>`;
     }
     if((grp.tgtIds||[]).includes(nodeId)){
       // 후행 배지: 진한(role-t)
       html+=`<span class="pred-badge ${col} role-t"
-        title="후행 #${num} (클릭=이 공종만 연결삭제)"
+        title="${esc(t('predBadgeTgtTitle',{num}))}"
         onclick="event.stopPropagation();removeTgtFromGroup('${grp.id}','${nodeId}')">${num}</span>`;
     }
   });
@@ -12803,27 +12878,27 @@ function _updateModeBar(){
   // 선행 단계 표시
   if(_predSrcId){
     stepSrc.className='pred-step done';
-    stepSrc.textContent='선행: '+_getNodeName(_predSrcId).slice(0,12);
+    stepSrc.textContent=t('predStepSrcDone',{name:_getNodeName(_predSrcId).slice(0,12)});
   } else {
     stepSrc.className='pred-step'+(_predSubMode==='src'?' active':'');
-    stepSrc.textContent='선행 —';
+    stepSrc.textContent=t('predStepSrcEmpty');
   }
 
   // 후행 단계 표시
   if(_predTgtIds.length){
     stepTgt.className='pred-step done';
-    stepTgt.textContent='후행: '+_predTgtIds.length+'개 선택';
+    stepTgt.textContent=t('predStepTgtDone',{n:_predTgtIds.length});
   } else {
     stepTgt.className='pred-step'+(_predSubMode==='tgt'?' active':'');
-    stepTgt.textContent='후행 —';
+    stepTgt.textContent=t('predStepTgtEmpty');
   }
 
   // 안내 메시지
   const msgs={
-    src:'공종을 클릭하여 선행 지정 (진한 파란색)',
-    tgt:'공종을 클릭하여 후행 추가/해제 (재클릭=해제)',
-    edit:'[연결삭제] 또는 [이동] 버튼을 사용하세요',
-    move:'교체할 공종을 클릭하세요 → 선행교체 or 후행이동 선택',
+    src:t('predModeMsgSrc'),
+    tgt:t('predModeMsgTgt'),
+    edit:t('predModeMsgEdit'),
+    move:t('predModeMsgMove'),
   };
   info.textContent=msgs[_predSubMode]||'';
 
@@ -12864,11 +12939,11 @@ function _fillEditButtons(){
       <button class="btn bd btn-xs no-print"
         style="font-size:10px;padding:1px 5px;min-width:0"
         onclick="event.stopPropagation();editDelPred('${nid}')"
-        title="연결 삭제">✂</button>
+        title="${esc(t('predDelBtnTitle'))}">✂</button>
       <button class="btn no-print"
         style="background:#7c3aed;color:#fff;font-size:10px;padding:1px 5px;border-radius:3px;min-width:0"
         onclick="event.stopPropagation();editMovePred('${nid}')"
-        title="이동">↗</button>`;
+        title="${esc(t('predMoveBtnTitle'))}">↗</button>`;
   });
 }
 
@@ -12904,7 +12979,7 @@ document.addEventListener('click', function(e){
     _updateModeBar();
 
   } else if(_predSubMode==='tgt'){
-    if(nodeId===_predSrcId){toast('선행 공종은 후행으로 선택할 수 없습니다');return;}
+    if(nodeId===_predSrcId){toast(t('predTgtNotSrcMsg'));return;}
     const idx = _predTgtIds.indexOf(nodeId);
     if(idx>=0){
       _predTgtIds.splice(idx,1);
@@ -12923,8 +12998,8 @@ document.addEventListener('click', function(e){
 
 // ── 연결 확정 ──
 function confirmPredLink(){
-  if(!_predSrcId){toast('선행 공종을 먼저 선택하세요');return;}
-  if(!_predTgtIds.length){toast('후행 공종을 1개 이상 선택하세요');return;}
+  if(!_predSrcId){toast(t('predSelectSrcFirstMsg'));return;}
+  if(!_predTgtIds.length){toast(t('predSelectTgtFirstMsg'));return;}
 
   // 이미 같은 선행으로 연결된 그룹이 있으면 tgtIds에 추가, 없으면 새 그룹 생성
   const existing = _predLinks.find(g=>g.srcId===_predSrcId);
@@ -12948,9 +13023,9 @@ function confirmPredLink(){
   if(added>0){
     _savePredLinks();
     markGanttDirty();
-    toast(`✅ ${added}개 연결 저장됨`);
+    toast(t('predLinkSavedMsg',{n:added}));
   } else {
-    toast('이미 동일한 연결이 존재합니다');
+    toast(t('predAlreadyExistsMsg'));
   }
   _clearCurrentSelection();
 }
@@ -13015,11 +13090,11 @@ function removePredGroup(groupId){
   if(!grp)return;
   const idx=_predLinks.indexOf(grp);
   const tgtNames=grp.tgtIds.map(id=>_getNodeName(id)).join(', ');
-  showConf(`#${idx+1} 그룹 전체 삭제\n선행: ${_getNodeName(grp.srcId)}\n후행: ${tgtNames}\n\n이 그룹의 모든 연결을 삭제하시겠습니까?`,()=>{
+  showConf(t('predDelGroupConfirmMsg',{num:idx+1,src:_getNodeName(grp.srcId),tgt:tgtNames}),()=>{
     _predLinks=_predLinks.filter(g=>g.id!==groupId);
     _savePredLinks();
     markGanttDirty();
-    toast('그룹 연결이 삭제되었습니다');
+    toast(t('predGroupDeletedMsg'));
   });
 }
 
@@ -13028,13 +13103,13 @@ function removeTgtFromGroup(groupId, tgtId){
   _loadPredLinks();
   const grp=_predLinks.find(g=>g.id===groupId);
   if(!grp)return;
-  showConf(`"${_getNodeName(tgtId)}"의 연결만 삭제하시겠습니까?\n(다른 후행 연결은 유지됩니다)`,()=>{
+  showConf(t('predDelOneConfirmMsg',{name:_getNodeName(tgtId)}),()=>{
     grp.tgtIds=grp.tgtIds.filter(id=>id!==tgtId);
     // 후행이 0개가 되면 그룹 자체 삭제
     if(!grp.tgtIds.length) _predLinks=_predLinks.filter(g=>g.id!==groupId);
     _savePredLinks();
     markGanttDirty();
-    toast('연결이 삭제되었습니다');
+    toast(t('predLinkDeletedMsg'));
   });
 }
 
@@ -13048,7 +13123,7 @@ function editDelPred(nodeId){
   // 이 공종이 후행으로 포함된 그룹
   const asTgt=_predLinks.filter(g=>(g.tgtIds||[]).includes(nodeId));
 
-  if(!asSrc.length&&!asTgt.length){toast('이 공종에 연결된 선후행이 없습니다');return;}
+  if(!asSrc.length&&!asTgt.length){toast(t('predNoLinkMsg'));return;}
 
   let rows='';
 
@@ -13061,9 +13136,9 @@ function editDelPred(nodeId){
     rows+=`<label style="display:flex;align-items:center;gap:8px;padding:6px 4px;border-bottom:1px solid #f0ede8;cursor:pointer">
       <input type="checkbox" class="pred-del-chk" data-gid="${grp.id}" data-tgt="" checked style="width:14px;height:14px">
       <span class="pred-badge ${col}" style="flex-shrink:0">${num}</span>
-      <span style="font-size:10px;background:#dbeafe;color:#1d4ed8;padding:1px 6px;border-radius:3px;flex-shrink:0">선행</span>
+      <span style="font-size:10px;background:#dbeafe;color:#1d4ed8;padding:1px 6px;border-radius:3px;flex-shrink:0">${esc(t('predLinkSrcTag'))}</span>
       <span style="font-size:11px;color:var(--text)">${esc(nodeName)} → ${esc(tgtNames)}</span>
-      <span style="font-size:9px;color:var(--text3)">(그룹 전체 삭제)</span>
+      <span style="font-size:9px;color:var(--text3)">${esc(t('predGroupDelSuffix'))}</span>
     </label>`;
   });
 
@@ -13076,31 +13151,31 @@ function editDelPred(nodeId){
     rows+=`<label style="display:flex;align-items:center;gap:8px;padding:6px 4px;border-bottom:1px solid #f0ede8;cursor:pointer">
       <input type="checkbox" class="pred-del-chk" data-gid="${grp.id}" data-tgt="${nodeId}" checked style="width:14px;height:14px">
       <span class="pred-badge ${col}" style="flex-shrink:0">${num}</span>
-      <span style="font-size:10px;background:#dcfce7;color:#166534;padding:1px 6px;border-radius:3px;flex-shrink:0">후행</span>
+      <span style="font-size:10px;background:#dcfce7;color:#166534;padding:1px 6px;border-radius:3px;flex-shrink:0">${esc(t('predLinkTgtTag'))}</span>
       <span style="font-size:11px;color:var(--text)">${esc(srcName)} → ${esc(nodeName)}</span>
-      <span style="font-size:9px;color:var(--text3)">(이 공종만 삭제)</span>
+      <span style="font-size:9px;color:var(--text3)">${esc(t('predOneDelSuffix'))}</span>
     </label>`;
   });
 
   showModal(`
-    <div class="modal-title">연결 삭제 — ${esc(nodeName)}</div>
-    <p style="font-size:11px;color:var(--text2);margin-bottom:8px">삭제할 연결을 선택하세요</p>
+    <div class="modal-title">${esc(t('predDelModalTitle',{name:nodeName}))}</div>
+    <p style="font-size:11px;color:var(--text2);margin-bottom:8px">${esc(t('predDelModalHint'))}</p>
     <div style="max-height:280px;overflow-y:auto;border:1px solid var(--border);border-radius:4px;padding:0 4px">${rows}</div>
     <div style="display:flex;gap:6px;margin-top:10px;align-items:center">
-      <button class="btn bgray btn-xs" onclick="document.querySelectorAll('.pred-del-chk').forEach(c=>c.checked=true)">전체선택</button>
-      <button class="btn bgray btn-xs" onclick="document.querySelectorAll('.pred-del-chk').forEach(c=>c.checked=false)">전체해제</button>
+      <button class="btn bgray btn-xs" onclick="document.querySelectorAll('.pred-del-chk').forEach(c=>c.checked=true)">${esc(t('predSelectAllBtn'))}</button>
+      <button class="btn bgray btn-xs" onclick="document.querySelectorAll('.pred-del-chk').forEach(c=>c.checked=false)">${esc(t('predDeselectAllBtn'))}</button>
       <div style="flex:1"></div>
-      <button class="btn bgray" onclick="closeModal()">취소</button>
+      <button class="btn bgray" onclick="closeModal()">${esc(t('wordCancel'))}</button>
       <button class="btn bd" onclick="
         const chks=[...document.querySelectorAll('.pred-del-chk:checked')];
         closeModal();
         _execDelGroup(chks.map(c=>({gid:c.dataset.gid,tgt:c.dataset.tgt})));
-      ">선택 삭제</button>
+      ">${esc(t('predDelSelectedBtn'))}</button>
     </div>`);
 }
 
 function _execDelGroup(items){
-  if(!items.length){toast('삭제할 연결이 없습니다');return;}
+  if(!items.length){toast(t('predNoSelToDelMsg'));return;}
   items.forEach(({gid,tgt})=>{
     const grp=_predLinks.find(g=>g.id===gid);
     if(!grp)return;
@@ -13115,7 +13190,7 @@ function _execDelGroup(items){
   });
   _savePredLinks();
   markGanttDirty();
-  toast('삭제 완료');
+  toast(t('predDelDoneMsg'));
 }
 
 // ── 편집: 이동 ──
@@ -13124,14 +13199,14 @@ function editMovePred(nodeId){
   _loadPredLinks();
   const asSrc=_predLinks.filter(g=>g.srcId===nodeId);
   const asTgt=_predLinks.filter(g=>(g.tgtIds||[]).includes(nodeId));
-  if(!asSrc.length&&!asTgt.length){toast('이 공종에 연결된 선후행이 없습니다');return;}
+  if(!asSrc.length&&!asTgt.length){toast(t('predNoLinkMsg'));return;}
   _predMoveNodeId=nodeId;
   _predSubMode='move';
   document.querySelectorAll('.tree-node.pred-move-src').forEach(el=>el.classList.remove('pred-move-src'));
   const wrap=document.getElementById('nd_'+nodeId);
   if(wrap)wrap.classList.add('pred-move-src');
   _updateModeBar();
-  toast(`"${_getNodeName(nodeId)}" 선택됨 — 이동할 대상 공종을 클릭하세요`);
+  toast(t('predMoveSelectedMsg',{name:_getNodeName(nodeId)}));
 }
 
 // ── 이동 옵션 팝업 ──
@@ -13155,8 +13230,8 @@ function _showMoveOptions(moveNodeId, targetNodeId){
     const tgtNames=(grp.tgtIds||[]).map(id=>_getNodeName(id)).join(', ');
     opts+=`<button class="btn bp btn-xs" style="width:100%;margin-bottom:5px;text-align:left;padding:6px 10px"
       onclick="closeModal();_execMoveOneLk('${grp.id}','src','${targetNodeId}')">
-      📌 선행 이동 #${num}: [${esc(moveName)} → ${esc(tgtNames)}]<br>
-      <span style="font-size:10px;opacity:.8">→ 선행이 [${esc(tgtName)}]로 바뀝니다</span></button>`;
+      ${t('predMoveSrcOptLabel',{num,move:esc(moveName),tgts:esc(tgtNames)})}<br>
+      <span style="font-size:10px;opacity:.8">${t('predMoveSrcOptHint',{tgt:esc(tgtName)})}</span></button>`;
   });
 
   // 후행으로 참여한 그룹 → 이 후행 자리를 targetNode로 교체
@@ -13166,18 +13241,18 @@ function _showMoveOptions(moveNodeId, targetNodeId){
     const srcName=_getNodeName(grp.srcId);
     opts+=`<button class="btn bo btn-xs" style="width:100%;margin-bottom:5px;text-align:left;padding:6px 10px"
       onclick="closeModal();_execMoveOneLk('${grp.id}','tgt','${targetNodeId}','${moveNodeId}')">
-      🔀 후행 이동 #${num}: [${esc(srcName)} → ${esc(moveName)}]<br>
-      <span style="font-size:10px;opacity:.8">→ 후행이 [${esc(tgtName)}]로 바뀝니다 (다른 후행 유지)</span></button>`;
+      ${t('predMoveTgtOptLabel',{num,src:esc(srcName),move:esc(moveName)})}<br>
+      <span style="font-size:10px;opacity:.8">${t('predMoveTgtOptHint',{tgt:esc(tgtName)})}</span></button>`;
   });
 
-  if(!opts) opts='<p style="font-size:11px;color:var(--text2)">이동 가능한 연결이 없습니다</p>';
+  if(!opts) opts=`<p style="font-size:11px;color:var(--text2)">${esc(t('predNoMoveOptMsg'))}</p>`;
 
-  showModal(`<div class="modal-title">이동 방식 선택</div>
+  showModal(`<div class="modal-title">${esc(t('predMoveModalTitle'))}</div>
     <p style="font-size:11px;color:var(--text2);margin-bottom:10px">
       <b>${esc(moveName)}</b> → <b>${esc(tgtName)}</b><br>
-      <span style="font-size:10px;color:var(--text3)">선택한 연결만 변경, 나머지 유지</span>
+      <span style="font-size:10px;color:var(--text3)">${esc(t('predMoveModalHint'))}</span>
     </p>${opts}
-    <div class="modal-acts"><button class="btn bgray" onclick="closeModal()">취소</button></div>`);
+    <div class="modal-acts"><button class="btn bgray" onclick="closeModal()">${esc(t('wordCancel'))}</button></div>`);
   _clearCurrentSelection();
   setPredSubMode('edit');
 }
@@ -13185,7 +13260,7 @@ function _showMoveOptions(moveNodeId, targetNodeId){
 // 링크 1개 변경 — 선행 또는 특정 후행만 교체
 function _execMoveOneLk(groupId, side, newNodeId, oldTgtId){
   const grp=_predLinks.find(g=>g.id===groupId);
-  if(!grp){toast('연결을 찾을 수 없습니다');return;}
+  if(!grp){toast(t('predNotFoundMsg'));return;}
   if(side==='src'){
     grp.srcId=newNodeId;
   } else {
@@ -13196,17 +13271,17 @@ function _execMoveOneLk(groupId, side, newNodeId, oldTgtId){
   }
   _savePredLinks();
   markGanttDirty();
-  toast('이동 완료');
+  toast(t('predMoveDoneMsg'));
 }
 
 // ── 전체 초기화 ──
 function clearAllPreds(){
-  showConf('모든 선후행 연결을 초기화하시겠습니까?',()=>{
+  showConf(t('predClearAllConfirmMsg'),()=>{
     _predLinks=[];
     _savePredLinks();
     refreshAllBadges();
     markGanttDirty();
-    toast('모든 선후행 연결이 초기화되었습니다');
+    toast(t('predClearAllDoneMsg'));
   });
 }
 
