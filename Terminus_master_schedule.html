@@ -1484,7 +1484,7 @@ body.pred-edit-mode .nacts{min-width:44px}
 <div id="loginScreen" class="overlay">
   <div class="card" style="width:400px">
     <div class="card-logo">
-      <h1>▣ MASTER SCHEDULE</h1>
+      <h1>▣ TERMINUS MASTER SCHEDULE</h1>
       <p style="font-size:11px;color:#8a9bb5">Schedule Management System</p>
     </div>
 
@@ -1608,7 +1608,7 @@ body.pred-edit-mode .nacts{min-width:44px}
     <button class="tb" id="meetingTabBtn" data-tab="meeting" onclick="switchTab(this)" style="display:none">🤝 통합 비교(회의)</button>
     <button class="tb" id="timelineTabBtn" data-tab="timeline" onclick="switchTab(this)">📋 공정 흐름</button>
     <button class="tb" id="aiTabBtn" data-tab="ai" onclick="switchTab(this)" style="display:none">🤖 AI 분석</button>
-    <button class="tb" id="adminTabBtn" data-tab="admin" onclick="switchTab(this)" style="display:none">⚙️ 관리자</button>
+    <button class="tb" id="adminTabBtn" data-tab="admin" onclick="switchTab(this)" style="display:none">⚙️ 관리</button>
   </nav>
 
   <div class="main">
@@ -1852,7 +1852,7 @@ body.pred-edit-mode .nacts{min-width:44px}
       <div style="margin-top:16px;padding:12px 16px;background:#fff;border:1px solid #e2ddd7;border-radius:5px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
         <div style="display:flex;align-items:center;gap:12px">
           <div style="background:#1c3a5e;color:#fff;border-radius:6px;padding:4px 12px;font-size:11px;font-weight:700;letter-spacing:.06em;font-family:'JetBrains Mono',monospace">
-            MASTER SCHEDULE
+            TERMINUS MASTER SCHEDULE
           </div>
           <div style="font-size:11px;color:#6b6760">
             Made by <strong style="color:#1c3a5e">유병한</strong>
@@ -1952,7 +1952,7 @@ const I18N = {
   ko: {
     menu:'☰ 메뉴', settings:'⚙ 설정',
     tabInput:'✏️ 데이터 입력', tabMerge:'🗂️ 취합', tabMeeting:'🤝 통합 비교(회의)',
-    tabTimeline:'📋 공정 흐름', tabAi:'🤖 AI 분석', tabAdmin:'⚙️ 관리자',
+    tabTimeline:'📋 공정 흐름', tabAi:'🤖 AI 분석', tabAdmin:'⚙️ 관리',
     stgTitle:'설정', stgAccount:'계정', stgLang:'언어', stgApiKey:'API 키', stgSub:'구독', stgLogout:'로그아웃',
     stgName:'이름', stgPwCur:'현재 비밀번호', stgPwNew:'새 비밀번호', stgPwNew2:'새 비밀번호 확인',
     stgSave:'저장', stgClose:'닫기', stgCloseWin:'✕ 창 닫기',
@@ -2009,6 +2009,21 @@ const I18N = {
     secCreateBtn:'생성', secAddNameErr:'대분류명을 입력하세요', secCreatedMsg:'대분류 "{nm}" 이(가) 생성되었습니다',
     secDelConfirm:'대분류 "{nm}"을(를) 삭제하시겠습니까?\n포함된 모든 공종도 삭제됩니다.', secDeletedMsg:'대분류가 삭제되었습니다',
     newNodeName:'새 공종',
+    spTitle:'현장(공사) 선택', spDesc:'작업할 현장을 선택하세요.', spNoSites:'아직 배정된 현장이 없습니다.',
+    spMasterBtn:'🛠 현장·계정 관리 (마스터)', apTitle:'🛠 현장·계정 관리', apSiteSectionLbl:'현장',
+    apNewSitePh:'새 현장명', apAddSiteBtn:'+ 현장 생성', apUserSectionLbl:'전사 직원/관리자',
+    apNoData:'없음', apCompanyMissing:'회사명 미입력', apSitesCount:'현장 {n}곳',
+    apNamePh:'이름', apPwPh:'비번', apCompanyPh:'회사명(예: 동부건설(주))',
+    roleStaff:'직원', roleManager:'현장관리자', roleMaster:'마스터', apAddUserBtn:'+ 계정 추가',
+    apDefCodeLbl:'담당관리자 임시 관리자코드(공통 기본값):', apDefCodePh:'예: 0000', apDefCodeSaveBtn:'기본값 저장',
+    apDefCodeHint:'담당관리자로 등록하면 위 공통 기본값이 임시 관리자코드로 부여됩니다(본인이 변경 전까지 사용). 한 번 저장하면 계속 유지됩니다.',
+    apBackBtn:'← 현장 선택으로', apSiteNameErr:'현장명을 입력하세요', apSiteCreatedMsg:'현장 생성: {name}',
+    apUserFieldsErr:'이름/비번을 입력하세요', apUserAddedMsg:'계정 추가: {name}', apDefCodeSavedMsg:'기본 관리자코드 저장됨',
+    apSiteRenamePrompt:'현장 새 이름', apSiteDelConfirm:'현장 "{cur}" 을(를) 삭제할까요?\n해당 현장의 공정표 데이터가 삭제됩니다.',
+    apUserNamePrompt:'계정 이름', apUserCompanyPrompt:'회사명', apUserDelConfirm:'계정 "{cur}" 을(를) 삭제할까요?',
+    apNoAccounts:'계정 없음', apAssignTitle:'담당자 배정 — {site}', apAssignDesc:'접근 허용할 사람 체크(담당관리자도 함께 체크)',
+    apSiteMgrLabel:'담당관리자', apAssignSavedMsg:'배정 저장됨',
+    genFailMsg:'실패: {msg}', genChangedMsg:'변경됨', genDeletedMsg:'삭제됨',
   },
   en: {
     menu:'☰ Menu', settings:'⚙ Settings',
@@ -2070,6 +2085,21 @@ const I18N = {
     secCreateBtn:'Create', secAddNameErr:'Please enter a section name', secCreatedMsg:'Section "{nm}" created',
     secDelConfirm:'Delete section "{nm}"?\nAll tasks inside it will also be deleted.', secDeletedMsg:'Section deleted',
     newNodeName:'New Task',
+    spTitle:'Select Site', spDesc:'Select the site you want to work on.', spNoSites:'No sites assigned yet.',
+    spMasterBtn:'🛠 Site & Account Management (Master)', apTitle:'🛠 Site & Account Management', apSiteSectionLbl:'Sites',
+    apNewSitePh:'New site name', apAddSiteBtn:'+ Create Site', apUserSectionLbl:'Company Staff/Admins',
+    apNoData:'None', apCompanyMissing:'No company name', apSitesCount:'{n} site(s)',
+    apNamePh:'Name', apPwPh:'Password', apCompanyPh:'Company (e.g. Dongbu Construction)',
+    roleStaff:'Staff', roleManager:'Site Manager', roleMaster:'Master', apAddUserBtn:'+ Add Account',
+    apDefCodeLbl:'Temporary admin code for site managers (shared default):', apDefCodePh:'e.g. 0000', apDefCodeSaveBtn:'Save Default',
+    apDefCodeHint:'When registered as a site manager, the shared default above is assigned as a temporary admin code (used until they change it). Once saved, it stays in effect.',
+    apBackBtn:'← Back to Site Selection', apSiteNameErr:'Please enter a site name', apSiteCreatedMsg:'Site created: {name}',
+    apUserFieldsErr:'Please enter a name/password', apUserAddedMsg:'Account added: {name}', apDefCodeSavedMsg:'Default admin code saved',
+    apSiteRenamePrompt:'New site name', apSiteDelConfirm:'Delete site "{cur}"?\nAll schedule data for this site will be deleted.',
+    apUserNamePrompt:'Account name', apUserCompanyPrompt:'Company name', apUserDelConfirm:'Delete account "{cur}"?',
+    apNoAccounts:'No accounts', apAssignTitle:'Assign Manager — {site}', apAssignDesc:'Check who should have access (also check site managers)',
+    apSiteMgrLabel:'Site Manager', apAssignSavedMsg:'Assignment saved',
+    genFailMsg:'Failed: {msg}', genChangedMsg:'Changed', genDeletedMsg:'Deleted',
   },
   es: {
     menu:'☰ Menú', settings:'⚙ Ajustes',
@@ -2131,6 +2161,21 @@ const I18N = {
     secCreateBtn:'Crear', secAddNameErr:'Ingrese un nombre de sección', secCreatedMsg:'Sección "{nm}" creada',
     secDelConfirm:'¿Eliminar la sección "{nm}"?\nTambién se eliminarán todas las tareas que contiene.', secDeletedMsg:'Sección eliminada',
     newNodeName:'Nueva Tarea',
+    spTitle:'Seleccionar Obra', spDesc:'Selecciona la obra en la que vas a trabajar.', spNoSites:'Aún no hay obras asignadas.',
+    spMasterBtn:'🛠 Gestión de Obras y Cuentas (Maestro)', apTitle:'🛠 Gestión de Obras y Cuentas', apSiteSectionLbl:'Obras',
+    apNewSitePh:'Nombre de la nueva obra', apAddSiteBtn:'+ Crear Obra', apUserSectionLbl:'Personal/Administradores de la empresa',
+    apNoData:'Ninguno', apCompanyMissing:'Sin nombre de empresa', apSitesCount:'{n} obra(s)',
+    apNamePh:'Nombre', apPwPh:'Contraseña', apCompanyPh:'Empresa (ej: Dongbu Construction)',
+    roleStaff:'Personal', roleManager:'Encargado de Obra', roleMaster:'Maestro', apAddUserBtn:'+ Agregar Cuenta',
+    apDefCodeLbl:'Código de administrador temporal para encargados de obra (valor predeterminado compartido):', apDefCodePh:'ej: 0000', apDefCodeSaveBtn:'Guardar Predeterminado',
+    apDefCodeHint:'Al registrarse como encargado de obra, se asigna el valor predeterminado anterior como código de administrador temporal (se usa hasta que lo cambien). Una vez guardado, permanece vigente.',
+    apBackBtn:'← Volver a Selección de Obra', apSiteNameErr:'Ingrese un nombre de obra', apSiteCreatedMsg:'Obra creada: {name}',
+    apUserFieldsErr:'Ingrese nombre/contraseña', apUserAddedMsg:'Cuenta agregada: {name}', apDefCodeSavedMsg:'Código de administrador predeterminado guardado',
+    apSiteRenamePrompt:'Nuevo nombre de la obra', apSiteDelConfirm:'¿Eliminar la obra "{cur}"?\nSe eliminarán todos los datos del cronograma de esta obra.',
+    apUserNamePrompt:'Nombre de la cuenta', apUserCompanyPrompt:'Nombre de la empresa', apUserDelConfirm:'¿Eliminar la cuenta "{cur}"?',
+    apNoAccounts:'Sin cuentas', apAssignTitle:'Asignar Encargado — {site}', apAssignDesc:'Marque quién debe tener acceso (marque también a los encargados de obra)',
+    apSiteMgrLabel:'Encargado de Obra', apAssignSavedMsg:'Asignación guardada',
+    genFailMsg:'Error: {msg}', genChangedMsg:'Cambiado', genDeletedMsg:'Eliminado',
   },
   de: {
     menu:'☰ Menü', settings:'⚙ Einstellungen',
@@ -2192,11 +2237,26 @@ const I18N = {
     secCreateBtn:'Erstellen', secAddNameErr:'Bitte einen Abschnittsnamen eingeben', secCreatedMsg:'Abschnitt "{nm}" erstellt',
     secDelConfirm:'Abschnitt "{nm}" löschen?\nAlle darin enthaltenen Vorgänge werden ebenfalls gelöscht.', secDeletedMsg:'Abschnitt gelöscht',
     newNodeName:'Neuer Vorgang',
+    spTitle:'Baustelle auswählen', spDesc:'Wählen Sie die Baustelle aus, an der Sie arbeiten möchten.', spNoSites:'Noch keine Baustellen zugewiesen.',
+    spMasterBtn:'🛠 Baustellen-/Kontenverwaltung (Master)', apTitle:'🛠 Baustellen-/Kontenverwaltung', apSiteSectionLbl:'Baustellen',
+    apNewSitePh:'Name der neuen Baustelle', apAddSiteBtn:'+ Baustelle erstellen', apUserSectionLbl:'Mitarbeiter/Admins des Unternehmens',
+    apNoData:'Keine', apCompanyMissing:'Kein Firmenname', apSitesCount:'{n} Baustelle(n)',
+    apNamePh:'Name', apPwPh:'Passwort', apCompanyPh:'Firma (z. B. Dongbu Construction)',
+    roleStaff:'Mitarbeiter', roleManager:'Bauleiter', roleMaster:'Master', apAddUserBtn:'+ Konto hinzufügen',
+    apDefCodeLbl:'Temporärer Admin-Code für Bauleiter (gemeinsamer Standardwert):', apDefCodePh:'z. B. 0000', apDefCodeSaveBtn:'Standard speichern',
+    apDefCodeHint:'Bei Registrierung als Bauleiter wird der obige gemeinsame Standardwert als temporärer Admin-Code zugewiesen (gültig bis zur eigenen Änderung). Nach dem Speichern bleibt er dauerhaft gültig.',
+    apBackBtn:'← Zurück zur Baustellenauswahl', apSiteNameErr:'Bitte einen Baustellennamen eingeben', apSiteCreatedMsg:'Baustelle erstellt: {name}',
+    apUserFieldsErr:'Bitte Name/Passwort eingeben', apUserAddedMsg:'Konto hinzugefügt: {name}', apDefCodeSavedMsg:'Standard-Admin-Code gespeichert',
+    apSiteRenamePrompt:'Neuer Baustellenname', apSiteDelConfirm:'Baustelle "{cur}" löschen?\nAlle Zeitplandaten dieser Baustelle werden gelöscht.',
+    apUserNamePrompt:'Kontoname', apUserCompanyPrompt:'Firmenname', apUserDelConfirm:'Konto "{cur}" löschen?',
+    apNoAccounts:'Keine Konten', apAssignTitle:'Verantwortlichen zuweisen — {site}', apAssignDesc:'Zugriffsberechtigte auswählen (Bauleiter ebenfalls ankreuzen)',
+    apSiteMgrLabel:'Bauleiter', apAssignSavedMsg:'Zuweisung gespeichert',
+    genFailMsg:'Fehlgeschlagen: {msg}', genChangedMsg:'Geändert', genDeletedMsg:'Gelöscht',
   },
   ja: {
     menu:'☰ メニュー', settings:'⚙ 設定',
     tabInput:'✏️ データ入力', tabMerge:'🗂️ 統合', tabMeeting:'🤝 統合比較（会議）',
-    tabTimeline:'📋 工程フロー', tabAi:'🤖 AI分析', tabAdmin:'⚙️ 管理者',
+    tabTimeline:'📋 工程フロー', tabAi:'🤖 AI分析', tabAdmin:'⚙️ 管理',
     stgTitle:'設定', stgAccount:'アカウント', stgLang:'言語', stgApiKey:'APIキー', stgSub:'登録', stgLogout:'ログアウト',
     stgName:'名前', stgPwCur:'現在のパスワード', stgPwNew:'新しいパスワード', stgPwNew2:'新しいパスワード確認',
     stgSave:'保存', stgClose:'閉じる', stgCloseWin:'✕ ウィンドウを閉じる',
@@ -2253,6 +2313,21 @@ const I18N = {
     secCreateBtn:'作成', secAddNameErr:'大分類名を入力してください', secCreatedMsg:'大分類「{nm}」が作成されました',
     secDelConfirm:'大分類「{nm}」を削除しますか？\n含まれるすべての工種も削除されます。', secDeletedMsg:'大分類が削除されました',
     newNodeName:'新規工種',
+    spTitle:'現場（工事）選択', spDesc:'作業する現場を選択してください。', spNoSites:'まだ割り当てられた現場がありません。',
+    spMasterBtn:'🛠 現場・アカウント管理（マスター）', apTitle:'🛠 現場・アカウント管理', apSiteSectionLbl:'現場',
+    apNewSitePh:'新しい現場名', apAddSiteBtn:'+ 現場作成', apUserSectionLbl:'全社スタッフ/管理者',
+    apNoData:'なし', apCompanyMissing:'会社名未入力', apSitesCount:'現場{n}件',
+    apNamePh:'名前', apPwPh:'パスワード', apCompanyPh:'会社名（例：東部建設(株)）',
+    roleStaff:'スタッフ', roleManager:'現場管理者', roleMaster:'マスター', apAddUserBtn:'+ アカウント追加',
+    apDefCodeLbl:'現場管理者用の仮管理者コード（共通デフォルト）：', apDefCodePh:'例：0000', apDefCodeSaveBtn:'デフォルト保存',
+    apDefCodeHint:'現場管理者として登録すると、上記の共通デフォルトが仮管理者コードとして付与されます（本人が変更するまで使用）。一度保存すると保持されます。',
+    apBackBtn:'← 現場選択に戻る', apSiteNameErr:'現場名を入力してください', apSiteCreatedMsg:'現場作成：{name}',
+    apUserFieldsErr:'名前/パスワードを入力してください', apUserAddedMsg:'アカウント追加：{name}', apDefCodeSavedMsg:'デフォルト管理者コードが保存されました',
+    apSiteRenamePrompt:'現場の新しい名前', apSiteDelConfirm:'現場「{cur}」を削除しますか？\nこの現場の工程表データが削除されます。',
+    apUserNamePrompt:'アカウント名', apUserCompanyPrompt:'会社名', apUserDelConfirm:'アカウント「{cur}」を削除しますか？',
+    apNoAccounts:'アカウントなし', apAssignTitle:'担当者割り当て — {site}', apAssignDesc:'アクセスを許可する人にチェック（現場管理者も一緒にチェック）',
+    apSiteMgrLabel:'現場管理者', apAssignSavedMsg:'割り当てが保存されました',
+    genFailMsg:'失敗：{msg}', genChangedMsg:'変更されました', genDeletedMsg:'削除されました',
   },
 };
 let _lang = (function(){ try{ return localStorage.getItem('ms_lang')||'ko'; }catch(e){ return 'ko'; } })();
@@ -2942,9 +3017,9 @@ async function showSitePicker(){
   try{ const r=await fetch(API+'/api/site/list?userId='+encodeURIComponent(CU.userId||'')); const j=await r.json(); _siteList=(j.ok&&j.sites)||[]; _myRole=j.role||null; }
   catch(e){ _siteList=[]; }
   if(!_siteList.length && _myRole!=='master'){ _activeSite=null; await loadFromServer(); initApp(); return; }
-  const rows=_siteList.map(s=>`<button class="btn bp" style="display:block;width:100%;margin-bottom:8px;text-align:left;font-size:13px" onclick="selectSite('${s.id}')">🌐 ${esc(s.name)}</button>`).join('')||'<div style="font-size:12px;color:var(--text3);margin-bottom:8px">아직 배정된 현장이 없습니다.</div>';
-  const mgr=(_myRole==='master')?'<button class="btn bgray" style="display:block;width:100%;margin-top:6px" onclick="showAdminPanel()">🛠 현장·계정 관리 (마스터)</button>':'';
-  showModal(`<div class="modal-title">현장(공사) 선택</div><p style="font-size:12px;color:var(--text2);margin-bottom:10px">작업할 현장을 선택하세요.</p>${rows}${mgr}`, true);
+  const rows=_siteList.map(s=>`<button class="btn bp" style="display:block;width:100%;margin-bottom:8px;text-align:left;font-size:13px" onclick="selectSite('${s.id}')">🌐 ${esc(s.name)}</button>`).join('')||`<div style="font-size:12px;color:var(--text3);margin-bottom:8px">${t('spNoSites')}</div>`;
+  const mgr=(_myRole==='master')?`<button class="btn bgray" style="display:block;width:100%;margin-top:6px" onclick="showAdminPanel()">${t('spMasterBtn')}</button>`:'';
+  showModal(`<div class="modal-title">${t('spTitle')}</div><p style="font-size:12px;color:var(--text2);margin-bottom:10px">${t('spDesc')}</p>${rows}${mgr}`, true);
 }
 async function selectSite(id){
   _activeSite=id;
@@ -2961,67 +3036,67 @@ async function showAdminPanel(){
   try{ const r=await fetch(API+'/api/admin/overview?userId='+encodeURIComponent(CU.userId)); ov=await r.json(); }catch(e){}
   const users=ov.users||[], sites=ov.sites||[];
   const defCode=ov.defaultManagerCode||'';
-  const userRows=users.map(u=>`<div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:2px 0;gap:4px"><span>• ${esc(u.name)} <span style="color:var(--text3)">[${u.role}]</span>${u.company?' · '+esc(u.company):' · <span style="color:#dc2626">회사명 미입력</span>'} · 현장 ${(u.sites||[]).length}곳</span><span style="display:flex;gap:3px"><button class="btn bgray btn-xs" onclick="adminRenameUser('${u.id}','${esc(u.name)}','${esc(u.company||'')}')">수정</button><button class="btn bd btn-xs" onclick="adminDeleteUser('${u.id}','${esc(u.name)}')">삭제</button></span></div>`).join('')||'<div style="color:var(--text3);font-size:12px">없음</div>';
-  const siteRows=sites.map(s=>`<div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:2px 0;gap:4px"><span>🌐 ${esc(s.name)}</span><span style="display:flex;gap:3px"><button class="btn bgray btn-xs" onclick="adminAssign('${s.id}','${esc(s.name)}')">담당자</button><button class="btn bgray btn-xs" onclick="adminRenameSite('${s.id}','${esc(s.name)}')">이름</button><button class="btn bd btn-xs" onclick="adminDeleteSite('${s.id}','${esc(s.name)}')">삭제</button></span></div>`).join('')||'<div style="color:var(--text3);font-size:12px">없음</div>';
+  const userRows=users.map(u=>`<div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:2px 0;gap:4px"><span>• ${esc(u.name)} <span style="color:var(--text3)">[${u.role}]</span>${u.company?' · '+esc(u.company):' · <span style="color:#dc2626">'+esc(t('apCompanyMissing'))+'</span>'} · ${esc(t('apSitesCount',{n:(u.sites||[]).length}))}</span><span style="display:flex;gap:3px"><button class="btn bgray btn-xs" onclick="adminRenameUser('${u.id}','${esc(u.name)}','${esc(u.company||'')}')">${t('wordEdit')}</button><button class="btn bd btn-xs" onclick="adminDeleteUser('${u.id}','${esc(u.name)}')">${t('wordDelete')}</button></span></div>`).join('')||`<div style="color:var(--text3);font-size:12px">${t('apNoData')}</div>`;
+  const siteRows=sites.map(s=>`<div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:2px 0;gap:4px"><span>🌐 ${esc(s.name)}</span><span style="display:flex;gap:3px"><button class="btn bgray btn-xs" onclick="adminAssign('${s.id}','${esc(s.name)}')">${t('apSiteMgrLabel')}</button><button class="btn bgray btn-xs" onclick="adminRenameSite('${s.id}','${esc(s.name)}')">${t('wordEdit')}</button><button class="btn bd btn-xs" onclick="adminDeleteSite('${s.id}','${esc(s.name)}')">${t('wordDelete')}</button></span></div>`).join('')||`<div style="color:var(--text3);font-size:12px">${t('apNoData')}</div>`;
   showModal(`
-    <div class="modal-title">🛠 현장·계정 관리</div>
+    <div class="modal-title">${t('apTitle')}</div>
     <div style="max-height:60vh;overflow:auto">
-      <div style="font-weight:700;margin:6px 0">현장</div>${siteRows}
-      <div style="display:flex;gap:6px;margin:8px 0"><input class="pi" id="adNewSite" placeholder="새 현장명" style="flex:1"><button class="btn bp btn-xs" onclick="adminCreateSite()">+ 현장 생성</button></div>
+      <div style="font-weight:700;margin:6px 0">${t('apSiteSectionLbl')}</div>${siteRows}
+      <div style="display:flex;gap:6px;margin:8px 0"><input class="pi" id="adNewSite" placeholder="${t('apNewSitePh')}" style="flex:1"><button class="btn bp btn-xs" onclick="adminCreateSite()">${t('apAddSiteBtn')}</button></div>
       <hr style="margin:10px 0;border:none;border-top:1px solid var(--border)">
-      <div style="font-weight:700;margin:6px 0">전사 직원/관리자</div>${userRows}
+      <div style="font-weight:700;margin:6px 0">${t('apUserSectionLbl')}</div>${userRows}
       <div style="display:flex;gap:4px;margin:8px 0;flex-wrap:wrap">
-        <input class="pi" id="adName" placeholder="이름" style="width:80px">
-        <input class="pi" id="adPw" placeholder="비번" type="password" style="width:80px">
-        <input class="pi" id="adCompany" placeholder="회사명(예: 동부건설(주))" style="width:150px">
-        <select class="pi" id="adRole" style="width:95px"><option value="staff">직원</option><option value="manager">현장관리자</option><option value="master">마스터</option></select>
-        <button class="btn bp btn-xs" onclick="adminAddUser()">+ 계정 추가</button>
+        <input class="pi" id="adName" placeholder="${t('apNamePh')}" style="width:80px">
+        <input class="pi" id="adPw" placeholder="${t('apPwPh')}" type="password" style="width:80px">
+        <input class="pi" id="adCompany" placeholder="${t('apCompanyPh')}" style="width:150px">
+        <select class="pi" id="adRole" style="width:95px"><option value="staff">${t('roleStaff')}</option><option value="manager">${t('roleManager')}</option><option value="master">${t('roleMaster')}</option></select>
+        <button class="btn bp btn-xs" onclick="adminAddUser()">${t('apAddUserBtn')}</button>
       </div>
       <div style="display:flex;gap:4px;align-items:center;margin:4px 0;flex-wrap:wrap">
-        <span style="font-size:11px;color:var(--text2)">담당관리자 임시 관리자코드(공통 기본값):</span>
-        <input class="pi" id="adDefCode" placeholder="예: 0000" style="width:90px" value="${esc(defCode)}">
-        <button class="btn bgray btn-xs" onclick="adminSetDefaultCode()">기본값 저장</button>
+        <span style="font-size:11px;color:var(--text2)">${t('apDefCodeLbl')}</span>
+        <input class="pi" id="adDefCode" placeholder="${t('apDefCodePh')}" style="width:90px" value="${esc(defCode)}">
+        <button class="btn bgray btn-xs" onclick="adminSetDefaultCode()">${t('apDefCodeSaveBtn')}</button>
       </div>
-      <div style="font-size:10px;color:var(--text3);margin:-2px 0 4px">담당관리자로 등록하면 위 공통 기본값이 임시 관리자코드로 부여됩니다(본인이 변경 전까지 사용). 한 번 저장하면 계속 유지됩니다.</div>
+      <div style="font-size:10px;color:var(--text3);margin:-2px 0 4px">${t('apDefCodeHint')}</div>
     </div>
-    <div class="modal-acts"><button class="btn bgray" onclick="showSitePicker()">← 현장 선택으로</button></div>`);
+    <div class="modal-acts"><button class="btn bgray" onclick="showSitePicker()">${t('apBackBtn')}</button></div>`);
 }
 async function adminCreateSite(){
-  const name=(document.getElementById('adNewSite').value||'').trim(); if(!name){toast('현장명을 입력하세요');return;}
+  const name=(document.getElementById('adNewSite').value||'').trim(); if(!name){toast(t('apSiteNameErr'));return;}
   const r=await fetch(API+'/api/admin/site-create',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:CU.userId,name})});
-  const j=await r.json(); if(j.ok){toast('현장 생성: '+name); showAdminPanel();} else toast('실패: '+(j.msg||''));
+  const j=await r.json(); if(j.ok){toast(t('apSiteCreatedMsg',{name})); showAdminPanel();} else toast(t('genFailMsg',{msg:j.msg||''}));
 }
 async function adminAddUser(){
   const name=(document.getElementById('adName').value||'').trim(), pw=document.getElementById('adPw').value, role=document.getElementById('adRole').value;
   const company=(document.getElementById('adCompany')?.value||'').trim();
-  if(!name||!pw){toast('이름/비번을 입력하세요');return;}
+  if(!name||!pw){toast(t('apUserFieldsErr'));return;}
   const r=await fetch(API+'/api/admin/user-add',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:CU.userId,name,pw,role,company})});
-  const j=await r.json(); if(j.ok){toast('계정 추가: '+name); showAdminPanel();} else toast('실패: '+(j.msg||''));
+  const j=await r.json(); if(j.ok){toast(t('apUserAddedMsg',{name})); showAdminPanel();} else toast(t('genFailMsg',{msg:j.msg||''}));
 }
 async function adminSetDefaultCode(){
   const code=(document.getElementById('adDefCode')?.value||'').trim();
   const r=await fetch(API+'/api/admin/set-default-code',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:CU.userId,code})});
-  const j=await r.json(); if(j.ok)toast('기본 관리자코드 저장됨'); else toast('실패: '+(j.msg||''));
+  const j=await r.json(); if(j.ok)toast(t('apDefCodeSavedMsg')); else toast(t('genFailMsg',{msg:j.msg||''}));
 }
-async function adminRenameSite(id,cur){ const name=prompt('현장 새 이름',cur); if(name==null)return; const r=await fetch(API+'/api/admin/site-rename',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:CU.userId,siteId:id,name:name.trim()})}); const j=await r.json(); if(j.ok){toast('변경됨'); showAdminPanel();} else toast('실패: '+(j.msg||'')); }
-async function adminDeleteSite(id,cur){ if(!confirm('현장 "'+cur+'" 을(를) 삭제할까요?\n해당 현장의 공정표 데이터가 삭제됩니다.'))return; const r=await fetch(API+'/api/admin/site-delete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:CU.userId,siteId:id})}); const j=await r.json(); if(j.ok){toast('삭제됨'); showAdminPanel();} else toast('실패: '+(j.msg||'')); }
-async function adminRenameUser(id,cur,curCo){ const name=prompt('계정 이름',cur); if(name==null)return; const company=prompt('회사명',curCo||''); const body={userId:CU.userId,targetId:id,name:name.trim()}; if(company!==null)body.company=company.trim(); const r=await fetch(API+'/api/admin/user-rename',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}); const j=await r.json(); if(j.ok){toast('변경됨'); showAdminPanel();} else toast('실패: '+(j.msg||'')); }
-async function adminDeleteUser(id,cur){ if(!confirm('계정 "'+cur+'" 을(를) 삭제할까요?'))return; const r=await fetch(API+'/api/admin/user-delete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:CU.userId,targetId:id})}); const j=await r.json(); if(j.ok){toast('삭제됨'); showAdminPanel();} else toast('실패: '+(j.msg||'')); }
+async function adminRenameSite(id,cur){ const name=prompt(t('apSiteRenamePrompt'),cur); if(name==null)return; const r=await fetch(API+'/api/admin/site-rename',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:CU.userId,siteId:id,name:name.trim()})}); const j=await r.json(); if(j.ok){toast(t('genChangedMsg')); showAdminPanel();} else toast(t('genFailMsg',{msg:j.msg||''})); }
+async function adminDeleteSite(id,cur){ if(!confirm(t('apSiteDelConfirm',{cur})))return; const r=await fetch(API+'/api/admin/site-delete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:CU.userId,siteId:id})}); const j=await r.json(); if(j.ok){toast(t('genDeletedMsg')); showAdminPanel();} else toast(t('genFailMsg',{msg:j.msg||''})); }
+async function adminRenameUser(id,cur,curCo){ const name=prompt(t('apUserNamePrompt'),cur); if(name==null)return; const company=prompt(t('apUserCompanyPrompt'),curCo||''); const body={userId:CU.userId,targetId:id,name:name.trim()}; if(company!==null)body.company=company.trim(); const r=await fetch(API+'/api/admin/user-rename',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}); const j=await r.json(); if(j.ok){toast(t('genChangedMsg')); showAdminPanel();} else toast(t('genFailMsg',{msg:j.msg||''})); }
+async function adminDeleteUser(id,cur){ if(!confirm(t('apUserDelConfirm',{cur})))return; const r=await fetch(API+'/api/admin/user-delete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:CU.userId,targetId:id})}); const j=await r.json(); if(j.ok){toast(t('genDeletedMsg')); showAdminPanel();} else toast(t('genFailMsg',{msg:j.msg||''})); }
 async function adminAssign(siteId,siteName){
   let ov={users:[],sites:[]};
   try{ const r=await fetch(API+'/api/admin/overview?userId='+encodeURIComponent(CU.userId)); ov=await r.json(); }catch(e){}
   const site=(ov.sites||[]).find(s=>s.id===siteId)||{managerIds:[]};
   const rows=(ov.users||[]).map(u=>{
     const member=(u.sites||[]).includes(siteId), mgr=(site.managerIds||[]).includes(u.id);
-    return `<label style="display:flex;align-items:center;gap:6px;font-size:12px;padding:3px 0"><input type="checkbox" class="adm-mem" value="${u.id}" ${member?'checked':''}> ${esc(u.name)} <span style="color:var(--text3)">[${u.role}]</span><label style="margin-left:auto;font-size:11px;display:flex;gap:3px;align-items:center"><input type="checkbox" class="adm-mgr" value="${u.id}" ${mgr?'checked':''}>담당관리자</label></label>`;
-  }).join('')||'<div style="color:var(--text3);font-size:12px">계정 없음</div>';
-  showModal(`<div class="modal-title">담당자 배정 — ${esc(siteName)}</div><p style="font-size:11px;color:var(--text3);margin-bottom:6px">접근 허용할 사람 체크(담당관리자도 함께 체크)</p><div style="max-height:55vh;overflow:auto">${rows}</div><div class="modal-acts"><button class="btn bp" onclick="adminSaveAssign('${siteId}')">저장</button><button class="btn bgray" onclick="showAdminPanel()">취소</button></div>`);
+    return `<label style="display:flex;align-items:center;gap:6px;font-size:12px;padding:3px 0"><input type="checkbox" class="adm-mem" value="${u.id}" ${member?'checked':''}> ${esc(u.name)} <span style="color:var(--text3)">[${u.role}]</span><label style="margin-left:auto;font-size:11px;display:flex;gap:3px;align-items:center"><input type="checkbox" class="adm-mgr" value="${u.id}" ${mgr?'checked':''}>${t('apSiteMgrLabel')}</label></label>`;
+  }).join('')||`<div style="color:var(--text3);font-size:12px">${t('apNoAccounts')}</div>`;
+  showModal(`<div class="modal-title">${t('apAssignTitle',{site:esc(siteName)})}</div><p style="font-size:11px;color:var(--text3);margin-bottom:6px">${t('apAssignDesc')}</p><div style="max-height:55vh;overflow:auto">${rows}</div><div class="modal-acts"><button class="btn bp" onclick="adminSaveAssign('${siteId}')">${t('stgSave')}</button><button class="btn bgray" onclick="showAdminPanel()">${t('wordCancel')}</button></div>`);
 }
 async function adminSaveAssign(siteId){
   const memberIds=[...document.querySelectorAll('.adm-mem:checked')].map(c=>c.value);
   const managerIds=[...document.querySelectorAll('.adm-mgr:checked')].map(c=>c.value);
   const r=await fetch(API+'/api/admin/site-assign',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:CU.userId,siteId,memberIds,managerIds})});
-  const j=await r.json(); if(j.ok){toast('배정 저장됨'); showAdminPanel();} else toast('실패: '+(j.msg||''));
+  const j=await r.json(); if(j.ok){toast(t('apAssignSavedMsg')); showAdminPanel();} else toast(t('genFailMsg',{msg:j.msg||''}));
 }
 
 /* ── 로컬 앱 진입 ── */
