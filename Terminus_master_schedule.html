@@ -2043,6 +2043,21 @@ const I18N = {
     curPwEmptyErr:'현재 비밀번호를 입력하세요', newPwEmptyErr:'새 비밀번호를 입력하세요', newPwMismatchErr:'새 비밀번호가 일치하지 않습니다',
     curPwWrongErr:'현재 비밀번호가 올바르지 않습니다', pwSavedMsg:'저장되었습니다', pwChangeFailErr:'변경 실패',
     serverErrWithMsg:'서버 오류: {msg}',
+    projNameTitle:'현장명 입력', projNamePh:'ㅇㅇㅇ공사', coNameInpTitle:'Pro 버전은 회사명을 직접 입력할 수 있습니다',
+    colQtyTitle:'물량/단위 표시·숨기기', colPTitle:'계획일정 P', colATitle:'실적일정 A',
+    colAmtTitle:'금액', colRateTitle:'실적율', colEventTitle:'이벤트 버튼 표시/숨기기',
+    predSrcTitle:'선행 공종 선택', predTgtTitle:'후행 공종 선택', predConnTitle:'선택된 선행→후행 연결 저장',
+    predEditTitle:'연결 삭제/이동 편집', predCloseTitle:'선후행 모드 종료 (ESC)', btnCollapseAllTitle:'전체 접기',
+    btnExpandAllTitle:'전체 펼치기', btnClipTitle:'뷰 클립 — 현재 펼침/접힘 상태를 저장하고 불러옵니다', btnResetAllTitle:'전체 초기화',
+    analyzeBtnTitle:'현재 활성 공정표를 AI로 지연·충돌 분석(우측 패널)', lwSliderTitle:'공종명 폭 조절', chRangeStartPh:'시작',
+    chRangeEndPh:'종료', evTogPTitle:'계획 이벤트 표시/숨기기', evTogATitle:'실적 이벤트 표시/숨기기',
+    btnChartRefreshTitle:'차트 막대 즉시 갱신', btnMeetingMembersTitle:'비교할 업체 선택 후 적용', btnMeetingDistTitle:'참여사 최신 공정표를 보관 폴더로 배포(파일명에 \'배포\' 추가) + 접수에서 제거',
+    btnMeetingEndTitle:'공정회의 종료 — 내 데이터로 복귀', autoCalcPh:'자동계산', docLocalFileTitle:'내 PC의 .json 공정표를 새 창에서 열기(서버 미반영 — 대조용)',
+    docNewLocalTitle:'빈 공정표를 새 창에서 작성(로컬 전용)', gridMonthToggleTitle:'클릭:접기/펼치기', dayHeaderResizeTitle:'좌우로 끌어 날짜 칸 폭 조절',
+    planBarDragTitle:'가운데=일정 이동 / 좌·우 끝=시작·종료일 조절', actualBarDragTitle:'가운데=실적 이동 / 좌·우 끝=실적 시작·종료일', eventDragTitleSuffix:'(끌어서 이동 · 클릭=편집)',
+    wordExpand:'펼치기', wordCollapse:'접기', hideRowTitle:'이 행 숨기기',
+    adminVerifyModalTitle:'🔐 관리자 탭 확인', adminVerifyHint:'관리자 코드를 입력하세요.', adminVerifyPh:'관리자 코드',
+    adminCodeWrongErr:'관리자 코드가 올바르지 않습니다', adminCodeEnterPromptErr:'코드를 입력하세요',
     serverBackupOnlyDoneMsg:'✅ 서버 백업 완료 (내 PC 저장은 취소됨): {name}', backupErrMsg:'백업 오류: {msg}', backupListErrMsg:'백업 목록 오류: {msg}',
     restoreModalTitle:'복원', noBackupFilesMsg:'백업 파일이 없습니다.', restoreBtnLabel:'복원',
     deleteBtnLabel:'삭제', restoreSelectModalTitle:'복원 — 백업 선택', restoreSelectHint:'선택한 백업으로 현재 공정표를 교체합니다(복원 직전 자동백업 생성, 전원 영향).',
@@ -2274,6 +2289,21 @@ const I18N = {
     curPwEmptyErr:'Please enter your current password', newPwEmptyErr:'Please enter a new password', newPwMismatchErr:'The new passwords do not match',
     curPwWrongErr:'The current password is incorrect', pwSavedMsg:'Saved', pwChangeFailErr:'Change failed',
     serverErrWithMsg:'Server error: {msg}',
+    projNameTitle:'Enter the site name', projNamePh:'Site name', coNameInpTitle:'In the Pro version, you can enter the company name directly',
+    colQtyTitle:'Show/hide quantity/unit', colPTitle:'Plan schedule (P)', colATitle:'Actual schedule (A)',
+    colAmtTitle:'Amount', colRateTitle:'Progress rate', colEventTitle:'Show/hide event button',
+    predSrcTitle:'Select predecessor task', predTgtTitle:'Select successor task', predConnTitle:'Save the selected predecessor→successor link',
+    predEditTitle:'Edit — delete/move links', predCloseTitle:'Exit predecessor/successor mode (ESC)', btnCollapseAllTitle:'Collapse all',
+    btnExpandAllTitle:'Expand all', btnClipTitle:'View clip — save and load the current expand/collapse state', btnResetAllTitle:'Reset everything',
+    analyzeBtnTitle:'Analyze the current schedule for delays/conflicts with AI (right panel)', lwSliderTitle:'Adjust task name column width', chRangeStartPh:'Start',
+    chRangeEndPh:'End', evTogPTitle:'Show/hide plan events', evTogATitle:'Show/hide actual events',
+    btnChartRefreshTitle:'Refresh chart bars immediately', btnMeetingMembersTitle:'Select companies to compare, then apply', btnMeetingDistTitle:'Distribute participants\' latest schedules to the archive folder (adds "distributed" to the filename) and remove from inbox',
+    btnMeetingEndTitle:'End schedule meeting — return to my data', autoCalcPh:'Auto-calculated', docLocalFileTitle:'Open a .json schedule from my PC in a new window (not reflected on the server — for comparison)',
+    docNewLocalTitle:'Create a blank schedule in a new window (local only)', gridMonthToggleTitle:'Click: collapse/expand', dayHeaderResizeTitle:'Drag left/right to adjust the date cell width',
+    planBarDragTitle:'Center = move schedule / left·right edges = adjust start·end dates', actualBarDragTitle:'Center = move actual / left·right edges = actual start·end dates', eventDragTitleSuffix:'(drag to move · click to edit)',
+    wordExpand:'Expand', wordCollapse:'Collapse', hideRowTitle:'Hide this row',
+    adminVerifyModalTitle:'🔐 Admin Tab Verification', adminVerifyHint:'Please enter the admin code.', adminVerifyPh:'Admin code',
+    adminCodeWrongErr:'The admin code is incorrect', adminCodeEnterPromptErr:'Please enter the code',
     serverBackupOnlyDoneMsg:'✅ Server backup complete (saving to my PC was cancelled): {name}', backupErrMsg:'Backup error: {msg}', backupListErrMsg:'Backup list error: {msg}',
     restoreModalTitle:'Restore', noBackupFilesMsg:'There are no backup files.', restoreBtnLabel:'Restore',
     deleteBtnLabel:'Delete', restoreSelectModalTitle:'Restore — Select Backup', restoreSelectHint:'This replaces the current schedule with the selected backup (an automatic backup is created right before restoring, and it affects everyone).',
@@ -2505,6 +2535,21 @@ const I18N = {
     curPwEmptyErr:'Ingrese su contraseña actual', newPwEmptyErr:'Ingrese una nueva contraseña', newPwMismatchErr:'Las nuevas contraseñas no coinciden',
     curPwWrongErr:'La contraseña actual es incorrecta', pwSavedMsg:'Guardado', pwChangeFailErr:'Error al cambiar',
     serverErrWithMsg:'Error del servidor: {msg}',
+    projNameTitle:'Ingrese el nombre de la obra', projNamePh:'Nombre de la obra', coNameInpTitle:'En la versión Pro, puede ingresar el nombre de la empresa directamente',
+    colQtyTitle:'Mostrar/ocultar cantidad/unidad', colPTitle:'Cronograma de plan (P)', colATitle:'Cronograma real (A)',
+    colAmtTitle:'Monto', colRateTitle:'Tasa de avance', colEventTitle:'Mostrar/ocultar botón de evento',
+    predSrcTitle:'Seleccionar tarea predecesora', predTgtTitle:'Seleccionar tarea sucesora', predConnTitle:'Guardar el enlace predecesor→sucesor seleccionado',
+    predEditTitle:'Editar — eliminar/mover enlaces', predCloseTitle:'Salir del modo predecesor/sucesor (ESC)', btnCollapseAllTitle:'Contraer todo',
+    btnExpandAllTitle:'Expandir todo', btnClipTitle:'Clip de vista — guarda y carga el estado actual de expansión/contracción', btnResetAllTitle:'Restablecer todo',
+    analyzeBtnTitle:'Analiza el cronograma actual en busca de retrasos/conflictos con IA (panel derecho)', lwSliderTitle:'Ajustar el ancho de la columna de nombre de tarea', chRangeStartPh:'Inicio',
+    chRangeEndPh:'Fin', evTogPTitle:'Mostrar/ocultar eventos de plan', evTogATitle:'Mostrar/ocultar eventos reales',
+    btnChartRefreshTitle:'Actualizar las barras del gráfico de inmediato', btnMeetingMembersTitle:'Seleccione las empresas a comparar y luego aplique', btnMeetingDistTitle:'Distribuye los últimos cronogramas de los participantes a la carpeta de archivo (agrega "distribuido" al nombre del archivo) y elimina de recibidos',
+    btnMeetingEndTitle:'Finalizar reunión de cronograma — volver a mis datos', autoCalcPh:'Calculado automáticamente', docLocalFileTitle:'Abrir un cronograma .json de mi PC en una nueva ventana (no se refleja en el servidor — para comparación)',
+    docNewLocalTitle:'Crear un cronograma vacío en una nueva ventana (solo local)', gridMonthToggleTitle:'Clic: contraer/expandir', dayHeaderResizeTitle:'Arrastre a izquierda/derecha para ajustar el ancho de la celda de fecha',
+    planBarDragTitle:'Centro = mover cronograma / bordes izq.·der. = ajustar fechas de inicio·fin', actualBarDragTitle:'Centro = mover real / bordes izq.·der. = fechas reales de inicio·fin', eventDragTitleSuffix:'(arrastrar para mover · clic para editar)',
+    wordExpand:'Expandir', wordCollapse:'Contraer', hideRowTitle:'Ocultar esta fila',
+    adminVerifyModalTitle:'🔐 Verificación de la Pestaña de Administrador', adminVerifyHint:'Ingrese el código de administrador.', adminVerifyPh:'Código de administrador',
+    adminCodeWrongErr:'El código de administrador es incorrecto', adminCodeEnterPromptErr:'Ingrese el código',
     serverBackupOnlyDoneMsg:'✅ Copia de seguridad del servidor completa (se canceló el guardado en mi PC): {name}', backupErrMsg:'Error de respaldo: {msg}', backupListErrMsg:'Error de lista de copias de seguridad: {msg}',
     restoreModalTitle:'Restaurar', noBackupFilesMsg:'No hay archivos de respaldo.', restoreBtnLabel:'Restaurar',
     deleteBtnLabel:'Eliminar', restoreSelectModalTitle:'Restaurar — Seleccionar Copia de Seguridad', restoreSelectHint:'Esto reemplaza el cronograma actual con la copia de seguridad seleccionada (se crea una copia de seguridad automática justo antes de restaurar, y afecta a todos).',
@@ -2736,6 +2781,21 @@ const I18N = {
     curPwEmptyErr:'Bitte geben Sie Ihr aktuelles Passwort ein', newPwEmptyErr:'Bitte geben Sie ein neues Passwort ein', newPwMismatchErr:'Die neuen Passwörter stimmen nicht überein',
     curPwWrongErr:'Das aktuelle Passwort ist falsch', pwSavedMsg:'Gespeichert', pwChangeFailErr:'Änderung fehlgeschlagen',
     serverErrWithMsg:'Serverfehler: {msg}',
+    projNameTitle:'Standortnamen eingeben', projNamePh:'Standortname', coNameInpTitle:'In der Pro-Version können Sie den Firmennamen direkt eingeben',
+    colQtyTitle:'Menge/Einheit ein-/ausblenden', colPTitle:'Plan-Zeitplan (P)', colATitle:'Ist-Zeitplan (A)',
+    colAmtTitle:'Betrag', colRateTitle:'Fortschrittsrate', colEventTitle:'Ereignis-Schaltfläche ein-/ausblenden',
+    predSrcTitle:'Vorgängervorgang auswählen', predTgtTitle:'Nachfolgervorgang auswählen', predConnTitle:'Ausgewählte Vorgänger→Nachfolger-Verknüpfung speichern',
+    predEditTitle:'Bearbeiten — Verknüpfungen löschen/verschieben', predCloseTitle:'Vorgänger-/Nachfolgermodus beenden (ESC)', btnCollapseAllTitle:'Alle einklappen',
+    btnExpandAllTitle:'Alle ausklappen', btnClipTitle:'Ansichts-Clip — speichert und lädt den aktuellen Auf-/Zuklappzustand', btnResetAllTitle:'Alles zurücksetzen',
+    analyzeBtnTitle:'Aktuellen Zeitplan mit KI auf Verzögerungen/Konflikte analysieren (rechtes Panel)', lwSliderTitle:'Breite der Vorgangsnamensspalte anpassen', chRangeStartPh:'Start',
+    chRangeEndPh:'Ende', evTogPTitle:'Plan-Ereignisse ein-/ausblenden', evTogATitle:'Ist-Ereignisse ein-/ausblenden',
+    btnChartRefreshTitle:'Diagrammbalken sofort aktualisieren', btnMeetingMembersTitle:'Zu vergleichende Firmen auswählen und übernehmen', btnMeetingDistTitle:'Verteilt die neuesten Zeitpläne der Teilnehmer in den Archivordner (fügt "verteilt" zum Dateinamen hinzu) und entfernt sie aus dem Posteingang',
+    btnMeetingEndTitle:'Terminbesprechung beenden — zu meinen Daten zurückkehren', autoCalcPh:'Automatisch berechnet', docLocalFileTitle:'Öffnet einen .json-Zeitplan von meinem PC in einem neuen Fenster (wird nicht auf dem Server übernommen — zum Vergleich)',
+    docNewLocalTitle:'Leeren Zeitplan in einem neuen Fenster erstellen (nur lokal)', gridMonthToggleTitle:'Klicken: einklappen/ausklappen', dayHeaderResizeTitle:'Nach links/rechts ziehen, um die Breite der Datumszelle anzupassen',
+    planBarDragTitle:'Mitte = Zeitplan verschieben / linker·rechter Rand = Start-·Enddatum anpassen', actualBarDragTitle:'Mitte = Ist verschieben / linker·rechter Rand = Ist-Start-·Enddatum', eventDragTitleSuffix:'(zum Verschieben ziehen · Klicken zum Bearbeiten)',
+    wordExpand:'Ausklappen', wordCollapse:'Einklappen', hideRowTitle:'Diese Zeile ausblenden',
+    adminVerifyModalTitle:'🔐 Admin-Tab-Verifizierung', adminVerifyHint:'Bitte geben Sie den Admin-Code ein.', adminVerifyPh:'Admin-Code',
+    adminCodeWrongErr:'Der Admin-Code ist falsch', adminCodeEnterPromptErr:'Bitte geben Sie den Code ein',
     serverBackupOnlyDoneMsg:'✅ Serversicherung abgeschlossen (Speichern auf meinem PC wurde abgebrochen): {name}', backupErrMsg:'Sicherungsfehler: {msg}', backupListErrMsg:'Fehler bei der Sicherungsliste: {msg}',
     restoreModalTitle:'Wiederherstellen', noBackupFilesMsg:'Es sind keine Sicherungsdateien vorhanden.', restoreBtnLabel:'Wiederherstellen',
     deleteBtnLabel:'Löschen', restoreSelectModalTitle:'Wiederherstellen — Sicherung auswählen', restoreSelectHint:'Dadurch wird der aktuelle Zeitplan durch die ausgewählte Sicherung ersetzt (unmittelbar vor der Wiederherstellung wird automatisch eine Sicherung erstellt, betrifft alle Benutzer).',
@@ -2967,6 +3027,21 @@ const I18N = {
     curPwEmptyErr:'現在のパスワードを入力してください', newPwEmptyErr:'新しいパスワードを入力してください', newPwMismatchErr:'新しいパスワードが一致しません',
     curPwWrongErr:'現在のパスワードが正しくありません', pwSavedMsg:'保存されました', pwChangeFailErr:'変更失敗',
     serverErrWithMsg:'サーバーエラー：{msg}',
+    projNameTitle:'現場名を入力', projNamePh:'現場名', coNameInpTitle:'Pro版では会社名を直接入力できます',
+    colQtyTitle:'数量／単位の表示・非表示', colPTitle:'計画日程（P）', colATitle:'実績日程（A）',
+    colAmtTitle:'金額', colRateTitle:'実績率', colEventTitle:'イベントボタンの表示/非表示',
+    predSrcTitle:'先行工種を選択', predTgtTitle:'後行工種を選択', predConnTitle:'選択した先行→後行の連結を保存',
+    predEditTitle:'連結の削除・移動編集', predCloseTitle:'先行・後行モード終了（ESC）', btnCollapseAllTitle:'全て折りたたむ',
+    btnExpandAllTitle:'全て展開', btnClipTitle:'ビュークリップ — 現在の展開・折りたたみ状態を保存・読込', btnResetAllTitle:'全て初期化',
+    analyzeBtnTitle:'現在の工程表をAIで遅延・衝突分析（右パネル）', lwSliderTitle:'工種名幅の調整', chRangeStartPh:'開始',
+    chRangeEndPh:'終了', evTogPTitle:'計画イベントの表示/非表示', evTogATitle:'実績イベントの表示/非表示',
+    btnChartRefreshTitle:'チャートバーを即時更新', btnMeetingMembersTitle:'比較する業者を選択して適用', btnMeetingDistTitle:'参加業者の最新工程表を保管フォルダへ配布（ファイル名に「配布」追加）＋受付から削除',
+    btnMeetingEndTitle:'工程会議終了 — 自分のデータに戻る', autoCalcPh:'自動計算', docLocalFileTitle:'自分のPCの.json工程表を新しいウィンドウで開く（サーバーには反映されません — 対照用）',
+    docNewLocalTitle:'空の工程表を新しいウィンドウで作成（ローカル専用）', gridMonthToggleTitle:'クリック：折りたたみ／展開', dayHeaderResizeTitle:'左右にドラッグして日付セル幅を調整',
+    planBarDragTitle:'中央＝日程移動／左右端＝開始・終了日調整', actualBarDragTitle:'中央＝実績移動／左右端＝実績開始・終了日', eventDragTitleSuffix:'（ドラッグで移動・クリックで編集）',
+    wordExpand:'展開', wordCollapse:'折りたたみ', hideRowTitle:'この行を非表示',
+    adminVerifyModalTitle:'🔐 管理者タブ確認', adminVerifyHint:'管理者コードを入力してください。', adminVerifyPh:'管理者コード',
+    adminCodeWrongErr:'管理者コードが正しくありません', adminCodeEnterPromptErr:'コードを入力してください',
     serverBackupOnlyDoneMsg:'✅ サーバーバックアップ完了（PC保存はキャンセルされました）：{name}', backupErrMsg:'バックアップエラー：{msg}', backupListErrMsg:'バックアップ一覧エラー：{msg}',
     restoreModalTitle:'復元', noBackupFilesMsg:'バックアップファイルがありません。', restoreBtnLabel:'復元',
     deleteBtnLabel:'削除', restoreSelectModalTitle:'復元 — バックアップ選択', restoreSelectHint:'選択したバックアップで現在の工程表を置き換えます（復元直前に自動バックアップを作成、全員に影響）。',
@@ -3166,6 +3241,19 @@ function applyI18n(){
   var _setupPhMap={setupMasterCode:'setupMasterPh', setupCo:'setupCoPh', setupAdminName:'setupAdminNamePh',
     setupPw:'setupPwPh', setupPw2:'setupPw2Ph', setupAdminCode:'setupAdminCodePh', setupAdminCode2:'setupAdminCode2Ph'};
   Object.keys(_setupPhMap).forEach(function(id){ var el=document.getElementById(id); if(el) el.placeholder=t(_setupPhMap[id]); });
+  // 상단 툴바 — title(툴팁) 일괄 적용
+  var _toolbarTitleMap={projName:'projNameTitle', coNameInp:'coNameInpTitle', 'ctog-QTY':'colQtyTitle', 'ctog-P':'colPTitle',
+    'ctog-A':'colATitle', 'ctog-AMT':'colAmtTitle', 'ctog-RATE':'colRateTitle', 'ctog-EVBTN':'colEventTitle',
+    pgbSrc:'predSrcTitle', pgbTgt:'predTgtTitle', pgbConn:'predConnTitle', pgbEdit:'predEditTitle', pgbClose:'predCloseTitle',
+    btnCollapseAll:'btnCollapseAllTitle', btnExpandAll:'btnExpandAllTitle', btnClip:'btnClipTitle', btnResetAll:'btnResetAllTitle',
+    analyzeBtn:'analyzeBtnTitle', lwSlider:'lwSliderTitle', 'evtog-P':'evTogPTitle', 'evtog-A':'evTogATitle',
+    btnChartRefresh:'btnChartRefreshTitle', btnMeetingMembers:'btnMeetingMembersTitle', btnMeetingDist:'btnMeetingDistTitle', btnMeetingEnd:'btnMeetingEndTitle'};
+  Object.keys(_toolbarTitleMap).forEach(function(id){ var el=document.getElementById(id); if(el) el.title=t(_toolbarTitleMap[id]); });
+  var projNameEl=document.getElementById('projName'); if(projNameEl) projNameEl.placeholder=t('projNamePh');
+  var gRangeSEl=document.getElementById('gRangeS'); if(gRangeSEl) gRangeSEl.placeholder=t('chRangeStartPh');
+  var gRangeEEl=document.getElementById('gRangeE'); if(gRangeEEl) gRangeEEl.placeholder=t('chRangeEndPh');
+  var totalBudgetEl=document.getElementById('totalBudget'); if(totalBudgetEl) totalBudgetEl.placeholder=t('autoCalcPh');
+  var totalActAmountEl=document.getElementById('totalActAmount'); if(totalActAmountEl) totalActAmountEl.placeholder=t('autoCalcPh');
   if(typeof _updateConnStatusLabel==='function') try{ _updateConnStatusLabel(); }catch(e){}
   if(typeof _updateMenuSaveOpenLabels==='function') try{ _updateMenuSaveOpenLabels(); }catch(e){}
 
@@ -3569,8 +3657,8 @@ function renderDocTabs(){
   const ts=on=>`padding:4px 12px;border:1px solid var(--border);border-bottom:${on?'1px solid #fff':'1px solid var(--border)'};border-radius:7px 7px 0 0;font-size:11px;cursor:pointer;margin-right:3px;background:${on?'#fff':'#e5e7eb'};color:${on?'#111':'#555'};font-weight:${on?'700':'400'};position:relative;top:1px`;
   let h=`<span onclick="switchDoc('server')" style="${ts(_activeDoc==='server')}">🌐 ${esc(_siteName||'서버 현장')}</span>`;
   if(_localDoc){ h+=`<span onclick="switchDoc('local')" style="${ts(_activeDoc==='local')}">💻 ${esc(_localDoc.name)} <span onclick="event.stopPropagation();closeLocalDoc()" style="margin-left:5px;color:#b91c1c;font-weight:700">✕</span></span>`; }
-  h+=`<span onclick="openLocalDocPick()" title="내 PC의 .json 공정표를 새 창에서 열기(서버 미반영 — 대조용)" style="padding:4px 10px;font-size:11px;cursor:pointer;color:var(--text2)">${esc(t('docLocalFile'))}</span>`;
-  h+=`<span onclick="openLocalWindowNew()" title="빈 공정표를 새 창에서 작성(로컬 전용)" style="padding:4px 10px;font-size:11px;cursor:pointer;color:var(--text2)">${esc(t('docNewLocal'))}</span>`;
+  h+=`<span onclick="openLocalDocPick()" title="${esc(t('docLocalFileTitle'))}" style="padding:4px 10px;font-size:11px;cursor:pointer;color:var(--text2)">${esc(t('docLocalFile'))}</span>`;
+  h+=`<span onclick="openLocalWindowNew()" title="${esc(t('docNewLocalTitle'))}" style="padding:4px 10px;font-size:11px;cursor:pointer;color:var(--text2)">${esc(t('docNewLocal'))}</span>`;
   bar.innerHTML=h;
 }
 function openLocalDocPick(){ const i=document.getElementById('localDocInp'); if(i)i.click(); }
@@ -4307,16 +4395,16 @@ function switchTab(btn){
 
 function _showAdminVerify(btn){
   showModal(`
-    <div class="modal-title">🔐 관리자 탭 확인</div>
-    <p style="font-size:12px;color:var(--text2);margin-bottom:12px">관리자 코드를 입력하세요.</p>
+    <div class="modal-title">${esc(t('adminVerifyModalTitle'))}</div>
+    <p style="font-size:12px;color:var(--text2);margin-bottom:12px">${esc(t('adminVerifyHint'))}</p>
     <div class="mfg">
-      <input type="password" class="fc" id="adminVerifyInput" placeholder="관리자 코드"
+      <input type="password" class="fc" id="adminVerifyInput" placeholder="${esc(t('adminVerifyPh'))}"
         onkeydown="if(event.key==='Enter')_doAdminVerify(this.closest('.modal-box').__btn)">
     </div>
     <div id="adminVerifyErr" class="auth-err"></div>
     <div class="modal-acts">
-      <button class="btn bgray" onclick="closeModal()">취소</button>
-      <button class="btn bp" onclick="_doAdminVerify()">확인</button>
+      <button class="btn bgray" onclick="closeModal()">${esc(t('wordCancel'))}</button>
+      <button class="btn bp" onclick="_doAdminVerify()">${esc(t('wordConfirm'))}</button>
     </div>`);
   // btn 참조 저장
   document.getElementById('modalBox').__btn=btn;
@@ -4331,14 +4419,14 @@ async function _doAdminVerify(){
     try{
       const r=await fetch(API+'/api/account/verify-code',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:CU.userId,code:val})});
       const j=await r.json();
-      if(!j.ok){ err.textContent='관리자 코드가 올바르지 않습니다'; return; }
-    }catch(e){ err.textContent='서버 오류'; return; }
+      if(!j.ok){ err.textContent=t('adminCodeWrongErr'); return; }
+    }catch(e){ err.textContent=t('genServerErrMsg'); return; }
   } else {
     // 로컬(Pro/Enterprise 단독): 기존 방식
-    if(!val){ err.textContent='코드를 입력하세요'; return; }
+    if(!val){ err.textContent=t('adminCodeEnterPromptErr'); return; }
     const d=gs(); const co=d.companies.find(c=>c.id===CU.id); const hashed=hpw(val);
     const ok = (co&&co.adminCode) ? (co.adminCode===hashed) : (hashed===_DEFAULT_MASTER_CODE);
-    if(!ok){ err.textContent='관리자 코드가 올바르지 않습니다'; return; }
+    if(!ok){ err.textContent=t('adminCodeWrongErr'); return; }
   }
   _adminVerified=true;
   closeModal();
@@ -7667,10 +7755,10 @@ function buildIntegratedHeader(){
   mGroups.forEach(mg=>{
     const w=mg.cells.reduce((s,c)=>s+(c.collapsed?collW:CW),0);
     const ico=mg.collapsed?'▶':'◀';
-    h+=`<div class="int-mon${mg.collapsed?' coll':''}" style="width:${w}px;min-width:${w}px" onclick="togMonth('${mg.mk}')" title="클릭:접기/펼치기">${mg.label} <span style="font-size:9px;opacity:.7">${ico}</span></div>`;
+    h+=`<div class="int-mon${mg.collapsed?' coll':''}" style="width:${w}px;min-width:${w}px" onclick="togMonth('${mg.mk}')" title="${esc(t('gridMonthToggleTitle'))}">${mg.label} <span style="font-size:9px;opacity:.7">${ico}</span></div>`;
   });
   h+=`</div>`;
-  h+=`<div class="int-hdr-day" style="cursor:ew-resize" title="좌우로 끌어 날짜 칸 폭 조절">`;
+  h+=`<div class="int-hdr-day" style="cursor:ew-resize" title="${esc(t('dayHeaderResizeTitle'))}">`;
   vis.forEach(c=>{
     const w=c.collapsed?collW:CW;
     if(c.collapsed){ h+=`<div class="int-day coll-ph" style="width:${w}px;min-width:${w}px"></div>`; return; }
@@ -7985,13 +8073,13 @@ function buildRowChartHtml(opts){
     }else{
       if(planPx&&vi===planPx.anchorVi){
         const br=planPx.clampL&&planPx.clampR?'0':planPx.clampL?'0 3px 3px 0':planPx.clampR?'3px 0 0 3px':'3px';
-        html+=`<div class="rbar pb pb-drag" data-nid="${opts.nodeId||''}" data-sid="${opts.secId||''}" data-kind="plan" data-ps="${(opts.plan&&opts.plan.s)||''}" data-pf="${(opts.plan&&opts.plan.f)||''}" onmousemove="_pbHover(event,this)" style="left:${planPx.leftPx.toFixed(1)}px;width:${planPx.widthPx.toFixed(1)}px;border-radius:${br};pointer-events:auto;cursor:grab" title="가운데=일정 이동 / 좌·우 끝=시작·종료일 조절"></div>`;
+        html+=`<div class="rbar pb pb-drag" data-nid="${opts.nodeId||''}" data-sid="${opts.secId||''}" data-kind="plan" data-ps="${(opts.plan&&opts.plan.s)||''}" data-pf="${(opts.plan&&opts.plan.f)||''}" onmousemove="_pbHover(event,this)" style="left:${planPx.leftPx.toFixed(1)}px;width:${planPx.widthPx.toFixed(1)}px;border-radius:${br};pointer-events:auto;cursor:grab" title="${esc(t('planBarDragTitle'))}"></div>`;
       }
       if(actBarPx&&vi===actBarPx.anchorVi){
         const br=actBarPx.clampL&&actBarPx.clampR?'0':actBarPx.clampL?'0 3px 3px 0':actBarPx.clampR?'3px 0 0 3px':'3px';
         const bg=actGradient(actRate,'#22c55e');
         const _lxA=actBarPx.leftPx, _lwA=actBarPx.widthPx;
-        html+=`<div class="rbar ab pb-drag" data-nid="${opts.nodeId||''}" data-sid="${opts.secId||''}" data-kind="actual" data-ps="${(opts.actual&&opts.actual.s)||''}" data-pf="${(opts.actual&&opts.actual.f)||''}" onmousemove="_pbHover(event,this)" style="left:${_lxA.toFixed(1)}px;width:${_lwA.toFixed(1)}px;border-radius:${br};background:${bg};pointer-events:auto;cursor:grab" title="가운데=실적 이동 / 좌·우 끝=실적 시작·종료일"></div>`;
+        html+=`<div class="rbar ab pb-drag" data-nid="${opts.nodeId||''}" data-sid="${opts.secId||''}" data-kind="actual" data-ps="${(opts.actual&&opts.actual.s)||''}" data-pf="${(opts.actual&&opts.actual.f)||''}" onmousemove="_pbHover(event,this)" style="left:${_lxA.toFixed(1)}px;width:${_lwA.toFixed(1)}px;border-radius:${br};background:${bg};pointer-events:auto;cursor:grab" title="${esc(t('actualBarDragTitle'))}"></div>`;
         if(opts.actual&&opts.actual.s)html+=`<div class="bar-lbl bar-lbl-l" style="left:${(_lxA-19).toFixed(1)}px;transform:translateX(-100%) translateY(-50%)">${opts.actual.s}</div>`;
         const _rtxtA=[opts.actual&&opts.actual.f?opts.actual.f:'', opts.name2||''].filter(Boolean).join('\u2002');
         if(_rtxtA)html+=`<div class="bar-lbl bar-lbl-r" style="left:${(_lxA+_lwA+19).toFixed(1)}px">${_rtxtA}</div>`;
@@ -8040,11 +8128,11 @@ function buildRowChartHtml(opts){
       if(shape!=='none'){
         const shapeCls=shape==='c'?'ev-diamond ev-circle':'ev-diamond';
         const shapeExtra=shape==='dr'?';background:#dc2626':'';
-        html+=`<div class="${shapeCls} ${cls} ev-drag" data-evid="${ev.id}" data-nid="${opts.nodeId}" data-evdate="${ev.date||''}" style="left:${xPx.toFixed(1)}px;top:${yTop}${shapeExtra};cursor:move" title="${esc(label)} (끌어서 이동 · 클릭=편집)"></div>`;
+        html+=`<div class="${shapeCls} ${cls} ev-drag" data-evid="${ev.id}" data-nid="${opts.nodeId}" data-evdate="${ev.date||''}" style="left:${xPx.toFixed(1)}px;top:${yTop}${shapeExtra};cursor:move" title="${esc(label)} ${esc(t('eventDragTitleSuffix'))}"></div>`;
       }
       // 라벨: 도형 위 중앙 정렬 (도형 없음이면 라벨만 표시)
       if(shape==='none'){
-        html+=`<div class="ev-label ${cls} ev-drag" data-evid="${ev.id}" data-nid="${opts.nodeId}" data-evdate="${ev.date||''}" style="left:${xPx.toFixed(1)}px;top:${yLabel};pointer-events:auto;cursor:move" title="${esc(label)} (끌어서 이동 · 클릭=편집)">${labelShort}</div>`;
+        html+=`<div class="ev-label ${cls} ev-drag" data-evid="${ev.id}" data-nid="${opts.nodeId}" data-evdate="${ev.date||''}" style="left:${xPx.toFixed(1)}px;top:${yLabel};pointer-events:auto;cursor:move" title="${esc(label)} ${esc(t('eventDragTitleSuffix'))}">${labelShort}</div>`;
       } else {
         html+=`<div class="ev-label ${cls}" style="left:${xPx.toFixed(1)}px;top:${yLabel}">${labelShort}</div>`;
       }
@@ -8157,7 +8245,7 @@ function buildGantt(proj,container,_unused,mode,opts){
   // 월 헤더
   mGroups.forEach(mg=>{
     const ico=mg.collapsed?'▶':'◀';
-    th+=`<th class="gmon${mg.collapsed?' coll':''}" colspan="${mg.cells.length}" onclick="togMonth('${mg.mk}')" title="클릭:접기/펼치기">
+    th+=`<th class="gmon${mg.collapsed?' coll':''}" colspan="${mg.cells.length}" onclick="togMonth('${mg.mk}')" title="${esc(t('gridMonthToggleTitle'))}">
       ${mg.label} <span style="font-size:9px;opacity:.7">${ico}</span></th>`;
   });
   th+=`</tr><tr style="height:14px">`;
@@ -8186,7 +8274,7 @@ function buildGantt(proj,container,_unused,mode,opts){
     // 좌측 5컬럼 (colspan=5) + 우측 날짜 셀들
     th+=`<tr data-ri="${ri}">
       <td class="glbl gsec" colspan="5" style="left:0;background:${sec.color};white-space:normal;word-break:keep-all">
-        <button class="gtog" onclick="togGSec('${sec.id}')" title="${secColl?'펼치기':'접기'}">${tog}</button>${esc(sec.name)}
+        <button class="gtog" onclick="togGSec('${sec.id}')" title="${secColl?esc(t('wordExpand')):esc(t('wordCollapse'))}">${tog}</button>${esc(sec.name)}
       </td>`;
     // summary bars 계산
     const secAllNodes=[];
@@ -8264,9 +8352,9 @@ function buildGantt(proj,container,_unused,mode,opts){
         return;
       }
 
-      const hideBtn=`<button class="grhide-btn" onclick="event.stopPropagation();togGRow('${node.id}')" title="이 행 숨기기">−</button>`;
+      const hideBtn=`<button class="grhide-btn" onclick="event.stopPropagation();togGRow('${node.id}')" title="${esc(t('hideRowTitle'))}">−</button>`;
       const togHtml=hasCh
-        ?`<button class="gntog" onclick="togGNode('${node.id}')" title="${nodeColl?'펼치기':'접기'}">${nodeColl?'+':'−'}</button>`
+        ?`<button class="gntog" onclick="togGNode('${node.id}')" title="${nodeColl?esc(t('wordExpand')):esc(t('wordCollapse'))}">${nodeColl?'+':'−'}</button>`
         :`<span class="gntog-placeholder"></span>`;
 
       let nameHtml=`<span style="display:inline-flex;align-items:flex-start;padding-left:${il}px;white-space:normal;word-break:keep-all;line-height:1.4;vertical-align:top">`;
@@ -9225,7 +9313,7 @@ async function _siteRemoveStaff(id,name){
 function _showAddServerUser(){
   showModal(`
     <div class="modal-title">${t('addStaffModalTitle')}</div>
-    <div class="fg"><label>${t('apNamePh')}</label><input type="text" id="nsuName" class="fc" placeholder="홍길동"></div>
+    <div class="fg"><label>${t('apNamePh')}</label><input type="text" id="nsuName" class="fc" placeholder="${esc(t('setupAdminNamePh'))}"></div>
     <div class="fg"><label>${t('fullPwLbl')}</label><input type="password" id="nsuPw" class="fc" placeholder="${t('fullPwLbl')}"></div>
     <div class="fg"><label>${t('pwConfirmLbl')}</label><input type="password" id="nsuPw2" class="fc" placeholder="${t('pwConfirmPh')}"></div>
     <div class="fg"><label>${t('adminColAuth')}</label>
