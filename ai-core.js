@@ -759,7 +759,8 @@ function shouldUseMultiTurn(userMsg) {
 // 1단계: 전체 요약 → AI가 집중 대분류 선택
 // 2단계: 선택 대분류 상세 분석
 // 3단계: 종합 의견 + 만회 계획 통합
-async function runMultiTurnAnalysis(instructions, analysisData, runProvider, onProgress) {
+async function runMultiTurnAnalysis(instructions, analysisData, runProvider, onProgress, lang) {
+  const _langDir = _langDirective(lang);
   const { baseDate, progressRate, planRate, delaysWeighted, conflicts,
           tfAlerts, blindSpots, predLinksText, projectName, cpm, evm, velocity } = analysisData;
   const _cpmTxt = (cpm && !cpm.cyclic && cpm.projectFinish) ? ('CPM 예상준공 '+cpm.projectFinish+'(계획 '+cpm.plannedFinish+'), 임계경로 '+cpm.criticalCount+'개'+((cpm.criticalDelayed&&cpm.criticalDelayed.length)?(', CP지연: '+cpm.criticalDelayed.map(d=>d.name).join('/')):'')) : 'CPM 산출불가';
@@ -773,7 +774,8 @@ async function runMultiTurnAnalysis(instructions, analysisData, runProvider, onP
   const step1Sys = `당신은 건설 공정관리 전문 분석관입니다.
 공정 현황을 빠르게 파악하고 가장 심각한 대분류(섹션) 2~3개를 선택하십시오.
 출력: {"focusSections":["섹션명1","섹션명2"],"overallRisk":"전체 위험 수준 한 문장","topDelayIds":["nodeId1","nodeId2","nodeId3"]}
-JSON만 출력하고 설명·코드블록·전문을 쓰지 마십시오.`;
+JSON만 출력하고 설명·코드블록·전문을 쓰지 마십시오.
+focusSections·topDelayIds는 데이터의 실제 섹션명/ID를 그대로 사용하고 번역하지 마십시오.` + _langDir;
 
   const step1User = [
     `# 공정 현황 요약 (기준일: ${baseDate})`,
@@ -853,7 +855,7 @@ JSON만 출력하고 설명·코드블록·전문을 쓰지 마십시오.`;
   const step3Sys = `당신은 건설 공정관리 전문 분석관입니다.
 1단계와 2단계 분석 결과를 종합하여 최종 의견과 만회 계획을 작성하십시오.
 출력: {"finalSummary":"최종 종합 의견 3-5문장","riskSummary":"핵심 위험 2-4문장","completionRisk":"준공일 영향 예측","recoveryPlan":"만회 계획 2-3가지"}
-JSON만 출력하십시오.`;
+JSON만 출력하십시오.` + _langDir;
 
   const step3User = [
     '# 1단계 결과',
@@ -1220,8 +1222,18 @@ function ensurePromptFiles(){
   try { if(!fs.existsSync(CLAUDE_PROMPT_FILE)) fs.writeFileSync(CLAUDE_PROMPT_FILE, DEFAULT_CLAUDE_INSTRUCTIONS, 'utf8'); } catch(e){}
 }
 
+// ── 앱 언어 설정(_lang)에 맞춰 AI 자유 문장(summary/risk/recovery 등) 출력 언어를
+//    강제하는 지시문. 지시서 본문은 손대지 않고 맨 끝에 덧붙여 앞선 "한국어로" 류
+//    지시를 명시적으로 덮어쓴다(ko는 지시서 원문 그대로 두므로 빈 문자열 반환).
+function _langDirective(lang){
+  const names = { en:'English', es:'Spanish (Español)', de:'German (Deutsch)', ja:'Japanese (日本語)' };
+  const name = names[lang];
+  if(!name) return '';
+  return `\n\n[LANGUAGE OVERRIDE — supersedes any earlier "in Korean" instruction above]\nWrite every free-text value in the JSON output (summary, risk, recovery, completionRisk, intent, criticalPath, blindSpots, warning, overallRisk, finalSummary, riskSummary, recoveryPlan, top3[].reason, and any risk-level label) in ${name}. Do not mix in Korean. Keep all JSON keys exactly as specified in English; do not translate keys or change the JSON structure itself.`;
+}
+
 // ── 메인 오케스트레이터: proj + opts → 분석 응답 객체 ──
-// opts: { baseDate, provider, apiKey, site }
+// opts: { baseDate, provider, apiKey, site, lang }
 async function analyze(proj, opts){
   opts = opts || {};
   const baseDate = opts.baseDate || getKSTDateString();
@@ -1252,7 +1264,7 @@ async function analyze(proj, opts){
 
   const defaultProvider = process.env.AI_PROVIDER || 'groq';
   const primary = (['claude','ollama','groq'].includes(reqProvider)) ? reqProvider : defaultProvider;
-  const instructions = loadAiInstructions(primary);
+  const instructions = loadAiInstructions(primary) + _langDirective(opts.lang);
   const userMsg = buildAiPrompt({ baseDate, progressRate, planRate, delays: delaysWeighted, conflicts, predLinksText, tfAlerts, blindSpots, parallelCandidates, completionRiskScore, projectName: proj.projectName, cpm, evm, velocity });
 
   const fallbackOrder = ['groq','ollama','claude'].filter(p => p !== primary);
@@ -1267,7 +1279,7 @@ async function analyze(proj, opts){
     try {
       const mt = await runMultiTurnAnalysis(instructions,
         { baseDate, progressRate, planRate, delaysWeighted, conflicts, tfAlerts, blindSpots, predLinksText, projectName: proj.projectName, cpm, evm, velocity },
-        (sys,usr)=>runProvider(sys,usr), (step,msg)=>console.log('[AI] 멀티턴 '+step+'/3: '+msg));
+        (sys,usr)=>runProvider(sys,usr), (step,msg)=>console.log('[AI] 멀티턴 '+step+'/3: '+msg), opts.lang);
       aiRawX = JSON.stringify(mt.parsed);
       multiTurnMeta = { mode:'multi-turn', focusSections: mt.parsed._focusSections, overallRisk: mt.parsed._overallRisk };
     } catch(e){ console.error('[AI] 멀티턴 실패, 단일턴 폴백:', e.message); try { aiRawX = await runProvider(instructions, userMsg); } catch(e2){ aiError=e2.message; } }

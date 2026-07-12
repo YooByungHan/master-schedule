@@ -1907,7 +1907,7 @@ const requestHandler = async (req, res) => {
       else { const d = body.site ? readSite(body.site) : readData(); proj = d.projects && d.projects[companyId]; }
       if (!proj) { res.writeHead(404, {'Content-Type':'application/json'}); res.end(JSON.stringify({ok:false, msg:'프로젝트를 찾을 수 없습니다'})); return; }
       // ── 분석은 ai-core.js 단일 소스로 위임 (Pro: ai-server.js 와 동일) ──
-      const out = await aiCore.analyze(proj, { baseDate: body.baseDate, provider: body.provider, apiKey: body.apiKey, site: body.site });
+      const out = await aiCore.analyze(proj, { baseDate: body.baseDate, provider: body.provider, apiKey: body.apiKey, site: body.site, lang: body.lang });
       res.writeHead(200, {'Content-Type':'application/json; charset=utf-8'});
       res.end(JSON.stringify(out));
     } catch (e) {

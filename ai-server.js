@@ -48,7 +48,7 @@ const server = http.createServer((req, res) => {
         const body = JSON.parse(Buffer.concat(chunks).toString('utf8'));
         const proj = (body.inlineProj && body.inlineProj.sections) ? body.inlineProj : null;
         if (!proj) { res.writeHead(400, {'Content-Type':'application/json; charset=utf-8'}); res.end(JSON.stringify({ok:false, msg:'inlineProj(공정 데이터)가 필요합니다'})); return; }
-        const out = await aiCore.analyze(proj, { baseDate: body.baseDate, provider: body.provider, apiKey: body.apiKey });
+        const out = await aiCore.analyze(proj, { baseDate: body.baseDate, provider: body.provider, apiKey: body.apiKey, lang: body.lang });
         res.writeHead(200, {'Content-Type':'application/json; charset=utf-8'});
         res.end(JSON.stringify(out));
       } catch (e) {

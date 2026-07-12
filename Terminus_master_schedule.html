@@ -3285,7 +3285,7 @@ const _IS_LOCAL = location.protocol === 'file:';
 const _AI_PORT_URL = 'http://localhost:3100';
 function _aiIsPro(){ return !!(typeof CU!=='undefined' && CU && CU.ver==='pro'); }
 function _aiBaseUrl(){ return _aiIsPro() ? (localStorage.getItem('ms_ai_url')||_AI_PORT_URL) : API; }
-function _aiAugment(b){ b=b||{}; if(_aiIsPro()){ if(!b.inlineProj){ try{ b.inlineProj=getProj(); }catch(e){} } const k=(localStorage.getItem('ms_claude_key')||'').trim(); if(k){ b.apiKey=k; b.provider=_detectProvider(k)||b.provider; } } return b; }
+function _aiAugment(b){ b=b||{}; b.lang=_lang; if(_aiIsPro()){ if(!b.inlineProj){ try{ b.inlineProj=getProj(); }catch(e){} } const k=(localStorage.getItem('ms_claude_key')||'').trim(); if(k){ b.apiKey=k; b.provider=_detectProvider(k)||b.provider; } } return b; }
 
 let _loginClickCount = 0;     // 로컬: 5회 클릭 카운터
 let _pendingServerUser = null; // 서버: 1차 검증 통과 후 대기 중인 유저 정보
@@ -10162,6 +10162,15 @@ function _buildClientAnalysis(baseDate){
   const rateGap=(progressRate!=null&&planRate!=null)?+(progressRate-planRate).toFixed(1):null;
   return {conflicts,delays,progressRate,planRate,rateGap};
 }
+// 앱 언어(_lang)에 맞춰 AI 자유 문장(summary/risk/recovery) 출력 언어를 강제하는 지시문.
+// ko는 지시서 원문(한국어 존댓말) 그대로 두므로 빈 문자열 반환 — 서버 쪽 ai-core.js의
+// _langDirective()와 동일한 역할(클라이언트가 직접 provider를 호출하는 Pro 경로용).
+function _aiLangDirective(lang){
+  const names={en:'English',es:'Spanish (Español)',de:'German (Deutsch)',ja:'Japanese (日本語)'};
+  const name=names[lang];
+  if(!name) return '';
+  return ` [LANGUAGE OVERRIDE — supersedes the "한국어 존댓말로" instruction above] Write the summary/risk/recovery JSON string values in ${name}, not Korean. Keep JSON keys in English.`;
+}
 async function _runLocalAnalyze(body){
   const key=(localStorage.getItem('ms_claude_key')||'').trim();
   const prov=_detectProvider(key);
@@ -10172,7 +10181,7 @@ async function _runLocalAnalyze(body){
   if(key && prov){
     body.innerHTML=`<div style="color:var(--text3);padding:8px">${t('apAiAnalyzing',{prov})}</div>`;
     try{
-      const sys='당신은 대한민국 건설 공정관리 전문가입니다. 아래 확정된 분석 사실만 근거로 한국어 존댓말로 답하세요. 설명·코드블록 없이 JSON 객체 하나만 출력하세요: {"summary":"전체 상황 2~3문장 요약","risk":"위험요인, 없으면 특이사항 없음","recovery":"우선순위순 만회조치, 지연 없으면 빈 문자열"}';
+      const sys='당신은 대한민국 건설 공정관리 전문가입니다. 아래 확정된 분석 사실만 근거로 한국어 존댓말로 답하세요. 설명·코드블록 없이 JSON 객체 하나만 출력하세요: {"summary":"전체 상황 2~3문장 요약","risk":"위험요인, 없으면 특이사항 없음","recovery":"우선순위순 만회조치, 지연 없으면 빈 문자열"}'+_aiLangDirective(_lang);
       const dl=(res.delays||[]).map(d=>`- [${d.section}] ${d.name}: ${d.type} ${d.daysLate}일`).join('\n')||'없음';
       const cf=(res.conflicts||[]).map(c=>`- ${c.predName} 미완 → ${c.succName} 착수(${c.succActualStart})`).join('\n')||'없음';
       const user=`[기준일] ${ds(new Date())}\n[진행률] ${res.progressRate}% / [계획률] ${res.planRate}% (격차 ${res.rateGap}%p)\n[지연 ${res.delays.length}건]\n${dl}\n[선후행 충돌 ${res.conflicts.length}건]\n${cf}`;
