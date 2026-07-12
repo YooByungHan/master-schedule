@@ -14115,7 +14115,7 @@ function dDiff(a,b){
 }
 function du(s,f){if(!s||!f)return'–';const d=dDiff(pd(s),pd(f))+1;return d>0?d+'d':'–'}
 function uid(){return Math.random().toString(36).slice(2,9)+Date.now().toString(36)}
-function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2600)}
 
 // ══════════════════════════════════════════════
