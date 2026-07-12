@@ -5002,6 +5002,19 @@ function syncNfixedWidth(){
 }
 // toggleCol 후에도 syncNfixedWidth 호출 — 컬럼 ON/OFF 시 즉시 반영
 
+// 대분류 헤더의 요약 막대(row-chart) HTML — buildSec()과 applySecColor()(색상 변경 시
+// sec-hdr을 부분 패치할 때) 양쪽에서 재사용
+function _buildSecChartHtml(sec){
+  const _allNodes=[];
+  (function _flat(ns){ns.forEach(n=>{_allNodes.push(n);if(n.ch)_flat(n.ch);});})(sec.nodes);
+  const _ps=_allNodes.map(n=>n.plan&&n.plan.s).filter(Boolean).sort()[0]||'';
+  const _pf=_allNodes.map(n=>n.plan&&n.plan.f).filter(Boolean).sort().slice(-1)[0]||'';
+  let _amt=0,_act=0;
+  sec.nodes.forEach(n=>{const a=n.amount||0;_amt+=a;_act+=a*((n.actRate||0)/100);});
+  const _actRate=_amt>0?Math.min(_act/_amt*100,100):0;
+  return buildRowChartHtml({type:'sec',plan:{s:_ps,f:_pf},actual:{s:_ps,f:_pf},actRate:_actRate,color:sec.color});
+}
+
 function buildSec(sec,totalBudget){
   const card=document.createElement('div');
   const _secOpen = _uiGet(sec.id) !== undefined ? _uiGet(sec.id) : sec.open !== false;
@@ -5055,7 +5068,7 @@ function buildSec(sec,totalBudget){
   const _secActRate=_secAmt>0?Math.min(_secAct/_secAmt*100,100):0;
   const _secAS=_secAllNodes.map(n=>n.actual&&n.actual.s).filter(Boolean).sort()[0]||'';
   const _secAF=_secAllNodes.map(n=>n.actual&&n.actual.f).filter(Boolean).sort().slice(-1)[0]||'';
-  const _secChartHtml=buildRowChartHtml({type:'sec',plan:{s:_secPS,f:_secPF},actual:{s:_secPS,f:_secPF},actRate:_secActRate,color:sec.color});
+  const _secChartHtml=_buildSecChartHtml(sec);
 
   // ★ 대분류 헤더를 하위 공종 행(nrow)과 동일한 구조로 구성
   //   → 좌측 영역의 자식 폭(ndepth-col + ntog + nblock + nfixed)이 nrow와 정확히 일치
@@ -5609,11 +5622,14 @@ function applySecColor(secId,newColor,isGray){
     if(_chevEl) _chevEl.style.color = _chevC;
     const _metaEl = _secHdrEl.querySelector('.sec-meta');
     if(_metaEl) _metaEl.style.color = _metaC;
+    // 대분류 헤더의 요약 막대(row-chart)는 위 스타일 패치에 포함되지 않으므로
+    // 새 색상으로 다시 만들어 통째로 교체 — 전체 재렌더 없이 막대 색상까지 즉시 반영
+    const _chartEl = _secHdrEl.querySelector('.row-chart');
+    if(_chartEl) _chartEl.outerHTML = _buildSecChartHtml(sec);
   }
 
   _rebuildSecTree(sec,p.totalBudget||0);
   populatePredSelectors();
-  markGanttDirty();
   toast(isGray?'회색으로 변경되었습니다':'섹션 및 하위 공종 색상이 변경되었습니다');
 }
 
