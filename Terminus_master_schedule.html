@@ -1592,7 +1592,7 @@ body.pred-edit-mode .nacts{min-width:44px}
               <button class="hdr-mi" onclick="hdrMenuAct(saveAsPng)">🖼️ PNG</button>
             </div>
           </div>
-          <button class="hdr-mi" onclick="hdrMenuAct(showHolidayModal)">🗓️ 공휴일 관리</button>
+          <button class="hdr-mi" id="hdrMiHoliday" onclick="hdrMenuAct(showHolidayModal)">🗓️ 공휴일 관리</button>
         </div>
       </div>
       <button class="btn bg-btn btn-xs no-print" id="settingsBtn" onclick="showSettingsModal('account')">⚙ 설정</button>
@@ -2024,6 +2024,12 @@ const I18N = {
     apNoAccounts:'계정 없음', apAssignTitle:'담당자 배정 — {site}', apAssignDesc:'접근 허용할 사람 체크(담당관리자도 함께 체크)',
     apSiteMgrLabel:'담당관리자', apAssignSavedMsg:'배정 저장됨',
     genFailMsg:'실패: {msg}', genChangedMsg:'변경됨', genDeletedMsg:'삭제됨',
+    holNoneMsg:'등록된 공휴일 없음', holCustomBadge:'사용자 지정', holDefaultBadge:'기본값', holModalTitle:'📅 공휴일 관리',
+    holNamePh:'공휴일명', holDesc:'날짜와 공휴일명을 입력하세요. 저장 시 이 기기의 모든 공정표에 적용됩니다.',
+    holResetWarn:'⚠ 기본값 초기화를 누르면 하드코딩된 2026년 공휴일로 되돌아갑니다.', holAddRowBtn:'+ 행 추가', holResetBtn:'기본값 초기화',
+    holResetConfirm:'하드코딩된 2026년 기본 공휴일로 초기화합니다. 계속하시겠습니까?', holResetDoneMsg:'✅ 기본 공휴일로 초기화되었습니다',
+    holRowErrMsg:'⚠ 날짜 또는 공휴일명이 비어있는 행이 있습니다', holSavedMsg:'✅ 공휴일이 저장되었습니다 ({n}개)',
+    adminHolTitle:'공휴일 관리', adminHolEditBtn:'📅 공휴일 편집', adminHolDesc:'차트에서 공휴일로 표시할 날짜를 직접 입력합니다. 저장된 데이터는 이 기기에 유지됩니다.',
   },
   en: {
     menu:'☰ Menu', settings:'⚙ Settings',
@@ -2100,6 +2106,12 @@ const I18N = {
     apNoAccounts:'No accounts', apAssignTitle:'Assign Manager — {site}', apAssignDesc:'Check who should have access (also check site managers)',
     apSiteMgrLabel:'Site Manager', apAssignSavedMsg:'Assignment saved',
     genFailMsg:'Failed: {msg}', genChangedMsg:'Changed', genDeletedMsg:'Deleted',
+    holNoneMsg:'No holidays registered', holCustomBadge:'Custom', holDefaultBadge:'Default', holModalTitle:'📅 Manage Holidays',
+    holNamePh:'Holiday name', holDesc:'Enter the date and holiday name. Saved changes apply to all schedules on this device.',
+    holResetWarn:'⚠ Resetting to default reverts to the hardcoded 2026 holidays.', holAddRowBtn:'+ Add Row', holResetBtn:'Reset to Default',
+    holResetConfirm:'This resets to the hardcoded default 2026 holidays. Continue?', holResetDoneMsg:'✅ Reset to default holidays',
+    holRowErrMsg:'⚠ Some rows have an empty date or holiday name', holSavedMsg:'✅ Holidays saved ({n})',
+    adminHolTitle:'Holiday Management', adminHolEditBtn:'📅 Edit Holidays', adminHolDesc:'Enter the dates to mark as holidays on the chart directly. Saved data is kept on this device.',
   },
   es: {
     menu:'☰ Menú', settings:'⚙ Ajustes',
@@ -2176,6 +2188,12 @@ const I18N = {
     apNoAccounts:'Sin cuentas', apAssignTitle:'Asignar Encargado — {site}', apAssignDesc:'Marque quién debe tener acceso (marque también a los encargados de obra)',
     apSiteMgrLabel:'Encargado de Obra', apAssignSavedMsg:'Asignación guardada',
     genFailMsg:'Error: {msg}', genChangedMsg:'Cambiado', genDeletedMsg:'Eliminado',
+    holNoneMsg:'No hay días festivos registrados', holCustomBadge:'Personalizado', holDefaultBadge:'Predeterminado', holModalTitle:'📅 Gestionar Días Festivos',
+    holNamePh:'Nombre del día festivo', holDesc:'Ingrese la fecha y el nombre del día festivo. Al guardar se aplica a todos los cronogramas de este dispositivo.',
+    holResetWarn:'⚠ Al restablecer los valores predeterminados, se vuelve a los días festivos de 2026 predefinidos.', holAddRowBtn:'+ Agregar Fila', holResetBtn:'Restablecer Predeterminados',
+    holResetConfirm:'Esto restablece los días festivos predeterminados de 2026. ¿Continuar?', holResetDoneMsg:'✅ Restablecido a los días festivos predeterminados',
+    holRowErrMsg:'⚠ Hay filas con fecha o nombre de día festivo vacíos', holSavedMsg:'✅ Días festivos guardados ({n})',
+    adminHolTitle:'Gestión de Días Festivos', adminHolEditBtn:'📅 Editar Días Festivos', adminHolDesc:'Ingrese directamente las fechas que se marcarán como festivos en el gráfico. Los datos guardados se mantienen en este dispositivo.',
   },
   de: {
     menu:'☰ Menü', settings:'⚙ Einstellungen',
@@ -2252,6 +2270,12 @@ const I18N = {
     apNoAccounts:'Keine Konten', apAssignTitle:'Verantwortlichen zuweisen — {site}', apAssignDesc:'Zugriffsberechtigte auswählen (Bauleiter ebenfalls ankreuzen)',
     apSiteMgrLabel:'Bauleiter', apAssignSavedMsg:'Zuweisung gespeichert',
     genFailMsg:'Fehlgeschlagen: {msg}', genChangedMsg:'Geändert', genDeletedMsg:'Gelöscht',
+    holNoneMsg:'Keine Feiertage registriert', holCustomBadge:'Benutzerdefiniert', holDefaultBadge:'Standard', holModalTitle:'📅 Feiertage verwalten',
+    holNamePh:'Feiertagsname', holDesc:'Geben Sie Datum und Feiertagsname ein. Beim Speichern gilt dies für alle Zeitpläne auf diesem Gerät.',
+    holResetWarn:'⚠ Beim Zurücksetzen auf Standard werden die fest codierten Feiertage 2026 wiederhergestellt.', holAddRowBtn:'+ Zeile hinzufügen', holResetBtn:'Auf Standard zurücksetzen',
+    holResetConfirm:'Dies setzt auf die fest codierten Standard-Feiertage 2026 zurück. Fortfahren?', holResetDoneMsg:'✅ Auf Standard-Feiertage zurückgesetzt',
+    holRowErrMsg:'⚠ Einige Zeilen haben ein leeres Datum oder einen leeren Feiertagsnamen', holSavedMsg:'✅ Feiertage gespeichert ({n})',
+    adminHolTitle:'Feiertagsverwaltung', adminHolEditBtn:'📅 Feiertage bearbeiten', adminHolDesc:'Geben Sie die Daten direkt ein, die im Diagramm als Feiertage markiert werden sollen. Gespeicherte Daten bleiben auf diesem Gerät erhalten.',
   },
   ja: {
     menu:'☰ メニュー', settings:'⚙ 設定',
@@ -2328,6 +2352,12 @@ const I18N = {
     apNoAccounts:'アカウントなし', apAssignTitle:'担当者割り当て — {site}', apAssignDesc:'アクセスを許可する人にチェック（現場管理者も一緒にチェック）',
     apSiteMgrLabel:'現場管理者', apAssignSavedMsg:'割り当てが保存されました',
     genFailMsg:'失敗：{msg}', genChangedMsg:'変更されました', genDeletedMsg:'削除されました',
+    holNoneMsg:'登録された祝日がありません', holCustomBadge:'カスタム', holDefaultBadge:'デフォルト', holModalTitle:'📅 祝日管理',
+    holNamePh:'祝日名', holDesc:'日付と祝日名を入力してください。保存するとこの端末のすべての工程表に適用されます。',
+    holResetWarn:'⚠ デフォルトにリセットすると、ハードコードされた2026年の祝日に戻ります。', holAddRowBtn:'+ 行追加', holResetBtn:'デフォルトにリセット',
+    holResetConfirm:'ハードコードされた2026年のデフォルト祝日にリセットします。続行しますか？', holResetDoneMsg:'✅ デフォルト祝日にリセットされました',
+    holRowErrMsg:'⚠ 日付または祝日名が空の行があります', holSavedMsg:'✅ 祝日が保存されました（{n}件）',
+    adminHolTitle:'祝日管理', adminHolEditBtn:'📅 祝日編集', adminHolDesc:'チャートに祝日として表示する日付を直接入力します。保存されたデータはこの端末に保持されます。',
   },
 };
 let _lang = (function(){ try{ return localStorage.getItem('ms_lang')||'ko'; }catch(e){ return 'ko'; } })();
@@ -2365,6 +2395,7 @@ function applyI18n(){
   var tTl=document.getElementById('timelineTabBtn'); if(tTl) tTl.textContent=t('tabTimeline');
   var tAi=document.getElementById('aiTabBtn'); if(tAi) tAi.textContent=t('tabAi');
   var tAd=document.getElementById('adminTabBtn'); if(tAd) tAd.textContent=t('tabAdmin');
+  var hmHol=document.getElementById('hdrMiHoliday'); if(hmHol) hmHol.innerHTML='🗓️ '+esc(t('adminHolTitle'));
 
   // 고정 헤드(pbar) — 프로젝트 정보 라벨
   ['pbLblCo','pbLblDate','pbLblBudget','pbLblActAmt','pbLblActRate'].forEach(function(id){
@@ -8058,10 +8089,10 @@ function renderAdmin(){
       </div>
     </div>
     <div class="admin-sec">
-      <div class="admin-title">공휴일 관리
-        <button class="btn bp btn-xs" onclick="showHolidayModal()">📅 공휴일 편집</button>
+      <div class="admin-title">${t('adminHolTitle')}
+        <button class="btn bp btn-xs" onclick="showHolidayModal()">${t('adminHolEditBtn')}</button>
       </div>
-      <p style="font-size:11px;color:var(--text2);margin-bottom:6px">차트에서 공휴일로 표시할 날짜를 직접 입력합니다. 저장된 데이터는 이 기기에 유지됩니다.</p>
+      <p style="font-size:11px;color:var(--text2);margin-bottom:6px">${t('adminHolDesc')}</p>
       <div id="holidayPreview" style="font-size:11px;color:var(--text3)"></div>
     </div>
     </div>`;
@@ -8203,8 +8234,8 @@ async function _renderAdminServer(){
         </div>
       </div>
       <div class="admin-sec">
-        <div class="admin-title">공휴일 관리
-          <button class="btn bp btn-xs" onclick="showHolidayModal()">📅 공휴일 편집</button>
+        <div class="admin-title">${t('adminHolTitle')}
+          <button class="btn bp btn-xs" onclick="showHolidayModal()">${t('adminHolEditBtn')}</button>
         </div>
         <div id="holidayPreview" style="font-size:11px;color:var(--text3)"></div>
       </div>`;
@@ -8532,8 +8563,8 @@ function renderHolidayPreview(){
   const h=_getEffectiveHolidays();
   const isCustom=!!_loadHolidays();
   const entries=Object.entries(h).sort((a,b)=>a[0].localeCompare(b[0]));
-  if(!entries.length){el.textContent='등록된 공휴일 없음';return;}
-  const badge=isCustom?'<span style="background:#1a6b3a;color:#fff;border-radius:3px;padding:1px 6px;font-size:10px;margin-right:6px">사용자 지정</span>':'<span style="background:#4a7ab5;color:#fff;border-radius:3px;padding:1px 6px;font-size:10px;margin-right:6px">기본값</span>';
+  if(!entries.length){el.textContent=t('holNoneMsg');return;}
+  const badge=isCustom?`<span style="background:#1a6b3a;color:#fff;border-radius:3px;padding:1px 6px;font-size:10px;margin-right:6px">${t('holCustomBadge')}</span>`:`<span style="background:#4a7ab5;color:#fff;border-radius:3px;padding:1px 6px;font-size:10px;margin-right:6px">${t('holDefaultBadge')}</span>`;
   el.innerHTML=badge+entries.map(([d,n])=>`<span style="margin-right:8px">${d} <b>${n}</b></span>`).join('');
 }
 
@@ -8544,29 +8575,29 @@ function showHolidayModal(){
   const rows=entries.map(([date,name],i)=>`
     <tr id="hr_${i}">
       <td><input class="utbl-inp hdate" type="date" value="${date}" style="width:130px"></td>
-      <td><input class="utbl-inp hname" type="text" value="${esc(name)}" placeholder="공휴일명" style="width:140px"></td>
-      <td><button class="btn bd btn-xs" onclick="delHolidayRow(${i})">삭제</button></td>
+      <td><input class="utbl-inp hname" type="text" value="${esc(name)}" placeholder="${t('holNamePh')}" style="width:140px"></td>
+      <td><button class="btn bd btn-xs" onclick="delHolidayRow(${i})">${t('wordDelete')}</button></td>
     </tr>`).join('');
 
   showModal(`
-    <div class="modal-title">📅 공휴일 관리</div>
+    <div class="modal-title">${t('holModalTitle')}</div>
     <p style="font-size:11px;color:var(--text2);margin-bottom:10px">
-      날짜와 공휴일명을 입력하세요. 저장 시 이 기기의 모든 공정표에 적용됩니다.<br>
-      <span style="color:#b45309">⚠ 기본값 초기화를 누르면 하드코딩된 2026년 공휴일로 되돌아갑니다.</span>
+      ${t('holDesc')}<br>
+      <span style="color:#b45309">${t('holResetWarn')}</span>
     </p>
     <div style="max-height:340px;overflow-y:auto;margin-bottom:10px">
       <table class="utbl" id="holidayTbl">
-        <thead><tr><th>날짜</th><th>공휴일명</th><th style="width:48px"></th></tr></thead>
+        <thead><tr><th>${t('wordDate')}</th><th>${t('holNamePh')}</th><th style="width:48px"></th></tr></thead>
         <tbody id="holidayTbody">${rows}</tbody>
       </table>
     </div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
-      <button class="btn bo btn-xs" onclick="addHolidayRow()">+ 행 추가</button>
-      <button class="btn bw btn-xs" onclick="resetHolidaysToDefault()">기본값 초기화</button>
+      <button class="btn bo btn-xs" onclick="addHolidayRow()">${t('holAddRowBtn')}</button>
+      <button class="btn bw btn-xs" onclick="resetHolidaysToDefault()">${t('holResetBtn')}</button>
     </div>
     <div class="modal-acts">
-      <button class="btn bgray" onclick="closeModal()">취소</button>
-      <button class="btn bp" onclick="saveHolidayModal()">💾 저장</button>
+      <button class="btn bgray" onclick="closeModal()">${t('wordCancel')}</button>
+      <button class="btn bp" onclick="saveHolidayModal()">💾 ${t('stgSave')}</button>
     </div>`);
 }
 
@@ -8578,8 +8609,8 @@ function addHolidayRow(){
   tr.id='hr_'+i;
   tr.innerHTML=`
     <td><input class="utbl-inp hdate" type="date" value="" style="width:130px"></td>
-    <td><input class="utbl-inp hname" type="text" value="" placeholder="공휴일명" style="width:140px"></td>
-    <td><button class="btn bd btn-xs" onclick="this.closest('tr').remove()">삭제</button></td>`;
+    <td><input class="utbl-inp hname" type="text" value="" placeholder="${t('holNamePh')}" style="width:140px"></td>
+    <td><button class="btn bd btn-xs" onclick="this.closest('tr').remove()">${t('wordDelete')}</button></td>`;
   tbody.appendChild(tr);
   tr.querySelector('.hdate').focus();
 }
@@ -8590,12 +8621,12 @@ function delHolidayRow(i){
 }
 
 function resetHolidaysToDefault(){
-  showConf('하드코딩된 2026년 기본 공휴일로 초기화합니다. 계속하시겠습니까?',()=>{
+  showConf(t('holResetConfirm'),()=>{
     localStorage.removeItem(HK);
     closeModal();
     renderHolidayPreview();
     renderInput();
-    toast('✅ 기본 공휴일로 초기화되었습니다');
+    toast(t('holResetDoneMsg'));
   });
 }
 
@@ -8617,12 +8648,12 @@ function saveHolidayModal(){
     if(!/^\d{4}-\d{2}-\d{2}$/.test(dv)){err=true;d.style.border='1px solid red';return;}
     obj[dv]=nv;
   });
-  if(err){toast('⚠ 날짜 또는 공휴일명이 비어있는 행이 있습니다');return;}
+  if(err){toast(t('holRowErrMsg'));return;}
   _saveHolidays(obj);
   closeModal();
   renderHolidayPreview();
   renderInput(); // 차트 재렌더 (공휴일 색상 반영)
-  toast('✅ 공휴일이 저장되었습니다 ('+Object.keys(obj).length+'개)');
+  toast(t('holSavedMsg',{n:Object.keys(obj).length}));
 }
 
 function changeAdminCode(){
