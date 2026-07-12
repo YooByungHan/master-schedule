@@ -2011,6 +2011,19 @@ const I18N = {
     projResetMsg:'프로젝트가 초기화되었습니다', secOrderChangedMsg:'대분류 순서가 변경되었습니다', dragNeedDatesMsg:'시작/종료일이 있어야 드래그할 수 있습니다',
     dragBarKindActual:'실적', dragBarKindPlan:'계획', dragBarModeStart:'시작일',
     dragBarModeEnd:'종료일', dragBarModeMove:'이동', dragBarResultMsg:'📅 {kind} {mode}: {ns} ~ {nf}',
+    chartDataMissingMsg:'차트 데이터가 없습니다', pngGeneratingMsg:'PNG 생성 중... 잠시 기다려주세요', pngSavedMsg:'PNG 파일이 저장되었습니다',
+    saveCancelledMsg:'저장을 취소했습니다', pngGenFailMsg:'PNG 생성 실패: {msg}', tplLoadFailMsg:'⚠ 템플릿을 불러오지 못했습니다{suffix}',
+    tplLoadFailProSuffix:' (Pro는 ai-server 실행 필요)', tplSheetMismatchMsg:'⚠ 템플릿 시트 구조가 다릅니다', excelSavedMsg:'📊 내 PC에 저장 완료 (Excel에서 Ctrl+Shift+G)',
+    excelDownloadedMsg:'📊 내 PC로 다운로드됨 — 차단 시 파일 속성>차단해제 또는 Excel 신뢰할 수 있는 위치 설정', excelGenErrMsg:'엑셀 생성 오류: {msg}', selectBaseDateAlert:'기준일자를 선택해주세요.',
+    baseDateApplyFailMsg:'⚠ 기준일자 반영에 실패했습니다.', newFileSavedMsg:'✅ 신규 파일 저장 완료: {fname} (시트: {sheet})', existingFileSavedMsg:'✅ "{name}" 저장 완료 ({action} · 통합현황 갱신)',
+    sheetActionOverwrite:'덮어쓰기', sheetActionAppend:'추가', saveFailMsg:'⚠ 저장 실패: {msg}',
+    fileProcessErrAlert:'파일 처리 중 오류가 발생했습니다:\n{msg}', fileReadFailAlert:'파일을 읽지 못했습니다.', selectDateAlert:'날짜를 선택해주세요.',
+    baselineDateRequiredMsg:'⚠ 기준선 날짜를 먼저 설정해주세요.', noXlsxInFolderMsg:'⚠ 폴더에 xlsx 파일이 없습니다.', fileReadFailMsg:'⚠ 파일을 읽지 못했습니다.',
+    fileOpenFailMsg:'파일 열기 실패: {msg}', pdfGeneratingMsg:'PDF 생성 중...', pdfGenErrMsg:'⚠ PDF 생성 오류: {msg}',
+    markerPickTitle:'📍 기준선 날짜 설정 필요', markerPickDesc1:'실적현황 저장은 <b>기준선 날짜</b>가 필요합니다.', markerPickDesc2:'기준선이 없으면 어느 시점의 데이터인지 알 수 없습니다.',
+    markerPickLabel:'기준선 날짜 선택', markerPickConfirmBtn:'이 날짜로 저장 진행',
+    chartTooLargeMsg:'⚠ 차트가 너무 큽니다 — 단위를 주/10일로 바꾸거나 [범위]를 지정 후 다시 시도하세요', pdfLibLoadFailMsg:'⚠ PDF 라이브러리 로드 실패 — 인터넷 연결 확인 후 다시 시도하세요', pdfGenFailRetryMsg:'⚠ PDF 생성 실패 — 단위를 주/10일로 바꾸거나 [범위]를 지정 후 다시 시도하세요',
+    pdfSavedMsg:'PDF 저장 완료 ({pages}페이지)',
     pbLblCo:'업체명', pbLblDate:'작성일', pbLblBudget:'총 공사금액', pbLblActAmt:'실적금액', pbLblActRate:'실적율',
     hgLblTask:'공종', colQty:'물량', colAmt:'금액', colRate:'실적', colEvent:'이벤트',
     predSrc:'선행', predTgt:'후행', predConn:'노드연결', predEdit:'노드편집', predClose:'✕ 완료',
@@ -2200,6 +2213,19 @@ const I18N = {
     projResetMsg:'Project has been reset', secOrderChangedMsg:'Section order changed', dragNeedDatesMsg:'Start/end dates are required to drag',
     dragBarKindActual:'Actual', dragBarKindPlan:'Plan', dragBarModeStart:'start date',
     dragBarModeEnd:'end date', dragBarModeMove:'move', dragBarResultMsg:'📅 {kind} {mode}: {ns} ~ {nf}',
+    chartDataMissingMsg:'No chart data available', pngGeneratingMsg:'Generating PNG... please wait', pngSavedMsg:'PNG file saved',
+    saveCancelledMsg:'Save cancelled', pngGenFailMsg:'PNG generation failed: {msg}', tplLoadFailMsg:'⚠ Failed to load the template{suffix}',
+    tplLoadFailProSuffix:' (Pro requires running ai-server)', tplSheetMismatchMsg:'⚠ The template sheet structure doesn\'t match', excelSavedMsg:'📊 Saved to my PC (in Excel, press Ctrl+Shift+G)',
+    excelDownloadedMsg:'📊 Downloaded to my PC — if blocked, use File Properties > Unblock, or set an Excel Trusted Location', excelGenErrMsg:'Excel generation error: {msg}', selectBaseDateAlert:'Please select a base date.',
+    baseDateApplyFailMsg:'⚠ Failed to apply the base date.', newFileSavedMsg:'✅ New file saved: {fname} (sheet: {sheet})', existingFileSavedMsg:'✅ "{name}" saved ({action} · combined status updated)',
+    sheetActionOverwrite:'overwrite', sheetActionAppend:'append', saveFailMsg:'⚠ Save failed: {msg}',
+    fileProcessErrAlert:'An error occurred while processing the file:\n{msg}', fileReadFailAlert:'Could not read the file.', selectDateAlert:'Please select a date.',
+    baselineDateRequiredMsg:'⚠ Please set the baseline date first.', noXlsxInFolderMsg:'⚠ There are no xlsx files in the folder.', fileReadFailMsg:'⚠ Could not read the file.',
+    fileOpenFailMsg:'Failed to open file: {msg}', pdfGeneratingMsg:'Generating PDF...', pdfGenErrMsg:'⚠ PDF generation error: {msg}',
+    markerPickTitle:'📍 Baseline Date Required', markerPickDesc1:'Saving progress status requires a <b>baseline date</b>.', markerPickDesc2:'Without a baseline, there\'s no way to know what point in time the data represents.',
+    markerPickLabel:'Select Baseline Date', markerPickConfirmBtn:'Proceed to Save with This Date',
+    chartTooLargeMsg:'⚠ The chart is too large — switch the unit to week/10-day or set a [Range] and try again', pdfLibLoadFailMsg:'⚠ Failed to load the PDF library — check your internet connection and try again', pdfGenFailRetryMsg:'⚠ PDF generation failed — switch the unit to week/10-day or set a [Range] and try again',
+    pdfSavedMsg:'PDF saved ({pages} pages)',
     pbLblCo:'Company', pbLblDate:'Date', pbLblBudget:'Total Budget', pbLblActAmt:'Actual Amount', pbLblActRate:'Actual Rate',
     hgLblTask:'Tasks', colQty:'Qty', colAmt:'Amount', colRate:'Actual', colEvent:'Events',
     predSrc:'Pred', predTgt:'Succ', predConn:'Link', predEdit:'Edit', predClose:'✕ Done',
@@ -2389,6 +2415,19 @@ const I18N = {
     projResetMsg:'El proyecto se ha restablecido', secOrderChangedMsg:'Se cambió el orden de las secciones', dragNeedDatesMsg:'Se requieren fechas de inicio/fin para arrastrar',
     dragBarKindActual:'Real', dragBarKindPlan:'Plan', dragBarModeStart:'fecha de inicio',
     dragBarModeEnd:'fecha de fin', dragBarModeMove:'mover', dragBarResultMsg:'📅 {kind} {mode}: {ns} ~ {nf}',
+    chartDataMissingMsg:'No hay datos de gráfico disponibles', pngGeneratingMsg:'Generando PNG... espere por favor', pngSavedMsg:'Archivo PNG guardado',
+    saveCancelledMsg:'Guardado cancelado', pngGenFailMsg:'Error al generar PNG: {msg}', tplLoadFailMsg:'⚠ No se pudo cargar la plantilla{suffix}',
+    tplLoadFailProSuffix:' (Pro requiere ejecutar ai-server)', tplSheetMismatchMsg:'⚠ La estructura de la hoja de plantilla no coincide', excelSavedMsg:'📊 Guardado en mi PC (en Excel, presione Ctrl+Shift+G)',
+    excelDownloadedMsg:'📊 Descargado a mi PC — si está bloqueado, use Propiedades del archivo > Desbloquear, o configure una Ubicación de confianza en Excel', excelGenErrMsg:'Error de generación de Excel: {msg}', selectBaseDateAlert:'Seleccione una fecha base.',
+    baseDateApplyFailMsg:'⚠ Error al aplicar la fecha base.', newFileSavedMsg:'✅ Nuevo archivo guardado: {fname} (hoja: {sheet})', existingFileSavedMsg:'✅ "{name}" guardado ({action} · estado combinado actualizado)',
+    sheetActionOverwrite:'sobrescritura', sheetActionAppend:'adición', saveFailMsg:'⚠ Error al guardar: {msg}',
+    fileProcessErrAlert:'Se produjo un error al procesar el archivo:\n{msg}', fileReadFailAlert:'No se pudo leer el archivo.', selectDateAlert:'Seleccione una fecha.',
+    baselineDateRequiredMsg:'⚠ Primero establezca la fecha de referencia.', noXlsxInFolderMsg:'⚠ No hay archivos xlsx en la carpeta.', fileReadFailMsg:'⚠ No se pudo leer el archivo.',
+    fileOpenFailMsg:'Error al abrir el archivo: {msg}', pdfGeneratingMsg:'Generando PDF...', pdfGenErrMsg:'⚠ Error de generación de PDF: {msg}',
+    markerPickTitle:'📍 Se requiere fecha de referencia', markerPickDesc1:'Guardar el estado de progreso requiere una <b>fecha de referencia</b>.', markerPickDesc2:'Sin una línea de referencia, no hay forma de saber a qué momento corresponden los datos.',
+    markerPickLabel:'Seleccionar Fecha de Referencia', markerPickConfirmBtn:'Continuar a Guardar con Esta Fecha',
+    chartTooLargeMsg:'⚠ El gráfico es demasiado grande — cambie la unidad a semana/10 días o defina un [Rango] e intente de nuevo', pdfLibLoadFailMsg:'⚠ Error al cargar la biblioteca PDF — verifique su conexión a internet e intente de nuevo', pdfGenFailRetryMsg:'⚠ Error al generar PDF — cambie la unidad a semana/10 días o defina un [Rango] e intente de nuevo',
+    pdfSavedMsg:'PDF guardado ({pages} páginas)',
     pbLblCo:'Empresa', pbLblDate:'Fecha', pbLblBudget:'Presupuesto Total', pbLblActAmt:'Monto Real', pbLblActRate:'Avance Real',
     hgLblTask:'Tareas', colQty:'Cant.', colAmt:'Monto', colRate:'Avance', colEvent:'Eventos',
     predSrc:'Prec.', predTgt:'Suc.', predConn:'Vincular', predEdit:'Editar', predClose:'✕ Listo',
@@ -2578,6 +2617,19 @@ const I18N = {
     projResetMsg:'Projekt wurde zurückgesetzt', secOrderChangedMsg:'Abschnittsreihenfolge geändert', dragNeedDatesMsg:'Start-/Enddatum erforderlich, um zu ziehen',
     dragBarKindActual:'Ist', dragBarKindPlan:'Plan', dragBarModeStart:'Startdatum',
     dragBarModeEnd:'Enddatum', dragBarModeMove:'verschieben', dragBarResultMsg:'📅 {kind} {mode}: {ns} ~ {nf}',
+    chartDataMissingMsg:'Keine Diagrammdaten verfügbar', pngGeneratingMsg:'PNG wird erstellt... bitte warten', pngSavedMsg:'PNG-Datei gespeichert',
+    saveCancelledMsg:'Speichern abgebrochen', pngGenFailMsg:'PNG-Erstellung fehlgeschlagen: {msg}', tplLoadFailMsg:'⚠ Vorlage konnte nicht geladen werden{suffix}',
+    tplLoadFailProSuffix:' (Pro erfordert die Ausführung von ai-server)', tplSheetMismatchMsg:'⚠ Die Vorlagenblattstruktur stimmt nicht überein', excelSavedMsg:'📊 Auf meinem PC gespeichert (in Excel Strg+Umschalt+G drücken)',
+    excelDownloadedMsg:'📊 Auf meinen PC heruntergeladen — bei Blockierung Dateieigenschaften > Blockierung aufheben oder einen vertrauenswürdigen Excel-Speicherort festlegen', excelGenErrMsg:'Excel-Erstellungsfehler: {msg}', selectBaseDateAlert:'Bitte wählen Sie ein Basisdatum.',
+    baseDateApplyFailMsg:'⚠ Anwenden des Basisdatums fehlgeschlagen.', newFileSavedMsg:'✅ Neue Datei gespeichert: {fname} (Blatt: {sheet})', existingFileSavedMsg:'✅ "{name}" gespeichert ({action} · Gesamtstatus aktualisiert)',
+    sheetActionOverwrite:'Überschreiben', sheetActionAppend:'Hinzufügen', saveFailMsg:'⚠ Speichern fehlgeschlagen: {msg}',
+    fileProcessErrAlert:'Beim Verarbeiten der Datei ist ein Fehler aufgetreten:\n{msg}', fileReadFailAlert:'Die Datei konnte nicht gelesen werden.', selectDateAlert:'Bitte wählen Sie ein Datum.',
+    baselineDateRequiredMsg:'⚠ Bitte legen Sie zuerst das Basisliniendatum fest.', noXlsxInFolderMsg:'⚠ Im Ordner befinden sich keine xlsx-Dateien.', fileReadFailMsg:'⚠ Die Datei konnte nicht gelesen werden.',
+    fileOpenFailMsg:'Datei konnte nicht geöffnet werden: {msg}', pdfGeneratingMsg:'PDF wird erstellt...', pdfGenErrMsg:'⚠ PDF-Erstellungsfehler: {msg}',
+    markerPickTitle:'📍 Basisliniendatum erforderlich', markerPickDesc1:'Zum Speichern des Fortschrittsstatus ist ein <b>Basisliniendatum</b> erforderlich.', markerPickDesc2:'Ohne Basislinie lässt sich nicht feststellen, zu welchem Zeitpunkt die Daten gehören.',
+    markerPickLabel:'Basisliniendatum auswählen', markerPickConfirmBtn:'Mit diesem Datum speichern fortfahren',
+    chartTooLargeMsg:'⚠ Das Diagramm ist zu groß — stellen Sie die Einheit auf Woche/10 Tage um oder legen Sie einen [Bereich] fest und versuchen Sie es erneut', pdfLibLoadFailMsg:'⚠ PDF-Bibliothek konnte nicht geladen werden — Internetverbindung prüfen und erneut versuchen', pdfGenFailRetryMsg:'⚠ PDF-Erstellung fehlgeschlagen — stellen Sie die Einheit auf Woche/10 Tage um oder legen Sie einen [Bereich] fest und versuchen Sie es erneut',
+    pdfSavedMsg:'PDF gespeichert ({pages} Seiten)',
     pbLblCo:'Firma', pbLblDate:'Datum', pbLblBudget:'Gesamtbudget', pbLblActAmt:'Ist-Betrag', pbLblActRate:'Ist-Fortschritt',
     hgLblTask:'Vorgänge', colQty:'Menge', colAmt:'Betrag', colRate:'Ist', colEvent:'Ereignisse',
     predSrc:'Vorg.', predTgt:'Nachf.', predConn:'Verknüpfen', predEdit:'Bearbeiten', predClose:'✕ Fertig',
@@ -2767,6 +2819,19 @@ const I18N = {
     projResetMsg:'プロジェクトが初期化されました', secOrderChangedMsg:'大分類の順序が変更されました', dragNeedDatesMsg:'開始・終了日がないとドラッグできません',
     dragBarKindActual:'実績', dragBarKindPlan:'計画', dragBarModeStart:'開始日',
     dragBarModeEnd:'終了日', dragBarModeMove:'移動', dragBarResultMsg:'📅 {kind} {mode}: {ns} ~ {nf}',
+    chartDataMissingMsg:'チャートデータがありません', pngGeneratingMsg:'PNG生成中...しばらくお待ちください', pngSavedMsg:'PNGファイルが保存されました',
+    saveCancelledMsg:'保存をキャンセルしました', pngGenFailMsg:'PNG生成失敗：{msg}', tplLoadFailMsg:'⚠ テンプレートを読み込めませんでした{suffix}',
+    tplLoadFailProSuffix:' (Proはai-serverの実行が必要)', tplSheetMismatchMsg:'⚠ テンプレートのシート構造が異なります', excelSavedMsg:'📊 PCに保存完了（Excelでは Ctrl+Shift+G）',
+    excelDownloadedMsg:'📊 PCにダウンロードされました — ブロックされた場合はファイルのプロパティ＞ブロック解除、またはExcelの信頼できる場所を設定してください', excelGenErrMsg:'Excel生成エラー：{msg}', selectBaseDateAlert:'基準日を選択してください。',
+    baseDateApplyFailMsg:'⚠ 基準日の反映に失敗しました。', newFileSavedMsg:'✅ 新規ファイル保存完了：{fname}（シート：{sheet}）', existingFileSavedMsg:'✅「{name}」保存完了（{action}・統合現況更新）',
+    sheetActionOverwrite:'上書き', sheetActionAppend:'追加', saveFailMsg:'⚠ 保存失敗：{msg}',
+    fileProcessErrAlert:'ファイル処理中にエラーが発生しました：\n{msg}', fileReadFailAlert:'ファイルを読み込めませんでした。', selectDateAlert:'日付を選択してください。',
+    baselineDateRequiredMsg:'⚠ 先に基準線日付を設定してください。', noXlsxInFolderMsg:'⚠ フォルダにxlsxファイルがありません。', fileReadFailMsg:'⚠ ファイルを読み込めませんでした。',
+    fileOpenFailMsg:'ファイルを開けませんでした：{msg}', pdfGeneratingMsg:'PDF生成中...', pdfGenErrMsg:'⚠ PDF生成エラー：{msg}',
+    markerPickTitle:'📍 基準線日付の設定が必要です', markerPickDesc1:'実績現況の保存には<b>基準線日付</b>が必要です。', markerPickDesc2:'基準線がないと、どの時点のデータか分かりません。',
+    markerPickLabel:'基準線日付を選択', markerPickConfirmBtn:'この日付で保存を進める',
+    chartTooLargeMsg:'⚠ チャートが大きすぎます — 単位を週／10日に変更するか［範囲］を指定して再試行してください', pdfLibLoadFailMsg:'⚠ PDFライブラリの読み込みに失敗しました — インターネット接続を確認して再試行してください', pdfGenFailRetryMsg:'⚠ PDF生成に失敗しました — 単位を週／10日に変更するか［範囲］を指定して再試行してください',
+    pdfSavedMsg:'PDF保存完了（{pages}ページ）',
     pbLblCo:'会社名', pbLblDate:'作成日', pbLblBudget:'総工事金額', pbLblActAmt:'実績金額', pbLblActRate:'実績率',
     hgLblTask:'工種', colQty:'数量', colAmt:'金額', colRate:'実績', colEvent:'イベント',
     predSrc:'先行', predTgt:'後行', predConn:'ノード接続', predEdit:'ノード編集', predClose:'✕ 完了',
@@ -10907,9 +10972,9 @@ function saveAsPng(){
   // 통합 구조: inputSecs(입력탭 전체)를 캡처 — 연결선·이벤트 포함
   const inputSecs=document.getElementById('inputSecs');
   const intHdr=document.getElementById('intHdr');
-  if(!inputSecs){toast('차트 데이터가 없습니다');return}
+  if(!inputSecs){toast(t('chartDataMissingMsg'));return}
 
-  toast('PNG 생성 중... 잠시 기다려주세요');
+  toast(t('pngGeneratingMsg'));
 
   // 스크롤 컨테이너를 일시적으로 전체 높이로 확장
   const scrollWrap=document.getElementById('inputScrollWrap');
@@ -10954,19 +11019,19 @@ function saveAsPng(){
         const _res = await saveWithPicker(filename, blob, [
           { description:'PNG 이미지(.png)', accept:{ 'image/png':['.png'] } }
         ]);
-        if(_res==='saved'){ toast('PNG 파일이 저장되었습니다'); }
-        else if(_res==='cancel'){ toast('저장을 취소했습니다'); }
+        if(_res==='saved'){ toast(t('pngSavedMsg')); }
+        else if(_res==='cancel'){ toast(t('saveCancelledMsg')); }
         else { // 'unsupported' → 브라우저 다운로드 폴백
           const a=document.createElement('a');
           a.download=filename;
           a.href=canvas.toDataURL('image/png');
           a.click();
-          toast('PNG 파일이 저장되었습니다');
+          toast(t('pngSavedMsg'));
         }
       },'image/png');
     }).catch(err=>{
       hideWrapper();
-      toast('PNG 생성 실패: '+err.message);
+      toast(t('pngGenFailMsg',{msg:err.message}));
     });
   },400);
 }
@@ -10978,10 +11043,10 @@ async function exportExcel(){
     const tplUrl=_aiBaseUrl()+'/api/template';
     let buf;
     try{ const r=await fetch(tplUrl); if(!r.ok) throw 0; buf=await r.arrayBuffer(); }
-    catch(e){ toast('⚠ 템플릿을 불러오지 못했습니다'+(_aiIsPro()?' (Pro는 ai-server 실행 필요)':'')); return; }
+    catch(e){ toast(t('tplLoadFailMsg',{suffix:(_aiIsPro()?t('tplLoadFailProSuffix'):'')})); return; }
     const wb=XLSX.read(new Uint8Array(buf),{bookVBA:true,cellStyles:true,cellDates:true});
     const wsD=wb.Sheets['공정데이터'], wsC=wb.Sheets['설정'];
-    if(!wsD||!wsC){ toast('⚠ 템플릿 시트 구조가 다릅니다'); return; }
+    if(!wsD||!wsC){ toast(t('tplSheetMismatchMsg')); return; }
     const D=v=>(v? new Date(v+'T00:00:00'):'');
     // 이벤트 맵 (nodeId -> [events])
     const evByNode={};
@@ -11029,13 +11094,13 @@ async function exportExcel(){
     const _res = await saveWithPicker(fname, blob, [
       { description:'Excel 바이너리 통합 문서(.xlsb)', accept:{ 'application/vnd.ms-excel.sheet.binary.macroEnabled.12':['.xlsb'] } }
     ]);
-    if(_res==='saved'){ toast('📊 내 PC에 저장 완료 (Excel에서 Ctrl+Shift+G)'); }
-    else if(_res==='cancel'){ toast('저장을 취소했습니다'); }
+    if(_res==='saved'){ toast(t('excelSavedMsg')); }
+    else if(_res==='cancel'){ toast(t('saveCancelledMsg')); }
     else { // 'unsupported' → 브라우저 다운로드 폴백(비보안 http 등)
       const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=fname; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1500);
-      toast('📊 내 PC로 다운로드됨 — 차단 시 파일 속성>차단해제 또는 Excel 신뢰할 수 있는 위치 설정');
+      toast(t('excelDownloadedMsg'));
     }
-  }catch(e){ toast('엑셀 생성 오류: '+(e&&e.message||e)); }
+  }catch(e){ toast(t('excelGenErrMsg',{msg:(e&&e.message||e)})); }
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -11376,7 +11441,7 @@ function _showOverwriteConfirm(meta, onYes, onDateChange){
   document.getElementById('ocm-yes').addEventListener('click',function(){ close(); onYes(); });
   document.getElementById('ocm-date-go').addEventListener('click',function(){
     var nv=document.getElementById('ocm-date').value;
-    if(!nv){ alert('기준일자를 선택해주세요.'); return; }
+    if(!nv){ alert(t('selectBaseDateAlert')); return; }
     if(nv===baseDate){ close(); onYes(); return; } // 같은 날짜면 덮어쓰기와 동일
     // 기준일자 반영 → 간트 기준선 갱신 → 스냅샷(meta) 재생성 후 재시도
     var mInp=document.getElementById('markerDate');
@@ -11384,7 +11449,7 @@ function _showOverwriteConfirm(meta, onYes, onDateChange){
     if(typeof renderGanttDebounced==='function') renderGanttDebounced();
     var newMeta=_buildProgressSnapshotData();
     close();
-    if(!newMeta){ toast('⚠ 기준일자 반영에 실패했습니다.'); return; }
+    if(!newMeta){ toast(t('baseDateApplyFailMsg')); return; }
     onDateChange(newMeta);
   });
 }
@@ -11452,11 +11517,11 @@ function _saveSnapshotAsNewFile(meta){
   saveWithPicker(fname, xlsxBlob2, [
     { description:'Excel 통합 문서(.xlsx)', accept:{ 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':['.xlsx'] } }
   ]).then(function(_res){
-    if(_res==='saved'){ toast('✅ 신규 파일 저장 완료: '+fname+' (시트: '+meta.ymd+')'); }
-    else if(_res==='cancel'){ toast('저장을 취소했습니다'); }
+    if(_res==='saved'){ toast(t('newFileSavedMsg',{fname,sheet:meta.ymd})); }
+    else if(_res==='cancel'){ toast(t('saveCancelledMsg')); }
     else { // 'unsupported' → 브라우저 다운로드 폴백
       XLSX.writeFile(wb, fname);
-      toast('✅ 신규 파일 저장 완료: '+fname+' (시트: '+meta.ymd+')');
+      toast(t('newFileSavedMsg',{fname,sheet:meta.ymd}));
     }
   });
 }
@@ -11747,7 +11812,7 @@ function _saveSnapshotIntoExisting(meta, file, saveDir){
         }
 
         // 4) 기준선 날짜 시트 교체(있으면) 또는 추가
-        var existedAction=sheetExists?'덮어쓰기':'추가';
+        var existedAction=sheetExists?t('sheetActionOverwrite'):t('sheetActionAppend');
         if(sheetExists){
           wb.Sheets[sheetName]=wsProg;
         }else{
@@ -11774,15 +11839,15 @@ function _saveSnapshotIntoExisting(meta, file, saveDir){
 
         var xlsxData3=XLSX.write(wb,{bookType:'xlsx',type:'array',cellStyles:true});
         var xlsxBlob3=new Blob([xlsxData3],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
-        var _msg='✅ "'+newName+'" 저장 완료 ('+existedAction+' · 통합현황 갱신)';
+        var _msg=t('existingFileSavedMsg',{name:newName,action:existedAction});
 
         if(saveDir && saveDir.__native){
           // 데스크톱 앱(Pro): IPC로 같은 폴더에 바로 저장
           xlsxBlob3.arrayBuffer().then(function(ab){
             return window.terminusNative.writeFileToDir({ folder:saveDir.path, name:newName, data:new Uint8Array(ab) });
           }).then(function(r){
-            if(r&&r.ok) toast(_msg); else toast('⚠ 저장 실패: '+((r&&r.msg)||''));
-          }).catch(function(e){ toast('⚠ 저장 실패: '+(e.message||e)); });
+            if(r&&r.ok) toast(_msg); else toast(t('saveFailMsg',{msg:((r&&r.msg)||'')}));
+          }).catch(function(e){ toast(t('saveFailMsg',{msg:(e.message||e)})); });
         } else if(saveDir){
           // 폴더 핸들 있음: 추가 다이얼로그 없이 바로 저장
           saveDir.getFileHandle(newName,{create:true}).then(function(fh){
@@ -11790,7 +11855,7 @@ function _saveSnapshotIntoExisting(meta, file, saveDir){
           }).then(function(w){
             return w.write(xlsxBlob3).then(function(){ return w.close(); });
           }).then(function(){ toast(_msg); })
-          .catch(function(e){ toast('⚠ 저장 실패: '+(e.message||e)); });
+          .catch(function(e){ toast(t('saveFailMsg',{msg:(e.message||e)})); });
         } else {
           // fallback (input file 경로)
           if(_saveDir){ saveToDir(newName,xlsxBlob3).then(function(ok){ if(ok) toast(_msg); else{ XLSX.writeFile(wb,newName); toast(_msg); } }); }
@@ -11808,10 +11873,10 @@ function _saveSnapshotIntoExisting(meta, file, saveDir){
       }
     }catch(err){
       console.error(err);
-      alert('파일 처리 중 오류가 발생했습니다:\n'+(err&&err.message||err));
+      alert(t('fileProcessErrAlert',{msg:(err&&err.message||err)}));
     }
   };
-  reader.onerror=function(){ alert('파일을 읽지 못했습니다.'); };
+  reader.onerror=function(){ alert(t('fileReadFailAlert')); };
   reader.readAsArrayBuffer(file);
 }
 
@@ -11828,18 +11893,18 @@ function exportProgressSnapshot(){
     mp.innerHTML=
       '<div style="background:#fff;border-radius:10px;box-shadow:0 12px 40px rgba(0,0,0,.28);width:340px;max-width:92vw;overflow:hidden">'+
         '<div style="background:#ea580c;color:#fff;padding:12px 16px;font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px">'+
-          '<span>📍 기준선 날짜 설정 필요</span>'+
+          '<span>'+esc(t('markerPickTitle'))+'</span>'+
         '</div>'+
         '<div style="padding:18px 20px">'+
           '<p style="font-size:12.5px;color:#1a1816;margin-bottom:14px;line-height:1.6">'+
-            '실적현황 저장은 <b>기준선 날짜</b>가 필요합니다.<br>'+
-            '기준선이 없으면 어느 시점의 데이터인지 알 수 없습니다.'+
+            t('markerPickDesc1')+'<br>'+
+            esc(t('markerPickDesc2'))+
           '</p>'+
-          '<label style="font-size:11px;font-weight:700;color:#6b6760;display:block;margin-bottom:5px">기준선 날짜 선택</label>'+
+          '<label style="font-size:11px;font-weight:700;color:#6b6760;display:block;margin-bottom:5px">'+esc(t('markerPickLabel'))+'</label>'+
           '<input type="date" id="mpDateInp" style="width:100%;padding:8px 10px;border:1.5px solid #e2ddd7;border-radius:5px;font-size:13px;font-family:inherit;margin-bottom:14px">'+
           '<div style="display:flex;gap:8px">'+
-            '<button id="mpCancel" style="flex:1;padding:9px;border:1px solid #e2ddd7;background:#f5f3ef;border-radius:5px;font-size:12px;cursor:pointer">취소</button>'+
-            '<button id="mpConfirm" style="flex:2;padding:9px;border:none;background:#1a6b3a;color:#fff;border-radius:5px;font-size:12px;font-weight:700;cursor:pointer">이 날짜로 저장 진행</button>'+
+            '<button id="mpCancel" style="flex:1;padding:9px;border:1px solid #e2ddd7;background:#f5f3ef;border-radius:5px;font-size:12px;cursor:pointer">'+esc(t('wordCancel'))+'</button>'+
+            '<button id="mpConfirm" style="flex:2;padding:9px;border:none;background:#1a6b3a;color:#fff;border-radius:5px;font-size:12px;font-weight:700;cursor:pointer">'+esc(t('markerPickConfirmBtn'))+'</button>'+
           '</div>'+
         '</div>'+
       '</div>';
@@ -11851,7 +11916,7 @@ function exportProgressSnapshot(){
     document.getElementById('mpCancel').addEventListener('click',function(){ mp.remove(); });
     document.getElementById('mpConfirm').addEventListener('click',function(){
       var dv=document.getElementById('mpDateInp').value;
-      if(!dv){ alert('날짜를 선택해주세요.'); return; }
+      if(!dv){ alert(t('selectDateAlert')); return; }
       if(mInp) mInp.value=dv;
       // 간트 기준선도 함께 업데이트
       if(typeof renderGanttDebounced==='function') renderGanttDebounced();
@@ -11862,7 +11927,7 @@ function exportProgressSnapshot(){
   }
 
   var meta=_buildProgressSnapshotData();
-  if(!meta){ toast('⚠ 기준선 날짜를 먼저 설정해주세요.'); return; }
+  if(!meta){ toast(t('baselineDateRequiredMsg')); return; }
 
   // 기존 모달 제거
   var prev=document.getElementById('progSaveModal');
@@ -11921,16 +11986,16 @@ function exportProgressSnapshot(){
           _saveDir=ndir;
         }
         var names=await window.terminusNative.listDirFiles({folder:ndir.path,exts:['.xlsx']});
-        if(!names||!names.length){ toast('⚠ 폴더에 xlsx 파일이 없습니다.'); return; }
+        if(!names||!names.length){ toast(t('noXlsxInFolderMsg')); return; }
         var nXlsxFiles=names.map(function(nm){ return {name:nm}; });
         nXlsxFiles.sort(function(a,b){ return a.name.localeCompare(b.name,'ko'); });
         _showFileListModal(nXlsxFiles,async function(sel){
           var buf=await window.terminusNative.readFileFromDir({folder:ndir.path,name:sel.name});
-          if(!buf){ toast('⚠ 파일을 읽지 못했습니다.'); return; }
+          if(!buf){ toast(t('fileReadFailMsg')); return; }
           var f=new Blob([buf]);
           _saveSnapshotIntoExisting(meta,f,ndir);
         });
-      }catch(e){ toast('파일 열기 실패: '+(e.message||e)); }
+      }catch(e){ toast(t('fileOpenFailMsg',{msg:(e.message||e)})); }
       return;
     }
     if(window.showDirectoryPicker){
@@ -11947,14 +12012,14 @@ function exportProgressSnapshot(){
           if(fh.kind==='file'&&nm.toLowerCase().endsWith('.xlsx'))
             xlsxFiles.push({name:nm,handle:fh});
         }
-        if(!xlsxFiles.length){ toast('⚠ 폴더에 xlsx 파일이 없습니다.'); return; }
+        if(!xlsxFiles.length){ toast(t('noXlsxInFolderMsg')); return; }
         xlsxFiles.sort(function(a,b){ return a.name.localeCompare(b.name,'ko'); });
         _showFileListModal(xlsxFiles,async function(sel){
           var f=await sel.handle.getFile();
           _saveSnapshotIntoExisting(meta,f,dir);
         });
       }catch(e){
-        if(e.name!=='AbortError') toast('파일 열기 실패: '+(e.message||e));
+        if(e.name!=='AbortError') toast(t('fileOpenFailMsg',{msg:(e.message||e)}));
       }
     } else {
       // fallback: 구형 브라우저
@@ -11971,12 +12036,12 @@ function exportProgressSnapshot(){
 function doPrint(){
   // 통합 구조: 탭 전환 없이 직접 PDF 생성
   renderGantt(); // hidden ganttWrap에도 차트가 그려짐
-  toast('PDF 생성 중...');
+  toast(t('pdfGeneratingMsg'));
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
     try{ _drawGanttPdf(); }
     catch(err){
       console.error('PDF 생성 오류:',err);
-      toast('⚠ PDF 생성 오류: '+(err&&err.message||err));
+      toast(t('pdfGenErrMsg',{msg:(err&&err.message||err)}));
     }
   }));
 }
@@ -12099,7 +12164,7 @@ function _drawGanttPdf(){
   cvs.height = Math.floor(canvasH * SC);
   const ctx  = cvs.getContext('2d');
   if(!ctx || !cvs.width || !cvs.height){
-    toast('⚠ 차트가 너무 큽니다 — 단위를 주/10일로 바꾸거나 [범위]를 지정 후 다시 시도하세요');
+    toast(t('chartTooLargeMsg'));
     return;
   }
   ctx.scale(SC, SC);
@@ -12563,7 +12628,7 @@ function _drawGanttPdf(){
 
   /* ── 9. jsPDF 다중 페이지 (페이지별 타일 분할 방식) ── */
   if(!window.jspdf||!window.jspdf.jsPDF){
-    toast('⚠ PDF 라이브러리 로드 실패 — 인터넷 연결 확인 후 다시 시도하세요');
+    toast(t('pdfLibLoadFailMsg'));
     return;
   }
   const {jsPDF} = window.jspdf;
@@ -12594,26 +12659,26 @@ function _drawGanttPdf(){
     tctx.drawImage(cvs, 0,sy,cvs.width,sh, 0,0,cvs.width,sh);
     const img=tile.toDataURL('image/jpeg',0.95);
     if(!img||img.length<100){
-      toast('⚠ PDF 생성 실패 — 단위를 주/10일로 바꾸거나 [범위]를 지정 후 다시 시도하세요');
+      toast(t('pdfGenFailRetryMsg'));
       return;
     }
     pdf.addImage(img,'JPEG',0,margin,pdfW,sh*PT,undefined,'FAST');
   }
 
   const nm=p.projectName||'공정표';
-  const t=new Date();
-  const ymd=`${t.getFullYear()}${String(t.getMonth()+1).padStart(2,'0')}${String(t.getDate()).padStart(2,'0')}`;
+  const _dt=new Date();
+  const ymd=`${_dt.getFullYear()}${String(_dt.getMonth()+1).padStart(2,'0')}${String(_dt.getDate()).padStart(2,'0')}`;
   const pdfFilename=`${nm}_${ymd}.pdf`;
   const pdfBlob=pdf.output('blob');
   // 매 저장마다 위치·파일명을 묻는 저장창(현재 방식) → 사용자가 폴더 선택.
   saveWithPicker(pdfFilename, pdfBlob, [
     { description:'PDF 문서(.pdf)', accept:{ 'application/pdf':['.pdf'] } }
   ]).then(_res=>{
-    if(_res==='saved'){ toast(`PDF 저장 완료 (${pages}페이지)`); }
-    else if(_res==='cancel'){ toast('저장을 취소했습니다'); }
+    if(_res==='saved'){ toast(t('pdfSavedMsg',{pages})); }
+    else if(_res==='cancel'){ toast(t('saveCancelledMsg')); }
     else { // 'unsupported' → 브라우저 다운로드 폴백
       pdf.save(pdfFilename);
-      toast(`PDF 저장 완료 (${pages}페이지)`);
+      toast(t('pdfSavedMsg',{pages}));
     }
   });
 }
