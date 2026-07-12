@@ -1958,6 +1958,12 @@ const I18N = {
     stgSave:'저장', stgClose:'닫기', stgCloseWin:'✕ 창 닫기',
     subDesc:'구독하면 앱을 최신 상태로 유지할 수 있도록 자동 업데이트 알림을 받을 수 있습니다.',
     subYes:'✅ 구독 중', subNo:'❌ 구독 중이 아닙니다', subRecent:'최근 영상', subLoading:'불러오는 중...', subNone:'표시할 영상이 없습니다', subOpenChannelBtn:'▶ 채널 열기',
+    mtgFileListFailMsg:'파일 목록을 불러오지 못했습니다.', mtgNoInboxMsg:'접수된 자료가 없습니다.', mtgUploadHintMsg:'취합 탭에서 하도사 파일을 업로드(드래그앤드롭)하세요.',
+    mtgLoadingInboxMsg:'접수 파일 불러오는 중...', primaryCoLabel:'(원도급)', mtgArchivedSuffix:'(보관)',
+    mtgActiveOnlyHint:'접수된 업체만 선택 가능합니다(보관=비활성).', mtgApplyBtn:'적용 (결합 비교)', mtgNoParticipantsMsg:'참여 업체가 없습니다 (업체 선택 후 사용)',
+    mtgDistDoneMsg:'📤 {n}개사 배포 완료 → 보관(파일명에 배포 추가)·접수에서 제거. 미참여사는 접수 유지', mtgSelectAllBtn:'모두 선택', mtgDeselectAllBtn:'모두 해제',
+    mtgSelectedCount:'{n}개 선택', mtgNoCoMsg:'등록된 업체가 없습니다.', mtgSelectAtLeastOneMsg:'비교할 업체를 1곳 이상 선택하세요',
+    mtgCombineDoneMsg:'✅ {n}개사 결합 — 통합 비교 중',
     pbLblCo:'업체명', pbLblDate:'작성일', pbLblBudget:'총 공사금액', pbLblActAmt:'실적금액', pbLblActRate:'실적율',
     hgLblTask:'공종', colQty:'물량', colAmt:'금액', colRate:'실적', colEvent:'이벤트',
     predSrc:'선행', predTgt:'후행', predConn:'노드연결', predEdit:'노드편집', predClose:'✕ 완료',
@@ -2095,6 +2101,12 @@ const I18N = {
     stgSave:'Save', stgClose:'Close', stgCloseWin:'✕ Close window',
     subDesc:'Subscribing lets you receive auto-update notifications so the app always stays current.',
     subYes:'✅ Subscribed', subNo:'❌ Not subscribed', subRecent:'Recent videos', subLoading:'Loading...', subNone:'No videos to show', subOpenChannelBtn:'▶ Open Channel',
+    mtgFileListFailMsg:'Failed to load the file list.', mtgNoInboxMsg:'No files received yet.', mtgUploadHintMsg:'Upload subcontractor files (drag & drop) in the Merge tab.',
+    mtgLoadingInboxMsg:'Loading inbox files...', primaryCoLabel:'(Prime Contractor)', mtgArchivedSuffix:'(Archived)',
+    mtgActiveOnlyHint:'Only companies in the inbox can be selected (archived = inactive).', mtgApplyBtn:'Apply (Combine & Compare)', mtgNoParticipantsMsg:'No participating companies (select companies first)',
+    mtgDistDoneMsg:'📤 Distributed {n} company(ies) → moved to Archive (added "distributed" to filename), removed from Inbox. Non-participants remain in Inbox.', mtgSelectAllBtn:'Select All', mtgDeselectAllBtn:'Deselect All',
+    mtgSelectedCount:'{n} selected', mtgNoCoMsg:'No companies registered.', mtgSelectAtLeastOneMsg:'Select at least one company to compare',
+    mtgCombineDoneMsg:'✅ Combined {n} company(ies) — comparing',
     pbLblCo:'Company', pbLblDate:'Date', pbLblBudget:'Total Budget', pbLblActAmt:'Actual Amount', pbLblActRate:'Actual Rate',
     hgLblTask:'Tasks', colQty:'Qty', colAmt:'Amount', colRate:'Actual', colEvent:'Events',
     predSrc:'Pred', predTgt:'Succ', predConn:'Link', predEdit:'Edit', predClose:'✕ Done',
@@ -2232,6 +2244,12 @@ const I18N = {
     stgSave:'Guardar', stgClose:'Cerrar', stgCloseWin:'✕ Cerrar ventana',
     subDesc:'Suscribirte te permite recibir notificaciones de actualización para mantener la app siempre al día.',
     subYes:'✅ Suscrito', subNo:'❌ No suscrito', subRecent:'Videos recientes', subLoading:'Cargando...', subNone:'No hay videos para mostrar', subOpenChannelBtn:'▶ Abrir Canal',
+    mtgFileListFailMsg:'No se pudo cargar la lista de archivos.', mtgNoInboxMsg:'No hay datos recibidos.', mtgUploadHintMsg:'Suba los archivos de los subcontratistas (arrastrar y soltar) en la pestaña Combinar.',
+    mtgLoadingInboxMsg:'Cargando archivos recibidos...', primaryCoLabel:'(Contratista Principal)', mtgArchivedSuffix:'(Archivado)',
+    mtgActiveOnlyHint:'Solo se pueden seleccionar empresas en recibidos (archivado = inactivo).', mtgApplyBtn:'Aplicar (Combinar y Comparar)', mtgNoParticipantsMsg:'No hay empresas participantes (seleccione empresas primero)',
+    mtgDistDoneMsg:'📤 Se distribuyeron {n} empresa(s) → movidas a Archivo (se agregó "distribuido" al nombre del archivo), eliminadas de Recibidos. Las no participantes permanecen en Recibidos.', mtgSelectAllBtn:'Seleccionar Todo', mtgDeselectAllBtn:'Deseleccionar Todo',
+    mtgSelectedCount:'{n} seleccionado(s)', mtgNoCoMsg:'No hay empresas registradas.', mtgSelectAtLeastOneMsg:'Seleccione al menos una empresa para comparar',
+    mtgCombineDoneMsg:'✅ {n} empresa(s) combinada(s) — comparando',
     pbLblCo:'Empresa', pbLblDate:'Fecha', pbLblBudget:'Presupuesto Total', pbLblActAmt:'Monto Real', pbLblActRate:'Avance Real',
     hgLblTask:'Tareas', colQty:'Cant.', colAmt:'Monto', colRate:'Avance', colEvent:'Eventos',
     predSrc:'Prec.', predTgt:'Suc.', predConn:'Vincular', predEdit:'Editar', predClose:'✕ Listo',
@@ -2369,6 +2387,12 @@ const I18N = {
     stgSave:'Speichern', stgClose:'Schließen', stgCloseWin:'✕ Fenster schließen',
     subDesc:'Mit einem Abo erhältst du Auto-Update-Benachrichtigungen, damit die App immer aktuell bleibt.',
     subYes:'✅ Abonniert', subNo:'❌ Nicht abonniert', subRecent:'Neueste Videos', subLoading:'Wird geladen...', subNone:'Keine Videos vorhanden', subOpenChannelBtn:'▶ Kanal öffnen',
+    mtgFileListFailMsg:'Dateiliste konnte nicht geladen werden.', mtgNoInboxMsg:'Noch keine Dateien empfangen.', mtgUploadHintMsg:'Laden Sie Subunternehmer-Dateien (per Drag & Drop) im Zusammenführen-Tab hoch.',
+    mtgLoadingInboxMsg:'Eingangsdateien werden geladen...', primaryCoLabel:'(Hauptauftragnehmer)', mtgArchivedSuffix:'(Archiviert)',
+    mtgActiveOnlyHint:'Nur Firmen im Eingang können ausgewählt werden (archiviert = inaktiv).', mtgApplyBtn:'Anwenden (Zusammenführen & Vergleichen)', mtgNoParticipantsMsg:'Keine teilnehmenden Firmen (zuerst Firmen auswählen)',
+    mtgDistDoneMsg:'📤 {n} Firma(en) verteilt → ins Archiv verschoben ("verteilt" zum Dateinamen hinzugefügt), aus dem Eingang entfernt. Nicht teilnehmende Firmen bleiben im Eingang.', mtgSelectAllBtn:'Alle auswählen', mtgDeselectAllBtn:'Alle abwählen',
+    mtgSelectedCount:'{n} ausgewählt', mtgNoCoMsg:'Keine Firmen registriert.', mtgSelectAtLeastOneMsg:'Wählen Sie mindestens eine Firma zum Vergleichen aus',
+    mtgCombineDoneMsg:'✅ {n} Firma(en) zusammengeführt — wird verglichen',
     pbLblCo:'Firma', pbLblDate:'Datum', pbLblBudget:'Gesamtbudget', pbLblActAmt:'Ist-Betrag', pbLblActRate:'Ist-Fortschritt',
     hgLblTask:'Vorgänge', colQty:'Menge', colAmt:'Betrag', colRate:'Ist', colEvent:'Ereignisse',
     predSrc:'Vorg.', predTgt:'Nachf.', predConn:'Verknüpfen', predEdit:'Bearbeiten', predClose:'✕ Fertig',
@@ -2506,6 +2530,12 @@ const I18N = {
     stgSave:'保存', stgClose:'閉じる', stgCloseWin:'✕ ウィンドウを閉じる',
     subDesc:'登録すると、アプリを常に最新の状態に保つための自動更新通知を受け取れます。',
     subYes:'✅ 登録済み', subNo:'❌ 未登録', subRecent:'最近の動画', subLoading:'読み込み中...', subNone:'表示する動画がありません', subOpenChannelBtn:'▶ チャンネルを開く',
+    mtgFileListFailMsg:'ファイルリストの読み込みに失敗しました。', mtgNoInboxMsg:'受付されたデータがありません。', mtgUploadHintMsg:'取りまとめタブで下請業者のファイルをアップロード（ドラッグ＆ドロップ）してください。',
+    mtgLoadingInboxMsg:'受付ファイルを読み込み中...', primaryCoLabel:'（元請）', mtgArchivedSuffix:'（保管）',
+    mtgActiveOnlyHint:'受付済みの業者のみ選択可能です（保管＝無効）。', mtgApplyBtn:'適用（統合比較）', mtgNoParticipantsMsg:'参加業者がいません（業者選択後に使用）',
+    mtgDistDoneMsg:'📤 {n}社を配布完了 → 保管へ移動（ファイル名に「配布」追加）・受付から削除。未参加社は受付に維持', mtgSelectAllBtn:'すべて選択', mtgDeselectAllBtn:'すべて解除',
+    mtgSelectedCount:'{n}件選択', mtgNoCoMsg:'登録された業者がありません。', mtgSelectAtLeastOneMsg:'比較する業者を1つ以上選択してください',
+    mtgCombineDoneMsg:'✅ {n}社結合 — 統合比較中',
     pbLblCo:'会社名', pbLblDate:'作成日', pbLblBudget:'総工事金額', pbLblActAmt:'実績金額', pbLblActRate:'実績率',
     hgLblTask:'工種', colQty:'数量', colAmt:'金額', colRate:'実績', colEvent:'イベント',
     predSrc:'先行', predTgt:'後行', predConn:'ノード接続', predEdit:'ノード編集', predClose:'✕ 完了',
@@ -2928,6 +2958,13 @@ function applyPatch(companyId, secId, nodeId, fields){
       sel.value=fields.predecessorId||'';
       sel.className='pred-sel'+(fields.predecessorId?' has-pred':'');
     }
+  }
+  // 계획/실적 일정·실적율이 바뀌면 차트 막대 위치·색이 달라지므로, 그 공종 한 줄의
+  // row-chart만 다시 그려서 교체 — 전체 재렌더(renderInput) 없이 O(1) 비용으로 반영
+  if(fields.plan !== undefined || fields.actual !== undefined || fields.actRate !== undefined){
+    const n=findNode(sec.nodes, nodeId);
+    const chartEl=document.querySelector(`#nd_${nodeId} > .nrow > .row-chart`);
+    if(n && chartEl) chartEl.outerHTML=_buildNodeChartHtml(n, secId);
   }
   return true;
 }
@@ -5013,6 +5050,23 @@ function _buildSecChartHtml(sec){
   sec.nodes.forEach(n=>{const a=n.amount||0;_amt+=a;_act+=a*((n.actRate||0)/100);});
   const _actRate=_amt>0?Math.min(_act/_amt*100,100):0;
   return buildRowChartHtml({type:'sec',plan:{s:_ps,f:_pf},actual:{s:_ps,f:_pf},actRate:_actRate,color:sec.color});
+}
+
+// 공종(노드) 행의 요약 막대(row-chart) HTML — bNode()와, 다른 PC의 실시간 패치 반영 시
+// (applyPatch) 막대만 가볍게 다시 그릴 때 재사용
+function _buildNodeChartHtml(node,secId){
+  const hasCh=node.ch&&node.ch.length>0;
+  const _actRate=(!isNaN(parseFloat(node.actRate))&&parseFloat(node.actRate)>0)?Math.min(parseFloat(node.actRate),100):0;
+  return buildRowChartHtml({
+    type:'node',
+    nodeId:node.id,
+    secId:secId,
+    hasCh:hasCh,
+    plan:{s:node.plan&&node.plan.s||'',f:node.plan&&node.plan.f||''},
+    actual:{s:node.actual&&node.actual.s||'',f:node.actual&&node.actual.f||''},
+    actRate:_actRate,
+    name2:node.name2||''
+  });
 }
 
 function buildSec(sec,totalBudget){
@@ -9922,31 +9976,31 @@ async function _ensureSlotsFromInbox(inbox){
 // 서버: 접수/보관 파일 기준 업체 선택 모달
 async function _showMemberModalServer(){
   let data; try{ const r=await fetch(API+'/api/files/companies?userId='+encodeURIComponent(CU.userId)+'&site='+encodeURIComponent(_activeSite)); data=await r.json(); }catch(e){}
-  if(!data||!data.ok){ showModal('<div class="modal-title">업체 선택</div><div style="padding:12px;color:#dc2626">파일 목록을 불러오지 못했습니다.</div><div class="modal-acts"><button class="btn bgray" onclick="closeModal()">닫기</button></div>'); return; }
+  if(!data||!data.ok){ showModal(`<div class="modal-title">${t('btnMeetingMembers')}</div><div style="padding:12px;color:#dc2626">${t('mtgFileListFailMsg')}</div><div class="modal-acts"><button class="btn bgray" onclick="closeModal()">${t('stgClose')}</button></div>`); return; }
   const inbox=data.inbox||[], archive=data.archive||[];
-  if(!inbox.length){ showModal('<div class="modal-title">업체 선택</div><div style="padding:16px;color:var(--text2)">접수된 자료가 없습니다.<div style="font-size:11px;color:var(--text3);margin-top:6px">취합 탭에서 하도사 파일을 업로드(드래그앤드롭)하세요.</div></div><div class="modal-acts"><button class="btn bgray" onclick="closeModal()">닫기</button></div>'); return; }
-  showModal('<div class="modal-title">업체 선택</div><div style="padding:14px;color:var(--text3)">접수 파일 불러오는 중...</div>');
+  if(!inbox.length){ showModal(`<div class="modal-title">${t('btnMeetingMembers')}</div><div style="padding:16px;color:var(--text2)">${t('mtgNoInboxMsg')}<div style="font-size:11px;color:var(--text3);margin-top:6px">${t('mtgUploadHintMsg')}</div></div><div class="modal-acts"><button class="btn bgray" onclick="closeModal()">${t('stgClose')}</button></div>`); return; }
+  showModal(`<div class="modal-title">${t('btnMeetingMembers')}</div><div style="padding:14px;color:var(--text3)">${t('mtgLoadingInboxMsg')}</div>`);
   await _ensureSlotsFromInbox(inbox);
   const d=gs();
   const inboxNames=new Set(inbox.map(x=>x.company).filter(Boolean));
   const allNames=[...new Set([...inbox.map(x=>x.company), ...archive.map(x=>x.company)].filter(Boolean))];
   let rows='';
   const primaryCo=(d.companies||[]).find(c=>c.id===_sitePrimary);
-  if(primaryCo){ const ch=_meetingMembers.includes(primaryCo.id)?'checked':''; rows+=`<label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border:1px solid var(--border);border-radius:5px;cursor:pointer;font-size:12px;background:#f8fafc"><input type="checkbox" value="${primaryCo.id}" ${ch} onchange="toggleMeetingMember('${primaryCo.id}',this.checked);mtgSyncAll()">${esc(primaryCo.name)} <span style="color:var(--navy);font-weight:700">(원도급)</span></label>`; }
+  if(primaryCo){ const ch=_meetingMembers.includes(primaryCo.id)?'checked':''; rows+=`<label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border:1px solid var(--border);border-radius:5px;cursor:pointer;font-size:12px;background:#f8fafc"><input type="checkbox" value="${primaryCo.id}" ${ch} onchange="toggleMeetingMember('${primaryCo.id}',this.checked);mtgSyncAll()">${esc(primaryCo.name)} <span style="color:var(--navy);font-weight:700">${t('primaryCoLabel')}</span></label>`; }
   rows+=allNames.map(nm=>{
     const active=inboxNames.has(nm);
     const co=(d.companies||[]).find(c=>c.name===nm);
     const cid=co?co.id:'';
     const ch=(cid && _meetingMembers.includes(cid))?'checked':'';
-    return `<label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border:1px solid var(--border);border-radius:5px;font-size:12px;${active?'cursor:pointer':'opacity:.45'}"><input type="checkbox" value="${cid}" ${ch} ${active?'':'disabled'} onchange="toggleMeetingMember('${cid}',this.checked);mtgSyncAll()">${esc(nm)}${active?'':' <span style="color:var(--text3);font-size:10px">(보관)</span>'}</label>`;
+    return `<label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border:1px solid var(--border);border-radius:5px;font-size:12px;${active?'cursor:pointer':'opacity:.45'}"><input type="checkbox" value="${cid}" ${ch} ${active?'':'disabled'} onchange="toggleMeetingMember('${cid}',this.checked);mtgSyncAll()">${esc(nm)}${active?'':' <span style="color:var(--text3);font-size:10px">'+t('mtgArchivedSuffix')+'</span>'}</label>`;
   }).join('');
-  showModal(`<div class="modal-title">업체 선택</div><p style="font-size:11px;color:var(--text3);margin-bottom:8px">접수된 업체만 선택 가능합니다(보관=비활성).</p><div style="display:flex;flex-direction:column;gap:5px;max-height:46vh;overflow:auto">${rows}</div><div class="modal-acts"><button class="btn bp" onclick="mtgApply()">적용 (결합 비교)</button><button class="btn bgray" onclick="closeModal()">닫기</button></div>`);
+  showModal(`<div class="modal-title">${t('btnMeetingMembers')}</div><p style="font-size:11px;color:var(--text3);margin-bottom:8px">${t('mtgActiveOnlyHint')}</p><div style="display:flex;flex-direction:column;gap:5px;max-height:46vh;overflow:auto">${rows}</div><div class="modal-acts"><button class="btn bp" onclick="mtgApply()">${t('mtgApplyBtn')}</button><button class="btn bgray" onclick="closeModal()">${t('stgClose')}</button></div>`);
   setTimeout(mtgSyncAll,0);
 }
 // 배포: 참여사 최신 공정표를 보관 폴더로(파일명에 배포 추가) + 접수에서 제거
 async function mtgDistribute(){
   if(!(_serverMode && _activeSite)){ if(typeof distributeAllMembers==='function') return distributeAllMembers(); return; }
-  if(!_meetingMembers.length){ toast('참여 업체가 없습니다 (업체 선택 후 사용)'); return; }
+  if(!_meetingMembers.length){ toast(t('mtgNoParticipantsMsg')); return; }
   if(typeof _writeBackMeetingCore==='function') _writeBackMeetingCore();
   const d=gs(); const today=ds(new Date());
   let inboxMap={};
@@ -9965,7 +10019,7 @@ async function mtgDistribute(){
       ok++;
     }catch(e){}
   }
-  toast('📤 '+ok+'개사 배포 완료 → 보관(파일명에 배포 추가)·접수에서 제거. 미참여사는 접수 유지');
+  toast(t('mtgDistDoneMsg',{n:ok}));
   if(typeof renderFileMgr==='function') renderFileMgr();
 }
 
@@ -10163,22 +10217,22 @@ function showMemberModal(){
   const d=gs();
   const cos=d.companies.filter(c=>c.id!==MEETING_ID);
   cos.sort((a,b)=>(a.id===CU.id?-1:b.id===CU.id?1:0));
-  const rows=cos.map(c=>`<label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border:1px solid var(--border);border-radius:5px;cursor:pointer;font-size:12px"><input type="checkbox" value="${c.id}" ${_meetingMembers.includes(c.id)?'checked':''} onchange="toggleMeetingMember('${c.id}',this.checked);mtgSyncAll()">${esc(c.name)}${c.id===CU.id?' (원도급)':''}</label>`).join('')||'<div style="color:var(--text3);font-size:12px">등록된 업체가 없습니다.</div>';
+  const rows=cos.map(c=>`<label style="display:flex;align-items:center;gap:6px;padding:6px 8px;border:1px solid var(--border);border-radius:5px;cursor:pointer;font-size:12px"><input type="checkbox" value="${c.id}" ${_meetingMembers.includes(c.id)?'checked':''} onchange="toggleMeetingMember('${c.id}',this.checked);mtgSyncAll()">${esc(c.name)}${c.id===CU.id?' '+t('primaryCoLabel'):''}</label>`).join('')||`<div style="color:var(--text3);font-size:12px">${t('mtgNoCoMsg')}</div>`;
   showModal(`
-    <div class="modal-title">업체 선택</div>
+    <div class="modal-title">${t('btnMeetingMembers')}</div>
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-      <button class="btn bgray btn-xs" id="mtgAllBtn" onclick="mtgToggleAll()">모두 선택</button>
-      <span id="mtgCnt" style="font-size:11px;color:var(--text3)">${_meetingMembers.length}개 선택</span>
+      <button class="btn bgray btn-xs" id="mtgAllBtn" onclick="mtgToggleAll()">${t('mtgSelectAllBtn')}</button>
+      <span id="mtgCnt" style="font-size:11px;color:var(--text3)">${t('mtgSelectedCount',{n:_meetingMembers.length})}</span>
     </div>
     <div id="mtgMembers" style="display:flex;flex-direction:column;gap:5px;max-height:46vh;overflow:auto">${rows}</div>
-    <div class="modal-acts"><button class="btn bp" onclick="mtgApply()">적용 (결합 비교)</button><button class="btn bgray" onclick="closeModal()">닫기</button></div>`);
+    <div class="modal-acts"><button class="btn bp" onclick="mtgApply()">${t('mtgApplyBtn')}</button><button class="btn bgray" onclick="closeModal()">${t('stgClose')}</button></div>`);
   setTimeout(mtgSyncAll,0);
 }
 function mtgSyncAll(){
   const d=gs(); const cos=d.companies.filter(c=>c.id!==MEETING_ID);
   const allSel=cos.length>0 && cos.every(c=>_meetingMembers.includes(c.id));
-  const btn=document.getElementById('mtgAllBtn'); if(btn) btn.textContent=allSel?'모두 해제':'모두 선택';
-  const cnt=document.getElementById('mtgCnt'); if(cnt) cnt.textContent=_meetingMembers.length+'개 선택';
+  const btn=document.getElementById('mtgAllBtn'); if(btn) btn.textContent=allSel?t('mtgDeselectAllBtn'):t('mtgSelectAllBtn');
+  const cnt=document.getElementById('mtgCnt'); if(cnt) cnt.textContent=t('mtgSelectedCount',{n:_meetingMembers.length});
 }
 function mtgToggleAll(){
   const d=gs(); const cos=d.companies.filter(c=>c.id!==MEETING_ID);
@@ -10188,9 +10242,9 @@ function mtgToggleAll(){
   mtgSyncAll();
 }
 function mtgApply(){
-  if(!_meetingMembers.length){ toast('비교할 업체를 1곳 이상 선택하세요'); return; }
+  if(!_meetingMembers.length){ toast(t('mtgSelectAtLeastOneMsg')); return; }
   buildMeetingProject(); enterMeetingView(); closeModal();
-  toast(`✅ ${_meetingMembers.length}개사 결합 — 통합 비교 중`);
+  toast(t('mtgCombineDoneMsg',{n:_meetingMembers.length}));
 }
 // ══════════════════════════════════════════════
 //  SAVE / LOAD
