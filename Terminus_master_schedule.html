@@ -2004,6 +2004,11 @@ const I18N = {
     clipErrName:'클립 이름을 입력하세요', clipErrMax:'최대 {n}개까지 저장 가능합니다', clipSavedMsg:'📌 클립 저장됨: "{name}"',
     clipErrNotFound:'클립을 찾을 수 없습니다', clipAppliedMsg:'📂 클립 적용됨: "{name}"', clipDeletedMsg:'클립이 삭제되었습니다',
     clipConfirmDeleteAll:'모든 클립을 삭제하시겠습니까?', clipAllDeletedMsg:'전체 클립이 삭제되었습니다',
+    schedPlanLbl:'계획 일정', schedActLbl:'실행 일정', btnAddSection:'＋ 대분류',
+    secAddTitle:'대분류 생성', secAddNameLbl:'대분류명', secAddNamePh:'예: 건축공사, 토공사 …', secAddColorLbl:'색상',
+    secCreateBtn:'생성', secAddNameErr:'대분류명을 입력하세요', secCreatedMsg:'대분류 "{nm}" 이(가) 생성되었습니다',
+    secDelConfirm:'대분류 "{nm}"을(를) 삭제하시겠습니까?\n포함된 모든 공종도 삭제됩니다.', secDeletedMsg:'대분류가 삭제되었습니다',
+    newNodeName:'새 공종',
   },
   en: {
     menu:'☰ Menu', settings:'⚙ Settings',
@@ -2060,6 +2065,11 @@ const I18N = {
     clipErrName:'Please enter a clip name', clipErrMax:'Up to {n} clips can be saved', clipSavedMsg:'📌 Clip saved: "{name}"',
     clipErrNotFound:'Clip not found', clipAppliedMsg:'📂 Clip applied: "{name}"', clipDeletedMsg:'Clip deleted',
     clipConfirmDeleteAll:'Delete all clips?', clipAllDeletedMsg:'All clips deleted',
+    schedPlanLbl:'Planned Schedule', schedActLbl:'Actual Schedule', btnAddSection:'＋ Section',
+    secAddTitle:'Create Section', secAddNameLbl:'Section Name', secAddNamePh:'e.g. Building Works, Civil Works …', secAddColorLbl:'Color',
+    secCreateBtn:'Create', secAddNameErr:'Please enter a section name', secCreatedMsg:'Section "{nm}" created',
+    secDelConfirm:'Delete section "{nm}"?\nAll tasks inside it will also be deleted.', secDeletedMsg:'Section deleted',
+    newNodeName:'New Task',
   },
   es: {
     menu:'☰ Menú', settings:'⚙ Ajustes',
@@ -2116,6 +2126,11 @@ const I18N = {
     clipErrName:'Ingrese un nombre de clip', clipErrMax:'Se pueden guardar hasta {n} clips', clipSavedMsg:'📌 Clip guardado: "{name}"',
     clipErrNotFound:'Clip no encontrado', clipAppliedMsg:'📂 Clip aplicado: "{name}"', clipDeletedMsg:'Clip eliminado',
     clipConfirmDeleteAll:'¿Eliminar todos los clips?', clipAllDeletedMsg:'Todos los clips eliminados',
+    schedPlanLbl:'Cronograma Planificado', schedActLbl:'Cronograma Real', btnAddSection:'＋ Sección',
+    secAddTitle:'Crear Sección', secAddNameLbl:'Nombre de Sección', secAddNamePh:'ej: Obras de Edificación, Obras Civiles …', secAddColorLbl:'Color',
+    secCreateBtn:'Crear', secAddNameErr:'Ingrese un nombre de sección', secCreatedMsg:'Sección "{nm}" creada',
+    secDelConfirm:'¿Eliminar la sección "{nm}"?\nTambién se eliminarán todas las tareas que contiene.', secDeletedMsg:'Sección eliminada',
+    newNodeName:'Nueva Tarea',
   },
   de: {
     menu:'☰ Menü', settings:'⚙ Einstellungen',
@@ -2172,6 +2187,11 @@ const I18N = {
     clipErrName:'Bitte einen Clip-Namen eingeben', clipErrMax:'Bis zu {n} Clips können gespeichert werden', clipSavedMsg:'📌 Clip gespeichert: "{name}"',
     clipErrNotFound:'Clip nicht gefunden', clipAppliedMsg:'📂 Clip angewendet: "{name}"', clipDeletedMsg:'Clip gelöscht',
     clipConfirmDeleteAll:'Alle Clips löschen?', clipAllDeletedMsg:'Alle Clips gelöscht',
+    schedPlanLbl:'Plantermin', schedActLbl:'Ist-Termin', btnAddSection:'＋ Abschnitt',
+    secAddTitle:'Abschnitt erstellen', secAddNameLbl:'Abschnittsname', secAddNamePh:'z. B. Hochbau, Tiefbau …', secAddColorLbl:'Farbe',
+    secCreateBtn:'Erstellen', secAddNameErr:'Bitte einen Abschnittsnamen eingeben', secCreatedMsg:'Abschnitt "{nm}" erstellt',
+    secDelConfirm:'Abschnitt "{nm}" löschen?\nAlle darin enthaltenen Vorgänge werden ebenfalls gelöscht.', secDeletedMsg:'Abschnitt gelöscht',
+    newNodeName:'Neuer Vorgang',
   },
   ja: {
     menu:'☰ メニュー', settings:'⚙ 設定',
@@ -2228,6 +2248,11 @@ const I18N = {
     clipErrName:'クリップ名を入力してください', clipErrMax:'最大{n}件まで保存できます', clipSavedMsg:'📌 クリップ保存済み：「{name}」',
     clipErrNotFound:'クリップが見つかりません', clipAppliedMsg:'📂 クリップ適用済み：「{name}」', clipDeletedMsg:'クリップが削除されました',
     clipConfirmDeleteAll:'すべてのクリップを削除しますか？', clipAllDeletedMsg:'すべてのクリップが削除されました',
+    schedPlanLbl:'計画工程', schedActLbl:'実行工程', btnAddSection:'＋ 大分類',
+    secAddTitle:'大分類を作成', secAddNameLbl:'大分類名', secAddNamePh:'例：建築工事、土木工事 …', secAddColorLbl:'色',
+    secCreateBtn:'作成', secAddNameErr:'大分類名を入力してください', secCreatedMsg:'大分類「{nm}」が作成されました',
+    secDelConfirm:'大分類「{nm}」を削除しますか？\n含まれるすべての工種も削除されます。', secDeletedMsg:'大分類が削除されました',
+    newNodeName:'新規工種',
   },
 };
 let _lang = (function(){ try{ return localStorage.getItem('ms_lang')||'ko'; }catch(e){ return 'ko'; } })();
@@ -2235,6 +2260,18 @@ function t(key,vars){
   var s=(I18N[_lang]&&I18N[_lang][key]) || I18N.ko[key] || key;
   if(vars) Object.keys(vars).forEach(function(k){ s=s.replace('{'+k+'}', vars[k]); });
   return s;
+}
+// 차트 월 헤더 라벨(예: "2026년 7월" / "July 2026") — 언어별 표기 형식이 달라 별도 처리
+const MONTH_NAMES={
+  en:['January','February','March','April','May','June','July','August','September','October','November','December'],
+  es:['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'],
+  de:['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
+};
+function monthLabel(d){
+  const y=d.getFullYear(), m=d.getMonth();
+  if(_lang==='ja') return `${y}年${m+1}月`;
+  if(_lang==='ko'||!MONTH_NAMES[_lang]) return `${y}년 ${m+1}월`;
+  return `${MONTH_NAMES[_lang][m]} ${y}`;
 }
 function setLang(lang){
   if(!I18N[lang]) return;
@@ -2275,6 +2312,9 @@ function applyI18n(){
   var dDecade=document.querySelector('.mbns [data-mode="decade"]'); if(dDecade) dDecade.textContent=t('unitDecade');
   // 로컬/서버 문서 전환 바(동적 렌더 — t()를 직접 써서 매번 최신 언어로 그려짐)
   if(typeof renderDocTabs==='function') try{ renderDocTabs(); }catch(e){}
+  // 통합 헤더의 월 그룹 라벨("2026년 7월" 등)은 _INT_VIS/_INT_MGROUPS에 캐시되므로
+  // 언어가 바뀌어도 재계산되지 않는다 — 캐시를 비워 renderInput()이 새 언어로 다시 계산하게 함
+  if(typeof _INT_VIS!=='undefined') _INT_VIS=null;
   // 공정 영역(입력 섹션) 라벨도 t()를 직접 써서 그려지므로, 이미 렌더된 트리를 다시 그려 갱신
   if(typeof getProj==='function' && typeof renderInput==='function' && CU) try{ if(getProj()) renderInput(); }catch(e){}
 }
@@ -3202,7 +3242,7 @@ function mkProj(coName){
     }))
   };
 }
-function mkNode(name='새 공종'){
+function mkNode(name=t('newNodeName')){
   return{id:uid(),name,name2:'',manager:'',plan:{s:'',f:''},actual:{s:'',f:''},amount:0,actRate:0,open:true,ch:[],predecessorId:''};
 }
 
@@ -5164,7 +5204,7 @@ function updQty(secId,nodeId,v){
   node.qty=(v||'').trim();
   saveProj(p);
 }
-const _UNIT_DEFAULTS=['Ton','Kg','M','EA','개소','식','명'];
+const _UNIT_DEFAULTS=['Ton','Kg','M','EA','Site','Set','Man'];
 function _getUnitList(){
   try{
     const l=JSON.parse(localStorage.getItem('msUnitList')||'null');
@@ -5313,8 +5353,8 @@ function bNode(node,secId,depth,totalBudget,secColor){
               <span class="mgr-icon-wrap" onclick="${isParent?'':(`updMgrClick('${secId}','${node.id}',this)`)}" title="${isParent?esc(t('mgrTitle')):esc(t('mgrAssignTitle'))}">${mgrIconContent}</span>
               <input class="nn1" type="text" placeholder="${esc(t('taskNamePh'))}" value="${esc(node.name)}"
                 onfocus="this._pv=this.value;this.select()"
-                onkeydown="if(event.key==='Escape'){this.value=this._pv||'새 공종';updF('${secId}','${node.id}','name',this.value);this.blur();event.preventDefault();}"
-                onblur="(function(el){if(!el.value.trim()){el.value=el._pv||'새 공종';}updF('${secId}','${node.id}','name',el.value);})(this)"
+                onkeydown="if(event.key==='Escape'){this.value=this._pv||'${t('newNodeName')}';updF('${secId}','${node.id}','name',this.value);this.blur();event.preventDefault();}"
+                onblur="(function(el){if(!el.value.trim()){el.value=el._pv||'${t('newNodeName')}';}updF('${secId}','${node.id}','name',el.value);})(this)"
                 style="min-width:60px">
               <div class="pred-badges" id="pbadge_${node.id}">${buildPredBadges(node.id)}</div>
             </div>
@@ -6182,39 +6222,39 @@ function addSection(){
   const idx=getProj().sections.length;
   const color=SEC_COLORS[idx%SEC_COLORS.length];
   showModal(`
-    <div class="modal-title">대분류 생성</div>
-    <div class="mfg"><label>대분류명</label>
-      <input class="fc" id="newSecNm" placeholder="예: 건축공사, 토공사 …">
+    <div class="modal-title">${t('secAddTitle')}</div>
+    <div class="mfg"><label>${t('secAddNameLbl')}</label>
+      <input class="fc" id="newSecNm" placeholder="${t('secAddNamePh')}">
     </div>
-    <div class="mfg"><label>색상</label>
+    <div class="mfg"><label>${t('secAddColorLbl')}</label>
       <input type="color" id="newSecColor" value="${color}" style="width:60px;height:32px;border:1px solid var(--border);border-radius:4px;cursor:pointer">
     </div>
     <div class="modal-acts">
-      <button class="btn bgray" onclick="closeModal()">취소</button>
-      <button class="btn bp" onclick="doAddSection()">생성</button>
+      <button class="btn bgray" onclick="closeModal()">${t('wordCancel')}</button>
+      <button class="btn bp" onclick="doAddSection()">${t('secCreateBtn')}</button>
     </div>`);
   setTimeout(()=>{const el=document.getElementById('newSecNm');if(el)el.focus();},50);
 }
 function doAddSection(){
   const nm=document.getElementById('newSecNm').value.trim();
   const color=document.getElementById('newSecColor').value;
-  if(!nm){toast('대분류명을 입력하세요');return}
+  if(!nm){toast(t('secAddNameErr'));return}
   const p=getProj();
   const sec={id:uid(),name:nm,color,open:true,nodes:[]};
   p.sections.push(sec);saveProj(p);closeModal();
   const con=document.getElementById('inputSecs');
   let tb2=0; p.sections.forEach(s2=>s2.nodes.forEach(n=>{ tb2+=n.amount||0; }));
   con.appendChild(buildSec(sec,tb2));
-  toast(`대분류 "${nm}" 이(가) 생성되었습니다`);
+  toast(t('secCreatedMsg',{nm}));
 }
 function deleteSection(secId){
   const p=getProj();
   const s=p.sections.find(x=>x.id===secId);
   if(!s)return;
-  showConf(`대분류 "${s.name}"을(를) 삭제하시겠습니까?\n포함된 모든 공종도 삭제됩니다.`,()=>{
+  showConf(t('secDelConfirm',{nm:s.name}),()=>{
     const p2=getProj();
     p2.sections=p2.sections.filter(x=>x.id!==secId);
-    saveProj(p2);renderInput();toast('대분류가 삭제되었습니다');
+    saveProj(p2);renderInput();toast(t('secDeletedMsg'));
   });
 }
 
@@ -6303,7 +6343,7 @@ function _calcIntChart(){
     const mk=c.mk;
     if(!cg||cg.mk!==mk){
       if(cg)_INT_MGROUPS.push(cg);
-      const d=c.date;cg={mk,label:`${d.getFullYear()}년 ${d.getMonth()+1}월`,cells:[],collapsed:!!CMCOLL[mk]};
+      const d=c.date;cg={mk,label:monthLabel(d),cells:[],collapsed:!!CMCOLL[mk]};
     }
     cg.cells.push(c);
   });
@@ -6560,17 +6600,17 @@ function buildIntegratedHeader(){
   const totalChartW=vis.reduce((s,c)=>s+(c.collapsed?collW:CW),0);
   let h=`<div class="int-hdr-left">
     <div class="ihl">
-      <span style="font-size:12px;font-weight:700;letter-spacing:.03em;opacity:.95">공종명</span>
+      <span style="font-size:12px;font-weight:700;letter-spacing:.03em;opacity:.95">${t('taskNamePh')}</span>
     </div>
     <div class="ihl-col-strip" id="ihlColStrip">
-      <div class="ihl-col col-QTY" id="ihlLblQTY">물량</div>
-      <div class="ihl-col col-P"   id="ihlLblP">계획 일정</div>
-      <div class="ihl-col col-A"   id="ihlLblA">실행 일정</div>
-      <div class="ihl-col col-AMT" id="ihlLblAMT">금&thinsp;액</div>
-      <div class="ihl-col col-RATE" id="ihlLblRATE">실적율</div>
+      <div class="ihl-col col-QTY" id="ihlLblQTY">${t('colQty')}</div>
+      <div class="ihl-col col-P"   id="ihlLblP">${t('schedPlanLbl')}</div>
+      <div class="ihl-col col-A"   id="ihlLblA">${t('schedActLbl')}</div>
+      <div class="ihl-col col-AMT" id="ihlLblAMT">${t('colAmt')}</div>
+      <div class="ihl-col col-RATE" id="ihlLblRATE">${t('pbLblActRate')}</div>
     </div>
     <div class="ihl-actions no-print" onclick="event.stopPropagation()">
-      <button class="btn btn-xs ihl-add-sec" onclick="addSection()" title="대분류 생성">＋ 대분류</button>
+      <button class="btn btn-xs ihl-add-sec" onclick="addSection()" title="${t('secAddTitle')}">${t('btnAddSection')}</button>
     </div>
   </div>`;
   h+=`<div class="int-hdr-right" style="width:${totalChartW}px;min-width:${totalChartW}px">`;
@@ -7036,7 +7076,7 @@ function buildGantt(proj,container,_unused,mode,opts){
     const mk=c.mk;
     if(!cg||cg.mk!==mk){
       if(cg)mGroups.push(cg);
-      const d=c.date;cg={mk,label:`${d.getFullYear()}년 ${d.getMonth()+1}월`,cells:[],collapsed:!!CMCOLL[mk]};
+      const d=c.date;cg={mk,label:monthLabel(d),cells:[],collapsed:!!CMCOLL[mk]};
     }
     cg.cells.push(c);
   });
@@ -11192,7 +11232,7 @@ function _drawGanttPdf(){
     if(!cg||cg.mk!==mk){
       if(cg)mGroups.push(cg);
       const d=c.date;
-      cg={mk,label:`${d.getFullYear()}년 ${d.getMonth()+1}월`,cells:[],collapsed:!!CMCOLL[mk]};
+      cg={mk,label:monthLabel(d),cells:[],collapsed:!!CMCOLL[mk]};
     }
     cg.cells.push(c);
   });
