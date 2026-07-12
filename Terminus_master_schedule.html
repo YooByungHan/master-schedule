@@ -1727,11 +1727,11 @@ body.pred-edit-mode .nacts{min-width:44px}
       body.ap-open #tabInput{padding-right:372px}
       </style>
       <div id="analyzePanel" class="analyze-panel">
-        <div class="ap-head"><span>🤖 공정 분석</span>
-          <span><button class="btn bp btn-xs" onclick="runEditorAnalyze()">다시 분석</button>
+        <div class="ap-head"><span id="apPanelTitle">🤖 공정 분석</span>
+          <span><button class="btn bp btn-xs" id="apReanalyzeBtn" onclick="runEditorAnalyze()">다시 분석</button>
           <button class="btn bgray btn-xs" onclick="toggleAnalyzePanel(false)">✕</button></span>
         </div>
-        <div id="analyzeBody" class="ap-body"><div style="color:var(--text3);padding:8px">[다시 분석]을 눌러 시작하세요.</div></div>
+        <div id="analyzeBody" class="ap-body"><div id="apStartHintEl" style="color:var(--text3);padding:8px">[다시 분석]을 눌러 시작하세요.</div></div>
       </div>
     </div>
 
@@ -1964,6 +1964,20 @@ const I18N = {
     mtgDistDoneMsg:'📤 {n}개사 배포 완료 → 보관(파일명에 배포 추가)·접수에서 제거. 미참여사는 접수 유지', mtgSelectAllBtn:'모두 선택', mtgDeselectAllBtn:'모두 해제',
     mtgSelectedCount:'{n}개 선택', mtgNoCoMsg:'등록된 업체가 없습니다.', mtgSelectAtLeastOneMsg:'비교할 업체를 1곳 이상 선택하세요',
     mtgCombineDoneMsg:'✅ {n}개사 결합 — 통합 비교 중',
+    apPanelTitle:'🤖 공정 분석', apReanalyzeBtn:'다시 분석', apStartHint:'[다시 분석]을 눌러 시작하세요.',
+    apAnalyzing:'분석 중...', apCalcErrMsg:'분석 계산 오류: {msg}', apAiAnalyzing:'AI 분석 중... ({prov})',
+    apAiCallFailMsg:'(AI 호출 실패: {msg})', apKeyFormatErrMsg:'API 키 형식을 인식하지 못했습니다. gsk_(Groq)·sk-ant(Claude)·sk-(OpenAI) 키를 개인정보 수정에 입력하세요.', apServerAnalyzeErrMsg:'서버 분석 오류: {msg}',
+    apServerErrMsg:'서버 오류: {msg}', apConflictBadge:'충돌 {n}', apDelayBadge:'지연 {n}',
+    apProgressBadge:'진행 {p}% / 계획 {q}%', genDelayWord:'지연', genLeadWord:'선행',
+    apKeyMetricsTitle:'📐 핵심 지표', apConflictSecTitle:'⚠ 선후행 충돌', apDelaySecTitle:'⏰ 지연 공종',
+    apNoIssueMsg:'지연·충돌 없음 👍', apAiOpinionTitle:'💡 AI 의견', apAiSummaryLbl:'📊 요약',
+    apAiRiskLbl:'⚠ 위험 요인', apAiRecoveryLbl:'💡 권장 조치', apSpiLbl:'SPI(일정효율)',
+    apCompletionRateLbl:'기성율', apCompletionRateVal:'{comp}% / 계획 {plan}%', apCpmFinishLbl:'CPM 예상준공',
+    apSlipSuffix:' (슬립 {n}일)', apCriticalPathLbl:'임계경로', apCountUnit:'{n}개',
+    apWeeklyProgressLbl:'주당 진척', apWeeklyProgressVal:'{v}%p', apRemainingWeeksSuffix:' · 잔여 ~{n}주',
+    apConfidenceLbl:'분석 신뢰도', apConflictItem:'{pred} 미완 → {succ} 착수({date})', apDelayItem:'[{section}] {name} — {type} {days}일',
+    delayTypeCompletedLate:'완료지연', delayTypeIncomplete:'미완료', delayTypeNotStarted:'미착수',
+    apNoLocationMsg:'이 항목은 위치 정보가 없습니다', apNodeNotFoundMsg:'해당 공종을 찾지 못했습니다(회의뷰가 종료됐을 수 있음)',
     pbLblCo:'업체명', pbLblDate:'작성일', pbLblBudget:'총 공사금액', pbLblActAmt:'실적금액', pbLblActRate:'실적율',
     hgLblTask:'공종', colQty:'물량', colAmt:'금액', colRate:'실적', colEvent:'이벤트',
     predSrc:'선행', predTgt:'후행', predConn:'노드연결', predEdit:'노드편집', predClose:'✕ 완료',
@@ -2107,6 +2121,20 @@ const I18N = {
     mtgDistDoneMsg:'📤 Distributed {n} company(ies) → moved to Archive (added "distributed" to filename), removed from Inbox. Non-participants remain in Inbox.', mtgSelectAllBtn:'Select All', mtgDeselectAllBtn:'Deselect All',
     mtgSelectedCount:'{n} selected', mtgNoCoMsg:'No companies registered.', mtgSelectAtLeastOneMsg:'Select at least one company to compare',
     mtgCombineDoneMsg:'✅ Combined {n} company(ies) — comparing',
+    apPanelTitle:'🤖 Schedule Analysis', apReanalyzeBtn:'Re-analyze', apStartHint:'Click [Re-analyze] to start.',
+    apAnalyzing:'Analyzing...', apCalcErrMsg:'Analysis calculation error: {msg}', apAiAnalyzing:'AI analyzing... ({prov})',
+    apAiCallFailMsg:'(AI call failed: {msg})', apKeyFormatErrMsg:'Could not recognize the API key format. Enter a gsk_(Groq), sk-ant(Claude), or sk-(OpenAI) key in your account settings.', apServerAnalyzeErrMsg:'Server analysis error: {msg}',
+    apServerErrMsg:'Server error: {msg}', apConflictBadge:'Conflicts {n}', apDelayBadge:'Delays {n}',
+    apProgressBadge:'Progress {p}% / Planned {q}%', genDelayWord:'Delayed', genLeadWord:'Ahead',
+    apKeyMetricsTitle:'📐 Key Metrics', apConflictSecTitle:'⚠ Predecessor Conflicts', apDelaySecTitle:'⏰ Delayed Tasks',
+    apNoIssueMsg:'No delays or conflicts 👍', apAiOpinionTitle:'💡 AI Opinion', apAiSummaryLbl:'📊 Summary',
+    apAiRiskLbl:'⚠ Risk Factors', apAiRecoveryLbl:'💡 Recommended Actions', apSpiLbl:'SPI (Schedule Efficiency)',
+    apCompletionRateLbl:'Progress Rate', apCompletionRateVal:'{comp}% / Planned {plan}%', apCpmFinishLbl:'CPM Forecast Finish',
+    apSlipSuffix:' (slip {n}d)', apCriticalPathLbl:'Critical Path', apCountUnit:'{n}',
+    apWeeklyProgressLbl:'Weekly Progress', apWeeklyProgressVal:'{v}%p', apRemainingWeeksSuffix:' · ~{n} weeks remaining',
+    apConfidenceLbl:'Analysis Confidence', apConflictItem:'{pred} incomplete → {succ} started ({date})', apDelayItem:'[{section}] {name} — {type} {days}d',
+    delayTypeCompletedLate:'Completed Late', delayTypeIncomplete:'Incomplete', delayTypeNotStarted:'Not Started',
+    apNoLocationMsg:'This item has no location information', apNodeNotFoundMsg:'Could not find this task (the meeting view may have ended)',
     pbLblCo:'Company', pbLblDate:'Date', pbLblBudget:'Total Budget', pbLblActAmt:'Actual Amount', pbLblActRate:'Actual Rate',
     hgLblTask:'Tasks', colQty:'Qty', colAmt:'Amount', colRate:'Actual', colEvent:'Events',
     predSrc:'Pred', predTgt:'Succ', predConn:'Link', predEdit:'Edit', predClose:'✕ Done',
@@ -2250,6 +2278,20 @@ const I18N = {
     mtgDistDoneMsg:'📤 Se distribuyeron {n} empresa(s) → movidas a Archivo (se agregó "distribuido" al nombre del archivo), eliminadas de Recibidos. Las no participantes permanecen en Recibidos.', mtgSelectAllBtn:'Seleccionar Todo', mtgDeselectAllBtn:'Deseleccionar Todo',
     mtgSelectedCount:'{n} seleccionado(s)', mtgNoCoMsg:'No hay empresas registradas.', mtgSelectAtLeastOneMsg:'Seleccione al menos una empresa para comparar',
     mtgCombineDoneMsg:'✅ {n} empresa(s) combinada(s) — comparando',
+    apPanelTitle:'🤖 Análisis del Cronograma', apReanalyzeBtn:'Reanalizar', apStartHint:'Haga clic en [Reanalizar] para comenzar.',
+    apAnalyzing:'Analizando...', apCalcErrMsg:'Error de cálculo del análisis: {msg}', apAiAnalyzing:'Analizando con IA... ({prov})',
+    apAiCallFailMsg:'(Error al llamar a la IA: {msg})', apKeyFormatErrMsg:'No se pudo reconocer el formato de la clave API. Ingrese una clave gsk_(Groq), sk-ant(Claude) o sk-(OpenAI) en la configuración de su cuenta.', apServerAnalyzeErrMsg:'Error de análisis del servidor: {msg}',
+    apServerErrMsg:'Error del servidor: {msg}', apConflictBadge:'Conflictos {n}', apDelayBadge:'Retrasos {n}',
+    apProgressBadge:'Avance {p}% / Planificado {q}%', genDelayWord:'Retrasado', genLeadWord:'Adelantado',
+    apKeyMetricsTitle:'📐 Indicadores Clave', apConflictSecTitle:'⚠ Conflictos de Precedencia', apDelaySecTitle:'⏰ Tareas Retrasadas',
+    apNoIssueMsg:'Sin retrasos ni conflictos 👍', apAiOpinionTitle:'💡 Opinión de la IA', apAiSummaryLbl:'📊 Resumen',
+    apAiRiskLbl:'⚠ Factores de Riesgo', apAiRecoveryLbl:'💡 Acciones Recomendadas', apSpiLbl:'SPI (Eficiencia del Cronograma)',
+    apCompletionRateLbl:'Tasa de Avance', apCompletionRateVal:'{comp}% / Planificado {plan}%', apCpmFinishLbl:'Finalización Prevista (CPM)',
+    apSlipSuffix:' (retraso {n}d)', apCriticalPathLbl:'Ruta Crítica', apCountUnit:'{n}',
+    apWeeklyProgressLbl:'Avance Semanal', apWeeklyProgressVal:'{v}%p', apRemainingWeeksSuffix:' · ~{n} semanas restantes',
+    apConfidenceLbl:'Confianza del Análisis', apConflictItem:'{pred} incompleto → {succ} iniciado ({date})', apDelayItem:'[{section}] {name} — {type} {days}d',
+    delayTypeCompletedLate:'Finalizado con Retraso', delayTypeIncomplete:'Incompleto', delayTypeNotStarted:'No Iniciado',
+    apNoLocationMsg:'Este elemento no tiene información de ubicación', apNodeNotFoundMsg:'No se pudo encontrar esta tarea (la vista de reunión pudo haber terminado)',
     pbLblCo:'Empresa', pbLblDate:'Fecha', pbLblBudget:'Presupuesto Total', pbLblActAmt:'Monto Real', pbLblActRate:'Avance Real',
     hgLblTask:'Tareas', colQty:'Cant.', colAmt:'Monto', colRate:'Avance', colEvent:'Eventos',
     predSrc:'Prec.', predTgt:'Suc.', predConn:'Vincular', predEdit:'Editar', predClose:'✕ Listo',
@@ -2393,6 +2435,20 @@ const I18N = {
     mtgDistDoneMsg:'📤 {n} Firma(en) verteilt → ins Archiv verschoben ("verteilt" zum Dateinamen hinzugefügt), aus dem Eingang entfernt. Nicht teilnehmende Firmen bleiben im Eingang.', mtgSelectAllBtn:'Alle auswählen', mtgDeselectAllBtn:'Alle abwählen',
     mtgSelectedCount:'{n} ausgewählt', mtgNoCoMsg:'Keine Firmen registriert.', mtgSelectAtLeastOneMsg:'Wählen Sie mindestens eine Firma zum Vergleichen aus',
     mtgCombineDoneMsg:'✅ {n} Firma(en) zusammengeführt — wird verglichen',
+    apPanelTitle:'🤖 Terminplan-Analyse', apReanalyzeBtn:'Erneut analysieren', apStartHint:'Klicken Sie auf [Erneut analysieren], um zu starten.',
+    apAnalyzing:'Analysiere...', apCalcErrMsg:'Fehler bei der Analyseberechnung: {msg}', apAiAnalyzing:'KI-Analyse läuft... ({prov})',
+    apAiCallFailMsg:'(KI-Aufruf fehlgeschlagen: {msg})', apKeyFormatErrMsg:'API-Schlüsselformat nicht erkannt. Geben Sie einen gsk_(Groq)-, sk-ant(Claude)- oder sk-(OpenAI)-Schlüssel in Ihren Kontoeinstellungen ein.', apServerAnalyzeErrMsg:'Serveranalysefehler: {msg}',
+    apServerErrMsg:'Serverfehler: {msg}', apConflictBadge:'Konflikte {n}', apDelayBadge:'Verzögerungen {n}',
+    apProgressBadge:'Fortschritt {p}% / Geplant {q}%', genDelayWord:'Verzögert', genLeadWord:'Voraus',
+    apKeyMetricsTitle:'📐 Wichtige Kennzahlen', apConflictSecTitle:'⚠ Abhängigkeitskonflikte', apDelaySecTitle:'⏰ Verzögerte Vorgänge',
+    apNoIssueMsg:'Keine Verzögerungen oder Konflikte 👍', apAiOpinionTitle:'💡 KI-Einschätzung', apAiSummaryLbl:'📊 Zusammenfassung',
+    apAiRiskLbl:'⚠ Risikofaktoren', apAiRecoveryLbl:'💡 Empfohlene Maßnahmen', apSpiLbl:'SPI (Terminplaneffizienz)',
+    apCompletionRateLbl:'Fortschrittsrate', apCompletionRateVal:'{comp}% / Geplant {plan}%', apCpmFinishLbl:'CPM-Fertigstellungsprognose',
+    apSlipSuffix:' (Verzug {n}T)', apCriticalPathLbl:'Kritischer Pfad', apCountUnit:'{n}',
+    apWeeklyProgressLbl:'Wöchentlicher Fortschritt', apWeeklyProgressVal:'{v}%p', apRemainingWeeksSuffix:' · ~{n} Wochen verbleibend',
+    apConfidenceLbl:'Analysevertrauen', apConflictItem:'{pred} unvollständig → {succ} begonnen ({date})', apDelayItem:'[{section}] {name} — {type} {days}T',
+    delayTypeCompletedLate:'Verspätet abgeschlossen', delayTypeIncomplete:'Unvollständig', delayTypeNotStarted:'Nicht begonnen',
+    apNoLocationMsg:'Für dieses Element sind keine Standortinformationen vorhanden', apNodeNotFoundMsg:'Dieser Vorgang wurde nicht gefunden (die Besprechungsansicht wurde möglicherweise beendet)',
     pbLblCo:'Firma', pbLblDate:'Datum', pbLblBudget:'Gesamtbudget', pbLblActAmt:'Ist-Betrag', pbLblActRate:'Ist-Fortschritt',
     hgLblTask:'Vorgänge', colQty:'Menge', colAmt:'Betrag', colRate:'Ist', colEvent:'Ereignisse',
     predSrc:'Vorg.', predTgt:'Nachf.', predConn:'Verknüpfen', predEdit:'Bearbeiten', predClose:'✕ Fertig',
@@ -2536,6 +2592,20 @@ const I18N = {
     mtgDistDoneMsg:'📤 {n}社を配布完了 → 保管へ移動（ファイル名に「配布」追加）・受付から削除。未参加社は受付に維持', mtgSelectAllBtn:'すべて選択', mtgDeselectAllBtn:'すべて解除',
     mtgSelectedCount:'{n}件選択', mtgNoCoMsg:'登録された業者がありません。', mtgSelectAtLeastOneMsg:'比較する業者を1つ以上選択してください',
     mtgCombineDoneMsg:'✅ {n}社結合 — 統合比較中',
+    apPanelTitle:'🤖 工程分析', apReanalyzeBtn:'再分析', apStartHint:'［再分析］を押して開始してください。',
+    apAnalyzing:'分析中...', apCalcErrMsg:'分析計算エラー：{msg}', apAiAnalyzing:'AI分析中...（{prov}）',
+    apAiCallFailMsg:'（AI呼び出し失敗：{msg}）', apKeyFormatErrMsg:'APIキーの形式を認識できませんでした。gsk_（Groq）・sk-ant（Claude）・sk-（OpenAI）のキーをアカウント設定に入力してください。', apServerAnalyzeErrMsg:'サーバー分析エラー：{msg}',
+    apServerErrMsg:'サーバーエラー：{msg}', apConflictBadge:'衝突 {n}', apDelayBadge:'遅延 {n}',
+    apProgressBadge:'進捗 {p}% / 計画 {q}%', genDelayWord:'遅延', genLeadWord:'先行',
+    apKeyMetricsTitle:'📐 主要指標', apConflictSecTitle:'⚠ 先行後続の衝突', apDelaySecTitle:'⏰ 遅延工種',
+    apNoIssueMsg:'遅延・衝突なし 👍', apAiOpinionTitle:'💡 AI意見', apAiSummaryLbl:'📊 要約',
+    apAiRiskLbl:'⚠ リスク要因', apAiRecoveryLbl:'💡 推奨対策', apSpiLbl:'SPI（工程効率）',
+    apCompletionRateLbl:'出来高率', apCompletionRateVal:'{comp}% / 計画 {plan}%', apCpmFinishLbl:'CPM予想竣工',
+    apSlipSuffix:'（遅延 {n}日）', apCriticalPathLbl:'クリティカルパス', apCountUnit:'{n}件',
+    apWeeklyProgressLbl:'週間進捗', apWeeklyProgressVal:'{v}%p', apRemainingWeeksSuffix:' ・残り約{n}週',
+    apConfidenceLbl:'分析信頼度', apConflictItem:'{pred}未完了 → {succ}着手（{date}）', apDelayItem:'[{section}] {name} — {type} {days}日',
+    delayTypeCompletedLate:'完了遅延', delayTypeIncomplete:'未完了', delayTypeNotStarted:'未着手',
+    apNoLocationMsg:'この項目には位置情報がありません', apNodeNotFoundMsg:'該当の工種が見つかりませんでした（会議ビューが終了している可能性があります）',
     pbLblCo:'会社名', pbLblDate:'作成日', pbLblBudget:'総工事金額', pbLblActAmt:'実績金額', pbLblActRate:'実績率',
     hgLblTask:'工種', colQty:'数量', colAmt:'金額', colRate:'実績', colEvent:'イベント',
     predSrc:'先行', predTgt:'後行', predConn:'ノード接続', predEdit:'ノード編集', predClose:'✕ 完了',
@@ -2704,6 +2774,9 @@ function applyI18n(){
   var mExpLbl=document.getElementById('menuExportLbl'); if(mExpLbl) mExpLbl.textContent=t('menuExportLbl');
   var mExpProg=document.getElementById('menuExportProgressBtn'); if(mExpProg) mExpProg.textContent=t('menuExportProgress');
   var mExpGantt=document.getElementById('menuExportGanttBtn'); if(mExpGantt) mExpGantt.textContent=t('menuExportGantt');
+  var apTitleEl=document.getElementById('apPanelTitle'); if(apTitleEl) apTitleEl.textContent=t('apPanelTitle');
+  var apReBtn=document.getElementById('apReanalyzeBtn'); if(apReBtn) apReBtn.textContent=t('apReanalyzeBtn');
+  var apHintEl=document.getElementById('apStartHintEl'); if(apHintEl) apHintEl.textContent=t('apStartHint');
   if(typeof _updateConnStatusLabel==='function') try{ _updateConnStatusLabel(); }catch(e){}
   if(typeof _updateMenuSaveOpenLabels==='function') try{ _updateMenuSaveOpenLabels(); }catch(e){}
 
@@ -10092,21 +10165,21 @@ function _buildClientAnalysis(baseDate){
 async function _runLocalAnalyze(body){
   const key=(localStorage.getItem('ms_claude_key')||'').trim();
   const prov=_detectProvider(key);
-  body.innerHTML='<div style="color:var(--text3);padding:8px">분석 중...</div>';
+  body.innerHTML=`<div style="color:var(--text3);padding:8px">${t('apAnalyzing')}</div>`;
   let res;
   try{ res=_buildClientAnalysis(ds(new Date())); }
-  catch(e){ body.innerHTML='<div style="color:#dc2626;padding:8px">분석 계산 오류: '+esc(e.message)+'</div>'; return; }
+  catch(e){ body.innerHTML=`<div style="color:#dc2626;padding:8px">${t('apCalcErrMsg',{msg:e.message})}</div>`; return; }
   if(key && prov){
-    body.innerHTML='<div style="color:var(--text3);padding:8px">AI 분석 중... ('+prov+')</div>';
+    body.innerHTML=`<div style="color:var(--text3);padding:8px">${t('apAiAnalyzing',{prov})}</div>`;
     try{
       const sys='당신은 대한민국 건설 공정관리 전문가입니다. 아래 확정된 분석 사실만 근거로 한국어 존댓말로 답하세요. 설명·코드블록 없이 JSON 객체 하나만 출력하세요: {"summary":"전체 상황 2~3문장 요약","risk":"위험요인, 없으면 특이사항 없음","recovery":"우선순위순 만회조치, 지연 없으면 빈 문자열"}';
       const dl=(res.delays||[]).map(d=>`- [${d.section}] ${d.name}: ${d.type} ${d.daysLate}일`).join('\n')||'없음';
       const cf=(res.conflicts||[]).map(c=>`- ${c.predName} 미완 → ${c.succName} 착수(${c.succActualStart})`).join('\n')||'없음';
       const user=`[기준일] ${ds(new Date())}\n[진행률] ${res.progressRate}% / [계획률] ${res.planRate}% (격차 ${res.rateGap}%p)\n[지연 ${res.delays.length}건]\n${dl}\n[선후행 충돌 ${res.conflicts.length}건]\n${cf}`;
       res.ai=_parseAiJson(await _callProvider(key,prov,sys,user));
-    }catch(e){ res.ai={summary:'(AI 호출 실패: '+(e.message||'')+')',risk:'',recovery:''}; }
+    }catch(e){ res.ai={summary:t('apAiCallFailMsg',{msg:e.message||''}),risk:'',recovery:''}; }
   } else if(key && !prov){
-    res.ai={summary:'API 키 형식을 인식하지 못했습니다. gsk_(Groq)·sk-ant(Claude)·sk-(OpenAI) 키를 개인정보 수정에 입력하세요.',risk:'',recovery:''};
+    res.ai={summary:t('apKeyFormatErrMsg'),risk:'',recovery:''};
   } else {
     res.ai=null;
   }
@@ -10116,55 +10189,56 @@ async function runEditorAnalyze(){
   const body=document.getElementById('analyzeBody'); if(!body)return;
   if(CU && CU.id==='LOCALWIN'){
     // 서버에서 띄운 로컬 창: 데이터는 인라인 전송, AI는 서버 키 사용
-    body.innerHTML='<div style="color:var(--text3);padding:8px">분석 중...</div>';
+    body.innerHTML=`<div style="color:var(--text3);padding:8px">${t('apAnalyzing')}</div>`;
     try{
       const _p=getProj(); try{ _p.predLinks=_getPredLinks(); }catch(e){}
       const r=await fetch(_aiBaseUrl()+'/api/ai/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(_aiAugment({inlineProj:_p, baseDate:ds(new Date())}))});
       const j=await r.json();
       const pn=document.getElementById('analyzePanel'); if(pn)pn.dataset.loaded='1';
       _renderEditorAnalyze(j, body);
-    }catch(e){ body.innerHTML='<div style="color:#dc2626;padding:8px">서버 분석 오류: '+esc(e.message)+'</div>'; }
+    }catch(e){ body.innerHTML=`<div style="color:#dc2626;padding:8px">${t('apServerAnalyzeErrMsg',{msg:e.message})}</div>`; }
     return;
   }
   if(_IS_LOCAL){ await _runLocalAnalyze(body); return; }
-  body.innerHTML='<div style="color:var(--text3);padding:8px">분석 중...</div>';
+  body.innerHTML=`<div style="color:var(--text3);padding:8px">${t('apAnalyzing')}</div>`;
   try{
     const r=await fetch(_aiBaseUrl()+'/api/ai/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(_aiAugment({companyId:getViewId(),baseDate:ds(new Date()),site:_activeSite||undefined}))});
     const j=await r.json();
     const p=document.getElementById('analyzePanel'); if(p)p.dataset.loaded='1';
     _renderEditorAnalyze(j,body);
-  }catch(e){ body.innerHTML='<div style="color:#dc2626;padding:8px">서버 오류: '+esc(e.message)+'</div>'; }
+  }catch(e){ body.innerHTML=`<div style="color:#dc2626;padding:8px">${t('apServerErrMsg',{msg:e.message})}</div>`; }
 }
 function _renderEditorAnalyze(j,body){
   const cf=j.conflicts||[], dl=j.delays||[]; const e=s=>esc(String(s==null?'':s));
   const gap=(j.rateGap!=null)?j.rateGap:null;
+  const _delayTypeMap={'완료지연':t('delayTypeCompletedLate'),'미완료':t('delayTypeIncomplete'),'미착수':t('delayTypeNotStarted')};
   let h=`<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
-    <span style="background:${cf.length?'#fee2e2':'#dcfce7'};color:${cf.length?'#b91c1c':'#15803d'};padding:2px 8px;border-radius:10px;font-weight:700">충돌 ${cf.length}</span>
-    <span style="background:${dl.length?'#fef3c7':'#dcfce7'};color:${dl.length?'#92400e':'#15803d'};padding:2px 8px;border-radius:10px;font-weight:700">지연 ${dl.length}</span>
-    <span style="background:#e0e7ff;color:#3730a3;padding:2px 8px;border-radius:10px;font-weight:700">진행 ${j.progressRate!=null?j.progressRate:'-'}% / 계획 ${j.planRate!=null?j.planRate:'-'}%</span>
-    ${gap!=null?`<span style="background:${gap<0?'#fee2e2':'#dcfce7'};color:${gap<0?'#b91c1c':'#15803d'};padding:2px 8px;border-radius:10px;font-weight:700">${gap<0?'지연':'선행'} ${Math.abs(gap)}%p</span>`:''}</div>`;
+    <span style="background:${cf.length?'#fee2e2':'#dcfce7'};color:${cf.length?'#b91c1c':'#15803d'};padding:2px 8px;border-radius:10px;font-weight:700">${t('apConflictBadge',{n:cf.length})}</span>
+    <span style="background:${dl.length?'#fef3c7':'#dcfce7'};color:${dl.length?'#92400e':'#15803d'};padding:2px 8px;border-radius:10px;font-weight:700">${t('apDelayBadge',{n:dl.length})}</span>
+    <span style="background:#e0e7ff;color:#3730a3;padding:2px 8px;border-radius:10px;font-weight:700">${t('apProgressBadge',{p:j.progressRate!=null?j.progressRate:'-',q:j.planRate!=null?j.planRate:'-'})}</span>
+    ${gap!=null?`<span style="background:${gap<0?'#fee2e2':'#dcfce7'};color:${gap<0?'#b91c1c':'#15803d'};padding:2px 8px;border-radius:10px;font-weight:700">${gap<0?t('genDelayWord'):t('genLeadWord')} ${Math.abs(gap)}%p</span>`:''}</div>`;
   // 핵심 지표 카드 (CPM/EVM/추세/신뢰도)
   const _cpm=j.cpm, _evm=j.evm, _vel=j.velocity, _conf=(j.ai&&j.ai.confidence!=null)?j.ai.confidence:null;
   const _cards=[];
-  if(_evm){ _cards.push(['SPI(일정효율)', (_evm.SPI!=null?_evm.SPI:'-'), (_evm.SPI!=null&&_evm.SPI<1)?'#b91c1c':'#15803d']);
-            _cards.push(['기성율', _evm.completionPct+'% / 계획 '+_evm.plannedPct+'%', '#3730a3']); }
+  if(_evm){ _cards.push([t('apSpiLbl'), (_evm.SPI!=null?_evm.SPI:'-'), (_evm.SPI!=null&&_evm.SPI<1)?'#b91c1c':'#15803d']);
+            _cards.push([t('apCompletionRateLbl'), t('apCompletionRateVal',{comp:_evm.completionPct,plan:_evm.plannedPct}), '#3730a3']); }
   if(_cpm && !_cpm.cyclic && _cpm.projectFinish){ let _slip=null; try{_slip=Math.round((new Date(_cpm.projectFinish)-new Date(_cpm.plannedFinish))/86400000);}catch(_e){}
-            _cards.push(['CPM 예상준공', _cpm.projectFinish+(_slip!=null?(' (슬립 '+_slip+'일)'):''), (_slip!=null&&_slip>0)?'#b91c1c':'#15803d']);
-            _cards.push(['임계경로', _cpm.criticalCount+'개', '#92400e']); }
-  if(_vel){ _cards.push(['주당 진척', _vel.velocityPerWeek+'%p'+(_vel.forecastWeeksToFinish!=null?(' · 잔여 ~'+_vel.forecastWeeksToFinish+'주'):''), _vel.stalled?'#b91c1c':'#15803d']); }
-  if(_conf!=null){ _cards.push(['분석 신뢰도', _conf+'%', _conf>=70?'#15803d':(_conf>=40?'#92400e':'#b91c1c')]); }
-  if(_cards.length){ h+='<div class="ap-sec-title">📐 핵심 지표</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px">'+_cards.map(c=>`<div class="apc" style="background:#f8fafc;border:1px solid var(--border);border-radius:6px;padding:6px 8px"><div style="font-size:10px;color:var(--text3)">${c[0]}</div><div style="font-weight:700;color:${c[2]}">${c[1]}</div></div>`).join('')+'</div>'; }
-  if(cf.length){ h+='<div class="ap-sec-title">⚠ 선후행 충돌</div>'+cf.map(c=>`<div class="ap-item" onclick="jumpToNode('${c.succId||c.predId||''}')"><b>${e(c.predName)}</b> 미완 → <b>${e(c.succName)}</b> 착수(${e(c.succActualStart)})</div>`).join(''); }
-  if(dl.length){ h+='<div class="ap-sec-title">⏰ 지연 공종</div>'+dl.map(d=>`<div class="ap-item" onclick="jumpToNode('${d.id||''}')">[${e(d.section)}] <b>${e(d.name)}</b> — ${e(d.type)} ${e(d.daysLate)}일</div>`).join(''); }
-  if(!cf.length && !dl.length) h+='<div style="color:#15803d;padding:8px">지연·충돌 없음 👍</div>';
+            _cards.push([t('apCpmFinishLbl'), _cpm.projectFinish+(_slip!=null?t('apSlipSuffix',{n:_slip}):''), (_slip!=null&&_slip>0)?'#b91c1c':'#15803d']);
+            _cards.push([t('apCriticalPathLbl'), t('apCountUnit',{n:_cpm.criticalCount}), '#92400e']); }
+  if(_vel){ _cards.push([t('apWeeklyProgressLbl'), t('apWeeklyProgressVal',{v:_vel.velocityPerWeek})+(_vel.forecastWeeksToFinish!=null?t('apRemainingWeeksSuffix',{n:_vel.forecastWeeksToFinish}):''), _vel.stalled?'#b91c1c':'#15803d']); }
+  if(_conf!=null){ _cards.push([t('apConfidenceLbl'), _conf+'%', _conf>=70?'#15803d':(_conf>=40?'#92400e':'#b91c1c')]); }
+  if(_cards.length){ h+='<div class="ap-sec-title">'+t('apKeyMetricsTitle')+'</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px">'+_cards.map(c=>`<div class="apc" style="background:#f8fafc;border:1px solid var(--border);border-radius:6px;padding:6px 8px"><div style="font-size:10px;color:var(--text3)">${c[0]}</div><div style="font-weight:700;color:${c[2]}">${c[1]}</div></div>`).join('')+'</div>'; }
+  if(cf.length){ h+='<div class="ap-sec-title">'+t('apConflictSecTitle')+'</div>'+cf.map(c=>`<div class="ap-item" onclick="jumpToNode('${c.succId||c.predId||''}')">${t('apConflictItem',{pred:'<b>'+e(c.predName)+'</b>',succ:'<b>'+e(c.succName)+'</b>',date:e(c.succActualStart)})}</div>`).join(''); }
+  if(dl.length){ h+='<div class="ap-sec-title">'+t('apDelaySecTitle')+'</div>'+dl.map(d=>`<div class="ap-item" onclick="jumpToNode('${d.id||''}')">${t('apDelayItem',{section:e(d.section),name:'<b>'+e(d.name)+'</b>',type:e(_delayTypeMap[d.type]||d.type),days:e(d.daysLate)})}</div>`).join(''); }
+  if(!cf.length && !dl.length) h+='<div style="color:#15803d;padding:8px">'+t('apNoIssueMsg')+'</div>';
   if(j.ai&&(j.ai.summary||j.ai.risk||j.ai.recovery)){
-    const blk=(t,c)=>c?`<div style="margin-top:6px"><div style="font-weight:700">${t}</div><div style="white-space:pre-wrap;background:#f8fafc;border:1px solid var(--border);border-radius:6px;padding:8px;margin-top:2px">${e(c)}</div></div>`:'';
-    h+='<div class="ap-sec-title">💡 AI 의견</div>'+blk('📊 요약',j.ai.summary)+blk('⚠ 위험 요인',j.ai.risk)+blk('💡 권장 조치',j.ai.recovery);
+    const blk=(ttl,c)=>c?`<div style="margin-top:6px"><div style="font-weight:700">${ttl}</div><div style="white-space:pre-wrap;background:#f8fafc;border:1px solid var(--border);border-radius:6px;padding:8px;margin-top:2px">${e(c)}</div></div>`:'';
+    h+='<div class="ap-sec-title">'+t('apAiOpinionTitle')+'</div>'+blk(t('apAiSummaryLbl'),j.ai.summary)+blk(t('apAiRiskLbl'),j.ai.risk)+blk(t('apAiRecoveryLbl'),j.ai.recovery);
   }
   body.innerHTML=h;
 }
 function jumpToNode(id){
-  if(!id){ toast('이 항목은 위치 정보가 없습니다'); return; }
+  if(!id){ toast(t('apNoLocationMsg')); return; }
   const ib=document.querySelector('[data-tab="input"]');
   if(ib && !document.getElementById('tabInput').classList.contains('on')) _doSwitchTab(ib);
   // 대상의 조상 노드가 접혀 있으면 펼쳐서 보이게 한 뒤 강조
@@ -10192,7 +10266,7 @@ function _findNodePath(sections, id){
 }
 function _flashNode(id){
   const el=document.getElementById('nd_'+id);
-  if(!el){ toast('해당 공종을 찾지 못했습니다(회의뷰가 종료됐을 수 있음)'); return; }
+  if(!el){ toast(t('apNodeNotFoundMsg')); return; }
   el.scrollIntoView({behavior:'smooth',block:'center'});
   el.classList.add('ap-flash');
   setTimeout(()=>el.classList.remove('ap-flash'), 2800);
