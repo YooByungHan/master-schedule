@@ -1981,6 +1981,29 @@ const I18N = {
     toastCut:'✂️ 잘라내기됨 — 붙여넣을 공종을 우클릭(또는 Ctrl+클릭) 후 Ctrl+V (Ctrl+Z로 취소)',
     toastClipEmpty:'클립보드가 비어있습니다', toastPasteSelf:'⚠ 자기 자신에게 붙여넣을 수 없습니다', toastPasteDescendant:'⚠ 자기 자손에게 붙여넣을 수 없습니다',
     toastPasteDone:'📌 붙여넣기 완료', toastNoUndo:'되돌릴 작업이 없습니다', toastUndoDone:'↩ 되돌리기 완료',
+    arpContractLbl:'계약', arpUnitLbl:'단위', arpTitle:'📊 실적 입력', arpQtyLbl:'수량', arpRateLbl:'실적율 (%)',
+    arpClickInput:'클릭하여 입력', arpIntNote:'※ 수량은 정수로 변환됩니다 ({q}×실적율)',
+    wordCancel:'취소', wordConfirm:'확인',
+    arpWarnLow:'⚠ 입력값({rate}%)이 현재 실적율({old}%)보다 낮습니다. 실적율 감소는 극히 예외적인 경우입니다.',
+    arpAlertRange:'실적율은 0~100 사이 숫자여야 합니다.',
+    unitClear:'지움', unitAddPh:'새 단위 추가', unitAddBtn:'＋추가',
+    wordDate:'날짜', wordEdit:'수정', wordDelete:'삭제', wordAdd:'추가',
+    evColType:'구분', evContentLbl:'내용', evColManage:'관리', evEmpty:'등록된 이벤트 없음',
+    evAddPlan:'+ 계획(P) 이벤트', evAddActual:'+ 실적(A) 이벤트', evModalTitle:'이벤트 관리',
+    evTypePlan:'계획(P)', evTypeActual:'실적(A)', evShapeLbl:'이벤트 도형',
+    evShapeDiamond:'마름모', evShapeDiamondRed:'마름모 (내부 빨간색)', evShapeCircle:'원 (막대차트 색)',
+    evShapeNone:'없음', evShapeNoneTitle:'도형 없음 — 메모만 표시', evContentHint:'(도형 위에 표시)',
+    evMemoPh:'예: 철골 자재 입고, 기초 콘크리트 타설 완료 등',
+    evErrDate:'날짜를 입력하세요', evErrMemo:'이벤트 내용을 입력하세요', evSavedMsg:'✅ 이벤트가 저장되었습니다',
+    evConfirmDel:'이 이벤트를 삭제하시겠습니까?', evDeletedMsg:'이벤트가 삭제되었습니다',
+    clipEmptyMsg:'저장된 클립이 없습니다.<br>아래 버튼으로 현재 상태를 저장하세요.', clipNodeCount:'{n}개 노드',
+    clipApplyBtn:'📂 적용', clipModalTitle:'📌 뷰 클립 — 트리 상태 저장/불러오기',
+    clipDesc:'현재 공종 트리의 펼침/접힘 상태를 저장합니다.<br>저장된 클립은 파일 저장 시 함께 보관되어 협업자가 열어도 동일하게 적용됩니다.',
+    clipMaxNote:'(최대 {n}개)', clipNamePh:'클립 이름 입력 (예: 6월 검토용, 기초공사 집중)', clipSaveBtn:'📌 현재 상태 저장',
+    clipMaxWarn:'⚠️ 최대 {n}개 저장 가능 — 기존 클립을 삭제 후 저장하세요.', clipDeleteAllBtn:'전체 삭제',
+    clipErrName:'클립 이름을 입력하세요', clipErrMax:'최대 {n}개까지 저장 가능합니다', clipSavedMsg:'📌 클립 저장됨: "{name}"',
+    clipErrNotFound:'클립을 찾을 수 없습니다', clipAppliedMsg:'📂 클립 적용됨: "{name}"', clipDeletedMsg:'클립이 삭제되었습니다',
+    clipConfirmDeleteAll:'모든 클립을 삭제하시겠습니까?', clipAllDeletedMsg:'전체 클립이 삭제되었습니다',
   },
   en: {
     menu:'☰ Menu', settings:'⚙ Settings',
@@ -2014,6 +2037,29 @@ const I18N = {
     toastCut:'✂️ Cut — right-click (or Ctrl+click) the target task, then Ctrl+V (Ctrl+Z to undo)',
     toastClipEmpty:'Clipboard is empty', toastPasteSelf:'⚠ Cannot paste onto itself', toastPasteDescendant:'⚠ Cannot paste onto its own descendant',
     toastPasteDone:'📌 Paste complete', toastNoUndo:'Nothing to undo', toastUndoDone:'↩ Undo complete',
+    arpContractLbl:'Contract', arpUnitLbl:'Unit', arpTitle:'📊 Enter Actual', arpQtyLbl:'Quantity', arpRateLbl:'Actual Rate (%)',
+    arpClickInput:'Click to enter', arpIntNote:'※ Quantity is rounded to a whole number ({q}×rate)',
+    wordCancel:'Cancel', wordConfirm:'Confirm',
+    arpWarnLow:'⚠ Entered value ({rate}%) is lower than the current actual rate ({old}%). Decreasing the rate is highly unusual.',
+    arpAlertRange:'Actual rate must be a number between 0 and 100.',
+    unitClear:'Clear', unitAddPh:'Add new unit', unitAddBtn:'＋Add',
+    wordDate:'Date', wordEdit:'Edit', wordDelete:'Delete', wordAdd:'Add',
+    evColType:'Type', evContentLbl:'Content', evColManage:'Actions', evEmpty:'No events registered',
+    evAddPlan:'+ Plan (P) Event', evAddActual:'+ Actual (A) Event', evModalTitle:'Manage Events',
+    evTypePlan:'Plan (P)', evTypeActual:'Actual (A)', evShapeLbl:'Event Shape',
+    evShapeDiamond:'Diamond', evShapeDiamondRed:'Diamond (red fill)', evShapeCircle:'Circle (bar color)',
+    evShapeNone:'None', evShapeNoneTitle:'No shape — memo only', evContentHint:'(shown above the shape)',
+    evMemoPh:'e.g. Steel materials delivered, Foundation concrete pour completed',
+    evErrDate:'Please enter a date', evErrMemo:'Please enter event content', evSavedMsg:'✅ Event saved',
+    evConfirmDel:'Delete this event?', evDeletedMsg:'Event deleted',
+    clipEmptyMsg:'No saved clips.<br>Use the button below to save the current state.', clipNodeCount:'{n} nodes',
+    clipApplyBtn:'📂 Apply', clipModalTitle:'📌 View Clips — Save/Load Tree State',
+    clipDesc:'Saves the current expand/collapse state of the task tree.<br>Saved clips are stored with the file, so collaborators see the same view when they open it.',
+    clipMaxNote:'(max {n})', clipNamePh:'Enter clip name (e.g. June review, Foundation focus)', clipSaveBtn:'📌 Save Current State',
+    clipMaxWarn:'⚠️ Maximum {n} clips — delete an existing clip before saving.', clipDeleteAllBtn:'Delete All',
+    clipErrName:'Please enter a clip name', clipErrMax:'Up to {n} clips can be saved', clipSavedMsg:'📌 Clip saved: "{name}"',
+    clipErrNotFound:'Clip not found', clipAppliedMsg:'📂 Clip applied: "{name}"', clipDeletedMsg:'Clip deleted',
+    clipConfirmDeleteAll:'Delete all clips?', clipAllDeletedMsg:'All clips deleted',
   },
   es: {
     menu:'☰ Menú', settings:'⚙ Ajustes',
@@ -2047,6 +2093,29 @@ const I18N = {
     toastCut:'✂️ Cortado — clic derecho (o Ctrl+clic) en la tarea destino, luego Ctrl+V (Ctrl+Z para deshacer)',
     toastClipEmpty:'El portapapeles está vacío', toastPasteSelf:'⚠ No se puede pegar sobre sí mismo', toastPasteDescendant:'⚠ No se puede pegar sobre su propio descendiente',
     toastPasteDone:'📌 Pegado completo', toastNoUndo:'No hay nada que deshacer', toastUndoDone:'↩ Deshecho',
+    arpContractLbl:'Contrato', arpUnitLbl:'Unidad', arpTitle:'📊 Ingresar Avance', arpQtyLbl:'Cantidad', arpRateLbl:'Avance Real (%)',
+    arpClickInput:'Clic para ingresar', arpIntNote:'※ La cantidad se redondea a un número entero ({q}×avance)',
+    wordCancel:'Cancelar', wordConfirm:'Confirmar',
+    arpWarnLow:'⚠ El valor ingresado ({rate}%) es menor que el avance actual ({old}%). Disminuir el avance es muy inusual.',
+    arpAlertRange:'El avance debe ser un número entre 0 y 100.',
+    unitClear:'Borrar', unitAddPh:'Agregar nueva unidad', unitAddBtn:'＋Agregar',
+    wordDate:'Fecha', wordEdit:'Editar', wordDelete:'Eliminar', wordAdd:'Agregar',
+    evColType:'Tipo', evContentLbl:'Contenido', evColManage:'Acciones', evEmpty:'No hay eventos registrados',
+    evAddPlan:'+ Evento de Plan (P)', evAddActual:'+ Evento de Avance (A)', evModalTitle:'Gestionar Eventos',
+    evTypePlan:'Plan (P)', evTypeActual:'Avance (A)', evShapeLbl:'Forma del Evento',
+    evShapeDiamond:'Diamante', evShapeDiamondRed:'Diamante (relleno rojo)', evShapeCircle:'Círculo (color de barra)',
+    evShapeNone:'Ninguna', evShapeNoneTitle:'Sin forma — solo nota', evContentHint:'(se muestra sobre la forma)',
+    evMemoPh:'p. ej. Entrega de materiales de acero, Colado de concreto de cimentación completado',
+    evErrDate:'Ingrese una fecha', evErrMemo:'Ingrese el contenido del evento', evSavedMsg:'✅ Evento guardado',
+    evConfirmDel:'¿Eliminar este evento?', evDeletedMsg:'Evento eliminado',
+    clipEmptyMsg:'No hay clips guardados.<br>Usa el botón de abajo para guardar el estado actual.', clipNodeCount:'{n} nodos',
+    clipApplyBtn:'📂 Aplicar', clipModalTitle:'📌 Clips de Vista — Guardar/Cargar Estado del Árbol',
+    clipDesc:'Guarda el estado actual de expansión/contracción del árbol de tareas.<br>Los clips guardados se conservan con el archivo, para que los colaboradores vean lo mismo al abrirlo.',
+    clipMaxNote:'(máx. {n})', clipNamePh:'Nombre del clip (ej: Revisión de junio, Enfoque en cimentación)', clipSaveBtn:'📌 Guardar Estado Actual',
+    clipMaxWarn:'⚠️ Máximo {n} clips — elimina uno existente antes de guardar.', clipDeleteAllBtn:'Eliminar Todo',
+    clipErrName:'Ingrese un nombre de clip', clipErrMax:'Se pueden guardar hasta {n} clips', clipSavedMsg:'📌 Clip guardado: "{name}"',
+    clipErrNotFound:'Clip no encontrado', clipAppliedMsg:'📂 Clip aplicado: "{name}"', clipDeletedMsg:'Clip eliminado',
+    clipConfirmDeleteAll:'¿Eliminar todos los clips?', clipAllDeletedMsg:'Todos los clips eliminados',
   },
   de: {
     menu:'☰ Menü', settings:'⚙ Einstellungen',
@@ -2080,6 +2149,29 @@ const I18N = {
     toastCut:'✂️ Ausgeschnitten — Zielvorgang rechtsklicken (oder Strg+Klick), dann Strg+V (Strg+Z zum Rückgängigmachen)',
     toastClipEmpty:'Zwischenablage ist leer', toastPasteSelf:'⚠ Kann nicht auf sich selbst eingefügt werden', toastPasteDescendant:'⚠ Kann nicht auf eigenen Nachkommen eingefügt werden',
     toastPasteDone:'📌 Einfügen abgeschlossen', toastNoUndo:'Nichts rückgängig zu machen', toastUndoDone:'↩ Rückgängig gemacht',
+    arpContractLbl:'Vertrag', arpUnitLbl:'Einheit', arpTitle:'📊 Ist-Wert eingeben', arpQtyLbl:'Menge', arpRateLbl:'Ist-Fortschritt (%)',
+    arpClickInput:'Zum Eingeben klicken', arpIntNote:'※ Menge wird auf eine ganze Zahl gerundet ({q}×Fortschritt)',
+    wordCancel:'Abbrechen', wordConfirm:'Bestätigen',
+    arpWarnLow:'⚠ Eingegebener Wert ({rate}%) ist niedriger als der aktuelle Ist-Fortschritt ({old}%). Eine Verringerung ist höchst ungewöhnlich.',
+    arpAlertRange:'Der Ist-Fortschritt muss eine Zahl zwischen 0 und 100 sein.',
+    unitClear:'Löschen', unitAddPh:'Neue Einheit hinzufügen', unitAddBtn:'＋Hinzufügen',
+    wordDate:'Datum', wordEdit:'Bearbeiten', wordDelete:'Löschen', wordAdd:'Hinzufügen',
+    evColType:'Typ', evContentLbl:'Inhalt', evColManage:'Aktionen', evEmpty:'Keine Ereignisse registriert',
+    evAddPlan:'+ Plan-Ereignis (P)', evAddActual:'+ Ist-Ereignis (A)', evModalTitle:'Ereignisse verwalten',
+    evTypePlan:'Plan (P)', evTypeActual:'Ist (A)', evShapeLbl:'Ereignisform',
+    evShapeDiamond:'Raute', evShapeDiamondRed:'Raute (rot gefüllt)', evShapeCircle:'Kreis (Balkenfarbe)',
+    evShapeNone:'Keine', evShapeNoneTitle:'Keine Form — nur Notiz', evContentHint:'(über der Form angezeigt)',
+    evMemoPh:'z. B. Stahlmaterial geliefert, Fundamentbeton gegossen',
+    evErrDate:'Bitte Datum eingeben', evErrMemo:'Bitte Ereignisinhalt eingeben', evSavedMsg:'✅ Ereignis gespeichert',
+    evConfirmDel:'Dieses Ereignis löschen?', evDeletedMsg:'Ereignis gelöscht',
+    clipEmptyMsg:'Keine gespeicherten Clips.<br>Verwenden Sie die Schaltfläche unten, um den aktuellen Zustand zu speichern.', clipNodeCount:'{n} Knoten',
+    clipApplyBtn:'📂 Anwenden', clipModalTitle:'📌 Ansichts-Clips — Baumstatus speichern/laden',
+    clipDesc:'Speichert den aktuellen Auf-/Zuklappstatus des Vorgangsbaums.<br>Gespeicherte Clips werden mit der Datei aufbewahrt, sodass Mitarbeiter beim Öffnen dieselbe Ansicht sehen.',
+    clipMaxNote:'(max. {n})', clipNamePh:'Clip-Namen eingeben (z. B. Juni-Review, Fokus Fundament)', clipSaveBtn:'📌 Aktuellen Zustand speichern',
+    clipMaxWarn:'⚠️ Maximal {n} Clips — löschen Sie einen vorhandenen Clip vor dem Speichern.', clipDeleteAllBtn:'Alle löschen',
+    clipErrName:'Bitte einen Clip-Namen eingeben', clipErrMax:'Bis zu {n} Clips können gespeichert werden', clipSavedMsg:'📌 Clip gespeichert: "{name}"',
+    clipErrNotFound:'Clip nicht gefunden', clipAppliedMsg:'📂 Clip angewendet: "{name}"', clipDeletedMsg:'Clip gelöscht',
+    clipConfirmDeleteAll:'Alle Clips löschen?', clipAllDeletedMsg:'Alle Clips gelöscht',
   },
   ja: {
     menu:'☰ メニュー', settings:'⚙ 設定',
@@ -2113,6 +2205,29 @@ const I18N = {
     toastCut:'✂️ 切り取りました — 貼り付け先の工種を右クリック（またはCtrl+クリック）後、Ctrl+V（Ctrl+Zで取り消し）',
     toastClipEmpty:'クリップボードが空です', toastPasteSelf:'⚠ 自分自身には貼り付けできません', toastPasteDescendant:'⚠ 自分の下位工種には貼り付けできません',
     toastPasteDone:'📌 貼り付け完了', toastNoUndo:'元に戻す操作がありません', toastUndoDone:'↩ 元に戻しました',
+    arpContractLbl:'契約', arpUnitLbl:'単位', arpTitle:'📊 実績入力', arpQtyLbl:'数量', arpRateLbl:'実績率 (%)',
+    arpClickInput:'クリックして入力', arpIntNote:'※ 数量は整数に変換されます（{q}×実績率）',
+    wordCancel:'キャンセル', wordConfirm:'確認',
+    arpWarnLow:'⚠ 入力値（{rate}%）が現在の実績率（{old}%）より低いです。実績率の減少は極めて例外的なケースです。',
+    arpAlertRange:'実績率は0〜100の数値である必要があります。',
+    unitClear:'削除', unitAddPh:'新しい単位を追加', unitAddBtn:'＋追加',
+    wordDate:'日付', wordEdit:'修正', wordDelete:'削除', wordAdd:'追加',
+    evColType:'区分', evContentLbl:'内容', evColManage:'管理', evEmpty:'登録されたイベントがありません',
+    evAddPlan:'+ 計画(P)イベント', evAddActual:'+ 実績(A)イベント', evModalTitle:'イベント管理',
+    evTypePlan:'計画(P)', evTypeActual:'実績(A)', evShapeLbl:'イベント図形',
+    evShapeDiamond:'ひし形', evShapeDiamondRed:'ひし形（内部赤）', evShapeCircle:'円（バー色）',
+    evShapeNone:'なし', evShapeNoneTitle:'図形なし — メモのみ表示', evContentHint:'（図形の上に表示）',
+    evMemoPh:'例：鉄骨材料入荷、基礎コンクリート打設完了など',
+    evErrDate:'日付を入力してください', evErrMemo:'イベント内容を入力してください', evSavedMsg:'✅ イベントが保存されました',
+    evConfirmDel:'このイベントを削除しますか？', evDeletedMsg:'イベントが削除されました',
+    clipEmptyMsg:'保存されたクリップがありません。<br>下のボタンで現在の状態を保存してください。', clipNodeCount:'{n}件のノード',
+    clipApplyBtn:'📂 適用', clipModalTitle:'📌 ビュークリップ — ツリー状態の保存/読み込み',
+    clipDesc:'現在の工種ツリーの展開/折りたたみ状態を保存します。<br>保存されたクリップはファイルと一緒に保管され、共同作業者が開いても同じ状態が適用されます。',
+    clipMaxNote:'（最大{n}件）', clipNamePh:'クリップ名を入力（例：6月レビュー用、基礎工事集中）', clipSaveBtn:'📌 現在の状態を保存',
+    clipMaxWarn:'⚠️ 最大{n}件まで保存可能 — 既存のクリップを削除してから保存してください。', clipDeleteAllBtn:'全削除',
+    clipErrName:'クリップ名を入力してください', clipErrMax:'最大{n}件まで保存できます', clipSavedMsg:'📌 クリップ保存済み：「{name}」',
+    clipErrNotFound:'クリップが見つかりません', clipAppliedMsg:'📂 クリップ適用済み：「{name}」', clipDeletedMsg:'クリップが削除されました',
+    clipConfirmDeleteAll:'すべてのクリップを削除しますか？', clipAllDeletedMsg:'すべてのクリップが削除されました',
   },
 };
 let _lang = (function(){ try{ return localStorage.getItem('ms_lang')||'ko'; }catch(e){ return 'ko'; } })();
@@ -5068,12 +5183,12 @@ function openUnitPicker(e,secId,nodeId){
   const units=_getUnitList();
   let grid='';
   units.forEach(u=>{ grid+=`<button class="unit-pick-btn" data-u="${esc(u)}">${esc(u)}</button>`; });
-  grid+=`<button class="unit-pick-btn" data-u="" style="color:#b91c1c">지움</button>`;
+  grid+=`<button class="unit-pick-btn" data-u="" style="color:#b91c1c">${esc(t('unitClear'))}</button>`;
   pop.innerHTML=`
     <div class="unit-picker-grid">${grid}</div>
     <div class="unit-picker-add">
-      <input type="text" placeholder="새 단위 추가" maxlength="6">
-      <button>＋추가</button>
+      <input type="text" placeholder="${esc(t('unitAddPh'))}" maxlength="6">
+      <button>${esc(t('unitAddBtn'))}</button>
     </div>`;
   document.body.appendChild(pop);
   _unitPickerEl=pop;
@@ -5452,7 +5567,7 @@ function openActRatePopup(secId, nodeId){
   //   외부클릭 이벤트 리스너 없음 — 취소/확인으로만 닫힘
   pop.style.cssText = 'position:fixed;z-index:1050;font-family:"Noto Sans KR",sans-serif';
 
-  const contractLabel = contractQty>0 ? `계약: ${contractQtyRaw}${unit?' '+unit:''}` : (unit?`단위: ${unit}`:'');
+  const contractLabel = contractQty>0 ? `${t('arpContractLbl')}: ${contractQtyRaw}${unit?' '+unit:''}` : (unit?`${t('arpUnitLbl')}: ${unit}`:'');
   const qtyInitVal = noQtyNoUnit ? '' : (oldQty>0 ? (intMode?String(Math.round(oldQty)):String(+oldQty.toFixed(4))) : '');
   const rateInitVal = oldRate>0 ? String(oldRate) : '';
 
@@ -5465,35 +5580,35 @@ function openActRatePopup(secId, nodeId){
   pop.innerHTML = `
   <div style="background:#fff;border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,.25);width:320px;max-width:92vw;overflow:hidden">
     <div style="background:#c2410c;color:#fff;padding:10px 14px;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:space-between">
-      <span>📊 실적 입력 — ${esc(node.name)}</span>
+      <span>${esc(t('arpTitle'))} — ${esc(node.name)}</span>
       <span id="arp-close" style="cursor:pointer;font-size:16px;line-height:1">×</span>
     </div>
     <div style="padding:14px 16px;font-size:12.5px">
       ${contractLabel?`<div style="color:#6b6760;margin-bottom:10px;font-size:11.5px">${contractLabel}</div>`:''}
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:${intMode?'8':'12'}px">
         <div>
-          <div style="font-size:10.5px;font-weight:600;color:#374151;margin-bottom:3px">수량${unit?' ('+unit+')':''}</div>
+          <div style="font-size:10.5px;font-weight:600;color:#374151;margin-bottom:3px">${esc(t('arpQtyLbl'))}${unit?' ('+unit+')':''}</div>
           <input id="arp-qty" type="text" readonly
             data-raw="${qtyInitVal}"
             value="${qtyInitVal}"
-            placeholder="${noQtyNoUnit?'–':intMode?'클릭하여 입력':'클릭하여 입력'}"
+            placeholder="${noQtyNoUnit?'–':esc(t('arpClickInput'))}"
             ${noQtyNoUnit?'disabled':''}
             style="${fldSty(noQtyNoUnit)}">
         </div>
         <div>
-          <div style="font-size:10.5px;font-weight:600;color:#374151;margin-bottom:3px">실적율 (%)</div>
+          <div style="font-size:10.5px;font-weight:600;color:#374151;margin-bottom:3px">${esc(t('arpRateLbl'))}</div>
           <input id="arp-rate" type="text" readonly
             data-raw="${rateInitVal}"
             value="${rateInitVal}"
-            placeholder="클릭하여 입력"
+            placeholder="${esc(t('arpClickInput'))}"
             style="${fldSty(false).replace('#a5d8c8','#fed7aa')}">
         </div>
       </div>
       <div id="arp-warn" style="display:none;background:#fff7ed;border:1px solid #fed7aa;border-radius:4px;padding:6px 10px;font-size:11px;color:#92400e;margin-bottom:8px"></div>
-      ${intMode?`<div style="font-size:10.5px;color:#6b6760;margin-bottom:8px">※ 수량은 정수로 변환됩니다 (${contractQty}${unit?' '+unit:''}×실적율)</div>`:''}
+      ${intMode?`<div style="font-size:10.5px;color:#6b6760;margin-bottom:8px">${esc(t('arpIntNote',{q:contractQty+(unit?' '+unit:'')}))}</div>`:''}
       <div style="display:flex;gap:8px;justify-content:flex-end">
-        <button id="arp-cancel" class="btn bgray" style="min-width:64px">취소</button>
-        <button id="arp-ok" class="btn bp" style="min-width:64px;background:#c2410c;border-color:#c2410c">확인</button>
+        <button id="arp-cancel" class="btn bgray" style="min-width:64px">${esc(t('wordCancel'))}</button>
+        <button id="arp-ok" class="btn bp" style="min-width:64px;background:#c2410c;border-color:#c2410c">${esc(t('wordConfirm'))}</button>
       </div>
     </div>
   </div>`;
@@ -5561,7 +5676,7 @@ function openActRatePopup(secId, nodeId){
   function checkWarn(rate){
     if(rate < oldRate && oldRate > 0){
       warnEl.style.display='block';
-      warnEl.textContent = `⚠ 입력값(${rate.toFixed(1)}%)이 현재 실적율(${oldRate}%)보다 낮습니다. 실적율 감소는 극히 예외적인 경우입니다.`;
+      warnEl.textContent = t('arpWarnLow',{rate:rate.toFixed(1),old:oldRate});
     } else {
       warnEl.style.display='none';
     }
@@ -5589,7 +5704,7 @@ function openActRatePopup(secId, nodeId){
   document.getElementById('arp-ok').addEventListener('click', function(){
     const finalRate = parseFloat(rateEl.dataset.raw||rateEl.value);
     if(isNaN(finalRate)||finalRate<0||finalRate>100){
-      alert('실적율은 0~100 사이 숫자여야 합니다.'); return;
+      alert(t('arpAlertRange')); return;
     }
     // 정수 모드: rate 재계산 (수량 반올림 후 확정)
     let confirmedRate = finalRate;
@@ -7469,26 +7584,26 @@ function showEventModal(secId,nodeId){
       <td style="font-size:12px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(ev.memo||'')}</td>
       <td>
         <div style="display:flex;gap:4px">
-          <button class="btn bo btn-xs" onclick="showEventEditModal('${nodeId}','${ev.id}',null,true)">수정</button>
-          <button class="btn bd btn-xs" onclick="deleteEvent('${nodeId}','${ev.id}')">삭제</button>
+          <button class="btn bo btn-xs" onclick="showEventEditModal('${nodeId}','${ev.id}',null,true)">${t('wordEdit')}</button>
+          <button class="btn bd btn-xs" onclick="deleteEvent('${nodeId}','${ev.id}')">${t('wordDelete')}</button>
         </div>
       </td>
     </tr>`).join('');
 
   showModal(`
-    <div class="modal-title">이벤트 관리 — ${esc(nodeName)}</div>
+    <div class="modal-title">${esc(t('evModalTitle'))} — ${esc(nodeName)}</div>
     <div style="margin-bottom:10px">
       <table class="utbl" style="width:100%">
-        <thead><tr><th style="width:48px">구분</th><th style="width:100px">날짜</th><th>내용</th><th style="width:80px">관리</th></tr></thead>
-        <tbody id="evListTbody">${rows||'<tr><td colspan="4" style="text-align:center;color:var(--text3);font-size:11px;padding:12px">등록된 이벤트 없음</td></tr>'}</tbody>
+        <thead><tr><th style="width:48px">${t('evColType')}</th><th style="width:100px">${t('wordDate')}</th><th>${t('evContentLbl')}</th><th style="width:80px">${t('evColManage')}</th></tr></thead>
+        <tbody id="evListTbody">${rows||`<tr><td colspan="4" style="text-align:center;color:var(--text3);font-size:11px;padding:12px">${t('evEmpty')}</td></tr>`}</tbody>
       </table>
     </div>
     <div class="modal-acts" style="justify-content:space-between">
       <div style="display:flex;gap:6px">
-        <button class="btn bp btn-xs" onclick="showEventEditModal('${nodeId}',null,null,true,'P')">+ 계획(P) 이벤트</button>
-        <button class="btn btn-xs" style="background:#dc2626;color:#fff;border-color:#dc2626" onclick="showEventEditModal('${nodeId}',null,null,true,'A')">+ 실적(A) 이벤트</button>
+        <button class="btn bp btn-xs" onclick="showEventEditModal('${nodeId}',null,null,true,'P')">${t('evAddPlan')}</button>
+        <button class="btn btn-xs" style="background:#dc2626;color:#fff;border-color:#dc2626" onclick="showEventEditModal('${nodeId}',null,null,true,'A')">${t('evAddActual')}</button>
       </div>
-      <button class="btn bgray" onclick="closeModal()">닫기</button>
+      <button class="btn bgray" onclick="closeModal()">${t('stgClose')}</button>
     </div>`, true);
 }
 
@@ -7502,28 +7617,28 @@ function showEventEditModal(nodeId,evId,_e,fromList,defaultType){
   const barCol=isP?'#3b82f6':'#22c55e';
 
   showModal(`
-    <div class="modal-title" style="color:${isP?'#1d4ed8':'#b91c1c'}">${isP?'계획(P)':'실적(A)'} 이벤트 ${existing?'수정':'추가'}</div>
+    <div class="modal-title" style="color:${isP?'#1d4ed8':'#b91c1c'}">${isP?t('evTypePlan'):t('evTypeActual')} ${t('colEvent')} ${existing?t('wordEdit'):t('wordAdd')}</div>
     <div class="mfg">
-      <label>날짜</label>
+      <label>${t('wordDate')}</label>
       <input type="date" class="fc" id="evDate" value="${existing?existing.date:''}" style="width:160px">
     </div>
     <div class="mfg">
-      <label>이벤트 도형</label>
+      <label>${t('evShapeLbl')}</label>
       <div class="ev-shape-pick" id="evShapePick">
-        <button type="button" class="evsp${curShape==='d'?' sel':''}" data-shape="d" title="마름모"><span class="evsp-d" style="background:${baseCol}"></span></button>
-        <button type="button" class="evsp${curShape==='dr'?' sel':''}" data-shape="dr" title="마름모 (내부 빨간색)"><span class="evsp-d" style="background:#dc2626"></span></button>
-        <button type="button" class="evsp${curShape==='c'?' sel':''}" data-shape="c" title="원 (막대차트 색)"><span class="evsp-c" style="background:${barCol}"></span></button>
-        <button type="button" class="evsp${curShape==='none'?' sel':''}" data-shape="none" title="도형 없음 — 메모만 표시">없음</button>
+        <button type="button" class="evsp${curShape==='d'?' sel':''}" data-shape="d" title="${t('evShapeDiamond')}"><span class="evsp-d" style="background:${baseCol}"></span></button>
+        <button type="button" class="evsp${curShape==='dr'?' sel':''}" data-shape="dr" title="${t('evShapeDiamondRed')}"><span class="evsp-d" style="background:#dc2626"></span></button>
+        <button type="button" class="evsp${curShape==='c'?' sel':''}" data-shape="c" title="${t('evShapeCircle')}"><span class="evsp-c" style="background:${barCol}"></span></button>
+        <button type="button" class="evsp${curShape==='none'?' sel':''}" data-shape="none" title="${t('evShapeNoneTitle')}">${t('evShapeNone')}</button>
       </div>
     </div>
     <div class="mfg">
-      <label>내용 <span style="font-size:10px;color:var(--text3)">(도형 위에 표시)</span></label>
-      <textarea class="fc" id="evMemo" rows="3" placeholder="예: 철골 자재 입고, 기초 콘크리트 타설 완료 등" style="width:100%;resize:vertical">${existing?esc(existing.memo):''}</textarea>
+      <label>${t('evContentLbl')} <span style="font-size:10px;color:var(--text3)">${t('evContentHint')}</span></label>
+      <textarea class="fc" id="evMemo" rows="3" placeholder="${t('evMemoPh')}" style="width:100%;resize:vertical">${existing?esc(existing.memo):''}</textarea>
     </div>
     <div class="modal-acts">
-      <button class="btn bgray" onclick="${fromList?`showEventModal('','${nodeId}')`:''};closeModal()">취소</button>
+      <button class="btn bgray" onclick="${fromList?`showEventModal('','${nodeId}')`:''};closeModal()">${t('wordCancel')}</button>
       <button class="btn bp" style="background:${isP?'#2563eb':'#dc2626'};border-color:${isP?'#2563eb':'#dc2626'}"
-        onclick="saveEventFromModal('${nodeId}','${evId||''}','${type}',${!!fromList})">💾 저장</button>
+        onclick="saveEventFromModal('${nodeId}','${evId||''}','${type}',${!!fromList})">💾 ${t('stgSave')}</button>
     </div>`);
   setTimeout(()=>{
     const el=document.getElementById('evDate');if(el)el.focus();
@@ -7539,8 +7654,8 @@ function showEventEditModal(nodeId,evId,_e,fromList,defaultType){
 function saveEventFromModal(nodeId,evId,type,fromList){
   const date=document.getElementById('evDate').value.trim();
   const memo=document.getElementById('evMemo').value.trim();
-  if(!date){toast('날짜를 입력하세요');return;}
-  if(!memo){toast('이벤트 내용을 입력하세요');return;}
+  if(!date){toast(t('evErrDate'));return;}
+  if(!memo){toast(t('evErrMemo'));return;}
 
   const selShape=document.querySelector('#evShapePick .evsp.sel');
   const shape=selShape?selShape.dataset.shape:'d';
@@ -7556,16 +7671,16 @@ function saveEventFromModal(nodeId,evId,type,fromList){
   renderInput();
   if(fromList) showEventModal('',nodeId);
   else closeModal();
-  toast('✅ 이벤트가 저장되었습니다');
+  toast(t('evSavedMsg'));
 }
 
 function deleteEvent(nodeId,evId){
-  showConf('이 이벤트를 삭제하시겠습니까?',()=>{
+  showConf(t('evConfirmDel'),()=>{
     const evts=_getEvents().filter(e=>e.id!==evId);
     _saveEvents(evts);
     renderInput();
     showEventModal('',nodeId);
-    toast('이벤트가 삭제되었습니다');
+    toast(t('evDeletedMsg'));
   });
 }
 
@@ -7635,42 +7750,41 @@ function showClipModal(){
 
   const slotHtml = clips.length === 0
     ? `<div style="text-align:center;color:var(--text3);font-size:11px;padding:16px">
-        저장된 클립이 없습니다.<br>아래 버튼으로 현재 상태를 저장하세요.
+        ${t('clipEmptyMsg')}
        </div>`
     : clips.map((c,i) => `
         <div class="clip-slot${_activeClipId===c.id?' clip-active':''}" id="cliprow_${c.id}">
           <div>
             <div class="clip-name" title="${esc(c.name)}">${esc(c.name)}</div>
-            <div class="clip-meta">${c.createdAt} · ${Object.keys(c.openState||{}).length}개 노드</div>
+            <div class="clip-meta">${c.createdAt} · ${t('clipNodeCount',{n:Object.keys(c.openState||{}).length})}</div>
           </div>
-          <button class="clip-apply-btn" onclick="applyClip('${c.id}')">📂 적용</button>
+          <button class="clip-apply-btn" onclick="applyClip('${c.id}')">${t('clipApplyBtn')}</button>
           <button class="clip-del-btn"   onclick="deleteClip('${c.id}')">✕</button>
         </div>`).join('');
 
   const canAdd = used < CLIP_MAX;
 
   showModal(`
-    <div class="modal-title">📌 뷰 클립 — 트리 상태 저장/불러오기</div>
+    <div class="modal-title">${t('clipModalTitle')}</div>
     <p style="font-size:11px;color:var(--text2);margin-bottom:10px">
-      현재 공종 트리의 펼침/접힘 상태를 저장합니다.<br>
-      저장된 클립은 파일 저장 시 함께 보관되어 협업자가 열어도 동일하게 적용됩니다.
-      <span style="color:#7c3aed">(최대 ${CLIP_MAX}개)</span>
+      ${t('clipDesc')}
+      <span style="color:#7c3aed">${t('clipMaxNote',{n:CLIP_MAX})}</span>
     </p>
     <div id="clipListWrap" style="max-height:260px;overflow-y:auto;margin-bottom:10px">
       ${slotHtml}
     </div>
     ${canAdd ? `
     <div style="display:flex;gap:7px;align-items:center;margin-bottom:4px">
-      <input class="fc" id="clipNameInput" placeholder="클립 이름 입력 (예: 6월 검토용, 기초공사 집중)" style="flex:1"
+      <input class="fc" id="clipNameInput" placeholder="${t('clipNamePh')}" style="flex:1"
         onkeydown="if(event.key==='Enter')saveClip()">
-      <button class="btn bp" onclick="saveClip()">📌 현재 상태 저장</button>
+      <button class="btn bp" onclick="saveClip()">${t('clipSaveBtn')}</button>
     </div>` : `
     <div style="font-size:11px;color:#b45309;padding:6px;background:#fffbeb;border-radius:4px;margin-bottom:4px">
-      ⚠️ 최대 ${CLIP_MAX}개 저장 가능 — 기존 클립을 삭제 후 저장하세요.
+      ${t('clipMaxWarn',{n:CLIP_MAX})}
     </div>`}
     <div class="modal-acts">
-      <button class="btn bgray btn-xs" onclick="clearAllClips()" style="margin-right:auto">전체 삭제</button>
-      <button class="btn bgray" onclick="closeModal()">닫기</button>
+      <button class="btn bgray btn-xs" onclick="clearAllClips()" style="margin-right:auto">${t('clipDeleteAllBtn')}</button>
+      <button class="btn bgray" onclick="closeModal()">${t('stgClose')}</button>
     </div>`);
 
   setTimeout(()=>{ const el=document.getElementById('clipNameInput'); if(el)el.focus(); },50);
@@ -7680,10 +7794,10 @@ function showClipModal(){
 function saveClip(){
   const nameEl = document.getElementById('clipNameInput');
   const name   = (nameEl ? nameEl.value : '').trim();
-  if(!name){ toast('클립 이름을 입력하세요'); return; }
+  if(!name){ toast(t('clipErrName')); return; }
 
   const clips = _getClips();
-  if(clips.length >= CLIP_MAX){ toast(`최대 ${CLIP_MAX}개까지 저장 가능합니다`); return; }
+  if(clips.length >= CLIP_MAX){ toast(t('clipErrMax',{n:CLIP_MAX})); return; }
 
   const now   = new Date();
   const ymd   = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
@@ -7699,7 +7813,7 @@ function saveClip(){
   clips.push(clip);
   _saveClips(clips);
   _activeClipId = clip.id;
-  toast(`📌 클립 저장됨: "${name}"`);
+  toast(t('clipSavedMsg',{name}));
   showClipModal(); // 새로고침
 }
 
@@ -7707,13 +7821,13 @@ function saveClip(){
 function applyClip(clipId){
   const clips = _getClips();
   const clip  = clips.find(c => c.id === clipId);
-  if(!clip){ toast('클립을 찾을 수 없습니다'); return; }
+  if(!clip){ toast(t('clipErrNotFound')); return; }
 
   _applyOpenState(clip.openState);
   _activeClipId = clipId;
   renderInput();
   closeModal();
-  toast(`📂 클립 적용됨: "${clip.name}"`);
+  toast(t('clipAppliedMsg',{name:clip.name}));
 }
 
 // 클립 삭제
@@ -7722,16 +7836,16 @@ function deleteClip(clipId){
   _saveClips(clips);
   if(_activeClipId === clipId) _activeClipId = null;
   showClipModal();
-  toast('클립이 삭제되었습니다');
+  toast(t('clipDeletedMsg'));
 }
 
 // 전체 삭제
 function clearAllClips(){
-  showConf('모든 클립을 삭제하시겠습니까?', ()=>{
+  showConf(t('clipConfirmDeleteAll'), ()=>{
     _saveClips([]);
     _activeClipId = null;
     closeModal();
-    toast('전체 클립이 삭제되었습니다');
+    toast(t('clipAllDeletedMsg'));
   });
 }
 
