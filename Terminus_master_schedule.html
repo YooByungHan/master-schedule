@@ -1042,6 +1042,9 @@ tr.grow-ghost:hover>td{height:18px!important;background:#e2eaf4!important;cursor
   border:1px solid #dde4ec;background:#fff;border-radius:4px;height:22px;
 }
 .hg-task .pgb:hover,.hg-task .hbn:hover{background:#eef3f9}
+/* AI 분석/안건 생성 버튼은 문구가 "AI 분석"~"📋 Generate Agenda"처럼 언어별로 길이 차이가
+   커서 위 56px 고정폭에 맞지 않음 — 내용에 맞춰 늘어나도록 별도 지정 */
+.hg-task #analyzeBtn,.hg-task #meetingAgendaBtn{width:auto;min-width:56px;padding:0 10px}
 .hg-task .hbn-danger:hover{background:#fee2e2}
 .hg-task .pgb.pgb-edit:hover{background:#f3e8ff}
 .hg-task .pgb.pgb-close:hover{background:#fee2e2}

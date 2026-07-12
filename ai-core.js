@@ -1229,7 +1229,11 @@ function _langDirective(lang){
   const names = { en:'English', es:'Spanish (Español)', de:'German (Deutsch)', ja:'Japanese (日本語)' };
   const name = names[lang];
   if(!name) return '';
-  return `\n\n[LANGUAGE OVERRIDE — supersedes any earlier "in Korean" instruction above]\nWrite every free-text value in the JSON output (summary, risk, recovery, completionRisk, intent, criticalPath, blindSpots, warning, overallRisk, finalSummary, riskSummary, recoveryPlan, top3[].reason, and any risk-level label) in ${name}. Do not mix in Korean. Keep all JSON keys exactly as specified in English; do not translate keys or change the JSON structure itself.`;
+  // 필드명을 나열하지 않고 일반 규칙으로 표현 — 이 지시문은 analyze()뿐 아니라
+  // 서로 다른 JSON 스키마를 쓰는 meeting-agenda 등 다른 프롬프트에도 그대로 재사용되므로,
+  // 특정 스키마의 필드명을 하드코딩하면 그 필드명 목록과 실제 요청받은 스키마가
+  // 어긋날 때 모델이 혼란스러워하며 응답을 부실하게 채우는 문제가 있었다.
+  return `\n\n[LANGUAGE OVERRIDE — supersedes any earlier "in Korean" instruction above]\nWrite every free-text / descriptive string value in the JSON output in ${name} — this means every field whose value is a natural-language sentence, phrase, title, or label (summaries, risk descriptions, recommendations, titles, details, forecasts, conclusions, etc.), not just a specific named subset. Do not mix in Korean. Keep all JSON key names exactly as specified in the schema (in English); do not translate key names or change the JSON structure. Still fully populate every field the schema requires (do not omit or shorten sections) — only the language of the text changes. Numeric, date, and ID-like values should remain unchanged.`;
 }
 
 // ── 메인 오케스트레이터: proj + opts → 분석 응답 객체 ──
