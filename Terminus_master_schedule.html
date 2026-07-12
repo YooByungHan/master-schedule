@@ -3083,16 +3083,22 @@ function openLocalWindowNew(){
 }
 function openLocalWindowFile(input){
   const f=input.files[0]; if(!f)return;
+  // 파일 선택(change 이벤트)→FileReader 완료까지 비동기 단계를 거치면 브라우저의
+  // "사용자 제스처" 신호가 만료되어 이후 window.open()이 조용히 차단될 수 있다.
+  // 그래서 제스처가 살아있는 지금(동기 구간) 빈 창을 먼저 열어두고, 파일 파싱이
+  // 끝나면 그 창을 실제 데이터가 실린 URL로 이동시킨다.
+  const win=window.open('about:blank','_blank','width=1280,height=860');
   const r=new FileReader();
   r.onload=e=>{
     try{
       const d=JSON.parse(e.target.result);
       const hint=_fileCompanyHint(f.name);
       const pick=_pickPrimaryFromFile(d, hint);
-      if(!pick||!pick.proj){ toast('이 파일에서 공정표를 찾지 못했습니다'); return; }
+      if(!pick||!pick.proj){ toast('이 파일에서 공정표를 찾지 못했습니다'); if(win)win.close(); return; }
       _stashLocalWin({name:f.name.replace(/\.json$/i,''), company:pick.companyName||hint||'로컬', proj:pick.proj});
-      window.open(location.pathname+'?localwin=1','_blank','width=1280,height=860');
-    }catch(err){ toast('파일 읽기 실패: '+(err.message||'')); }
+      if(win) win.location.href=location.pathname+'?localwin=1';
+      else window.open(location.pathname+'?localwin=1','_blank','width=1280,height=860');
+    }catch(err){ toast('파일 읽기 실패: '+(err.message||'')); if(win)win.close(); }
   };
   r.readAsText(f); input.value='';
 }
