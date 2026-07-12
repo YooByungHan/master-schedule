@@ -2024,6 +2024,41 @@ const I18N = {
     apNoAccounts:'계정 없음', apAssignTitle:'담당자 배정 — {site}', apAssignDesc:'접근 허용할 사람 체크(담당관리자도 함께 체크)',
     apSiteMgrLabel:'담당관리자', apAssignSavedMsg:'배정 저장됨',
     genFailMsg:'실패: {msg}', genChangedMsg:'변경됨', genDeletedMsg:'삭제됨',
+    adminCoTitle:'업체 계정 관리', adminAddCoBtn:'+ 업체 추가', adminColCode:'고유코드',
+    adminColCoName:'업체명', adminColContractName:'계약공사명', adminColContractPeriod:'공사기간 (시작일 ~ 종료일)',
+    adminColAuth:'권한', adminContractNamePh:'계약공사명 입력', badgePrimary:'주 관리자',
+    badgeCompany:'업체', adminEditCoBtn:'업체명/PW', adminCurrentAccount:'(현재 계정)',
+    adminCodeChangeTitle:'관리자 코드 변경', adminCodeChangeDesc:'로그인 시 관리자 코드를 입력해야 백업복원 등 관리자 기능을 사용할 수 있습니다.', adminNewCodePh:'새 관리자 코드',
+    genChangeBtn:'변경', adminPrimaryChangeTitle:'주 관리자 변경', adminPrimaryChangeDesc:'주 관리자 권한을 다른 업체에 이전합니다. 이전 후 현재 계정은 일반 업체가 됩니다.',
+    adminNoCoOption:'등록된 업체 없음', adminTransferBtn:'주 관리자 이전', adminClaudeKeyDesc:'공정 흐름 탭 AI 분석에 사용됩니다. 이 기기의 브라우저에만 저장됩니다.',
+    claudeKeySavedMsg:'✅ Claude API Key 저장됨', claudeKeyDeletedMsg:'🗑 Claude API Key 삭제됨', keyEnterErr:'⚠ API Key를 입력하세요',
+    claudeKeyWrongGroqErr:'⚠ 이건 Groq 키(gsk_)입니다. 아래 Groq 칸에 넣으세요', keySetBadge:'✅ 설정됨', keyUnsetBadge:'⚠ 미설정', claudeKeyServerSavedMsg:'✅ Claude API Key 서버에 저장됨. 모든 직원이 AI 분석 사용 가능',
+    keySaveFailMsg:'⚠ 저장 실패: {msg}', keyServerErrMsg:'⚠ 서버 오류: {msg}', claudeKeyUnsetHint:'⚠ 미설정 — 아래에 입력 후 "서버에 저장"을 누르세요',
+    claudeKeyServerDeletedMsg:'🗑 Claude API Key 서버에서 삭제됨', keyDeleteFailMsg:'⚠ 삭제 실패: {msg}', groqKeyWrongPrefixErr:'⚠ Groq 키는 gsk_ 로 시작합니다. 칸을 확인하세요',
+    groqKeyServerSavedMsg:'✅ Groq API Key 서버에 저장됨', groqKeyUnsetHint:'⚠ 미설정 — 아래에 gsk_... 키 입력 후 "서버에 저장"', groqKeyServerDeletedMsg:'🗑 Groq API Key 서버에서 삭제됨',
+    staffLoadingMsg:'직원 목록 로드 중...', badgeAdmin:'관리자', siteStaffTitle:'🌐 현장 직원 관리',
+    loadingMsg:'로드 중...', adminStaffTitle:'직원 계정 관리', adminAddStaffBtn:'+ 직원 추가',
+    noStaffMsg:'등록된 직원 없음', claudeKeyServerNote:'키는 <b>서버(config.json)</b>에 저장됩니다. 직원 브라우저에는 절대 노출되지 않습니다.', statusCheckingMsg:'상태 확인 중...',
+    saveToServerBtn:'서버에 저장', groqKeyTitle:'⚡ Groq API Key', groqKeyFreeNote:'(무료 · 기본 AI 제공자)',
+    groqKeyDesc:'무료 키는 <b>console.groq.com</b>에서 발급(gsk_로 시작). 서버(config.json)에 저장되며 직원 브라우저엔 노출되지 않습니다.', staffLoadFailMsg:'직원 목록 로드 실패: {msg}', noSiteInfoMsg:'현장 정보 없음',
+    noPermissionMsg:'권한 없음', mgrSuffix:'·담당', removeBtn:'제외',
+    noSiteStaffMsg:'현장 직원 없음', addToSiteBtn:'+ 현장에 추가', noUnassignedMsg:'미배정 직원 없음',
+    siteStaffLbl:'현장 직원', unassignedStaffLbl:'미배정 직원 — 내 현장에 추가', loadFailMsg:'로드 실패',
+    addedToSiteMsg:'{name} 현장에 추가됨', removeConfirm:'"{name}" 을(를) 이 현장에서 제외할까요?', removedMsg:'{name} 제외됨',
+    addStaffModalTitle:'직원 계정 추가', fullPwLbl:'비밀번호', pwConfirmLbl:'비밀번호 확인',
+    pwConfirmPh:'비밀번호 재입력', roleUser:'일반 직원', adminCodeSetLbl:'관리자 코드 설정',
+    adminCodePh:'관리자 코드', genAddBtn:'추가', genNameErr:'이름을 입력하세요',
+    pwEnterErr:'비밀번호를 입력하세요', pwMismatchErr:'비밀번호가 일치하지 않습니다', adminCodeEnterErr:'관리자 코드를 입력하세요',
+    addFailMsg:'추가 실패', staffAddedMsg:'직원 계정 추가: {name}', genServerErrMsg:'서버 오류',
+    delAccountConfirm:'"{name}" 계정을 삭제하시겠습니까?', delFailMsg:'삭제 실패', accountDeletedMsg:'계정 삭제: {name}',
+    adminCodeEmptyErr:'새 관리자 코드를 입력하세요', adminCodeMismatchErr:'관리자 코드가 일치하지 않습니다', coNotFoundErr:'업체 정보를 찾을 수 없습니다',
+    adminCodeChangedMsg:'✅ 관리자 코드가 변경되었습니다', savedMsg:'저장되었습니다', addCoModalTitle:'업체 추가',
+    uniqueCodeLbl:'고유코드', uniqueCodeNote:'(원도급사 자동부여 — 취합 기준키)', regenBtn:'↺ 재생성',
+    uniqueCodeWarn:'※ 중복 불가, 변경 금지', contractPeriodLbl:'공사기간', uniqueCodeEnterErr:'고유코드를 입력하세요',
+    coNamePwEnterErr:'업체명과 비밀번호를 입력하세요', codeInUseErr:'이미 사용 중인 고유코드입니다: {code}', coAddedMsg:'업체 추가 완료: [{code}] {name}',
+    editCoModalTitle:'업체 편집', newPwOptionalLbl:'새 비밀번호 (변경 시만 입력)', newPwOptionalPh:'빈칸 = 변경 안 함',
+    coNameEnterErr:'업체명을 입력하세요', coUpdatedMsg:'업체 정보가 수정되었습니다', delCoConfirm:'이 업체 계정과 모든 데이터를 삭제하시겠습니까?',
+    transferTargetErr:'이전할 업체를 선택하세요', transferConfirm:'주 관리자 권한을 이전하면 현재 계정은 일반 업체가 됩니다. 계속하시겠습니까?', transferDoneMsg:'주 관리자 권한이 이전되었습니다. 다시 로그인해주세요.',
     holNoneMsg:'등록된 공휴일 없음', holCustomBadge:'사용자 지정', holDefaultBadge:'기본값', holModalTitle:'📅 공휴일 관리',
     holNamePh:'공휴일명', holDesc:'날짜와 공휴일명을 입력하세요. 저장 시 이 기기의 모든 공정표에 적용됩니다.',
     holResetWarn:'⚠ 기본값 초기화를 누르면 하드코딩된 2026년 공휴일로 되돌아갑니다.', holAddRowBtn:'+ 행 추가', holResetBtn:'기본값 초기화',
@@ -2106,6 +2141,41 @@ const I18N = {
     apNoAccounts:'No accounts', apAssignTitle:'Assign Manager — {site}', apAssignDesc:'Check who should have access (also check site managers)',
     apSiteMgrLabel:'Site Manager', apAssignSavedMsg:'Assignment saved',
     genFailMsg:'Failed: {msg}', genChangedMsg:'Changed', genDeletedMsg:'Deleted',
+    adminCoTitle:'Company Account Management', adminAddCoBtn:'+ Add Company', adminColCode:'Unique Code',
+    adminColCoName:'Company Name', adminColContractName:'Contract Name', adminColContractPeriod:'Contract Period (Start ~ End)',
+    adminColAuth:'Role', adminContractNamePh:'Enter contract name', badgePrimary:'Primary Admin',
+    badgeCompany:'Company', adminEditCoBtn:'Name/PW', adminCurrentAccount:'(current account)',
+    adminCodeChangeTitle:'Change Admin Code', adminCodeChangeDesc:'You must enter the admin code at login to use admin features such as backup/restore.', adminNewCodePh:'New admin code',
+    genChangeBtn:'Change', adminPrimaryChangeTitle:'Change Primary Admin', adminPrimaryChangeDesc:'Transfers primary admin rights to another company. After the transfer, this account becomes a regular company.',
+    adminNoCoOption:'No companies registered', adminTransferBtn:'Transfer Primary Admin', adminClaudeKeyDesc:'Used for AI analysis in the Flow tab. Stored only in this device\'s browser.',
+    claudeKeySavedMsg:'✅ Claude API Key saved', claudeKeyDeletedMsg:'🗑 Claude API Key deleted', keyEnterErr:'⚠ Please enter an API Key',
+    claudeKeyWrongGroqErr:'⚠ This is a Groq key (gsk_). Enter it in the Groq field below', keySetBadge:'✅ Set', keyUnsetBadge:'⚠ Not set', claudeKeyServerSavedMsg:'✅ Claude API Key saved to server. All staff can now use AI analysis',
+    keySaveFailMsg:'⚠ Save failed: {msg}', keyServerErrMsg:'⚠ Server error: {msg}', claudeKeyUnsetHint:'⚠ Not set — enter it below and click "Save to Server"',
+    claudeKeyServerDeletedMsg:'🗑 Claude API Key deleted from server', keyDeleteFailMsg:'⚠ Delete failed: {msg}', groqKeyWrongPrefixErr:'⚠ Groq keys start with gsk_. Please check the field',
+    groqKeyServerSavedMsg:'✅ Groq API Key saved to server', groqKeyUnsetHint:'⚠ Not set — enter your gsk_... key below and click "Save to Server"', groqKeyServerDeletedMsg:'🗑 Groq API Key deleted from server',
+    staffLoadingMsg:'Loading staff list...', badgeAdmin:'Admin', siteStaffTitle:'🌐 Site Staff Management',
+    loadingMsg:'Loading...', adminStaffTitle:'Staff Account Management', adminAddStaffBtn:'+ Add Staff',
+    noStaffMsg:'No staff registered', claudeKeyServerNote:'The key is stored on the <b>server (config.json)</b>. It is never exposed to staff browsers.', statusCheckingMsg:'Checking status...',
+    saveToServerBtn:'Save to Server', groqKeyTitle:'⚡ Groq API Key', groqKeyFreeNote:'(Free · Default AI Provider)',
+    groqKeyDesc:'Get a free key at <b>console.groq.com</b> (starts with gsk_). Stored on the server (config.json) and never exposed to staff browsers.', staffLoadFailMsg:'Failed to load staff list: {msg}', noSiteInfoMsg:'No site information',
+    noPermissionMsg:'No permission', mgrSuffix:'·in charge', removeBtn:'Remove',
+    noSiteStaffMsg:'No site staff', addToSiteBtn:'+ Add to Site', noUnassignedMsg:'No unassigned staff',
+    siteStaffLbl:'Site Staff', unassignedStaffLbl:'Unassigned Staff — Add to My Site', loadFailMsg:'Load failed',
+    addedToSiteMsg:'{name} added to site', removeConfirm:'Remove "{name}" from this site?', removedMsg:'{name} removed',
+    addStaffModalTitle:'Add Staff Account', fullPwLbl:'Password', pwConfirmLbl:'Confirm Password',
+    pwConfirmPh:'Re-enter password', roleUser:'Regular Staff', adminCodeSetLbl:'Set Admin Code',
+    adminCodePh:'Admin code', genAddBtn:'Add', genNameErr:'Please enter a name',
+    pwEnterErr:'Please enter a password', pwMismatchErr:'Passwords do not match', adminCodeEnterErr:'Please enter an admin code',
+    addFailMsg:'Add failed', staffAddedMsg:'Staff account added: {name}', genServerErrMsg:'Server error',
+    delAccountConfirm:'Delete account "{name}"?', delFailMsg:'Delete failed', accountDeletedMsg:'Account deleted: {name}',
+    adminCodeEmptyErr:'Please enter a new admin code', adminCodeMismatchErr:'Admin codes do not match', coNotFoundErr:'Company information not found',
+    adminCodeChangedMsg:'✅ Admin code changed', savedMsg:'Saved', addCoModalTitle:'Add Company',
+    uniqueCodeLbl:'Unique Code', uniqueCodeNote:'(Auto-assigned by prime contractor — merge key)', regenBtn:'↺ Regenerate',
+    uniqueCodeWarn:'※ Must be unique, do not change', contractPeriodLbl:'Contract Period', uniqueCodeEnterErr:'Please enter a unique code',
+    coNamePwEnterErr:'Please enter a company name and password', codeInUseErr:'This unique code is already in use: {code}', coAddedMsg:'Company added: [{code}] {name}',
+    editCoModalTitle:'Edit Company', newPwOptionalLbl:'New Password (only if changing)', newPwOptionalPh:'Leave blank = no change',
+    coNameEnterErr:'Please enter a company name', coUpdatedMsg:'Company information updated', delCoConfirm:'Delete this company account and all its data?',
+    transferTargetErr:'Please select a company to transfer to', transferConfirm:'Transferring primary admin rights will make this account a regular company. Continue?', transferDoneMsg:'Primary admin rights transferred. Please log in again.',
     holNoneMsg:'No holidays registered', holCustomBadge:'Custom', holDefaultBadge:'Default', holModalTitle:'📅 Manage Holidays',
     holNamePh:'Holiday name', holDesc:'Enter the date and holiday name. Saved changes apply to all schedules on this device.',
     holResetWarn:'⚠ Resetting to default reverts to the hardcoded 2026 holidays.', holAddRowBtn:'+ Add Row', holResetBtn:'Reset to Default',
@@ -2188,6 +2258,41 @@ const I18N = {
     apNoAccounts:'Sin cuentas', apAssignTitle:'Asignar Encargado — {site}', apAssignDesc:'Marque quién debe tener acceso (marque también a los encargados de obra)',
     apSiteMgrLabel:'Encargado de Obra', apAssignSavedMsg:'Asignación guardada',
     genFailMsg:'Error: {msg}', genChangedMsg:'Cambiado', genDeletedMsg:'Eliminado',
+    adminCoTitle:'Gestión de Cuentas de Empresa', adminAddCoBtn:'+ Agregar Empresa', adminColCode:'Código Único',
+    adminColCoName:'Nombre de Empresa', adminColContractName:'Nombre del Contrato', adminColContractPeriod:'Período del Contrato (Inicio ~ Fin)',
+    adminColAuth:'Permiso', adminContractNamePh:'Ingrese el nombre del contrato', badgePrimary:'Administrador Principal',
+    badgeCompany:'Empresa', adminEditCoBtn:'Nombre/Contraseña', adminCurrentAccount:'(cuenta actual)',
+    adminCodeChangeTitle:'Cambiar Código de Administrador', adminCodeChangeDesc:'Debe ingresar el código de administrador al iniciar sesión para usar funciones de administrador como copia de seguridad/restauración.', adminNewCodePh:'Nuevo código de administrador',
+    genChangeBtn:'Cambiar', adminPrimaryChangeTitle:'Cambiar Administrador Principal', adminPrimaryChangeDesc:'Transfiere los derechos de administrador principal a otra empresa. Después de la transferencia, esta cuenta se convierte en una empresa normal.',
+    adminNoCoOption:'No hay empresas registradas', adminTransferBtn:'Transferir Administrador Principal', adminClaudeKeyDesc:'Se usa para el análisis de IA en la pestaña Flujo. Se guarda solo en el navegador de este dispositivo.',
+    claudeKeySavedMsg:'✅ Clave API de Claude guardada', claudeKeyDeletedMsg:'🗑 Clave API de Claude eliminada', keyEnterErr:'⚠ Ingrese una clave API',
+    claudeKeyWrongGroqErr:'⚠ Esta es una clave de Groq (gsk_). Ingrésela en el campo Groq de abajo', keySetBadge:'✅ Configurado', keyUnsetBadge:'⚠ No configurado', claudeKeyServerSavedMsg:'✅ Clave API de Claude guardada en el servidor. Todo el personal puede usar el análisis de IA',
+    keySaveFailMsg:'⚠ Error al guardar: {msg}', keyServerErrMsg:'⚠ Error del servidor: {msg}', claudeKeyUnsetHint:'⚠ No configurado — ingréselo abajo y haga clic en "Guardar en el Servidor"',
+    claudeKeyServerDeletedMsg:'🗑 Clave API de Claude eliminada del servidor', keyDeleteFailMsg:'⚠ Error al eliminar: {msg}', groqKeyWrongPrefixErr:'⚠ Las claves de Groq comienzan con gsk_. Verifique el campo',
+    groqKeyServerSavedMsg:'✅ Clave API de Groq guardada en el servidor', groqKeyUnsetHint:'⚠ No configurado — ingrese su clave gsk_... abajo y haga clic en "Guardar en el Servidor"', groqKeyServerDeletedMsg:'🗑 Clave API de Groq eliminada del servidor',
+    staffLoadingMsg:'Cargando lista de personal...', badgeAdmin:'Administrador', siteStaffTitle:'🌐 Gestión de Personal de Obra',
+    loadingMsg:'Cargando...', adminStaffTitle:'Gestión de Cuentas de Personal', adminAddStaffBtn:'+ Agregar Personal',
+    noStaffMsg:'No hay personal registrado', claudeKeyServerNote:'La clave se guarda en el <b>servidor (config.json)</b>. Nunca se expone a los navegadores del personal.', statusCheckingMsg:'Verificando estado...',
+    saveToServerBtn:'Guardar en el Servidor', groqKeyTitle:'⚡ Clave API de Groq', groqKeyFreeNote:'(Gratis · Proveedor de IA Predeterminado)',
+    groqKeyDesc:'Obtenga una clave gratuita en <b>console.groq.com</b> (comienza con gsk_). Se guarda en el servidor (config.json) y nunca se expone a los navegadores del personal.', staffLoadFailMsg:'Error al cargar la lista de personal: {msg}', noSiteInfoMsg:'Sin información de la obra',
+    noPermissionMsg:'Sin permiso', mgrSuffix:'·encargado', removeBtn:'Quitar',
+    noSiteStaffMsg:'Sin personal en la obra', addToSiteBtn:'+ Agregar a la Obra', noUnassignedMsg:'Sin personal sin asignar',
+    siteStaffLbl:'Personal de la Obra', unassignedStaffLbl:'Personal sin Asignar — Agregar a Mi Obra', loadFailMsg:'Error al cargar',
+    addedToSiteMsg:'{name} agregado a la obra', removeConfirm:'¿Quitar a "{name}" de esta obra?', removedMsg:'{name} eliminado',
+    addStaffModalTitle:'Agregar Cuenta de Personal', fullPwLbl:'Contraseña', pwConfirmLbl:'Confirmar Contraseña',
+    pwConfirmPh:'Vuelva a ingresar la contraseña', roleUser:'Personal Regular', adminCodeSetLbl:'Establecer Código de Administrador',
+    adminCodePh:'Código de administrador', genAddBtn:'Agregar', genNameErr:'Ingrese un nombre',
+    pwEnterErr:'Ingrese una contraseña', pwMismatchErr:'Las contraseñas no coinciden', adminCodeEnterErr:'Ingrese un código de administrador',
+    addFailMsg:'Error al agregar', staffAddedMsg:'Cuenta de personal agregada: {name}', genServerErrMsg:'Error del servidor',
+    delAccountConfirm:'¿Eliminar la cuenta "{name}"?', delFailMsg:'Error al eliminar', accountDeletedMsg:'Cuenta eliminada: {name}',
+    adminCodeEmptyErr:'Ingrese un nuevo código de administrador', adminCodeMismatchErr:'Los códigos de administrador no coinciden', coNotFoundErr:'No se encontró información de la empresa',
+    adminCodeChangedMsg:'✅ Código de administrador cambiado', savedMsg:'Guardado', addCoModalTitle:'Agregar Empresa',
+    uniqueCodeLbl:'Código Único', uniqueCodeNote:'(Asignado automáticamente por el contratista principal — clave de combinación)', regenBtn:'↺ Regenerar',
+    uniqueCodeWarn:'※ Debe ser único, no cambiar', contractPeriodLbl:'Período del Contrato', uniqueCodeEnterErr:'Ingrese un código único',
+    coNamePwEnterErr:'Ingrese el nombre de la empresa y la contraseña', codeInUseErr:'Este código único ya está en uso: {code}', coAddedMsg:'Empresa agregada: [{code}] {name}',
+    editCoModalTitle:'Editar Empresa', newPwOptionalLbl:'Nueva Contraseña (solo si cambia)', newPwOptionalPh:'En blanco = sin cambios',
+    coNameEnterErr:'Ingrese el nombre de la empresa', coUpdatedMsg:'Información de la empresa actualizada', delCoConfirm:'¿Eliminar esta cuenta de empresa y todos sus datos?',
+    transferTargetErr:'Seleccione una empresa a la que transferir', transferConfirm:'Transferir los derechos de administrador principal convertirá esta cuenta en una empresa normal. ¿Continuar?', transferDoneMsg:'Derechos de administrador principal transferidos. Vuelva a iniciar sesión.',
     holNoneMsg:'No hay días festivos registrados', holCustomBadge:'Personalizado', holDefaultBadge:'Predeterminado', holModalTitle:'📅 Gestionar Días Festivos',
     holNamePh:'Nombre del día festivo', holDesc:'Ingrese la fecha y el nombre del día festivo. Al guardar se aplica a todos los cronogramas de este dispositivo.',
     holResetWarn:'⚠ Al restablecer los valores predeterminados, se vuelve a los días festivos de 2026 predefinidos.', holAddRowBtn:'+ Agregar Fila', holResetBtn:'Restablecer Predeterminados',
@@ -2270,6 +2375,41 @@ const I18N = {
     apNoAccounts:'Keine Konten', apAssignTitle:'Verantwortlichen zuweisen — {site}', apAssignDesc:'Zugriffsberechtigte auswählen (Bauleiter ebenfalls ankreuzen)',
     apSiteMgrLabel:'Bauleiter', apAssignSavedMsg:'Zuweisung gespeichert',
     genFailMsg:'Fehlgeschlagen: {msg}', genChangedMsg:'Geändert', genDeletedMsg:'Gelöscht',
+    adminCoTitle:'Firmenkontoverwaltung', adminAddCoBtn:'+ Firma hinzufügen', adminColCode:'Eindeutiger Code',
+    adminColCoName:'Firmenname', adminColContractName:'Vertragsbezeichnung', adminColContractPeriod:'Vertragszeitraum (Beginn ~ Ende)',
+    adminColAuth:'Rolle', adminContractNamePh:'Vertragsbezeichnung eingeben', badgePrimary:'Hauptadministrator',
+    badgeCompany:'Firma', adminEditCoBtn:'Name/PW', adminCurrentAccount:'(aktuelles Konto)',
+    adminCodeChangeTitle:'Admin-Code ändern', adminCodeChangeDesc:'Sie müssen beim Login den Admin-Code eingeben, um Admin-Funktionen wie Sicherung/Wiederherstellung zu nutzen.', adminNewCodePh:'Neuer Admin-Code',
+    genChangeBtn:'Ändern', adminPrimaryChangeTitle:'Hauptadministrator ändern', adminPrimaryChangeDesc:'Überträgt die Hauptadministratorrechte an eine andere Firma. Nach der Übertragung wird dieses Konto zu einer normalen Firma.',
+    adminNoCoOption:'Keine Firmen registriert', adminTransferBtn:'Hauptadministrator übertragen', adminClaudeKeyDesc:'Wird für die KI-Analyse im Ablauf-Tab verwendet. Wird nur im Browser dieses Geräts gespeichert.',
+    claudeKeySavedMsg:'✅ Claude API-Schlüssel gespeichert', claudeKeyDeletedMsg:'🗑 Claude API-Schlüssel gelöscht', keyEnterErr:'⚠ Bitte einen API-Schlüssel eingeben',
+    claudeKeyWrongGroqErr:'⚠ Dies ist ein Groq-Schlüssel (gsk_). Bitte im Groq-Feld unten eingeben', keySetBadge:'✅ Festgelegt', keyUnsetBadge:'⚠ Nicht festgelegt', claudeKeyServerSavedMsg:'✅ Claude API-Schlüssel auf dem Server gespeichert. Alle Mitarbeiter können nun die KI-Analyse nutzen',
+    keySaveFailMsg:'⚠ Speichern fehlgeschlagen: {msg}', keyServerErrMsg:'⚠ Serverfehler: {msg}', claudeKeyUnsetHint:'⚠ Nicht festgelegt — unten eingeben und auf "Auf Server speichern" klicken',
+    claudeKeyServerDeletedMsg:'🗑 Claude API-Schlüssel vom Server gelöscht', keyDeleteFailMsg:'⚠ Löschen fehlgeschlagen: {msg}', groqKeyWrongPrefixErr:'⚠ Groq-Schlüssel beginnen mit gsk_. Bitte das Feld prüfen',
+    groqKeyServerSavedMsg:'✅ Groq API-Schlüssel auf dem Server gespeichert', groqKeyUnsetHint:'⚠ Nicht festgelegt — gsk_... Schlüssel unten eingeben und auf "Auf Server speichern" klicken', groqKeyServerDeletedMsg:'🗑 Groq API-Schlüssel vom Server gelöscht',
+    staffLoadingMsg:'Mitarbeiterliste wird geladen...', badgeAdmin:'Admin', siteStaffTitle:'🌐 Baustellen-Mitarbeiterverwaltung',
+    loadingMsg:'Wird geladen...', adminStaffTitle:'Mitarbeiterkontoverwaltung', adminAddStaffBtn:'+ Mitarbeiter hinzufügen',
+    noStaffMsg:'Keine Mitarbeiter registriert', claudeKeyServerNote:'Der Schlüssel wird auf dem <b>Server (config.json)</b> gespeichert. Er wird niemals an Mitarbeiter-Browser weitergegeben.', statusCheckingMsg:'Status wird geprüft...',
+    saveToServerBtn:'Auf Server speichern', groqKeyTitle:'⚡ Groq API-Schlüssel', groqKeyFreeNote:'(Kostenlos · Standard-KI-Anbieter)',
+    groqKeyDesc:'Kostenlosen Schlüssel unter <b>console.groq.com</b> holen (beginnt mit gsk_). Wird auf dem Server (config.json) gespeichert und nie an Mitarbeiter-Browser weitergegeben.', staffLoadFailMsg:'Mitarbeiterliste konnte nicht geladen werden: {msg}', noSiteInfoMsg:'Keine Baustelleninformationen',
+    noPermissionMsg:'Keine Berechtigung', mgrSuffix:'·zuständig', removeBtn:'Entfernen',
+    noSiteStaffMsg:'Keine Baustellenmitarbeiter', addToSiteBtn:'+ Zur Baustelle hinzufügen', noUnassignedMsg:'Keine nicht zugewiesenen Mitarbeiter',
+    siteStaffLbl:'Baustellenmitarbeiter', unassignedStaffLbl:'Nicht zugewiesene Mitarbeiter — Zu meiner Baustelle hinzufügen', loadFailMsg:'Laden fehlgeschlagen',
+    addedToSiteMsg:'{name} zur Baustelle hinzugefügt', removeConfirm:'"{name}" von dieser Baustelle entfernen?', removedMsg:'{name} entfernt',
+    addStaffModalTitle:'Mitarbeiterkonto hinzufügen', fullPwLbl:'Passwort', pwConfirmLbl:'Passwort bestätigen',
+    pwConfirmPh:'Passwort erneut eingeben', roleUser:'Regulärer Mitarbeiter', adminCodeSetLbl:'Admin-Code festlegen',
+    adminCodePh:'Admin-Code', genAddBtn:'Hinzufügen', genNameErr:'Bitte einen Namen eingeben',
+    pwEnterErr:'Bitte ein Passwort eingeben', pwMismatchErr:'Passwörter stimmen nicht überein', adminCodeEnterErr:'Bitte einen Admin-Code eingeben',
+    addFailMsg:'Hinzufügen fehlgeschlagen', staffAddedMsg:'Mitarbeiterkonto hinzugefügt: {name}', genServerErrMsg:'Serverfehler',
+    delAccountConfirm:'Konto "{name}" löschen?', delFailMsg:'Löschen fehlgeschlagen', accountDeletedMsg:'Konto gelöscht: {name}',
+    adminCodeEmptyErr:'Bitte einen neuen Admin-Code eingeben', adminCodeMismatchErr:'Admin-Codes stimmen nicht überein', coNotFoundErr:'Firmeninformationen nicht gefunden',
+    adminCodeChangedMsg:'✅ Admin-Code geändert', savedMsg:'Gespeichert', addCoModalTitle:'Firma hinzufügen',
+    uniqueCodeLbl:'Eindeutiger Code', uniqueCodeNote:'(Automatisch vom Hauptauftragnehmer vergeben — Zusammenführungsschlüssel)', regenBtn:'↺ Neu generieren',
+    uniqueCodeWarn:'※ Muss eindeutig sein, nicht ändern', contractPeriodLbl:'Vertragszeitraum', uniqueCodeEnterErr:'Bitte einen eindeutigen Code eingeben',
+    coNamePwEnterErr:'Bitte Firmennamen und Passwort eingeben', codeInUseErr:'Dieser eindeutige Code wird bereits verwendet: {code}', coAddedMsg:'Firma hinzugefügt: [{code}] {name}',
+    editCoModalTitle:'Firma bearbeiten', newPwOptionalLbl:'Neues Passwort (nur bei Änderung)', newPwOptionalPh:'Leer lassen = keine Änderung',
+    coNameEnterErr:'Bitte einen Firmennamen eingeben', coUpdatedMsg:'Firmeninformationen aktualisiert', delCoConfirm:'Dieses Firmenkonto und alle Daten löschen?',
+    transferTargetErr:'Bitte eine Zielfirma für die Übertragung auswählen', transferConfirm:'Die Übertragung der Hauptadministratorrechte macht dieses Konto zu einer normalen Firma. Fortfahren?', transferDoneMsg:'Hauptadministratorrechte übertragen. Bitte erneut anmelden.',
     holNoneMsg:'Keine Feiertage registriert', holCustomBadge:'Benutzerdefiniert', holDefaultBadge:'Standard', holModalTitle:'📅 Feiertage verwalten',
     holNamePh:'Feiertagsname', holDesc:'Geben Sie Datum und Feiertagsname ein. Beim Speichern gilt dies für alle Zeitpläne auf diesem Gerät.',
     holResetWarn:'⚠ Beim Zurücksetzen auf Standard werden die fest codierten Feiertage 2026 wiederhergestellt.', holAddRowBtn:'+ Zeile hinzufügen', holResetBtn:'Auf Standard zurücksetzen',
@@ -2352,6 +2492,41 @@ const I18N = {
     apNoAccounts:'アカウントなし', apAssignTitle:'担当者割り当て — {site}', apAssignDesc:'アクセスを許可する人にチェック（現場管理者も一緒にチェック）',
     apSiteMgrLabel:'現場管理者', apAssignSavedMsg:'割り当てが保存されました',
     genFailMsg:'失敗：{msg}', genChangedMsg:'変更されました', genDeletedMsg:'削除されました',
+    adminCoTitle:'業者アカウント管理', adminAddCoBtn:'+ 業者追加', adminColCode:'固有コード',
+    adminColCoName:'業者名', adminColContractName:'契約工事名', adminColContractPeriod:'工事期間（開始日～終了日）',
+    adminColAuth:'権限', adminContractNamePh:'契約工事名を入力', badgePrimary:'主管理者',
+    badgeCompany:'業者', adminEditCoBtn:'業者名/PW', adminCurrentAccount:'（現在のアカウント）',
+    adminCodeChangeTitle:'管理者コード変更', adminCodeChangeDesc:'バックアップ復元などの管理者機能を使うには、ログイン時に管理者コードを入力する必要があります。', adminNewCodePh:'新しい管理者コード',
+    genChangeBtn:'変更', adminPrimaryChangeTitle:'主管理者変更', adminPrimaryChangeDesc:'主管理者権限を他の業者に移譲します。移譲後、現在のアカウントは一般業者になります。',
+    adminNoCoOption:'登録された業者がありません', adminTransferBtn:'主管理者移譲', adminClaudeKeyDesc:'工程フロータブのAI分析に使用されます。この端末のブラウザにのみ保存されます。',
+    claudeKeySavedMsg:'✅ Claude APIキーが保存されました', claudeKeyDeletedMsg:'🗑 Claude APIキーが削除されました', keyEnterErr:'⚠ APIキーを入力してください',
+    claudeKeyWrongGroqErr:'⚠ これはGroqキー（gsk_）です。下のGroq欄に入力してください', keySetBadge:'✅ 設定済み', keyUnsetBadge:'⚠ 未設定', claudeKeyServerSavedMsg:'✅ Claude APIキーがサーバーに保存されました。全スタッフがAI分析を利用できます',
+    keySaveFailMsg:'⚠ 保存失敗：{msg}', keyServerErrMsg:'⚠ サーバーエラー：{msg}', claudeKeyUnsetHint:'⚠ 未設定 — 下に入力して「サーバーに保存」を押してください',
+    claudeKeyServerDeletedMsg:'🗑 Claude APIキーがサーバーから削除されました', keyDeleteFailMsg:'⚠ 削除失敗：{msg}', groqKeyWrongPrefixErr:'⚠ GroqキーはgSk_で始まります。入力欄を確認してください',
+    groqKeyServerSavedMsg:'✅ Groq APIキーがサーバーに保存されました', groqKeyUnsetHint:'⚠ 未設定 — 下にgsk_...キーを入力して「サーバーに保存」', groqKeyServerDeletedMsg:'🗑 Groq APIキーがサーバーから削除されました',
+    staffLoadingMsg:'スタッフリスト読み込み中...', badgeAdmin:'管理者', siteStaffTitle:'🌐 現場スタッフ管理',
+    loadingMsg:'読み込み中...', adminStaffTitle:'スタッフアカウント管理', adminAddStaffBtn:'+ スタッフ追加',
+    noStaffMsg:'登録されたスタッフがいません', claudeKeyServerNote:'キーは<b>サーバー（config.json）</b>に保存されます。スタッフのブラウザには一切公開されません。', statusCheckingMsg:'状態確認中...',
+    saveToServerBtn:'サーバーに保存', groqKeyTitle:'⚡ Groq APIキー', groqKeyFreeNote:'（無料・デフォルトAIプロバイダー）',
+    groqKeyDesc:'無料キーは<b>console.groq.com</b>で発行（gsk_で始まる）。サーバー（config.json）に保存され、スタッフのブラウザには公開されません。', staffLoadFailMsg:'スタッフリストの読み込みに失敗：{msg}', noSiteInfoMsg:'現場情報なし',
+    noPermissionMsg:'権限なし', mgrSuffix:'・担当', removeBtn:'除外',
+    noSiteStaffMsg:'現場スタッフなし', addToSiteBtn:'+ 現場に追加', noUnassignedMsg:'未配属スタッフなし',
+    siteStaffLbl:'現場スタッフ', unassignedStaffLbl:'未配属スタッフ — 自分の現場に追加', loadFailMsg:'読み込み失敗',
+    addedToSiteMsg:'{name}が現場に追加されました', removeConfirm:'「{name}」をこの現場から除外しますか？', removedMsg:'{name}が除外されました',
+    addStaffModalTitle:'スタッフアカウント追加', fullPwLbl:'パスワード', pwConfirmLbl:'パスワード確認',
+    pwConfirmPh:'パスワードを再入力', roleUser:'一般スタッフ', adminCodeSetLbl:'管理者コード設定',
+    adminCodePh:'管理者コード', genAddBtn:'追加', genNameErr:'名前を入力してください',
+    pwEnterErr:'パスワードを入力してください', pwMismatchErr:'パスワードが一致しません', adminCodeEnterErr:'管理者コードを入力してください',
+    addFailMsg:'追加失敗', staffAddedMsg:'スタッフアカウント追加：{name}', genServerErrMsg:'サーバーエラー',
+    delAccountConfirm:'「{name}」アカウントを削除しますか？', delFailMsg:'削除失敗', accountDeletedMsg:'アカウント削除：{name}',
+    adminCodeEmptyErr:'新しい管理者コードを入力してください', adminCodeMismatchErr:'管理者コードが一致しません', coNotFoundErr:'業者情報が見つかりません',
+    adminCodeChangedMsg:'✅ 管理者コードが変更されました', savedMsg:'保存されました', addCoModalTitle:'業者追加',
+    uniqueCodeLbl:'固有コード', uniqueCodeNote:'（元請が自動付与 — 取りまとめ基準キー）', regenBtn:'↺ 再生成',
+    uniqueCodeWarn:'※ 重複不可、変更禁止', contractPeriodLbl:'工事期間', uniqueCodeEnterErr:'固有コードを入力してください',
+    coNamePwEnterErr:'業者名とパスワードを入力してください', codeInUseErr:'既に使用中の固有コードです：{code}', coAddedMsg:'業者追加完了：[{code}] {name}',
+    editCoModalTitle:'業者編集', newPwOptionalLbl:'新しいパスワード（変更時のみ入力）', newPwOptionalPh:'空欄＝変更なし',
+    coNameEnterErr:'業者名を入力してください', coUpdatedMsg:'業者情報が更新されました', delCoConfirm:'この業者アカウントとすべてのデータを削除しますか？',
+    transferTargetErr:'移譲先の業者を選択してください', transferConfirm:'主管理者権限を移譲すると、現在のアカウントは一般業者になります。続行しますか？', transferDoneMsg:'主管理者権限が移譲されました。再度ログインしてください。',
     holNoneMsg:'登録された祝日がありません', holCustomBadge:'カスタム', holDefaultBadge:'デフォルト', holModalTitle:'📅 祝日管理',
     holNamePh:'祝日名', holDesc:'日付と祝日名を入力してください。保存するとこの端末のすべての工程表に適用されます。',
     holResetWarn:'⚠ デフォルトにリセットすると、ハードコードされた2026年の祝日に戻ります。', holAddRowBtn:'+ 行追加', holResetBtn:'デフォルトにリセット',
@@ -8011,7 +8186,7 @@ function renderAdmin(){
         <input type="text"
           class="utbl-inp"
           value="${esc(c.contractName||'')}"
-          placeholder="계약공사명 입력"
+          placeholder="${t('adminContractNamePh')}"
           onchange="saveCoField('${c.id}','contractName',this.value)"
           style="width:100%;min-width:140px">
       </td>
@@ -8030,12 +8205,12 @@ function renderAdmin(){
             style="width:118px">
         </div>
       </td>
-      <td>${c.isPrimary?'<span class="badge badge-p">주 관리자</span>':'<span class="badge badge-u">업체</span>'}</td>
+      <td>${c.isPrimary?`<span class="badge badge-p">${t('badgePrimary')}</span>`:`<span class="badge badge-u">${t('badgeCompany')}</span>`}</td>
       <td>
         <div style="display:flex;gap:4px">
-          <button class="btn bo btn-xs" onclick="editCo('${c.id}')">업체명/PW</button>
-          ${!c.isPrimary?`<button class="btn bd btn-xs" onclick="delCo('${c.id}')">삭제</button>`:''}
-          ${c.id===CU.id?'<span style="font-size:10px;color:var(--text3)">(현재 계정)</span>':''}
+          <button class="btn bo btn-xs" onclick="editCo('${c.id}')">${t('adminEditCoBtn')}</button>
+          ${!c.isPrimary?`<button class="btn bd btn-xs" onclick="delCo('${c.id}')">${t('wordDelete')}</button>`:''}
+          ${c.id===CU.id?`<span style="font-size:10px;color:var(--text3)">${t('adminCurrentAccount')}</span>`:''}
         </div>
       </td>
     </tr>`).join('');
@@ -8043,8 +8218,8 @@ function renderAdmin(){
   const others=d.companies.filter(c=>!c.isPrimary);
   document.getElementById('adminCon').innerHTML=`
     <div class="admin-sec">
-      <div class="admin-title">업체 계정 관리
-        <button class="btn bp btn-xs" onclick="showAddCo()">+ 업체 추가</button>
+      <div class="admin-title">${t('adminCoTitle')}
+        <button class="btn bp btn-xs" onclick="showAddCo()">${t('adminAddCoBtn')}</button>
       </div>
       <table class="utbl" style="table-layout:fixed;width:100%">
         <colgroup>
@@ -8055,37 +8230,37 @@ function renderAdmin(){
           <col style="width:80px">
           <col style="width:130px">
         </colgroup>
-        <thead><tr><th>고유코드</th><th>업체명</th><th>계약공사명</th><th>공사기간 (시작일 ~ 종료일)</th><th>권한</th><th>관리</th></tr></thead>
+        <thead><tr><th>${t('adminColCode')}</th><th>${t('adminColCoName')}</th><th>${t('adminColContractName')}</th><th>${t('adminColContractPeriod')}</th><th>${t('adminColAuth')}</th><th>${t('evColManage')}</th></tr></thead>
         <tbody>${rows}</tbody>
       </table>
     </div>
     <div class="admin-sec">
-      <div class="admin-title">관리자 코드 변경</div>
-      <p style="font-size:11px;color:var(--text2);margin-bottom:10px">로그인 시 관리자 코드를 입력해야 백업복원 등 관리자 기능을 사용할 수 있습니다.</p>
+      <div class="admin-title">${t('adminCodeChangeTitle')}</div>
+      <p style="font-size:11px;color:var(--text2);margin-bottom:10px">${t('adminCodeChangeDesc')}</p>
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-        <input type="password" class="pi" id="newAdminCode" placeholder="새 관리자 코드" style="width:160px">
-        <input type="password" class="pi" id="newAdminCode2" placeholder="확인" style="width:160px">
-        <button class="btn bp btn-xs" onclick="changeAdminCode()">변경</button>
+        <input type="password" class="pi" id="newAdminCode" placeholder="${t('adminNewCodePh')}" style="width:160px">
+        <input type="password" class="pi" id="newAdminCode2" placeholder="${t('wordConfirm')}" style="width:160px">
+        <button class="btn bp btn-xs" onclick="changeAdminCode()">${t('genChangeBtn')}</button>
       </div>
     </div>
     <div class="admin-sec">
-      <div class="admin-title">주 관리자 변경</div>
-      <p style="font-size:11px;color:var(--text2);margin-bottom:10px">주 관리자 권한을 다른 업체에 이전합니다. 이전 후 현재 계정은 일반 업체가 됩니다.</p>
+      <div class="admin-title">${t('adminPrimaryChangeTitle')}</div>
+      <p style="font-size:11px;color:var(--text2);margin-bottom:10px">${t('adminPrimaryChangeDesc')}</p>
       <div style="display:flex;gap:8px;align-items:center">
         <select class="pi" id="transTarget" style="width:180px">
-          ${others.length?others.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join(''):'<option value="">등록된 업체 없음</option>'}
+          ${others.length?others.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join(''):`<option value="">${t('adminNoCoOption')}</option>`}
         </select>
-        <button class="btn bw" onclick="transferPrimary()">주 관리자 이전</button>
+        <button class="btn bw" onclick="transferPrimary()">${t('adminTransferBtn')}</button>
       </div>
     </div>
     <div class="admin-sec">
       <div class="admin-title">🤖 Claude API Key</div>
-      <p style="font-size:11px;color:var(--text2);margin-bottom:10px">공정 흐름 탭 AI 분석에 사용됩니다. 이 기기의 브라우저에만 저장됩니다.</p>
+      <p style="font-size:11px;color:var(--text2);margin-bottom:10px">${t('adminClaudeKeyDesc')}</p>
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
         <input type="password" class="pi" id="adminClaudeKey" placeholder="sk-ant-api03-..." style="width:300px;font-family:monospace;font-size:11px"
           value="${esc(localStorage.getItem('ms_claude_key')||'')}">
-        <button class="btn bp btn-xs" onclick="_saveAdminClaudeKey()">저장</button>
-        <button class="btn bd btn-xs" onclick="_clearAdminClaudeKey()">삭제</button>
+        <button class="btn bp btn-xs" onclick="_saveAdminClaudeKey()">${t('stgSave')}</button>
+        <button class="btn bd btn-xs" onclick="_clearAdminClaudeKey()">${t('wordDelete')}</button>
       </div>
     </div>
     <div class="admin-sec">
@@ -8101,20 +8276,20 @@ function renderAdmin(){
 function _saveAdminClaudeKey(){
   const k=(document.getElementById('adminClaudeKey')?.value||'').trim();
   try{ if(k) localStorage.setItem('ms_claude_key',k); else localStorage.removeItem('ms_claude_key'); }catch(e){}
-  toast('✅ Claude API Key 저장됨');
+  toast(t('claudeKeySavedMsg'));
 }
 function _clearAdminClaudeKey(){
   try{ localStorage.removeItem('ms_claude_key'); }catch(e){}
   const el=document.getElementById('adminClaudeKey');
   if(el)el.value='';
-  toast('🗑 Claude API Key 삭제됨');
+  toast(t('claudeKeyDeletedMsg'));
 }
 
 // ── 서버 Enterprise 전용: API키를 서버(config.json)에 저장 ──────
 async function _saveAdminClaudeKeyServer(){
   const k=(document.getElementById('adminClaudeKey')?.value||'').trim();
-  if(!k){ toast('⚠ API Key를 입력하세요'); return; }
-  if(k.startsWith('gsk_')){ toast('⚠ 이건 Groq 키(gsk_)입니다. 아래 Groq 칸에 넣으세요'); return; }
+  if(!k){ toast(t('keyEnterErr')); return; }
+  if(k.startsWith('gsk_')){ toast(t('claudeKeyWrongGroqErr')); return; }
   try{
     const r=await fetch('/api/admin/claude-key',{
       method:'POST', headers:{'Content-Type':'application/json'},
@@ -8124,10 +8299,10 @@ async function _saveAdminClaudeKeyServer(){
     if(result.ok){
       document.getElementById('adminClaudeKey').value=''; // 입력란 즉시 비움
       const el=document.getElementById('adminKeyStatus');
-      if(el) el.innerHTML=`<span style="color:#166534;font-weight:600">✅ 설정됨</span> <span style="font-family:monospace;font-size:11px;color:var(--text3)">(sk-ant-...${k.slice(-4)})</span>`;
-      toast('✅ Claude API Key 서버에 저장됨. 모든 직원이 AI 분석 사용 가능');
-    } else { toast('⚠ 저장 실패: '+(result.msg||'')); }
-  }catch(e){ toast('⚠ 서버 오류: '+e.message); }
+      if(el) el.innerHTML=`<span style="color:#166534;font-weight:600">${t('keySetBadge')}</span> <span style="font-family:monospace;font-size:11px;color:var(--text3)">(sk-ant-...${k.slice(-4)})</span>`;
+      toast(t('claudeKeyServerSavedMsg'));
+    } else { toast(t('keySaveFailMsg',{msg:result.msg||''})); }
+  }catch(e){ toast(t('keyServerErrMsg',{msg:e.message})); }
 }
 async function _clearAdminClaudeKeyServer(){
   try{
@@ -8138,16 +8313,16 @@ async function _clearAdminClaudeKeyServer(){
     const result=await r.json();
     if(result.ok){
       const el=document.getElementById('adminKeyStatus');
-      if(el) el.innerHTML=`<span style="color:#dc2626">⚠ 미설정</span>`;
-      toast('🗑 Claude API Key 서버에서 삭제됨');
-    } else { toast('⚠ 삭제 실패: '+(result.msg||'')); }
-  }catch(e){ toast('⚠ 서버 오류: '+e.message); }
+      if(el) el.innerHTML=`<span style="color:#dc2626">${t('keyUnsetBadge')}</span>`;
+      toast(t('claudeKeyServerDeletedMsg'));
+    } else { toast(t('keyDeleteFailMsg',{msg:result.msg||''})); }
+  }catch(e){ toast(t('keyServerErrMsg',{msg:e.message})); }
 }
 
 async function _saveAdminGroqKeyServer(){
   const k=(document.getElementById('adminGroqKey')?.value||'').trim();
-  if(!k){ toast('⚠ API Key를 입력하세요'); return; }
-  if(!k.startsWith('gsk_')){ toast('⚠ Groq 키는 gsk_ 로 시작합니다. 칸을 확인하세요'); return; }
+  if(!k){ toast(t('keyEnterErr')); return; }
+  if(!k.startsWith('gsk_')){ toast(t('groqKeyWrongPrefixErr')); return; }
   try{
     const r=await fetch('/api/admin/groq-key',{
       method:'POST', headers:{'Content-Type':'application/json'},
@@ -8157,10 +8332,10 @@ async function _saveAdminGroqKeyServer(){
     if(result.ok){
       document.getElementById('adminGroqKey').value='';
       const el=document.getElementById('adminGroqStatus');
-      if(el) el.innerHTML=`<span style="color:#166534;font-weight:600">✅ 설정됨</span> <span style="font-family:monospace;font-size:11px;color:var(--text3)">(gsk_...${k.slice(-4)})</span>`;
-      toast('✅ Groq API Key 서버에 저장됨');
-    } else { toast('⚠ 저장 실패: '+(result.msg||'')); }
-  }catch(e){ toast('⚠ 서버 오류: '+e.message); }
+      if(el) el.innerHTML=`<span style="color:#166534;font-weight:600">${t('keySetBadge')}</span> <span style="font-family:monospace;font-size:11px;color:var(--text3)">(gsk_...${k.slice(-4)})</span>`;
+      toast(t('groqKeyServerSavedMsg'));
+    } else { toast(t('keySaveFailMsg',{msg:result.msg||''})); }
+  }catch(e){ toast(t('keyServerErrMsg',{msg:e.message})); }
 }
 async function _clearAdminGroqKeyServer(){
   try{
@@ -8171,10 +8346,10 @@ async function _clearAdminGroqKeyServer(){
     const result=await r.json();
     if(result.ok){
       const el=document.getElementById('adminGroqStatus');
-      if(el) el.innerHTML=`<span style="color:#dc2626">⚠ 미설정</span>`;
-      toast('🗑 Groq API Key 서버에서 삭제됨');
-    } else { toast('⚠ 삭제 실패: '+(result.msg||'')); }
-  }catch(e){ toast('⚠ 서버 오류: '+e.message); }
+      if(el) el.innerHTML=`<span style="color:#dc2626">${t('keyUnsetBadge')}</span>`;
+      toast(t('groqKeyServerDeletedMsg'));
+    } else { toast(t('keyDeleteFailMsg',{msg:result.msg||''})); }
+  }catch(e){ toast(t('keyServerErrMsg',{msg:e.message})); }
 }
 
 // ══════════════════════════════════════════════
@@ -8182,55 +8357,55 @@ async function _clearAdminGroqKeyServer(){
 // ══════════════════════════════════════════════
 async function _renderAdminServer(){
   const con=document.getElementById('adminCon');
-  con.innerHTML=`<div style="padding:20px;color:var(--text3);font-size:12px">직원 목록 로드 중...</div>`;
+  con.innerHTML=`<div style="padding:20px;color:var(--text3);font-size:12px">${t('staffLoadingMsg')}</div>`;
   try{
     const r=await fetch(`/api/users?companyId=${CU.id}`);
     const users=await r.json();
     const rows=users.map(u=>`
       <tr>
         <td><strong>${esc(u.name)}</strong></td>
-        <td>${u.isAdmin?'<span class="badge badge-p">관리자</span>':'<span class="badge badge-u">직원</span>'}</td>
+        <td>${u.isAdmin?`<span class="badge badge-p">${t('badgeAdmin')}</span>`:`<span class="badge badge-u">${t('roleStaff')}</span>`}</td>
         <td>
           <div style="display:flex;gap:4px">
-            ${u.id!==CU.userId?`<button class="btn bd btn-xs" onclick="_deleteServerUser('${u.id}','${esc(u.name)}')">삭제</button>`:'<span style="font-size:10px;color:var(--text3)">(현재 계정)</span>'}
+            ${u.id!==CU.userId?`<button class="btn bd btn-xs" onclick="_deleteServerUser('${u.id}','${esc(u.name)}')">${t('wordDelete')}</button>`:`<span style="font-size:10px;color:var(--text3)">${t('adminCurrentAccount')}</span>`}
           </div>
         </td>
       </tr>`).join('');
 
     con.innerHTML=`
       ${_activeSite?`<div class="admin-sec">
-        <div class="admin-title">🌐 현장 직원 관리</div>
-        <div id="siteMembersBox" style="font-size:12px;color:var(--text3)">로드 중...</div>
+        <div class="admin-title">${t('siteStaffTitle')}</div>
+        <div id="siteMembersBox" style="font-size:12px;color:var(--text3)">${t('loadingMsg')}</div>
       </div>`:''}
       <div class="admin-sec">
-        <div class="admin-title">직원 계정 관리
-          <button class="btn bp btn-xs" onclick="_showAddServerUser()">+ 직원 추가</button>
+        <div class="admin-title">${t('adminStaffTitle')}
+          <button class="btn bp btn-xs" onclick="_showAddServerUser()">${t('adminAddStaffBtn')}</button>
         </div>
         <table class="utbl" style="width:100%">
-          <thead><tr><th>이름</th><th>권한</th><th>관리</th></tr></thead>
-          <tbody>${rows||'<tr><td colspan="3" style="text-align:center;color:var(--text3)">등록된 직원 없음</td></tr>'}</tbody>
+          <thead><tr><th>${t('apNamePh')}</th><th>${t('adminColAuth')}</th><th>${t('evColManage')}</th></tr></thead>
+          <tbody>${rows||`<tr><td colspan="3" style="text-align:center;color:var(--text3)">${t('noStaffMsg')}</td></tr>`}</tbody>
         </table>
       </div>
       <div class="admin-sec">
         <div class="admin-title">🤖 Claude API Key</div>
         <p style="font-size:11px;color:var(--text2);margin-bottom:6px">
-          키는 <b>서버(config.json)</b>에 저장됩니다. 직원 브라우저에는 절대 노출되지 않습니다.
+          ${t('claudeKeyServerNote')}
         </p>
-        <div id="adminKeyStatus" style="font-size:12px;color:var(--text3);margin-bottom:8px">상태 확인 중...</div>
+        <div id="adminKeyStatus" style="font-size:12px;color:var(--text3);margin-bottom:8px">${t('statusCheckingMsg')}</div>
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
           <input type="password" class="pi" id="adminClaudeKey" placeholder="sk-ant-api03-..." style="width:300px;font-family:monospace;font-size:11px">
-          <button class="btn bp btn-xs" onclick="_saveAdminClaudeKeyServer()">서버에 저장</button>
-          <button class="btn bd btn-xs" onclick="_clearAdminClaudeKeyServer()">삭제</button>
+          <button class="btn bp btn-xs" onclick="_saveAdminClaudeKeyServer()">${t('saveToServerBtn')}</button>
+          <button class="btn bd btn-xs" onclick="_clearAdminClaudeKeyServer()">${t('wordDelete')}</button>
         </div>
       </div>
       <div class="admin-sec">
-        <div class="admin-title">⚡ Groq API Key <span style="font-size:10px;color:var(--text3)">(무료 · 기본 AI 제공자)</span></div>
-        <p style="font-size:11px;color:var(--text2);margin-bottom:6px">무료 키는 <b>console.groq.com</b>에서 발급(gsk_로 시작). 서버(config.json)에 저장되며 직원 브라우저엔 노출되지 않습니다.</p>
-        <div id="adminGroqStatus" style="font-size:12px;color:var(--text3);margin-bottom:8px">상태 확인 중...</div>
+        <div class="admin-title">${t('groqKeyTitle')} <span style="font-size:10px;color:var(--text3)">${t('groqKeyFreeNote')}</span></div>
+        <p style="font-size:11px;color:var(--text2);margin-bottom:6px">${t('groqKeyDesc')}</p>
+        <div id="adminGroqStatus" style="font-size:12px;color:var(--text3);margin-bottom:8px">${t('statusCheckingMsg')}</div>
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
           <input type="password" class="pi" id="adminGroqKey" placeholder="gsk_..." style="width:300px;font-family:monospace;font-size:11px">
-          <button class="btn bp btn-xs" onclick="_saveAdminGroqKeyServer()">서버에 저장</button>
-          <button class="btn bd btn-xs" onclick="_clearAdminGroqKeyServer()">삭제</button>
+          <button class="btn bp btn-xs" onclick="_saveAdminGroqKeyServer()">${t('saveToServerBtn')}</button>
+          <button class="btn bd btn-xs" onclick="_clearAdminGroqKeyServer()">${t('wordDelete')}</button>
         </div>
       </div>
       <div class="admin-sec">
@@ -8245,60 +8420,60 @@ async function _renderAdminServer(){
     fetch('/api/admin/claude-key/status').then(r=>r.json()).then(s=>{
       const el=document.getElementById('adminKeyStatus');
       if(el) el.innerHTML = s.set
-        ? `<span style="color:#166534;font-weight:600">✅ 설정됨</span> <span style="font-family:monospace;font-size:11px;color:var(--text3)">(${s.masked})</span>`
-        : `<span style="color:#dc2626">⚠ 미설정</span> — 아래에 입력 후 "서버에 저장"을 누르세요`;
+        ? `<span style="color:#166534;font-weight:600">${t('keySetBadge')}</span> <span style="font-family:monospace;font-size:11px;color:var(--text3)">(${s.masked})</span>`
+        : `<span style="color:#dc2626">${t('claudeKeyUnsetHint')}</span>`;
       const gel=document.getElementById('adminGroqStatus');
       if(gel) gel.innerHTML = s.groqSet
-        ? `<span style="color:#166534;font-weight:600">✅ 설정됨</span> <span style="font-family:monospace;font-size:11px;color:var(--text3)">(${s.groqMasked})</span>`
-        : `<span style="color:#dc2626">⚠ 미설정</span> — 아래에 gsk_... 키 입력 후 "서버에 저장"`;
+        ? `<span style="color:#166534;font-weight:600">${t('keySetBadge')}</span> <span style="font-family:monospace;font-size:11px;color:var(--text3)">(${s.groqMasked})</span>`
+        : `<span style="color:#dc2626">${t('groqKeyUnsetHint')}</span>`;
     }).catch(()=>{});
   }catch(e){
-    con.innerHTML=`<div style="padding:20px;color:red;font-size:12px">직원 목록 로드 실패: ${e.message}</div>`;
+    con.innerHTML=`<div style="padding:20px;color:red;font-size:12px">${t('staffLoadFailMsg',{msg:e.message})}</div>`;
   }
 }
 
 async function _renderSiteMembers(){
   const box=document.getElementById('siteMembersBox');
   if(!box) return;
-  if(!_activeSite){ box.innerHTML='<span style="color:var(--text3)">현장 정보 없음</span>'; return; }
+  if(!_activeSite){ box.innerHTML=`<span style="color:var(--text3)">${t('noSiteInfoMsg')}</span>`; return; }
   try{
     const r=await fetch(API+'/api/site/members?userId='+encodeURIComponent(CU.userId)+'&site='+encodeURIComponent(_activeSite));
     const j=await r.json();
-    if(!j.ok){ box.innerHTML='<span style="color:var(--text3)">'+(j.msg||'권한 없음')+'</span>'; return; }
-    const mem=(j.members||[]).map(m=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:3px 0;border-bottom:1px solid var(--border)"><span>${esc(m.name)} <span style="color:var(--text3)">[${m.role}${m.isManager?'·담당':''}]</span></span>${(m.role!=='master'&&m.id!==CU.userId)?`<button class="btn bd btn-xs" onclick="_siteRemoveStaff('${m.id}','${esc(m.name)}')">제외</button>`:''}</div>`).join('')||'<div style="color:var(--text3)">현장 직원 없음</div>';
-    const un=(j.unassigned||[]).map(m=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:3px 0"><span>${esc(m.name)} <span style="color:var(--text3)">[${m.role}]</span></span><button class="btn bp btn-xs" onclick="_siteAddStaff('${m.id}','${esc(m.name)}')">+ 현장에 추가</button></div>`).join('')||'<div style="color:var(--text3)">미배정 직원 없음</div>';
-    box.innerHTML=`<div style="font-weight:600;margin:2px 0 4px">현장 직원</div>${mem}<div style="font-weight:600;margin:12px 0 4px">미배정 직원 — 내 현장에 추가</div>${un}`;
-  }catch(e){ box.innerHTML='<span style="color:red">로드 실패</span>'; }
+    if(!j.ok){ box.innerHTML='<span style="color:var(--text3)">'+(j.msg||t('noPermissionMsg'))+'</span>'; return; }
+    const mem=(j.members||[]).map(m=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:3px 0;border-bottom:1px solid var(--border)"><span>${esc(m.name)} <span style="color:var(--text3)">[${m.role}${m.isManager?t('mgrSuffix'):''}]</span></span>${(m.role!=='master'&&m.id!==CU.userId)?`<button class="btn bd btn-xs" onclick="_siteRemoveStaff('${m.id}','${esc(m.name)}')">${t('removeBtn')}</button>`:''}</div>`).join('')||`<div style="color:var(--text3)">${t('noSiteStaffMsg')}</div>`;
+    const un=(j.unassigned||[]).map(m=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:3px 0"><span>${esc(m.name)} <span style="color:var(--text3)">[${m.role}]</span></span><button class="btn bp btn-xs" onclick="_siteAddStaff('${m.id}','${esc(m.name)}')">${t('addToSiteBtn')}</button></div>`).join('')||`<div style="color:var(--text3)">${t('noUnassignedMsg')}</div>`;
+    box.innerHTML=`<div style="font-weight:600;margin:2px 0 4px">${t('siteStaffLbl')}</div>${mem}<div style="font-weight:600;margin:12px 0 4px">${t('unassignedStaffLbl')}</div>${un}`;
+  }catch(e){ box.innerHTML=`<span style="color:red">${t('loadFailMsg')}</span>`; }
 }
 async function _siteAddStaff(id,name){
   const r=await fetch(API+'/api/site/add-staff',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:CU.userId,site:_activeSite,staffId:id})});
-  const j=await r.json(); if(j.ok){toast(name+' 현장에 추가됨'); _renderSiteMembers();} else toast('실패: '+(j.msg||''));
+  const j=await r.json(); if(j.ok){toast(t('addedToSiteMsg',{name})); _renderSiteMembers();} else toast(t('genFailMsg',{msg:j.msg||''}));
 }
 async function _siteRemoveStaff(id,name){
-  if(!confirm('"'+name+'" 을(를) 이 현장에서 제외할까요?'))return;
+  if(!confirm(t('removeConfirm',{name})))return;
   const r=await fetch(API+'/api/site/remove-staff',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:CU.userId,site:_activeSite,staffId:id})});
-  const j=await r.json(); if(j.ok){toast(name+' 제외됨'); _renderSiteMembers();} else toast('실패: '+(j.msg||''));
+  const j=await r.json(); if(j.ok){toast(t('removedMsg',{name})); _renderSiteMembers();} else toast(t('genFailMsg',{msg:j.msg||''}));
 }
 function _showAddServerUser(){
   showModal(`
-    <div class="modal-title">직원 계정 추가</div>
-    <div class="fg"><label>이름</label><input type="text" id="nsuName" class="fc" placeholder="홍길동"></div>
-    <div class="fg"><label>비밀번호</label><input type="password" id="nsuPw" class="fc" placeholder="비밀번호"></div>
-    <div class="fg"><label>비밀번호 확인</label><input type="password" id="nsuPw2" class="fc" placeholder="비밀번호 재입력"></div>
-    <div class="fg"><label>권한</label>
+    <div class="modal-title">${t('addStaffModalTitle')}</div>
+    <div class="fg"><label>${t('apNamePh')}</label><input type="text" id="nsuName" class="fc" placeholder="홍길동"></div>
+    <div class="fg"><label>${t('fullPwLbl')}</label><input type="password" id="nsuPw" class="fc" placeholder="${t('fullPwLbl')}"></div>
+    <div class="fg"><label>${t('pwConfirmLbl')}</label><input type="password" id="nsuPw2" class="fc" placeholder="${t('pwConfirmPh')}"></div>
+    <div class="fg"><label>${t('adminColAuth')}</label>
       <select id="nsuRole" class="fc">
-        <option value="user">일반 직원</option>
-        <option value="admin">관리자</option>
+        <option value="user">${t('roleUser')}</option>
+        <option value="admin">${t('badgeAdmin')}</option>
       </select>
     </div>
     <div class="fg" id="nsuAdminCodeWrap" style="display:none">
-      <label>관리자 코드 설정</label>
-      <input type="password" id="nsuAdminCode" class="fc" placeholder="관리자 코드">
+      <label>${t('adminCodeSetLbl')}</label>
+      <input type="password" id="nsuAdminCode" class="fc" placeholder="${t('adminCodePh')}">
     </div>
     <div id="nsuErr" class="auth-err"></div>
     <div style="display:flex;gap:8px;margin-top:12px">
-      <button class="btn bp" onclick="_submitAddServerUser()">추가</button>
-      <button class="btn bgray" onclick="closeModal()">취소</button>
+      <button class="btn bp" onclick="_submitAddServerUser()">${t('genAddBtn')}</button>
+      <button class="btn bgray" onclick="closeModal()">${t('wordCancel')}</button>
     </div>`,
   );
   document.getElementById('nsuRole').onchange=function(){
@@ -8313,31 +8488,31 @@ async function _submitAddServerUser(){
   const isAdmin=document.getElementById('nsuRole').value==='admin';
   const adminCode=isAdmin?(document.getElementById('nsuAdminCode').value||''):'';
   const err=document.getElementById('nsuErr');
-  if(!name){err.textContent='이름을 입력하세요';return}
-  if(!pw){err.textContent='비밀번호를 입력하세요';return}
-  if(pw!==pw2){err.textContent='비밀번호가 일치하지 않습니다';return}
-  if(isAdmin&&!adminCode){err.textContent='관리자 코드를 입력하세요';return}
+  if(!name){err.textContent=t('genNameErr');return}
+  if(!pw){err.textContent=t('pwEnterErr');return}
+  if(pw!==pw2){err.textContent=t('pwMismatchErr');return}
+  if(isAdmin&&!adminCode){err.textContent=t('adminCodeEnterErr');return}
   try{
     const r=await fetch('/api/register',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({companyId:CU.id, adminUserId:CU.userId, newUser:{name,pw,isAdmin,adminCode}})});
     const result=await r.json();
-    if(!result.ok){err.textContent=result.msg||'추가 실패';return}
+    if(!result.ok){err.textContent=result.msg||t('addFailMsg');return}
     closeModal();
-    toast(`직원 계정 추가: ${name}`);
+    toast(t('staffAddedMsg',{name}));
     _renderAdminServer();
-  }catch(e){ err.textContent='서버 오류'; }
+  }catch(e){ err.textContent=t('genServerErrMsg'); }
 }
 
 async function _deleteServerUser(userId, userName){
-  showConf(`"${userName}" 계정을 삭제하시겠습니까?`, async ()=>{
+  showConf(t('delAccountConfirm',{name:userName}), async ()=>{
     try{
       const r=await fetch('/api/user/delete',{method:'POST',headers:{'Content-Type':'application/json'},
         body:JSON.stringify({companyId:CU.id, adminUserId:CU.userId, targetUserId:userId})});
       const result=await r.json();
-      if(!result.ok){toast(result.msg||'삭제 실패');return}
-      toast(`계정 삭제: ${userName}`);
+      if(!result.ok){toast(result.msg||t('delFailMsg'));return}
+      toast(t('accountDeletedMsg',{name:userName}));
       _renderAdminServer();
-    }catch(e){ toast('서버 오류'); }
+    }catch(e){ toast(t('genServerErrMsg')); }
   });
 }
 
@@ -8659,16 +8834,16 @@ function saveHolidayModal(){
 function changeAdminCode(){
   const c1=document.getElementById('newAdminCode').value;
   const c2=document.getElementById('newAdminCode2').value;
-  if(!c1){toast('새 관리자 코드를 입력하세요');return}
-  if(c1!==c2){toast('관리자 코드가 일치하지 않습니다');return}
+  if(!c1){toast(t('adminCodeEmptyErr'));return}
+  if(c1!==c2){toast(t('adminCodeMismatchErr'));return}
   const d=gs();
   const co=d.companies.find(c=>c.id===CU.id);
-  if(!co){toast('업체 정보를 찾을 수 없습니다');return}
+  if(!co){toast(t('coNotFoundErr'));return}
   co.adminCode=hpw(c1);
   ss(d);
   document.getElementById('newAdminCode').value='';
   document.getElementById('newAdminCode2').value='';
-  toast('✅ 관리자 코드가 변경되었습니다');
+  toast(t('adminCodeChangedMsg'));
 }
 
 function saveCoField(id,field,val){
@@ -8677,7 +8852,7 @@ function saveCoField(id,field,val){
   if(!co)return;
   co[field]=val.trim();
   ss(d);
-  toast('저장되었습니다');
+  toast(t('savedMsg'));
 }
 
 function genShortCode(){
@@ -8694,28 +8869,28 @@ function genShortCode(){
 function showAddCo(){
   const code=genShortCode();
   showModal(`
-  <div class="modal-title">업체 추가</div>
+  <div class="modal-title">${t('addCoModalTitle')}</div>
   <div class="mfg">
-    <label>고유코드 <span style="font-size:9px;color:var(--text3)">(원도급사 자동부여 — 취합 기준키)</span></label>
+    <label>${t('uniqueCodeLbl')} <span style="font-size:9px;color:var(--text3)">${t('uniqueCodeNote')}</span></label>
     <div style="display:flex;gap:6px;align-items:center">
       <input class="fc" id="nCoCode" value="${code}" maxlength="8" style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px;letter-spacing:.12em;text-transform:uppercase;width:120px">
-      <button class="btn bgray btn-xs" onclick="document.getElementById('nCoCode').value=genShortCode()">↺ 재생성</button>
-      <span style="font-size:10px;color:var(--text3)">※ 중복 불가, 변경 금지</span>
+      <button class="btn bgray btn-xs" onclick="document.getElementById('nCoCode').value=genShortCode()">${t('regenBtn')}</button>
+      <span style="font-size:10px;color:var(--text3)">${t('uniqueCodeWarn')}</span>
     </div>
   </div>
-  <div class="mfg"><label>업체명</label><input class="fc" id="nCoNm" placeholder="업체명"></div>
-  <div class="mfg"><label>계약공사명</label><input class="fc" id="nCoContract" placeholder="계약공사명"></div>
-  <div class="mfg"><label>공사기간</label>
+  <div class="mfg"><label>${t('adminColCoName')}</label><input class="fc" id="nCoNm" placeholder="${t('adminColCoName')}"></div>
+  <div class="mfg"><label>${t('adminColContractName')}</label><input class="fc" id="nCoContract" placeholder="${t('adminColContractName')}"></div>
+  <div class="mfg"><label>${t('contractPeriodLbl')}</label>
     <div class="mfg-row">
       <input type="date" class="fc" id="nCoStart" style="flex:1">
       <span style="padding:8px 4px;color:var(--text3)">~</span>
       <input type="date" class="fc" id="nCoEnd" style="flex:1">
     </div>
   </div>
-  <div class="mfg"><label>비밀번호</label><input type="password" class="fc" id="nCoPw" placeholder="비밀번호"></div>
+  <div class="mfg"><label>${t('fullPwLbl')}</label><input type="password" class="fc" id="nCoPw" placeholder="${t('fullPwLbl')}"></div>
   <div class="modal-acts">
-    <button class="btn bgray" onclick="closeModal()">취소</button>
-    <button class="btn bp" onclick="doAddCo()">추가</button>
+    <button class="btn bgray" onclick="closeModal()">${t('wordCancel')}</button>
+    <button class="btn bp" onclick="doAddCo()">${t('genAddBtn')}</button>
   </div>`);
 }
 function doAddCo(){
@@ -8725,31 +8900,31 @@ function doAddCo(){
   const contractName=document.getElementById('nCoContract').value.trim();
   const contractStart=document.getElementById('nCoStart').value;
   const contractEnd=document.getElementById('nCoEnd').value;
-  if(!code){toast('고유코드를 입력하세요');return}
-  if(!nm||!pw){toast('업체명과 비밀번호를 입력하세요');return}
+  if(!code){toast(t('uniqueCodeEnterErr'));return}
+  if(!nm||!pw){toast(t('coNamePwEnterErr'));return}
   const d=gs();
-  if(d.companies.find(c=>c.shortCode===code)){toast('이미 사용 중인 고유코드입니다: '+code);return}
+  if(d.companies.find(c=>c.shortCode===code)){toast(t('codeInUseErr',{code}));return}
   const c={id:uid(),shortCode:code,name:nm,pw:hpw(pw),isPrimary:false,contractName,contractStart,contractEnd};
   d.companies.push(c);d.projects[c.id]=mkProj(nm);ss(d);
-  closeModal();renderAdmin();populateViewCoSel();toast(`업체 추가 완료: [${code}] ${nm}`);
+  closeModal();renderAdmin();populateViewCoSel();toast(t('coAddedMsg',{code,name:nm}));
 }
 function editCo(id){
   const d=gs();const co=d.companies.find(c=>c.id===id);if(!co)return;
   showModal(`
-    <div class="modal-title">업체 편집</div>
-    <div class="mfg"><label>업체명</label><input class="fc" id="eCnm" value="${esc(co.name)}"></div>
-    <div class="mfg"><label>계약공사명</label><input class="fc" id="eContract" value="${esc(co.contractName||'')}"></div>
-    <div class="mfg"><label>공사기간</label>
+    <div class="modal-title">${t('editCoModalTitle')}</div>
+    <div class="mfg"><label>${t('adminColCoName')}</label><input class="fc" id="eCnm" value="${esc(co.name)}"></div>
+    <div class="mfg"><label>${t('adminColContractName')}</label><input class="fc" id="eContract" value="${esc(co.contractName||'')}"></div>
+    <div class="mfg"><label>${t('contractPeriodLbl')}</label>
       <div class="mfg-row">
         <input type="date" class="fc" id="eCoStart" value="${co.contractStart||''}" style="flex:1">
         <span style="padding:8px 4px;color:var(--text3)">~</span>
         <input type="date" class="fc" id="eCoEnd" value="${co.contractEnd||''}" style="flex:1">
       </div>
     </div>
-    <div class="mfg"><label>새 비밀번호 (변경 시만 입력)</label><input type="password" class="fc" id="eCpw" placeholder="빈칸 = 변경 안 함"></div>
+    <div class="mfg"><label>${t('newPwOptionalLbl')}</label><input type="password" class="fc" id="eCpw" placeholder="${t('newPwOptionalPh')}"></div>
     <div class="modal-acts">
-      <button class="btn bgray" onclick="closeModal()">취소</button>
-      <button class="btn bp" onclick="doEditCo('${id}')">저장</button>
+      <button class="btn bgray" onclick="closeModal()">${t('wordCancel')}</button>
+      <button class="btn bp" onclick="doEditCo('${id}')">${t('stgSave')}</button>
     </div>`);
 }
 function doEditCo(id){
@@ -8758,30 +8933,30 @@ function doEditCo(id){
   const contractName=document.getElementById('eContract').value.trim();
   const contractStart=document.getElementById('eCoStart').value;
   const contractEnd=document.getElementById('eCoEnd').value;
-  if(!nm){toast('업체명을 입력하세요');return}
+  if(!nm){toast(t('coNameEnterErr'));return}
   const d=gs();const co=d.companies.find(c=>c.id===id);if(!co)return;
   co.name=nm;co.contractName=contractName;co.contractStart=contractStart;co.contractEnd=contractEnd;
   if(pw)co.pw=hpw(pw);
   if(d.projects[id])d.projects[id].companyName=nm;
-  ss(d);closeModal();renderAdmin();populateViewCoSel();toast('업체 정보가 수정되었습니다');
+  ss(d);closeModal();renderAdmin();populateViewCoSel();toast(t('coUpdatedMsg'));
 }
 function delCo(id){
-  showConf('이 업체 계정과 모든 데이터를 삭제하시겠습니까?',()=>{
+  showConf(t('delCoConfirm'),()=>{
     const d=gs();d.companies=d.companies.filter(c=>c.id!==id);delete d.projects[id];
-    ss(d);renderAdmin();populateViewCoSel();toast('삭제되었습니다');
+    ss(d);renderAdmin();populateViewCoSel();toast(t('genDeletedMsg'));
   });
 }
 function transferPrimary(){
   const tid=document.getElementById('transTarget').value;
-  if(!tid){toast('이전할 업체를 선택하세요');return}
-  showConf('주 관리자 권한을 이전하면 현재 계정은 일반 업체가 됩니다. 계속하시겠습니까?',()=>{
+  if(!tid){toast(t('transferTargetErr'));return}
+  showConf(t('transferConfirm'),()=>{
     const d=gs();
     d.companies.forEach(c=>{
       if(c.id===CU.id)c.isPrimary=false;
       if(c.id===tid)c.isPrimary=true;
     });
     CU.isPrimary=false;ss(d);
-    toast('주 관리자 권한이 이전되었습니다. 다시 로그인해주세요.');
+    toast(t('transferDoneMsg'));
     setTimeout(()=>{
       CU=null;VCID=null;
       document.getElementById('app').style.display='none';
