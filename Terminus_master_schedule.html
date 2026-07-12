@@ -1743,8 +1743,8 @@ body.pred-edit-mode .nacts{min-width:44px}
         ondragleave="this.classList.remove('over')"
         ondrop="handleDrop(event)">
         <div style="font-size:30px;margin-bottom:6px">📁</div>
-        <div style="font-weight:700;font-size:13px;margin-bottom:3px">파일 드래그 또는 클릭하여 업로드</div>
-        <div style="color:var(--text2);font-size:11px">담당자별 JSON 파일 여러 개 — 고유코드로 자동 매칭 (회사명 달라도 무관)</div>
+        <div id="mergeDropTitle" style="font-weight:700;font-size:13px;margin-bottom:3px">파일 드래그 또는 클릭하여 업로드</div>
+        <div id="mergeDropDesc" style="color:var(--text2);font-size:11px">담당자별 JSON 파일 여러 개 — 고유코드로 자동 매칭 (회사명 달라도 무관)</div>
       </div>
       <input type="file" id="mergeInp" accept=".json" multiple style="display:none" onchange="handleMergeFiles(this.files)">
 
@@ -1752,40 +1752,40 @@ body.pred-edit-mode .nacts{min-width:44px}
       <div id="fileMgr" class="no-print" style="display:none;margin:10px 0">
         <div style="display:flex;gap:8px;align-items:stretch">
           <div style="flex:1;border:1px solid var(--border);border-radius:8px;overflow:hidden;min-width:0">
-            <div style="background:var(--bg2);padding:6px 8px;font-weight:700;font-size:12px;display:flex;justify-content:space-between;align-items:center">📥 접수 <button class="btn bgray btn-xs" onclick="renderFileMgr()" title="새로고침">↻</button></div>
+            <div style="background:var(--bg2);padding:6px 8px;font-weight:700;font-size:12px;display:flex;justify-content:space-between;align-items:center">📥 <span id="fmInboxLbl">접수</span> <button class="btn bgray btn-xs" id="fmRefreshBtn" onclick="renderFileMgr()" title="새로고침">↻</button></div>
             <div id="fmInbox" style="max-height:240px;overflow:auto;padding:5px 8px;font-size:12px">로드 중...</div>
             <div style="padding:6px 8px;border-top:1px solid var(--border);display:flex;gap:5px;flex-wrap:wrap">
-              <button class="btn bp btn-xs" onclick="fileDownloadSelected('접수')" title="선택 파일의 최신 공정표를 생성해 다운로드">⬇ 선택 다운로드(최신본)</button>
+              <button class="btn bp btn-xs" id="fmDlBtn1" onclick="fileDownloadSelected('접수')" title="선택 파일의 최신 공정표를 생성해 다운로드">⬇ 선택 다운로드(최신본)</button>
               <button class="btn bgray btn-xs" onclick="fileDeleteSelected('접수')">🗑</button>
             </div>
           </div>
           <div style="display:flex;flex-direction:column;justify-content:center;gap:8px">
-            <button class="btn bgray" title="선택 → 보관" onclick="fileMove('접수','보관')" style="font-size:14px">▶</button>
-            <button class="btn bgray" title="선택 → 접수" onclick="fileMove('보관','접수')" style="font-size:14px">◀</button>
+            <button class="btn bgray" id="fmMoveRightBtn" title="선택 → 보관" onclick="fileMove('접수','보관')" style="font-size:14px">▶</button>
+            <button class="btn bgray" id="fmMoveLeftBtn" title="선택 → 접수" onclick="fileMove('보관','접수')" style="font-size:14px">◀</button>
           </div>
           <div style="flex:1;border:1px solid var(--border);border-radius:8px;overflow:hidden;min-width:0">
-            <div style="background:var(--bg2);padding:6px 8px;font-weight:700;font-size:12px">🗄 보관</div>
+            <div style="background:var(--bg2);padding:6px 8px;font-weight:700;font-size:12px">🗄 <span id="fmArchiveLbl">보관</span></div>
             <div id="fmArchive" style="max-height:240px;overflow:auto;padding:5px 8px;font-size:12px">로드 중...</div>
             <div style="padding:6px 8px;border-top:1px solid var(--border);display:flex;gap:5px;flex-wrap:wrap">
-              <button class="btn bp btn-xs" onclick="fileDownloadSelected('보관')">⬇ 선택 다운로드(최신본)</button>
+              <button class="btn bp btn-xs" id="fmDlBtn2" onclick="fileDownloadSelected('보관')">⬇ 선택 다운로드(최신본)</button>
               <button class="btn bgray btn-xs" onclick="fileDeleteSelected('보관')">🗑</button>
             </div>
           </div>
         </div>
-        <div style="font-size:10px;color:var(--text3);margin-top:5px">※ 드롭/업로드한 파일은 <b>접수</b>로 들어갑니다. 접수 목록은 공정회의 [업체 선택]에 사용 · 배포(다운로드) 후 ▶로 <b>보관</b>으로 이동하세요.</div>
+        <div id="fmNote" style="font-size:10px;color:var(--text3);margin-top:5px">※ 드롭/업로드한 파일은 <b>접수</b>로 들어갑니다. 접수 목록은 공정회의 [업체 선택]에 사용 · 배포(다운로드) 후 ▶로 <b>보관</b>으로 이동하세요.</div>
       </div>
 
       <!-- 매칭 테이블 -->
       <div id="matchTable" style="display:none;margin-bottom:10px"></div>
 
       <div id="mergeActs" style="display:none;gap:7px;margin-bottom:8px;flex-wrap:wrap;align-items:center" class="no-print">
-        <button class="btn bp" disabled style="opacity:.4;cursor:not-allowed" title="비활성화된 기능입니다">📥 원도급사 통합 적용</button>
-        <label style="font-size:11px;display:flex;align-items:center;gap:3px;cursor:not-allowed;opacity:.4" title="비활성화된 기능입니다">
-          <input type="checkbox" id="mergeKeepStruct" disabled> 구조 그대로
+        <button class="btn bp" id="mergeApplyBtn" disabled style="opacity:.4;cursor:not-allowed" title="비활성화된 기능입니다">📥 원도급사 통합 적용</button>
+        <label style="font-size:11px;display:flex;align-items:center;gap:3px;cursor:not-allowed;opacity:.4" id="mergeKeepStructWrap" title="비활성화된 기능입니다">
+          <input type="checkbox" id="mergeKeepStruct" disabled> <span id="mergeKeepStructLbl">구조 그대로</span>
         </label>
-        <button class="btn bgray" disabled style="opacity:.4;cursor:not-allowed" title="비활성화된 기능입니다">📊 통합 간트 미리보기</button>
+        <button class="btn bgray" id="mergeGanttPreviewBtn" disabled style="opacity:.4;cursor:not-allowed" title="비활성화된 기능입니다">📊 통합 간트 미리보기</button>
         <div style="width:1px;height:20px;background:var(--border)"></div>
-        <button class="btn bgray" disabled style="opacity:.4;cursor:not-allowed" title="비활성화된 기능입니다">✕ 초기화</button>
+        <button class="btn bgray" id="mergeResetBtn" disabled style="opacity:.4;cursor:not-allowed" title="비활성화된 기능입니다">✕ 초기화</button>
       </div>
       <div id="mergedOut"></div>
     </div>
@@ -2059,6 +2059,20 @@ const I18N = {
     editCoModalTitle:'업체 편집', newPwOptionalLbl:'새 비밀번호 (변경 시만 입력)', newPwOptionalPh:'빈칸 = 변경 안 함',
     coNameEnterErr:'업체명을 입력하세요', coUpdatedMsg:'업체 정보가 수정되었습니다', delCoConfirm:'이 업체 계정과 모든 데이터를 삭제하시겠습니까?',
     transferTargetErr:'이전할 업체를 선택하세요', transferConfirm:'주 관리자 권한을 이전하면 현재 계정은 일반 업체가 됩니다. 계속하시겠습니까?', transferDoneMsg:'주 관리자 권한이 이전되었습니다. 다시 로그인해주세요.',
+    mergeDropTitle:'파일 드래그 또는 클릭하여 업로드', mergeDropDesc:'담당자별 JSON 파일 여러 개 — 고유코드로 자동 매칭 (회사명 달라도 무관)', fmInboxLbl:'접수',
+    fmRefreshTitle:'새로고침', fmDlBtnText:'⬇ 선택 다운로드(최신본)', fmDlBtnTitle:'선택 파일의 최신 공정표를 생성해 다운로드',
+    fmMoveToArchiveTitle:'선택 → 보관', fmMoveToInboxTitle:'선택 → 접수', fmArchiveLbl:'보관',
+    fmNote:'※ 드롭/업로드한 파일은 <b>접수</b>로 들어갑니다. 접수 목록은 공정회의 [업체 선택]에 사용 · 배포(다운로드) 후 ▶로 <b>보관</b>으로 이동하세요.', mergeDisabledTitle:'비활성화된 기능입니다', mergeApplyBtnLbl:'📥 원도급사 통합 적용',
+    mergeKeepStructLbl:'구조 그대로', mergeGanttPreviewLbl:'📊 통합 간트 미리보기', mergeResetLbl:'✕ 초기화',
+    fileReadErrMsg:'파일 읽기 오류: {name}', noCoNameMsg:'업체미상', selectPh:'-- 선택 --',
+    matchFailBadge:'⚠ 미매칭', matchCodeBadge:'✔ 코드 매칭', matchNameBadge:'~ 이름 매칭',
+    mgrMoreCount:'외 {n}명', noMgrMsg:'담당자 없음', noCodeBadge:'코드없음',
+    matchStatusHdr:'📋 취합 현황 — {total}개 파일 / {matched}개 매칭', noCodeWarn:'⚠ 고유코드 없는 파일 {n}개 — 이름 매칭 시도', noCoRegisteredWarn:'⚠ 등록 업체 없음 — 관리 탭에서 추가하세요',
+    fileColHdr:'파일 정보 (코드·업체명·담당자)', coLinkColHdr:'등록 업체 연결', matchColHdr:'매칭',
+    noCodeHint:'💡 <strong>고유코드가 없는 파일</strong>은 회사명 유사도로 매칭합니다.<br>정확한 매칭을 위해 ⚙️ 관리 탭에서 업체를 등록하고 고유코드가 포함된 파일을 받으세요.', fmLoadErrMsg:'오류', fmNoFilesMsg:'파일 없음',
+    fmUploadedMsg:'📤 {n}개 파일 접수 폴더 업로드', fmSelectMoveErr:'이동할 파일을 선택하세요', fmMovedMsg:'{n}개 이동: {from} → {to}',
+    fmSelectDelErr:'삭제할 파일을 선택하세요', fmDelConfirm:'{n}개 파일을 삭제할까요?', fmSelectDlErr:'다운로드할 파일을 선택하세요',
+    fmDlFailMsg:'다운로드 실패: {name}', distNoTargetMsg:'배포할 하도사가 없습니다 (업체 선택 후 사용)', distDoneMsg:'📤 {n}개 하도사 파일을 배포 폴더에 저장했습니다 (하도업체/배포)',
     holNoneMsg:'등록된 공휴일 없음', holCustomBadge:'사용자 지정', holDefaultBadge:'기본값', holModalTitle:'📅 공휴일 관리',
     holNamePh:'공휴일명', holDesc:'날짜와 공휴일명을 입력하세요. 저장 시 이 기기의 모든 공정표에 적용됩니다.',
     holResetWarn:'⚠ 기본값 초기화를 누르면 하드코딩된 2026년 공휴일로 되돌아갑니다.', holAddRowBtn:'+ 행 추가', holResetBtn:'기본값 초기화',
@@ -2176,6 +2190,20 @@ const I18N = {
     editCoModalTitle:'Edit Company', newPwOptionalLbl:'New Password (only if changing)', newPwOptionalPh:'Leave blank = no change',
     coNameEnterErr:'Please enter a company name', coUpdatedMsg:'Company information updated', delCoConfirm:'Delete this company account and all its data?',
     transferTargetErr:'Please select a company to transfer to', transferConfirm:'Transferring primary admin rights will make this account a regular company. Continue?', transferDoneMsg:'Primary admin rights transferred. Please log in again.',
+    mergeDropTitle:'Drag files here or click to upload', mergeDropDesc:'Multiple JSON files per person — auto-matched by unique code (company name doesn\'t matter)', fmInboxLbl:'Inbox',
+    fmRefreshTitle:'Refresh', fmDlBtnText:'⬇ Download Selected (Latest)', fmDlBtnTitle:'Generates and downloads the latest schedule for the selected file',
+    fmMoveToArchiveTitle:'Selected → Archive', fmMoveToInboxTitle:'Selected → Inbox', fmArchiveLbl:'Archive',
+    fmNote:'※ Dropped/uploaded files go into <b>Inbox</b>. The inbox list is used for [Select Company] in the schedule meeting · after distributing (downloading), move them to <b>Archive</b> with ▶.', mergeDisabledTitle:'This feature is disabled', mergeApplyBtnLbl:'📥 Apply Prime Contractor Merge',
+    mergeKeepStructLbl:'Keep structure as-is', mergeGanttPreviewLbl:'📊 Merged Gantt Preview', mergeResetLbl:'✕ Reset',
+    fileReadErrMsg:'File read error: {name}', noCoNameMsg:'Unknown Company', selectPh:'-- Select --',
+    matchFailBadge:'⚠ Unmatched', matchCodeBadge:'✔ Code Matched', matchNameBadge:'~ Name Matched',
+    mgrMoreCount:'+{n} more', noMgrMsg:'No manager', noCodeBadge:'No code',
+    matchStatusHdr:'📋 Merge Status — {total} files / {matched} matched', noCodeWarn:'⚠ {n} file(s) without a unique code — attempting name match', noCoRegisteredWarn:'⚠ No companies registered — add one in the Admin tab',
+    fileColHdr:'File Info (Code · Company · Manager)', coLinkColHdr:'Link to Registered Company', matchColHdr:'Match',
+    noCodeHint:'💡 <strong>Files without a unique code</strong> are matched by company name similarity.<br>For accurate matching, register companies in the ⚙️ Admin tab and receive files that include a unique code.', fmLoadErrMsg:'Error', fmNoFilesMsg:'No files',
+    fmUploadedMsg:'📤 {n} file(s) uploaded to Inbox', fmSelectMoveErr:'Please select files to move', fmMovedMsg:'{n} moved: {from} → {to}',
+    fmSelectDelErr:'Please select files to delete', fmDelConfirm:'Delete {n} file(s)?', fmSelectDlErr:'Please select files to download',
+    fmDlFailMsg:'Download failed: {name}', distNoTargetMsg:'No subcontractors to distribute to (select companies first)', distDoneMsg:'📤 Saved files for {n} subcontractor(s) to the distribution folder',
     holNoneMsg:'No holidays registered', holCustomBadge:'Custom', holDefaultBadge:'Default', holModalTitle:'📅 Manage Holidays',
     holNamePh:'Holiday name', holDesc:'Enter the date and holiday name. Saved changes apply to all schedules on this device.',
     holResetWarn:'⚠ Resetting to default reverts to the hardcoded 2026 holidays.', holAddRowBtn:'+ Add Row', holResetBtn:'Reset to Default',
@@ -2293,6 +2321,20 @@ const I18N = {
     editCoModalTitle:'Editar Empresa', newPwOptionalLbl:'Nueva Contraseña (solo si cambia)', newPwOptionalPh:'En blanco = sin cambios',
     coNameEnterErr:'Ingrese el nombre de la empresa', coUpdatedMsg:'Información de la empresa actualizada', delCoConfirm:'¿Eliminar esta cuenta de empresa y todos sus datos?',
     transferTargetErr:'Seleccione una empresa a la que transferir', transferConfirm:'Transferir los derechos de administrador principal convertirá esta cuenta en una empresa normal. ¿Continuar?', transferDoneMsg:'Derechos de administrador principal transferidos. Vuelva a iniciar sesión.',
+    mergeDropTitle:'Arrastre archivos aquí o haga clic para subir', mergeDropDesc:'Varios archivos JSON por persona — coincidencia automática por código único (el nombre de la empresa no importa)', fmInboxLbl:'Recibidos',
+    fmRefreshTitle:'Actualizar', fmDlBtnText:'⬇ Descargar Seleccionados (Más Reciente)', fmDlBtnTitle:'Genera y descarga el cronograma más reciente del archivo seleccionado',
+    fmMoveToArchiveTitle:'Seleccionados → Archivo', fmMoveToInboxTitle:'Seleccionados → Recibidos', fmArchiveLbl:'Archivo',
+    fmNote:'※ Los archivos soltados/subidos van a <b>Recibidos</b>. La lista de recibidos se usa para [Seleccionar Empresa] en la reunión de cronograma · después de distribuir (descargar), muévalos a <b>Archivo</b> con ▶.', mergeDisabledTitle:'Esta función está desactivada', mergeApplyBtnLbl:'📥 Aplicar Combinación del Contratista Principal',
+    mergeKeepStructLbl:'Mantener estructura tal cual', mergeGanttPreviewLbl:'📊 Vista Previa de Gantt Combinado', mergeResetLbl:'✕ Restablecer',
+    fileReadErrMsg:'Error al leer el archivo: {name}', noCoNameMsg:'Empresa Desconocida', selectPh:'-- Seleccionar --',
+    matchFailBadge:'⚠ Sin Coincidencia', matchCodeBadge:'✔ Coincidencia por Código', matchNameBadge:'~ Coincidencia por Nombre',
+    mgrMoreCount:'+{n} más', noMgrMsg:'Sin encargado', noCodeBadge:'Sin código',
+    matchStatusHdr:'📋 Estado de Combinación — {total} archivos / {matched} coincidencias', noCodeWarn:'⚠ {n} archivo(s) sin código único — intentando coincidencia por nombre', noCoRegisteredWarn:'⚠ No hay empresas registradas — agregue una en la pestaña Administración',
+    fileColHdr:'Información del Archivo (Código · Empresa · Encargado)', coLinkColHdr:'Vincular a Empresa Registrada', matchColHdr:'Coincidencia',
+    noCodeHint:'💡 Los <strong>archivos sin código único</strong> se emparejan por similitud del nombre de la empresa.<br>Para una coincidencia precisa, registre las empresas en la pestaña ⚙️ Administración y reciba archivos con código único.', fmLoadErrMsg:'Error', fmNoFilesMsg:'Sin archivos',
+    fmUploadedMsg:'📤 {n} archivo(s) subidos a Recibidos', fmSelectMoveErr:'Seleccione archivos para mover', fmMovedMsg:'{n} movidos: {from} → {to}',
+    fmSelectDelErr:'Seleccione archivos para eliminar', fmDelConfirm:'¿Eliminar {n} archivo(s)?', fmSelectDlErr:'Seleccione archivos para descargar',
+    fmDlFailMsg:'Error al descargar: {name}', distNoTargetMsg:'No hay subcontratistas para distribuir (seleccione empresas primero)', distDoneMsg:'📤 Se guardaron archivos de {n} subcontratista(s) en la carpeta de distribución',
     holNoneMsg:'No hay días festivos registrados', holCustomBadge:'Personalizado', holDefaultBadge:'Predeterminado', holModalTitle:'📅 Gestionar Días Festivos',
     holNamePh:'Nombre del día festivo', holDesc:'Ingrese la fecha y el nombre del día festivo. Al guardar se aplica a todos los cronogramas de este dispositivo.',
     holResetWarn:'⚠ Al restablecer los valores predeterminados, se vuelve a los días festivos de 2026 predefinidos.', holAddRowBtn:'+ Agregar Fila', holResetBtn:'Restablecer Predeterminados',
@@ -2410,6 +2452,20 @@ const I18N = {
     editCoModalTitle:'Firma bearbeiten', newPwOptionalLbl:'Neues Passwort (nur bei Änderung)', newPwOptionalPh:'Leer lassen = keine Änderung',
     coNameEnterErr:'Bitte einen Firmennamen eingeben', coUpdatedMsg:'Firmeninformationen aktualisiert', delCoConfirm:'Dieses Firmenkonto und alle Daten löschen?',
     transferTargetErr:'Bitte eine Zielfirma für die Übertragung auswählen', transferConfirm:'Die Übertragung der Hauptadministratorrechte macht dieses Konto zu einer normalen Firma. Fortfahren?', transferDoneMsg:'Hauptadministratorrechte übertragen. Bitte erneut anmelden.',
+    mergeDropTitle:'Dateien hierher ziehen oder zum Hochladen klicken', mergeDropDesc:'Mehrere JSON-Dateien pro Person — automatischer Abgleich per eindeutigem Code (Firmenname spielt keine Rolle)', fmInboxLbl:'Eingang',
+    fmRefreshTitle:'Aktualisieren', fmDlBtnText:'⬇ Auswahl herunterladen (Neueste)', fmDlBtnTitle:'Erstellt und lädt den neuesten Zeitplan für die ausgewählte Datei herunter',
+    fmMoveToArchiveTitle:'Auswahl → Archiv', fmMoveToInboxTitle:'Auswahl → Eingang', fmArchiveLbl:'Archiv',
+    fmNote:'※ Abgelegte/hochgeladene Dateien gelangen in den <b>Eingang</b>. Die Eingangsliste wird für [Firma auswählen] im Terminbesprechung verwendet · nach der Verteilung (Download) mit ▶ ins <b>Archiv</b> verschieben.', mergeDisabledTitle:'Diese Funktion ist deaktiviert', mergeApplyBtnLbl:'📥 Hauptauftragnehmer-Zusammenführung anwenden',
+    mergeKeepStructLbl:'Struktur unverändert lassen', mergeGanttPreviewLbl:'📊 Zusammengeführte Gantt-Vorschau', mergeResetLbl:'✕ Zurücksetzen',
+    fileReadErrMsg:'Dateilesefehler: {name}', noCoNameMsg:'Unbekannte Firma', selectPh:'-- Auswählen --',
+    matchFailBadge:'⚠ Nicht zugeordnet', matchCodeBadge:'✔ Code abgeglichen', matchNameBadge:'~ Name abgeglichen',
+    mgrMoreCount:'+{n} weitere', noMgrMsg:'Kein Verantwortlicher', noCodeBadge:'Kein Code',
+    matchStatusHdr:'📋 Zusammenführungsstatus — {total} Dateien / {matched} abgeglichen', noCodeWarn:'⚠ {n} Datei(en) ohne eindeutigen Code — Namensabgleich wird versucht', noCoRegisteredWarn:'⚠ Keine Firmen registriert — fügen Sie eine im Verwaltungs-Tab hinzu',
+    fileColHdr:'Dateiinfo (Code · Firma · Verantwortlicher)', coLinkColHdr:'Mit registrierter Firma verknüpfen', matchColHdr:'Abgleich',
+    noCodeHint:'💡 <strong>Dateien ohne eindeutigen Code</strong> werden anhand der Namensähnlichkeit der Firma abgeglichen.<br>Für eine genaue Zuordnung registrieren Sie Firmen im Tab ⚙️ Verwaltung und lassen Sie sich Dateien mit eindeutigem Code zusenden.', fmLoadErrMsg:'Fehler', fmNoFilesMsg:'Keine Dateien',
+    fmUploadedMsg:'📤 {n} Datei(en) in den Eingang hochgeladen', fmSelectMoveErr:'Bitte Dateien zum Verschieben auswählen', fmMovedMsg:'{n} verschoben: {from} → {to}',
+    fmSelectDelErr:'Bitte Dateien zum Löschen auswählen', fmDelConfirm:'{n} Datei(en) löschen?', fmSelectDlErr:'Bitte Dateien zum Herunterladen auswählen',
+    fmDlFailMsg:'Download fehlgeschlagen: {name}', distNoTargetMsg:'Keine Subunternehmer zum Verteilen (zuerst Firmen auswählen)', distDoneMsg:'📤 Dateien für {n} Subunternehmer im Verteilungsordner gespeichert',
     holNoneMsg:'Keine Feiertage registriert', holCustomBadge:'Benutzerdefiniert', holDefaultBadge:'Standard', holModalTitle:'📅 Feiertage verwalten',
     holNamePh:'Feiertagsname', holDesc:'Geben Sie Datum und Feiertagsname ein. Beim Speichern gilt dies für alle Zeitpläne auf diesem Gerät.',
     holResetWarn:'⚠ Beim Zurücksetzen auf Standard werden die fest codierten Feiertage 2026 wiederhergestellt.', holAddRowBtn:'+ Zeile hinzufügen', holResetBtn:'Auf Standard zurücksetzen',
@@ -2527,6 +2583,20 @@ const I18N = {
     editCoModalTitle:'業者編集', newPwOptionalLbl:'新しいパスワード（変更時のみ入力）', newPwOptionalPh:'空欄＝変更なし',
     coNameEnterErr:'業者名を入力してください', coUpdatedMsg:'業者情報が更新されました', delCoConfirm:'この業者アカウントとすべてのデータを削除しますか？',
     transferTargetErr:'移譲先の業者を選択してください', transferConfirm:'主管理者権限を移譲すると、現在のアカウントは一般業者になります。続行しますか？', transferDoneMsg:'主管理者権限が移譲されました。再度ログインしてください。',
+    mergeDropTitle:'ファイルをドラッグまたはクリックしてアップロード', mergeDropDesc:'担当者ごとの複数のJSONファイル — 固有コードで自動マッチング（会社名が異なっても可）', fmInboxLbl:'受付',
+    fmRefreshTitle:'更新', fmDlBtnText:'⬇ 選択ダウンロード（最新版）', fmDlBtnTitle:'選択したファイルの最新工程表を生成してダウンロード',
+    fmMoveToArchiveTitle:'選択 → 保管', fmMoveToInboxTitle:'選択 → 受付', fmArchiveLbl:'保管',
+    fmNote:'※ ドロップ/アップロードしたファイルは<b>受付</b>に入ります。受付リストは工程会議の［業者選択］に使用 ・ 配布（ダウンロード）後、▶で<b>保管</b>に移動してください。', mergeDisabledTitle:'この機能は無効です', mergeApplyBtnLbl:'📥 元請統合適用',
+    mergeKeepStructLbl:'構造そのまま', mergeGanttPreviewLbl:'📊 統合ガントプレビュー', mergeResetLbl:'✕ 初期化',
+    fileReadErrMsg:'ファイル読み込みエラー：{name}', noCoNameMsg:'業者不明', selectPh:'-- 選択 --',
+    matchFailBadge:'⚠ 未マッチング', matchCodeBadge:'✔ コードマッチング', matchNameBadge:'~ 名前マッチング',
+    mgrMoreCount:'他{n}名', noMgrMsg:'担当者なし', noCodeBadge:'コードなし',
+    matchStatusHdr:'📋 取りまとめ状況 — {total}件のファイル / {matched}件マッチング', noCodeWarn:'⚠ 固有コードのないファイル{n}件 — 名前マッチングを試行', noCoRegisteredWarn:'⚠ 登録された業者がありません — 管理タブで追加してください',
+    fileColHdr:'ファイル情報（コード・業者名・担当者）', coLinkColHdr:'登録業者に連携', matchColHdr:'マッチング',
+    noCodeHint:'💡 <strong>固有コードのないファイル</strong>は会社名の類似度でマッチングします。<br>正確なマッチングのため、⚙️ 管理タブで業者を登録し、固有コード付きのファイルを受け取ってください。', fmLoadErrMsg:'エラー', fmNoFilesMsg:'ファイルなし',
+    fmUploadedMsg:'📤 {n}件のファイルを受付フォルダにアップロード', fmSelectMoveErr:'移動するファイルを選択してください', fmMovedMsg:'{n}件移動：{from} → {to}',
+    fmSelectDelErr:'削除するファイルを選択してください', fmDelConfirm:'{n}件のファイルを削除しますか？', fmSelectDlErr:'ダウンロードするファイルを選択してください',
+    fmDlFailMsg:'ダウンロード失敗：{name}', distNoTargetMsg:'配布先の下請業者がありません（業者選択後に使用）', distDoneMsg:'📤 {n}件の下請業者ファイルを配布フォルダに保存しました',
     holNoneMsg:'登録された祝日がありません', holCustomBadge:'カスタム', holDefaultBadge:'デフォルト', holModalTitle:'📅 祝日管理',
     holNamePh:'祝日名', holDesc:'日付と祝日名を入力してください。保存するとこの端末のすべての工程表に適用されます。',
     holResetWarn:'⚠ デフォルトにリセットすると、ハードコードされた2026年の祝日に戻ります。', holAddRowBtn:'+ 行追加', holResetBtn:'デフォルトにリセット',
@@ -2591,6 +2661,24 @@ function applyI18n(){
   var dDay=document.querySelector('.mbns [data-mode="day"]'); if(dDay) dDay.textContent=t('unitDay');
   var dWeek=document.querySelector('.mbns [data-mode="week"]'); if(dWeek) dWeek.textContent=t('unitWeek');
   var dDecade=document.querySelector('.mbns [data-mode="decade"]'); if(dDecade) dDecade.textContent=t('unitDecade');
+  // 취합 탭(정적 요소)
+  var mergeMap={
+    mergeDropTitle:'mergeDropTitle', mergeDropDesc:'mergeDropDesc', fmInboxLbl:'fmInboxLbl',
+    fmArchiveLbl:'fmArchiveLbl', mergeKeepStructLbl:'mergeKeepStructLbl',
+  };
+  Object.keys(mergeMap).forEach(function(id){
+    var el=document.getElementById(id); if(el) el.textContent=t(mergeMap[id]);
+  });
+  var fmRefresh=document.getElementById('fmRefreshBtn'); if(fmRefresh) fmRefresh.title=t('fmRefreshTitle');
+  var fmDl1=document.getElementById('fmDlBtn1'); if(fmDl1){ fmDl1.textContent=t('fmDlBtnText'); fmDl1.title=t('fmDlBtnTitle'); }
+  var fmDl2=document.getElementById('fmDlBtn2'); if(fmDl2) fmDl2.textContent=t('fmDlBtnText');
+  var fmMoveR=document.getElementById('fmMoveRightBtn'); if(fmMoveR) fmMoveR.title=t('fmMoveToArchiveTitle');
+  var fmMoveL=document.getElementById('fmMoveLeftBtn'); if(fmMoveL) fmMoveL.title=t('fmMoveToInboxTitle');
+  var fmNoteEl=document.getElementById('fmNote'); if(fmNoteEl) fmNoteEl.innerHTML=t('fmNote');
+  var mergeApplyBtn=document.getElementById('mergeApplyBtn'); if(mergeApplyBtn){ mergeApplyBtn.textContent=t('mergeApplyBtnLbl'); mergeApplyBtn.title=t('mergeDisabledTitle'); }
+  var mergeKeepWrap=document.getElementById('mergeKeepStructWrap'); if(mergeKeepWrap) mergeKeepWrap.title=t('mergeDisabledTitle');
+  var mergeGanttBtn=document.getElementById('mergeGanttPreviewBtn'); if(mergeGanttBtn){ mergeGanttBtn.textContent=t('mergeGanttPreviewLbl'); mergeGanttBtn.title=t('mergeDisabledTitle'); }
+  var mergeResetBtn=document.getElementById('mergeResetBtn'); if(mergeResetBtn){ mergeResetBtn.textContent=t('mergeResetLbl'); mergeResetBtn.title=t('mergeDisabledTitle'); }
   // 로컬/서버 문서 전환 바(동적 렌더 — t()를 직접 써서 매번 최신 언어로 그려짐)
   if(typeof renderDocTabs==='function') try{ renderDocTabs(); }catch(e){}
   // 통합 헤더의 월 그룹 라벨("2026년 7월" 등)은 _INT_VIS/_INT_MGROUPS에 캐시되므로
@@ -8982,7 +9070,7 @@ function handleMergeFiles(files){
         MFILES.push({filename:f.name,data:d,matchedCoId:null});
         autoMatchAll();
         renderMatchTable();
-      }catch{toast('파일 읽기 오류: '+f.name)}
+      }catch{toast(t('fileReadErrMsg',{name:f.name}))}
     };r.readAsText(f);
   });
 }
@@ -9040,27 +9128,27 @@ function renderMatchTable(){
     if(!_fd.companyName&&_fd.companies&&_fd.projects){
       const _co=_fd.companies[0];
       const _vid=Object.keys(_fd.projects).find(k=>_fd.projects[k]&&_fd.projects[k].sections&&_fd.projects[k].sections.length)||Object.keys(_fd.projects)[0];
-      _fd={..._fd.projects[_vid],shortCode:_co&&_co.shortCode||'',companyName:_co&&_co.name||'업체미상'};
+      _fd={..._fd.projects[_vid],shortCode:_co&&_co.shortCode||'',companyName:_co&&_co.name||t('noCoNameMsg')};
     }
     const jsonCode=_fd.shortCode||'';
-    const jsonName=esc(_fd.companyName||'업체미상');
+    const jsonName=esc(_fd.companyName||t('noCoNameMsg'));
     const matched=f.matchedCoId&&subs.find(c=>c.id===f.matchedCoId);
     const isCodeMatch=matched&&jsonCode&&(matched.shortCode||'').toUpperCase()===jsonCode.toUpperCase();
-    const opts=`<option value="">-- 선택 --</option>`+
+    const opts=`<option value="">${t('selectPh')}</option>`+
       subs.map(c=>`<option value="${c.id}"${f.matchedCoId===c.id?' selected':''}>[${esc(c.shortCode||'??')}] ${esc(c.name)}</option>`).join('');
     const statusIco=!matched
-      ?`<span class="match-fail">⚠ 미매칭</span>`
+      ?`<span class="match-fail">${t('matchFailBadge')}</span>`
       :isCodeMatch
-        ?`<span class="match-ok">✔ 코드 매칭</span>`
-        :`<span style="color:var(--amber);font-weight:700">~ 이름 매칭</span>`;
+        ?`<span class="match-ok">${t('matchCodeBadge')}</span>`
+        :`<span style="color:var(--amber);font-weight:700">${t('matchNameBadge')}</span>`;
     // 파일 내 담당자 수집 표시
     const mgrs=collectAllMgrs(f.data);
     const mgrHtml=mgrs.length
-      ?mgrs.slice(0,4).map(m=>`<span class="mgr-tag mgr-tag-sub" style="font-size:8px">${esc(m)}</span>`).join(' ')+(mgrs.length>4?` <span style="font-size:9px;color:var(--text3)">외 ${mgrs.length-4}명</span>`:'')
-      :`<span style="font-size:9px;color:var(--text3)">담당자 없음</span>`;
+      ?mgrs.slice(0,4).map(m=>`<span class="mgr-tag mgr-tag-sub" style="font-size:8px">${esc(m)}</span>`).join(' ')+(mgrs.length>4?` <span style="font-size:9px;color:var(--text3)">${t('mgrMoreCount',{n:mgrs.length-4})}</span>`:'')
+      :`<span style="font-size:9px;color:var(--text3)">${t('noMgrMsg')}</span>`;
     return`<tr>
       <td style="max-width:180px;word-break:break-all">
-        ${jsonCode?`<span class="co-code co-code-sm" style="margin-bottom:3px;display:inline-block">${esc(jsonCode)}</span><br>`:'<span style="font-size:9px;color:#dc2626">코드없음</span><br>'}
+        ${jsonCode?`<span class="co-code co-code-sm" style="margin-bottom:3px;display:inline-block">${esc(jsonCode)}</span><br>`:`<span style="font-size:9px;color:#dc2626">${t('noCodeBadge')}</span><br>`}
         <strong>${jsonName}</strong><br>
         <span style="font-size:10px;color:var(--text3)">${esc(f.filename)}</span><br>
         <div style="margin-top:3px;display:flex;flex-wrap:wrap;gap:2px">${mgrHtml}</div>
@@ -9078,20 +9166,19 @@ function renderMatchTable(){
   el.innerHTML=`
     <div class="match-wrap">
       <div class="match-hdr">
-        <span>📋 취합 현황 — ${MFILES.length}개 파일 / ${matchedCnt}개 매칭</span>
-        ${noCodeCnt?`<span style="color:#fcd34d;font-size:10px">⚠ 고유코드 없는 파일 ${noCodeCnt}개 — 이름 매칭 시도</span>`:''}
-        ${!subs.length?`<span style="color:#fcd34d;font-size:10px">⚠ 등록 업체 없음 — 관리자 탭에서 추가하세요</span>`:''}
+        <span>${t('matchStatusHdr',{total:MFILES.length,matched:matchedCnt})}</span>
+        ${noCodeCnt?`<span style="color:#fcd34d;font-size:10px">${t('noCodeWarn',{n:noCodeCnt})}</span>`:''}
+        ${!subs.length?`<span style="color:#fcd34d;font-size:10px">${t('noCoRegisteredWarn')}</span>`:''}
       </div>
       <table class="mtbl">
         <thead><tr>
-          <th>파일 정보 (코드·업체명·담당자)</th><th style="width:30px"></th>
-          <th>등록 업체 연결</th><th style="width:100px">매칭</th><th style="width:40px"></th>
+          <th>${t('fileColHdr')}</th><th style="width:30px"></th>
+          <th>${t('coLinkColHdr')}</th><th style="width:100px">${t('matchColHdr')}</th><th style="width:40px"></th>
         </tr></thead>
         <tbody>${rows}</tbody>
       </table>
       ${noCodeCnt?`<div style="padding:10px 12px;background:#fffbeb;border-top:1px solid var(--border);font-size:11px;color:#92400e">
-        💡 <strong>고유코드가 없는 파일</strong>은 회사명 유사도로 매칭합니다.<br>
-        정확한 매칭을 위해 ⚙️ 관리자 탭에서 업체를 등록하고 고유코드가 포함된 파일을 받으세요.
+        ${t('noCodeHint')}
       </div>`:''}
     </div>`;
   el.style.display='block';
@@ -9136,10 +9223,10 @@ async function _fmRenderFolder(folder,elId){
   try{
     const r=await fetch(API+'/api/files/list?userId='+encodeURIComponent(CU.userId)+'&site='+encodeURIComponent(_activeSite)+'&folder='+encodeURIComponent(folder));
     const j=await r.json();
-    if(!j.ok){ el.innerHTML='<div style="color:#dc2626;padding:6px">'+esc(j.msg||'오류')+'</div>'; return; }
-    if(!j.files.length){ el.innerHTML='<div style="color:var(--text3);padding:6px">파일 없음</div>'; return; }
+    if(!j.ok){ el.innerHTML='<div style="color:#dc2626;padding:6px">'+esc(j.msg||t('fmLoadErrMsg'))+'</div>'; return; }
+    if(!j.files.length){ el.innerHTML=`<div style="color:var(--text3);padding:6px">${t('fmNoFilesMsg')}</div>`; return; }
     el.innerHTML=j.files.map(f=>`<label style="display:flex;align-items:center;gap:6px;padding:2px 0;cursor:pointer"><input type="checkbox" class="fm-chk" data-folder="${folder}" value="${esc(f.name)}"><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(f.name)}">${esc(f.name)}</span></label>`).join('');
-  }catch(e){ el.innerHTML='<div style="color:#dc2626;padding:6px">로드 실패</div>'; }
+  }catch(e){ el.innerHTML=`<div style="color:#dc2626;padding:6px">${t('loadFailMsg')}</div>`; }
 }
 function _fmChecked(folder){ return [...document.querySelectorAll('.fm-chk[data-folder="'+folder+'"]:checked')].map(c=>c.value); }
 async function siteFilesUpload(fileList){
@@ -9147,21 +9234,21 @@ async function siteFilesUpload(fileList){
   const arr=[...fileList].filter(f=>/\.json$/i.test(f.name));
   let ok=0;
   for(const f of arr){ try{ const text=await f.text(); const r=await fetch(API+'/api/files/upload',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:CU.userId,site:_activeSite,name:f.name,content:text})}); const j=await r.json(); if(j.ok)ok++; }catch(e){} }
-  if(ok){ toast('📤 '+ok+'개 파일 접수 폴더 업로드'); renderFileMgr(); }
+  if(ok){ toast(t('fmUploadedMsg',{n:ok})); renderFileMgr(); }
 }
 async function fileMove(from,to){
-  const names=_fmChecked(from); if(!names.length){ toast('이동할 파일을 선택하세요'); return; }
+  const names=_fmChecked(from); if(!names.length){ toast(t('fmSelectMoveErr')); return; }
   for(const name of names){ try{ await fetch(API+'/api/files/move',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:CU.userId,site:_activeSite,name,from,to})}); }catch(e){} }
-  toast(names.length+'개 이동: '+from+' → '+to); renderFileMgr();
+  toast(t('fmMovedMsg',{n:names.length,from,to})); renderFileMgr();
 }
 async function fileDeleteSelected(folder){
-  const names=_fmChecked(folder); if(!names.length){ toast('삭제할 파일을 선택하세요'); return; }
-  if(!confirm(names.length+'개 파일을 삭제할까요?')) return;
+  const names=_fmChecked(folder); if(!names.length){ toast(t('fmSelectDelErr')); return; }
+  if(!confirm(t('fmDelConfirm',{n:names.length}))) return;
   for(const name of names){ try{ await fetch(API+'/api/files/delete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:CU.userId,site:_activeSite,folder,name})}); }catch(e){} }
-  toast('삭제됨'); renderFileMgr();
+  toast(t('genDeletedMsg')); renderFileMgr();
 }
 async function fileDownloadSelected(folder){
-  const names=_fmChecked(folder); if(!names.length){ toast('다운로드할 파일을 선택하세요'); return; }
+  const names=_fmChecked(folder); if(!names.length){ toast(t('fmSelectDlErr')); return; }
   for(const name of names){ await _downloadLatestForFile(folder,name); }
 }
 async function _downloadLatestForFile(folder,name){
@@ -9179,7 +9266,7 @@ async function _downloadLatestForFile(folder,name){
     _downloadText((coName+'_최신_'+ds(new Date())+'.json').replace(/[\/\\:*?"<>|]/g,'_'), JSON.stringify(out,null,2));
   } else if(raw!=null){
     _downloadText(name, raw);   // 매칭되는 업체 없음 → 원본 다운로드
-  } else { toast('다운로드 실패: '+name); }
+  } else { toast(t('fmDlFailMsg',{name})); }
 }
 // ── 하도 접수/배포 폴더 연동 ──
 async function pickInboxFile(encName){
@@ -9197,7 +9284,7 @@ async function distributeAllMembers(){
   const d=gs();
   const base=(_meetingMembers&&_meetingMembers.length)?_meetingMembers:d.companies.map(c=>c.id);
   const targets=base.filter(id=>id!==CU.id && id!==MEETING_ID);
-  if(!targets.length){ toast('배포할 하도사가 없습니다 (업체 선택 후 사용)'); return; }
+  if(!targets.length){ toast(t('distNoTargetMsg')); return; }
   const today=ds(new Date()).replace(/-/g,'');
   let ok=0;
   for(const id of targets){
@@ -9208,7 +9295,7 @@ async function distributeAllMembers(){
     const content=JSON.stringify({projectName:proj.projectName||'', companyName:coName, writeDate:proj.writeDate||ds(new Date()), shortCode:proj.shortCode||(co&&co.shortCode)||'', sections:proj.sections, predLinks:proj.predLinks||[]}, null, 2);
     try{ const r=await fetch(API+'/api/distribute',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({filename,content})}); const j=await r.json(); if(j.ok) ok++; }catch(e){}
   }
-  toast(`📤 ${ok}개 하도사 파일을 배포 폴더에 저장했습니다 (하도업체/배포)`);
+  toast(t('distDoneMsg',{n:ok}));
 }
 
 async function downloadDist(encName){
