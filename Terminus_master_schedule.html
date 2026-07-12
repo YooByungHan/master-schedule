@@ -2024,6 +2024,17 @@ const I18N = {
     markerPickLabel:'기준선 날짜 선택', markerPickConfirmBtn:'이 날짜로 저장 진행',
     chartTooLargeMsg:'⚠ 차트가 너무 큽니다 — 단위를 주/10일로 바꾸거나 [범위]를 지정 후 다시 시도하세요', pdfLibLoadFailMsg:'⚠ PDF 라이브러리 로드 실패 — 인터넷 연결 확인 후 다시 시도하세요', pdfGenFailRetryMsg:'⚠ PDF 생성 실패 — 단위를 주/10일로 바꾸거나 [범위]를 지정 후 다시 시도하세요',
     pdfSavedMsg:'PDF 저장 완료 ({pages}페이지)',
+    noSiteInfoMsg:'현장 정보가 없습니다', backupFailMsg:'백업 실패: {msg}', backupDoneMsg:'✅ 백업 완료 (서버 + 내 PC): {name}',
+    serverBackupOnlyDoneMsg:'✅ 서버 백업 완료 (내 PC 저장은 취소됨): {name}', backupErrMsg:'백업 오류: {msg}', backupListErrMsg:'백업 목록 오류: {msg}',
+    restoreModalTitle:'복원', noBackupFilesMsg:'백업 파일이 없습니다.', restoreBtnLabel:'복원',
+    deleteBtnLabel:'삭제', restoreSelectModalTitle:'복원 — 백업 선택', restoreSelectHint:'선택한 백업으로 현재 공정표를 교체합니다(복원 직전 자동백업 생성, 전원 영향).',
+    restoreDeleteServerOnlyHint:' 삭제는 서버 PC에서만 가능합니다.', restoreConfirmMsg:'"{name}"\n이 백업으로 현재 공정표를 교체할까요?\n(복원 직전 자동백업이 생성됩니다 · 전원에게 반영됩니다)', restoreFailMsg:'복원 실패: {msg}',
+    restoreDoneShortMsg:'✅ 복원 완료', restoreErrMsg:'복원 오류: {msg}', backupDeleteConfirmMsg:'"{name}" 백업을 삭제할까요?',
+    backupDeletedMsg:'삭제됨', backupDeleteFailMsg:'삭제 실패: {msg}', genericErrMsg:'오류',
+    saveLabelSave:'저장', saveLabelBackup:'백업', saveCompleteMsg:'{lbl} 완료: {filename}',
+    saveCompleteDownloadMsg:'{lbl} 완료: {filename} · 위치=다운로드 폴더(브라우저 "다운로드 시 위치 묻기"로 폴더 선택 가능)', restoreAdminOnlyMsg:'⚠ 백업복원은 관리자만 실행할 수 있습니다', invalidBackupFileMsg:'올바르지 않은 백업 파일입니다',
+    restoreWarningConfirmMsg:'⚠ 백업복원 경고\n\n파일: {name}\n\n이 파일로 복원하면 현재 모든 사람의\n작업 데이터가 이 백업 시점으로 되돌아갑니다.\n\n진행 중인 작업이 모두 사라질 수 있습니다.\n\n정말 복원하시겠습니까?', restoreDoneMsg:'✅ 백업복원 완료: {name}', serverRestoreFailMsg:'❌ 서버 복원 실패',
+    fileReadErrMsg:'파일 읽기 오류: {msg}',
     pbLblCo:'업체명', pbLblDate:'작성일', pbLblBudget:'총 공사금액', pbLblActAmt:'실적금액', pbLblActRate:'실적율',
     hgLblTask:'공종', colQty:'물량', colAmt:'금액', colRate:'실적', colEvent:'이벤트',
     predSrc:'선행', predTgt:'후행', predConn:'노드연결', predEdit:'노드편집', predClose:'✕ 완료',
@@ -2226,6 +2237,17 @@ const I18N = {
     markerPickLabel:'Select Baseline Date', markerPickConfirmBtn:'Proceed to Save with This Date',
     chartTooLargeMsg:'⚠ The chart is too large — switch the unit to week/10-day or set a [Range] and try again', pdfLibLoadFailMsg:'⚠ Failed to load the PDF library — check your internet connection and try again', pdfGenFailRetryMsg:'⚠ PDF generation failed — switch the unit to week/10-day or set a [Range] and try again',
     pdfSavedMsg:'PDF saved ({pages} pages)',
+    noSiteInfoMsg:'No site information available', backupFailMsg:'Backup failed: {msg}', backupDoneMsg:'✅ Backup complete (server + my PC): {name}',
+    serverBackupOnlyDoneMsg:'✅ Server backup complete (saving to my PC was cancelled): {name}', backupErrMsg:'Backup error: {msg}', backupListErrMsg:'Backup list error: {msg}',
+    restoreModalTitle:'Restore', noBackupFilesMsg:'There are no backup files.', restoreBtnLabel:'Restore',
+    deleteBtnLabel:'Delete', restoreSelectModalTitle:'Restore — Select Backup', restoreSelectHint:'This replaces the current schedule with the selected backup (an automatic backup is created right before restoring, and it affects everyone).',
+    restoreDeleteServerOnlyHint:' Deleting is only possible on the server PC.', restoreConfirmMsg:'"{name}"\nReplace the current schedule with this backup?\n(An automatic backup will be created before restoring · this affects everyone)', restoreFailMsg:'Restore failed: {msg}',
+    restoreDoneShortMsg:'✅ Restore complete', restoreErrMsg:'Restore error: {msg}', backupDeleteConfirmMsg:'Delete the backup "{name}"?',
+    backupDeletedMsg:'Deleted', backupDeleteFailMsg:'Delete failed: {msg}', genericErrMsg:'Error',
+    saveLabelSave:'Save', saveLabelBackup:'Backup', saveCompleteMsg:'{lbl} complete: {filename}',
+    saveCompleteDownloadMsg:'{lbl} complete: {filename} · location = Downloads folder (enable your browser\'s "Ask where to save" option to pick a folder)', restoreAdminOnlyMsg:'⚠ Only administrators can run backup restore', invalidBackupFileMsg:'This is not a valid backup file',
+    restoreWarningConfirmMsg:'⚠ Backup Restore Warning\n\nFile: {name}\n\nRestoring this file will roll back everyone\'s\nwork data to this backup point.\n\nAny work in progress may be lost.\n\nAre you sure you want to restore?', restoreDoneMsg:'✅ Backup restore complete: {name}', serverRestoreFailMsg:'❌ Server restore failed',
+    fileReadErrMsg:'File read error: {msg}',
     pbLblCo:'Company', pbLblDate:'Date', pbLblBudget:'Total Budget', pbLblActAmt:'Actual Amount', pbLblActRate:'Actual Rate',
     hgLblTask:'Tasks', colQty:'Qty', colAmt:'Amount', colRate:'Actual', colEvent:'Events',
     predSrc:'Pred', predTgt:'Succ', predConn:'Link', predEdit:'Edit', predClose:'✕ Done',
@@ -2428,6 +2450,17 @@ const I18N = {
     markerPickLabel:'Seleccionar Fecha de Referencia', markerPickConfirmBtn:'Continuar a Guardar con Esta Fecha',
     chartTooLargeMsg:'⚠ El gráfico es demasiado grande — cambie la unidad a semana/10 días o defina un [Rango] e intente de nuevo', pdfLibLoadFailMsg:'⚠ Error al cargar la biblioteca PDF — verifique su conexión a internet e intente de nuevo', pdfGenFailRetryMsg:'⚠ Error al generar PDF — cambie la unidad a semana/10 días o defina un [Rango] e intente de nuevo',
     pdfSavedMsg:'PDF guardado ({pages} páginas)',
+    noSiteInfoMsg:'No hay información del sitio disponible', backupFailMsg:'Error de respaldo: {msg}', backupDoneMsg:'✅ Copia de seguridad completa (servidor + mi PC): {name}',
+    serverBackupOnlyDoneMsg:'✅ Copia de seguridad del servidor completa (se canceló el guardado en mi PC): {name}', backupErrMsg:'Error de respaldo: {msg}', backupListErrMsg:'Error de lista de copias de seguridad: {msg}',
+    restoreModalTitle:'Restaurar', noBackupFilesMsg:'No hay archivos de respaldo.', restoreBtnLabel:'Restaurar',
+    deleteBtnLabel:'Eliminar', restoreSelectModalTitle:'Restaurar — Seleccionar Copia de Seguridad', restoreSelectHint:'Esto reemplaza el cronograma actual con la copia de seguridad seleccionada (se crea una copia de seguridad automática justo antes de restaurar, y afecta a todos).',
+    restoreDeleteServerOnlyHint:' La eliminación solo es posible en la PC del servidor.', restoreConfirmMsg:'"{name}"\n¿Reemplazar el cronograma actual con esta copia de seguridad?\n(Se creará una copia de seguridad automática antes de restaurar · esto afecta a todos)', restoreFailMsg:'Error al restaurar: {msg}',
+    restoreDoneShortMsg:'✅ Restauración completa', restoreErrMsg:'Error de restauración: {msg}', backupDeleteConfirmMsg:'¿Eliminar la copia de seguridad "{name}"?',
+    backupDeletedMsg:'Eliminado', backupDeleteFailMsg:'Error al eliminar: {msg}', genericErrMsg:'Error',
+    saveLabelSave:'Guardar', saveLabelBackup:'Copia de seguridad', saveCompleteMsg:'{lbl} completo: {filename}',
+    saveCompleteDownloadMsg:'{lbl} completo: {filename} · ubicación = carpeta de Descargas (active la opción "Preguntar dónde guardar" del navegador para elegir carpeta)', restoreAdminOnlyMsg:'⚠ Solo los administradores pueden ejecutar la restauración de copias de seguridad', invalidBackupFileMsg:'Este no es un archivo de copia de seguridad válido',
+    restoreWarningConfirmMsg:'⚠ Advertencia de Restauración de Copia de Seguridad\n\nArchivo: {name}\n\nRestaurar este archivo revertirá los datos de trabajo\nde todos a este punto de copia de seguridad.\n\nCualquier trabajo en progreso podría perderse.\n\n¿Está seguro de que desea restaurar?', restoreDoneMsg:'✅ Restauración de copia de seguridad completa: {name}', serverRestoreFailMsg:'❌ Error al restaurar el servidor',
+    fileReadErrMsg:'Error de lectura de archivo: {msg}',
     pbLblCo:'Empresa', pbLblDate:'Fecha', pbLblBudget:'Presupuesto Total', pbLblActAmt:'Monto Real', pbLblActRate:'Avance Real',
     hgLblTask:'Tareas', colQty:'Cant.', colAmt:'Monto', colRate:'Avance', colEvent:'Eventos',
     predSrc:'Prec.', predTgt:'Suc.', predConn:'Vincular', predEdit:'Editar', predClose:'✕ Listo',
@@ -2630,6 +2663,17 @@ const I18N = {
     markerPickLabel:'Basisliniendatum auswählen', markerPickConfirmBtn:'Mit diesem Datum speichern fortfahren',
     chartTooLargeMsg:'⚠ Das Diagramm ist zu groß — stellen Sie die Einheit auf Woche/10 Tage um oder legen Sie einen [Bereich] fest und versuchen Sie es erneut', pdfLibLoadFailMsg:'⚠ PDF-Bibliothek konnte nicht geladen werden — Internetverbindung prüfen und erneut versuchen', pdfGenFailRetryMsg:'⚠ PDF-Erstellung fehlgeschlagen — stellen Sie die Einheit auf Woche/10 Tage um oder legen Sie einen [Bereich] fest und versuchen Sie es erneut',
     pdfSavedMsg:'PDF gespeichert ({pages} Seiten)',
+    noSiteInfoMsg:'Keine Standortinformationen verfügbar', backupFailMsg:'Sicherung fehlgeschlagen: {msg}', backupDoneMsg:'✅ Sicherung abgeschlossen (Server + mein PC): {name}',
+    serverBackupOnlyDoneMsg:'✅ Serversicherung abgeschlossen (Speichern auf meinem PC wurde abgebrochen): {name}', backupErrMsg:'Sicherungsfehler: {msg}', backupListErrMsg:'Fehler bei der Sicherungsliste: {msg}',
+    restoreModalTitle:'Wiederherstellen', noBackupFilesMsg:'Es sind keine Sicherungsdateien vorhanden.', restoreBtnLabel:'Wiederherstellen',
+    deleteBtnLabel:'Löschen', restoreSelectModalTitle:'Wiederherstellen — Sicherung auswählen', restoreSelectHint:'Dadurch wird der aktuelle Zeitplan durch die ausgewählte Sicherung ersetzt (unmittelbar vor der Wiederherstellung wird automatisch eine Sicherung erstellt, betrifft alle Benutzer).',
+    restoreDeleteServerOnlyHint:' Löschen ist nur auf dem Server-PC möglich.', restoreConfirmMsg:'"{name}"\nAktuellen Zeitplan durch diese Sicherung ersetzen?\n(Vor der Wiederherstellung wird automatisch eine Sicherung erstellt · betrifft alle Benutzer)', restoreFailMsg:'Wiederherstellung fehlgeschlagen: {msg}',
+    restoreDoneShortMsg:'✅ Wiederherstellung abgeschlossen', restoreErrMsg:'Wiederherstellungsfehler: {msg}', backupDeleteConfirmMsg:'Sicherung "{name}" löschen?',
+    backupDeletedMsg:'Gelöscht', backupDeleteFailMsg:'Löschen fehlgeschlagen: {msg}', genericErrMsg:'Fehler',
+    saveLabelSave:'Speichern', saveLabelBackup:'Sicherung', saveCompleteMsg:'{lbl} abgeschlossen: {filename}',
+    saveCompleteDownloadMsg:'{lbl} abgeschlossen: {filename} · Speicherort = Downloads-Ordner (aktivieren Sie die Browseroption "Speicherort beim Herunterladen fragen", um einen Ordner auszuwählen)', restoreAdminOnlyMsg:'⚠ Nur Administratoren können die Sicherungswiederherstellung ausführen', invalidBackupFileMsg:'Dies ist keine gültige Sicherungsdatei',
+    restoreWarningConfirmMsg:'⚠ Warnung zur Sicherungswiederherstellung\n\nDatei: {name}\n\nDurch die Wiederherstellung dieser Datei werden die\nArbeitsdaten aller Benutzer auf diesen Sicherungsstand zurückgesetzt.\n\nLaufende Arbeiten können verloren gehen.\n\nMöchten Sie wirklich wiederherstellen?', restoreDoneMsg:'✅ Sicherungswiederherstellung abgeschlossen: {name}', serverRestoreFailMsg:'❌ Serverwiederherstellung fehlgeschlagen',
+    fileReadErrMsg:'Dateilesefehler: {msg}',
     pbLblCo:'Firma', pbLblDate:'Datum', pbLblBudget:'Gesamtbudget', pbLblActAmt:'Ist-Betrag', pbLblActRate:'Ist-Fortschritt',
     hgLblTask:'Vorgänge', colQty:'Menge', colAmt:'Betrag', colRate:'Ist', colEvent:'Ereignisse',
     predSrc:'Vorg.', predTgt:'Nachf.', predConn:'Verknüpfen', predEdit:'Bearbeiten', predClose:'✕ Fertig',
@@ -2832,6 +2876,17 @@ const I18N = {
     markerPickLabel:'基準線日付を選択', markerPickConfirmBtn:'この日付で保存を進める',
     chartTooLargeMsg:'⚠ チャートが大きすぎます — 単位を週／10日に変更するか［範囲］を指定して再試行してください', pdfLibLoadFailMsg:'⚠ PDFライブラリの読み込みに失敗しました — インターネット接続を確認して再試行してください', pdfGenFailRetryMsg:'⚠ PDF生成に失敗しました — 単位を週／10日に変更するか［範囲］を指定して再試行してください',
     pdfSavedMsg:'PDF保存完了（{pages}ページ）',
+    noSiteInfoMsg:'現場情報がありません', backupFailMsg:'バックアップ失敗：{msg}', backupDoneMsg:'✅ バックアップ完了（サーバー＋PC）：{name}',
+    serverBackupOnlyDoneMsg:'✅ サーバーバックアップ完了（PC保存はキャンセルされました）：{name}', backupErrMsg:'バックアップエラー：{msg}', backupListErrMsg:'バックアップ一覧エラー：{msg}',
+    restoreModalTitle:'復元', noBackupFilesMsg:'バックアップファイルがありません。', restoreBtnLabel:'復元',
+    deleteBtnLabel:'削除', restoreSelectModalTitle:'復元 — バックアップ選択', restoreSelectHint:'選択したバックアップで現在の工程表を置き換えます（復元直前に自動バックアップを作成、全員に影響）。',
+    restoreDeleteServerOnlyHint:' 削除はサーバーPCでのみ可能です。', restoreConfirmMsg:'「{name}」\nこのバックアップで現在の工程表を置き換えますか？\n（復元直前に自動バックアップが作成されます・全員に反映されます）', restoreFailMsg:'復元失敗：{msg}',
+    restoreDoneShortMsg:'✅ 復元完了', restoreErrMsg:'復元エラー：{msg}', backupDeleteConfirmMsg:'「{name}」バックアップを削除しますか？',
+    backupDeletedMsg:'削除されました', backupDeleteFailMsg:'削除失敗：{msg}', genericErrMsg:'エラー',
+    saveLabelSave:'保存', saveLabelBackup:'バックアップ', saveCompleteMsg:'{lbl}完了：{filename}',
+    saveCompleteDownloadMsg:'{lbl}完了：{filename}・保存先＝ダウンロードフォルダ（ブラウザの「ダウンロード時に保存先を確認」設定でフォルダ選択可能）', restoreAdminOnlyMsg:'⚠ バックアップ復元は管理者のみ実行できます', invalidBackupFileMsg:'無効なバックアップファイルです',
+    restoreWarningConfirmMsg:'⚠ バックアップ復元の警告\n\nファイル：{name}\n\nこのファイルで復元すると、現在の全員の\n作業データがこのバックアップ時点に戻ります。\n\n進行中の作業がすべて消える可能性があります。\n\n本当に復元しますか？', restoreDoneMsg:'✅ バックアップ復元完了：{name}', serverRestoreFailMsg:'❌ サーバー復元失敗',
+    fileReadErrMsg:'ファイル読み込みエラー：{msg}',
     pbLblCo:'会社名', pbLblDate:'作成日', pbLblBudget:'総工事金額', pbLblActAmt:'実績金額', pbLblActRate:'実績率',
     hgLblTask:'工種', colQty:'数量', colAmt:'金額', colRate:'実績', colEvent:'イベント',
     predSrc:'先行', predTgt:'後行', predConn:'ノード接続', predEdit:'ノード編集', predClose:'✕ 完了',
@@ -10658,52 +10713,52 @@ function mtgApply(){
 function menuSave(){ if(_serverMode && !_privateLocal && CU.ver!=='pro'){ doServerBackup(); } else { saveJSON(); } }
 function menuOpen(){ if(_serverMode && !_privateLocal && CU.ver!=='pro'){ showRestoreModal(); } else { document.getElementById('loadInp').click(); } }
 async function doServerBackup(){
-  if(!_activeSite){ toast('현장 정보가 없습니다'); return; }
+  if(!_activeSite){ toast(t('noSiteInfoMsg')); return; }
   try{
     const r=await fetch(API+'/api/backup/create',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:CU.userId,site:_activeSite})});
     const j=await r.json();
-    if(!j.ok){ toast('백업 실패: '+(j.msg||'')); return; }
+    if(!j.ok){ toast(t('backupFailMsg',{msg:(j.msg||'')})); return; }
     if(j.content){
       // 서버 백업과 별개로, 개인 PC에도 원하는 폴더를 골라 저장(매번 저장창 표시).
       const blob=new Blob([j.content],{type:'application/json'});
       const _res=await saveWithPicker(j.name, blob, [{ description:'JSON 백업 파일(.json)', accept:{ 'application/json':['.json'] } }]);
-      if(_res==='saved'){ toast('✅ 백업 완료 (서버 + 내 PC): '+j.name); return; }
-      if(_res==='cancel'){ toast('✅ 서버 백업 완료 (내 PC 저장은 취소됨): '+j.name); return; }
+      if(_res==='saved'){ toast(t('backupDoneMsg',{name:j.name})); return; }
+      if(_res==='cancel'){ toast(t('serverBackupOnlyDoneMsg',{name:j.name})); return; }
       _downloadText(j.name, j.content); // 'unsupported' → 브라우저 다운로드 폴백(비보안 http 등)
     }
-    toast('✅ 백업 완료 (서버 + 내 PC): '+j.name);
-  }catch(e){ toast('백업 오류: '+(e.message||'')); }
+    toast(t('backupDoneMsg',{name:j.name}));
+  }catch(e){ toast(t('backupErrMsg',{msg:(e.message||'')})); }
 }
 async function showRestoreModal(){
-  if(!_activeSite){ toast('현장 정보가 없습니다'); return; }
+  if(!_activeSite){ toast(t('noSiteInfoMsg')); return; }
   let j; try{ const r=await fetch(API+'/api/backup/list?userId='+encodeURIComponent(CU.userId)+'&site='+encodeURIComponent(_activeSite)); j=await r.json(); }catch(e){}
-  if(!j||!j.ok){ toast('백업 목록 오류: '+((j&&j.msg)||'')); return; }
-  if(!j.files.length){ showModal('<div class="modal-title">복원</div><div style="padding:14px;color:var(--text2)">백업 파일이 없습니다.</div><div class="modal-acts"><button class="btn bgray" onclick="closeModal()">닫기</button></div>'); return; }
+  if(!j||!j.ok){ toast(t('backupListErrMsg',{msg:((j&&j.msg)||'')})); return; }
+  if(!j.files.length){ showModal(`<div class="modal-title">${esc(t('restoreModalTitle'))}</div><div style="padding:14px;color:var(--text2)">${esc(t('noBackupFilesMsg'))}</div><div class="modal-acts"><button class="btn bgray" onclick="closeModal()">${esc(t('stgClose'))}</button></div>`); return; }
   const rows=j.files.map(f=>`<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 8px;border:1px solid var(--border);border-radius:5px;font-size:12px">
     <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(f.name)}"><b>${esc(f.name)}</b> <span style="color:var(--text3)">[${esc(f.type||'')}]</span></span>
     <span style="display:flex;gap:4px;flex-shrink:0">
-      <button class="btn bp btn-xs" onclick="doRestore('${esc(f.name)}')">복원</button>
-      ${j.canDelete?`<button class="btn bd btn-xs" onclick="doBackupDelete('${esc(f.name)}')">삭제</button>`:''}
+      <button class="btn bp btn-xs" onclick="doRestore('${esc(f.name)}')">${esc(t('restoreBtnLabel'))}</button>
+      ${j.canDelete?`<button class="btn bd btn-xs" onclick="doBackupDelete('${esc(f.name)}')">${esc(t('deleteBtnLabel'))}</button>`:''}
     </span></div>`).join('');
-  showModal(`<div class="modal-title">복원 — 백업 선택</div><p style="font-size:11px;color:var(--text3);margin-bottom:6px">선택한 백업으로 현재 공정표를 교체합니다(복원 직전 자동백업 생성, 전원 영향).${j.canDelete?'':' 삭제는 서버 PC에서만 가능합니다.'}</p><div style="display:flex;flex-direction:column;gap:5px;max-height:50vh;overflow:auto">${rows}</div><div class="modal-acts"><button class="btn bgray" onclick="closeModal()">닫기</button></div>`);
+  showModal(`<div class="modal-title">${esc(t('restoreSelectModalTitle'))}</div><p style="font-size:11px;color:var(--text3);margin-bottom:6px">${esc(t('restoreSelectHint'))}${j.canDelete?'':esc(t('restoreDeleteServerOnlyHint'))}</p><div style="display:flex;flex-direction:column;gap:5px;max-height:50vh;overflow:auto">${rows}</div><div class="modal-acts"><button class="btn bgray" onclick="closeModal()">${esc(t('stgClose'))}</button></div>`);
 }
 async function doRestore(name){
-  if(!confirm('"'+name+'"\n이 백업으로 현재 공정표를 교체할까요?\n(복원 직전 자동백업이 생성됩니다 · 전원에게 반영됩니다)')) return;
+  if(!confirm(t('restoreConfirmMsg',{name}))) return;
   try{
     const r=await fetch(API+'/api/backup/restore',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:CU.userId,site:_activeSite,name})});
     const j=await r.json();
-    if(!j.ok){ toast('복원 실패: '+(j.msg||'')); return; }
-    closeModal(); toast('✅ 복원 완료');
+    if(!j.ok){ toast(t('restoreFailMsg',{msg:(j.msg||'')})); return; }
+    closeModal(); toast(t('restoreDoneShortMsg'));
     try{ await loadFromServer(); }catch(e){} initApp();
-  }catch(e){ toast('복원 오류: '+(e.message||'')); }
+  }catch(e){ toast(t('restoreErrMsg',{msg:(e.message||'')})); }
 }
 async function doBackupDelete(name){
-  if(!confirm('"'+name+'" 백업을 삭제할까요?')) return;
+  if(!confirm(t('backupDeleteConfirmMsg',{name}))) return;
   try{
     const r=await fetch(API+'/api/backup/delete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:CU.userId,site:_activeSite,name})});
     const j=await r.json();
-    if(j.ok){ toast('삭제됨'); showRestoreModal(); } else toast('삭제 실패: '+(j.msg||''));
-  }catch(e){ toast('오류'); }
+    if(j.ok){ toast(t('backupDeletedMsg')); showRestoreModal(); } else toast(t('backupDeleteFailMsg',{msg:(j.msg||'')}));
+  }catch(e){ toast(t('genericErrMsg')); }
 }
 function saveJSON(){
   const p=getProj();
@@ -10735,16 +10790,16 @@ function saveJSON(){
     delete _backup.projects[MEETING_ID];
   }
   const blob=new Blob([JSON.stringify({..._backup,backupAt:new Date().toISOString()},null,2)],{type:'application/json'});
-  const _lbl=(CU&&CU.ver==='pro')?'저장':'백업';
+  const _lbl=(CU&&CU.ver==='pro')?t('saveLabelSave'):t('saveLabelBackup');
   saveToDir(filename, blob).then(ok=>{
     if(ok){
-      toast(`${_lbl} 완료: ${filename}`);
+      toast(t('saveCompleteMsg',{lbl:_lbl,filename}));
     } else {
       const a=document.createElement('a');
       a.href=URL.createObjectURL(blob);
       a.download=filename;
       a.click();
-      toast(`${_lbl} 완료: ${filename} · 위치=다운로드 폴더(브라우저 "다운로드 시 위치 묻기"로 폴더 선택 가능)`);
+      toast(t('saveCompleteDownloadMsg',{lbl:_lbl,filename}));
     }
   });
 }
@@ -10753,7 +10808,7 @@ function importJSON(inp){
   const f=inp.files[0];if(!f)return;
   // Pro 버전도 허용, Enterprise는 관리자만
   const _isPro2=(CU&&CU.ver==='pro');
-  if(!CU||(!_isPro2 && !CU.isPrimary)){toast('⚠ 백업복원은 관리자만 실행할 수 있습니다');inp.value='';return;}
+  if(!CU||(!_isPro2 && !CU.isPrimary)){toast(t('restoreAdminOnlyMsg'));inp.value='';return;}
 
   // 파일을 먼저 읽은 후 확인창 표시 (inp.value 초기화 타이밍 문제 방지)
   const r=new FileReader();
@@ -10810,13 +10865,13 @@ function importJSON(inp){
       }
 
       if(!restoreData){
-        toast('올바르지 않은 백업 파일입니다');
+        toast(t('invalidBackupFileMsg'));
         inp.value='';
         return;
       }
 
       showConf(
-        `⚠ 백업복원 경고\n\n파일: ${f.name}\n\n이 파일로 복원하면 현재 모든 사람의\n작업 데이터가 이 백업 시점으로 되돌아갑니다.\n\n진행 중인 작업이 모두 사라질 수 있습니다.\n\n정말 복원하시겠습니까?`,
+        t('restoreWarningConfirmMsg',{name:f.name}),
         ()=>{
           if(!_serverMode){
             // 로컬 단독 모드: localStorage에 직접 저장
@@ -10824,7 +10879,7 @@ function importJSON(inp){
             _saveLocalStorage();
             renderInput();markGanttDirty();
             initApp(); // 상단 공사명/업체명 입력란 등 화면을 불러온 파일 값으로 새로고침
-            toast('✅ 백업복원 완료: '+f.name);
+            toast(t('restoreDoneMsg',{name:f.name}));
           } else {
             fetch(API+'/api/data',{
               method:'POST',
@@ -10834,13 +10889,13 @@ function importJSON(inp){
               _cache=restoreData;
               renderInput();markGanttDirty();
               initApp();
-              toast('✅ 백업복원 완료: '+f.name);
-            }).catch(()=>toast('❌ 서버 복원 실패'));
+              toast(t('restoreDoneMsg',{name:f.name}));
+            }).catch(()=>toast(t('serverRestoreFailMsg')));
           }
         }
       );
     }catch(err){
-      toast('파일 읽기 오류: '+err.message);
+      toast(t('fileReadErrMsg',{msg:err.message}));
     }
     inp.value='';
   };
