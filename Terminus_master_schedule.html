@@ -11356,6 +11356,8 @@ async function exportExcel(){
     XLSX.utils.sheet_add_aoa(wsC,[[projName]],{origin:'B3'});
     XLSX.utils.sheet_add_aoa(wsC,[[D(minS),D(maxF)]],{origin:'A4'});
     XLSX.utils.sheet_add_aoa(wsC,[[compName]],{origin:'B8'});
+    // 코드(A열)·세부공정(C열)은 실적현황(_buildProgressSnapshotData)과 동일한 규칙으로 생성
+    _assignNodeCodes(p.sections);
     const rows=[];
     p.sections.forEach(sec=>{
       const arr=sec.nodes;
@@ -11364,13 +11366,14 @@ async function exportExcel(){
       const aS=arr.map(n=>n.actual&&n.actual.s).filter(Boolean).sort()[0]||'';
       const aF=arr.map(n=>n.actual&&n.actual.f).filter(Boolean).sort().slice(-1)[0]||'';
       const secAmt=arr.reduce((aa,nn)=>aa+(nn.amount||0),0);
-      rows.push(['', '■ '+(sec.name||''), '', '', D(pS), D(pF), D(aS), D(aF), '', (secAmt>0?secAmt:''), '', '']);
+      // A=코드 B=공정명 C=세부공정(신규) D=물량 E=단위 F~I=계획·실적 시작/종료 J=실적율 K=금액 L=이벤트 M=id
+      rows.push([sec._code, '■ '+(sec.name||''), '', '', '', D(pS), D(pF), D(aS), D(aF), '', (secAmt>0?secAmt:''), '', '']);
       (function walk(ns,depth){ ns.forEach(n=>{
         const nm='  '.repeat(depth)+(n.name||'');
         const qn=(n.qty!==''&&n.qty!=null&&!isNaN(parseFloat(n.qty)))?parseFloat(n.qty):'';
         const rt=(n.actRate>0)?n.actRate:'';
         const ev=(evByNode[n.id]||[]).map(e=>((e.date||'')+'|'+(e.shape||'d')+'|'+String(e.memo||'').replace(/[;|]/g,' ')+'|'+(e.type||'P'))).join(';');
-        rows.push([ (n.name2||''), nm, qn, (n.unit||''),
+        rows.push([ n._code, nm, (n.name2||''), qn, (n.unit||''),
           D(n.plan&&n.plan.s), D(n.plan&&n.plan.f), D(n.actual&&n.actual.s), D(n.actual&&n.actual.f), rt,
           (n.amount>0?n.amount:''), ev, (n.id||'') ]);
         if(n.ch&&n.ch.length) walk(n.ch,depth+1);
@@ -11378,7 +11381,7 @@ async function exportExcel(){
     });
     const oldRef=wsD['!ref']?XLSX.utils.decode_range(wsD['!ref']):null;
     XLSX.utils.sheet_add_aoa(wsD, rows, {origin:'A3'});
-    if(oldRef){ for(let R=3+rows.length; R<=oldRef.e.r+1; R++){ for(let C=0;C<=11;C++){ delete wsD[XLSX.utils.encode_cell({r:R-1,c:C})]; } } }
+    if(oldRef){ for(let R=3+rows.length; R<=oldRef.e.r+1; R++){ for(let C=0;C<=12;C++){ delete wsD[XLSX.utils.encode_cell({r:R-1,c:C})]; } } }
     // 선후행: 설정 시트 A19(헤더)+A20~ 에 [선행ID, 후행ID]
     const pl=[]; (p.predLinks||[]).forEach(l=>{ (l.tgtIds||[]).forEach(t=>{ if(l.srcId&&t) pl.push([l.srcId,t]); }); });
     if(pl.length){ XLSX.utils.sheet_add_aoa(wsC,[['선행ID','후행ID']],{origin:'A19'}); XLSX.utils.sheet_add_aoa(wsC,pl,{origin:'A20'}); }
@@ -11406,6 +11409,21 @@ async function exportExcel(){
 // ─────────────────────────────────────────────────────────────
 
 /* 현재 데이터를 기반으로 공정현황 시트(AOA) + 메타 산출 */
+// 노드별 코드(100, 100-10, 100-10-1, ...) 생성 — 실적현황/간트차트 엑셀 내보내기가
+// 공용으로 사용(둘의 "코드"가 항상 일치하도록 한 곳에서만 계산). sec._code/n._code에 임시 할당.
+function _assignNodeCodes(sections){
+  sections.forEach(function(sec, si){
+    var secCounter=si+1;
+    sec._code=String(secCounter*100);
+    (function genCodes(nodes, parentCode){
+      nodes.forEach(function(n, i){
+        n._code = parentCode ? (parentCode+'-'+(i+1)) : (String(secCounter*100)+'-'+String((i+1)*10));
+        if(n.ch&&n.ch.length) genCodes(n.ch, n._code);
+      });
+    })(sec.nodes, null);
+  });
+}
+
 function _buildProgressSnapshotData(){
   const p=getProj();
   p.sections.forEach(s=>s.nodes.forEach(n=>rollupNode(n)));
@@ -11423,22 +11441,7 @@ function _buildProgressSnapshotData(){
   var dataRows=[];   // 개별 날짜 시트용 (기존 형식 유지)
   var codeRows=[];   // 통합현황용: {code, name, name2, amt, planS, planF, actS, actF, rate, actAmt}
 
-  // 섹션 번호(100,200,...) + depth별 코드 생성
-  var _secCounter=0;
-  function _genCodes(nodes, parentCode, depthIdx){
-    nodes.forEach(function(n, i){
-      var code;
-      if(!parentCode){
-        // depth=0: 섹션 최상위 노드 → 100-10, 100-20, ...
-        code=String(_secCounter*100)+'-'+String((i+1)*10);
-      } else {
-        // depth>0: 부모코드 + '-' + 순번
-        code=parentCode+'-'+(i+1);
-      }
-      n._code=code; // 내부 임시 할당
-      if(n.ch&&n.ch.length) _genCodes(n.ch, code, depthIdx+1);
-    });
-  }
+  _assignNodeCodes(p.sections);
 
   function collectNodes(nodes, depth){
     nodes.forEach(function(n){
@@ -11478,14 +11481,9 @@ function _buildProgressSnapshotData(){
     });
   }
 
-  p.sections.forEach(function(sec,si){
-    _secCounter=si+1;
-    // 섹션 자체를 최상위 노드로: 코드 = 100, 200, ...
-    var secCode=String(_secCounter*100);
-    // 섹션 노드들에 코드 부여
-    _genCodes(sec.nodes, null, 0);
-    // 섹션 헤더행 (통합현황용)
-    codeRows.push({code:secCode, name:sec.name||'', name2:'', amt:0,
+  p.sections.forEach(function(sec){
+    // 섹션 헤더행 (통합현황용) — 코드는 _assignNodeCodes()가 이미 sec._code/n._code에 부여함
+    codeRows.push({code:sec._code, name:sec.name||'', name2:'', amt:0,
       planS:'',planF:'',actS:'',actF:'',rate:0,actAmt:0,isLeaf:false,isSec:true});
     collectNodes(sec.nodes, 0);
   });
