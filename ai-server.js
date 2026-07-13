@@ -27,8 +27,8 @@ const server = http.createServer((req, res) => {
   }
   if (req.method === 'GET' && url === '/api/template') {
     // 템플릿: template/ 우선, 없으면 루트에서 탐색(패키징 환경 대응)
-    const _cands = [ path.join(__dirname,'template','마스터공정표_간트차트_템플릿.xlsb'),
-                     path.join(__dirname,'마스터공정표_간트차트_템플릿.xlsb') ];
+    const _cands = [ path.join(__dirname,'template','MASTER_GANTT_TEMPLATE.xlsb'),
+                     path.join(__dirname,'MASTER_GANTT_TEMPLATE.xlsb') ];
     const _f = _cands.find(p=>{ try{ return fs.existsSync(p); }catch(e){ return false; } });
     if (_f) { res.writeHead(200, {'Content-Type':'application/vnd.ms-excel.sheet.binary.macroEnabled.12', 'Access-Control-Allow-Origin':'*'}); res.end(fs.readFileSync(_f)); }
     else { res.writeHead(404); res.end('template not found'); }

@@ -11378,7 +11378,7 @@ async function exportExcel(){
     try{ const r=await fetch(tplUrl); if(!r.ok) throw 0; buf=await r.arrayBuffer(); }
     catch(e){ toast(t('tplLoadFailMsg',{suffix:(_aiIsPro()?t('tplLoadFailProSuffix'):'')})); return; }
     const wb=XLSX.read(new Uint8Array(buf),{bookVBA:true,cellStyles:true,cellDates:true});
-    const wsD=wb.Sheets['공정데이터'], wsC=wb.Sheets['설정'];
+    const wsD=wb.Sheets['Task Data'], wsC=wb.Sheets['Setting'];
     if(!wsD||!wsC){ toast(t('tplSheetMismatchMsg')); return; }
     const D=v=>(v? new Date(v+'T00:00:00'):'');
     // 이벤트 맵 (nodeId -> [events])
