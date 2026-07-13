@@ -1,7 +1,7 @@
 {
   "name": "terminus-masterschedule-pro",
   "productName": "Terminus MasterSchedule Pro",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Terminus MasterSchedule Pro — 개인용 공정표 데스크톱 앱",
   "author": "유병한",
   "license": "ISC",
@@ -53,7 +53,7 @@
       {
         "provider": "github",
         "owner": "YooByungHan",
-        "repo": "master-schedule"
+        "repo": "Terminus-MasterSchedule-Pro"
       }
     ]
   }

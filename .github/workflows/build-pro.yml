@@ -4,6 +4,13 @@ name: Build Pro Desktop App
 #  - 'pro-v*' 태그를 push 하거나 (예: pro-v0.1.0)
 #  - Actions 탭에서 수동 실행(Run workflow) 하면
 #  Windows용 설치파일(.exe)을 빌드해 GitHub Release(초안)에 업로드한다.
+#
+# (2026-07-13 변경) Pro 릴리스는 전용 저장소(Terminus-MasterSchedule-Pro)로
+# 분리했다 — 유튜브를 보고 오는 일반 사용자가 소스코드 없이 README+다운로드
+# 링크만 있는 단순한 저장소로 접근하도록 하기 위함. (Server도 같은 이유로
+# 앞서 Terminus-MasterSchedule-Server로 분리됨 — 자세한 배경은 그쪽 커밋 참고.)
+# 기본 GITHUB_TOKEN은 이 저장소(master-schedule)에만 쓸 수 있으므로, 전용
+# 저장소에 쓰기 권한을 가진 PAT을 PRO_RELEASE_TOKEN 시크릿으로 등록해 사용한다.
 
 on:
   push:
@@ -59,8 +66,9 @@ jobs:
         working-directory: pro
         run: npm run dist
         env:
-          # electron-builder 가 GitHub Release 에 업로드할 때 사용하는 토큰
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # electron-builder 가 Terminus-MasterSchedule-Pro 저장소에 Release를
+          # 올릴 때 쓰는 토큰
+          GH_TOKEN: ${{ secrets.PRO_RELEASE_TOKEN }}
 
       - name: Release 제목에 "Pro" 표시 (Server 릴리즈와 구분)
         # 태그(v0.3.0 등)는 electron-updater가 semver로 파싱해야 하므로 그대로 두고,
@@ -70,5 +78,5 @@ jobs:
         shell: bash
         run: node ../scripts/set-release-name.js Pro "$(node -p "require('./package.json').version")"
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_REPO: ${{ github.repository }}
+          GH_TOKEN: ${{ secrets.PRO_RELEASE_TOKEN }}
+          GH_REPO: YooByungHan/Terminus-MasterSchedule-Pro
