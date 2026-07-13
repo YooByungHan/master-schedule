@@ -2061,6 +2061,15 @@ const I18N = {
     wordExpand:'펼치기', wordCollapse:'접기', hideRowTitle:'이 행 숨기기',
     adminVerifyModalTitle:'🔐 관리자 탭 확인', adminVerifyHint:'관리자 코드를 입력하세요.', adminVerifyPh:'관리자 코드',
     adminCodeWrongErr:'관리자 코드가 올바르지 않습니다', adminCodeEnterPromptErr:'코드를 입력하세요',
+    overwriteConfirmTitle:'⚠ 덮어쓰기 확인', overwriteConfirmDesc1:'동일한 기준일자 시트가 이미 있습니다.', overwriteConfirmDesc2:'기준일자 <b style="color:#dc2626">{date}</b> 시트가 파일에 존재합니다.<br>그대로 <b>덮어쓰기</b> 하거나, 기준일자를 잘못 두었다면 아래에서 <b>날짜를 바꿔</b> 저장할 수 있습니다.',
+    overwriteChangeDateLbl:'기준일자 변경(선택)', overwriteDateGoBtn:'이 날짜로 진행', overwriteConfirmBtn:'덮어쓰기',
+    fileSelectModalTitle:'📁 파일 선택', progSaveModalTitle:'📈 실적현황 저장', progSaveSiteLbl:'현장명:',
+    progSaveBaselineLbl:'기준선 날짜:', progSaveSheetNameSuffix:'(시트명: {ymd})', progSaveOverallRateLbl:'전체 실적율:',
+    progSaveCumAmtLbl:'누적실적금액:', wonUnit:'원', progSaveMethodLbl:'저장 방식을 선택하세요',
+    progSaveNewFileBtn:'신규 파일로 저장', progSaveNewFileDesc:'새 엑셀 파일을 생성합니다 ({filename})', progSaveExistingFileBtn:'기존 파일 선택',
+    progSaveExistingFileDesc:'선택한 파일의 데이터를 가져와 "{filename}" 로 저장합니다', progSaveHint:'※ 동일 날짜 시트가 존재할 경우 덮어쓰며, 누적이력 시트는 자동으로 업데이트됩니다.', fileTypeJsonBackup:'JSON 백업 파일(.json)',
+    fileTypePng:'PNG 이미지(.png)', fileTypeXlsb:'Excel 바이너리 통합 문서(.xlsb)', fileTypeXlsx:'Excel 통합 문서(.xlsx)',
+    fileTypePdf:'PDF 문서(.pdf)',
     serverBackupOnlyDoneMsg:'✅ 서버 백업 완료 (내 PC 저장은 취소됨): {name}', backupErrMsg:'백업 오류: {msg}', backupListErrMsg:'백업 목록 오류: {msg}',
     restoreModalTitle:'복원', noBackupFilesMsg:'백업 파일이 없습니다.', restoreBtnLabel:'복원',
     deleteBtnLabel:'삭제', restoreSelectModalTitle:'복원 — 백업 선택', restoreSelectHint:'선택한 백업으로 현재 공정표를 교체합니다(복원 직전 자동백업 생성, 전원 영향).',
@@ -2307,6 +2316,15 @@ const I18N = {
     wordExpand:'Expand', wordCollapse:'Collapse', hideRowTitle:'Hide this row',
     adminVerifyModalTitle:'🔐 Admin Tab Verification', adminVerifyHint:'Please enter the admin code.', adminVerifyPh:'Admin code',
     adminCodeWrongErr:'The admin code is incorrect', adminCodeEnterPromptErr:'Please enter the code',
+    overwriteConfirmTitle:'⚠ Confirm Overwrite', overwriteConfirmDesc1:'A sheet for this same baseline date already exists.', overwriteConfirmDesc2:'A sheet for baseline date <b style="color:#dc2626">{date}</b> exists in the file.<br>You can <b>overwrite</b> it as-is, or if the baseline date was set incorrectly, <b>change the date</b> below and save.',
+    overwriteChangeDateLbl:'Change Baseline Date (optional)', overwriteDateGoBtn:'Proceed with This Date', overwriteConfirmBtn:'Overwrite',
+    fileSelectModalTitle:'📁 Select File', progSaveModalTitle:'📈 Save Progress Status', progSaveSiteLbl:'Site:',
+    progSaveBaselineLbl:'Baseline Date:', progSaveSheetNameSuffix:'(sheet name: {ymd})', progSaveOverallRateLbl:'Overall Progress Rate:',
+    progSaveCumAmtLbl:'Cumulative Actual Amount:', wonUnit:'KRW', progSaveMethodLbl:'Choose how to save',
+    progSaveNewFileBtn:'Save as New File', progSaveNewFileDesc:'Creates a new Excel file ({filename})', progSaveExistingFileBtn:'Select Existing File',
+    progSaveExistingFileDesc:'Imports data from the selected file and saves it as "{filename}"', progSaveHint:'※ If a sheet for the same date exists, it will be overwritten, and the cumulative history sheet is updated automatically.', fileTypeJsonBackup:'JSON backup file (.json)',
+    fileTypePng:'PNG image (.png)', fileTypeXlsb:'Excel binary workbook (.xlsb)', fileTypeXlsx:'Excel workbook (.xlsx)',
+    fileTypePdf:'PDF document (.pdf)',
     serverBackupOnlyDoneMsg:'✅ Server backup complete (saving to my PC was cancelled): {name}', backupErrMsg:'Backup error: {msg}', backupListErrMsg:'Backup list error: {msg}',
     restoreModalTitle:'Restore', noBackupFilesMsg:'There are no backup files.', restoreBtnLabel:'Restore',
     deleteBtnLabel:'Delete', restoreSelectModalTitle:'Restore — Select Backup', restoreSelectHint:'This replaces the current schedule with the selected backup (an automatic backup is created right before restoring, and it affects everyone).',
@@ -2553,6 +2571,15 @@ const I18N = {
     wordExpand:'Expandir', wordCollapse:'Contraer', hideRowTitle:'Ocultar esta fila',
     adminVerifyModalTitle:'🔐 Verificación de la Pestaña de Administrador', adminVerifyHint:'Ingrese el código de administrador.', adminVerifyPh:'Código de administrador',
     adminCodeWrongErr:'El código de administrador es incorrecto', adminCodeEnterPromptErr:'Ingrese el código',
+    overwriteConfirmTitle:'⚠ Confirmar Sobrescritura', overwriteConfirmDesc1:'Ya existe una hoja para esta misma fecha de referencia.', overwriteConfirmDesc2:'Existe una hoja para la fecha de referencia <b style="color:#dc2626">{date}</b> en el archivo.<br>Puede <b>sobrescribirla</b> tal cual, o si la fecha de referencia era incorrecta, <b>cambie la fecha</b> abajo y guarde.',
+    overwriteChangeDateLbl:'Cambiar Fecha de Referencia (opcional)', overwriteDateGoBtn:'Continuar con Esta Fecha', overwriteConfirmBtn:'Sobrescribir',
+    fileSelectModalTitle:'📁 Seleccionar Archivo', progSaveModalTitle:'📈 Guardar Estado de Progreso', progSaveSiteLbl:'Obra:',
+    progSaveBaselineLbl:'Fecha de Referencia:', progSaveSheetNameSuffix:'(nombre de hoja: {ymd})', progSaveOverallRateLbl:'Tasa de Avance General:',
+    progSaveCumAmtLbl:'Monto Real Acumulado:', wonUnit:'KRW', progSaveMethodLbl:'Elija cómo guardar',
+    progSaveNewFileBtn:'Guardar como Archivo Nuevo', progSaveNewFileDesc:'Crea un nuevo archivo de Excel ({filename})', progSaveExistingFileBtn:'Seleccionar Archivo Existente',
+    progSaveExistingFileDesc:'Importa los datos del archivo seleccionado y los guarda como "{filename}"', progSaveHint:'※ Si existe una hoja para la misma fecha, se sobrescribirá, y la hoja de historial acumulado se actualiza automáticamente.', fileTypeJsonBackup:'Archivo de respaldo JSON (.json)',
+    fileTypePng:'Imagen PNG (.png)', fileTypeXlsb:'Libro binario de Excel (.xlsb)', fileTypeXlsx:'Libro de Excel (.xlsx)',
+    fileTypePdf:'Documento PDF (.pdf)',
     serverBackupOnlyDoneMsg:'✅ Copia de seguridad del servidor completa (se canceló el guardado en mi PC): {name}', backupErrMsg:'Error de respaldo: {msg}', backupListErrMsg:'Error de lista de copias de seguridad: {msg}',
     restoreModalTitle:'Restaurar', noBackupFilesMsg:'No hay archivos de respaldo.', restoreBtnLabel:'Restaurar',
     deleteBtnLabel:'Eliminar', restoreSelectModalTitle:'Restaurar — Seleccionar Copia de Seguridad', restoreSelectHint:'Esto reemplaza el cronograma actual con la copia de seguridad seleccionada (se crea una copia de seguridad automática justo antes de restaurar, y afecta a todos).',
@@ -2799,6 +2826,15 @@ const I18N = {
     wordExpand:'Ausklappen', wordCollapse:'Einklappen', hideRowTitle:'Diese Zeile ausblenden',
     adminVerifyModalTitle:'🔐 Admin-Tab-Verifizierung', adminVerifyHint:'Bitte geben Sie den Admin-Code ein.', adminVerifyPh:'Admin-Code',
     adminCodeWrongErr:'Der Admin-Code ist falsch', adminCodeEnterPromptErr:'Bitte geben Sie den Code ein',
+    overwriteConfirmTitle:'⚠ Überschreiben bestätigen', overwriteConfirmDesc1:'Für dieses Basisliniendatum existiert bereits ein Blatt.', overwriteConfirmDesc2:'Für das Basisliniendatum <b style="color:#dc2626">{date}</b> existiert bereits ein Blatt in der Datei.<br>Sie können es so <b>überschreiben</b> oder, falls das Basisliniendatum falsch war, unten das <b>Datum ändern</b> und speichern.',
+    overwriteChangeDateLbl:'Basisliniendatum ändern (optional)', overwriteDateGoBtn:'Mit diesem Datum fortfahren', overwriteConfirmBtn:'Überschreiben',
+    fileSelectModalTitle:'📁 Datei auswählen', progSaveModalTitle:'📈 Fortschrittsstatus speichern', progSaveSiteLbl:'Standort:',
+    progSaveBaselineLbl:'Basisliniendatum:', progSaveSheetNameSuffix:'(Blattname: {ymd})', progSaveOverallRateLbl:'Gesamtfortschrittsrate:',
+    progSaveCumAmtLbl:'Kumulierter Ist-Betrag:', wonUnit:'KRW', progSaveMethodLbl:'Wählen Sie die Speichermethode',
+    progSaveNewFileBtn:'Als neue Datei speichern', progSaveNewFileDesc:'Erstellt eine neue Excel-Datei ({filename})', progSaveExistingFileBtn:'Vorhandene Datei auswählen',
+    progSaveExistingFileDesc:'Importiert Daten aus der ausgewählten Datei und speichert sie als "{filename}"', progSaveHint:'※ Falls ein Blatt für dasselbe Datum existiert, wird es überschrieben, und das kumulierte Verlaufsblatt wird automatisch aktualisiert.', fileTypeJsonBackup:'JSON-Sicherungsdatei (.json)',
+    fileTypePng:'PNG-Bild (.png)', fileTypeXlsb:'Excel-Binärarbeitsmappe (.xlsb)', fileTypeXlsx:'Excel-Arbeitsmappe (.xlsx)',
+    fileTypePdf:'PDF-Dokument (.pdf)',
     serverBackupOnlyDoneMsg:'✅ Serversicherung abgeschlossen (Speichern auf meinem PC wurde abgebrochen): {name}', backupErrMsg:'Sicherungsfehler: {msg}', backupListErrMsg:'Fehler bei der Sicherungsliste: {msg}',
     restoreModalTitle:'Wiederherstellen', noBackupFilesMsg:'Es sind keine Sicherungsdateien vorhanden.', restoreBtnLabel:'Wiederherstellen',
     deleteBtnLabel:'Löschen', restoreSelectModalTitle:'Wiederherstellen — Sicherung auswählen', restoreSelectHint:'Dadurch wird der aktuelle Zeitplan durch die ausgewählte Sicherung ersetzt (unmittelbar vor der Wiederherstellung wird automatisch eine Sicherung erstellt, betrifft alle Benutzer).',
@@ -3045,6 +3081,15 @@ const I18N = {
     wordExpand:'展開', wordCollapse:'折りたたみ', hideRowTitle:'この行を非表示',
     adminVerifyModalTitle:'🔐 管理者タブ確認', adminVerifyHint:'管理者コードを入力してください。', adminVerifyPh:'管理者コード',
     adminCodeWrongErr:'管理者コードが正しくありません', adminCodeEnterPromptErr:'コードを入力してください',
+    overwriteConfirmTitle:'⚠ 上書き確認', overwriteConfirmDesc1:'同じ基準日付のシートが既に存在します。', overwriteConfirmDesc2:'基準日付<b style="color:#dc2626">{date}</b>のシートがファイルに存在します。<br>そのまま<b>上書き</b>するか、基準日付が間違っている場合は下で<b>日付を変更</b>して保存できます。',
+    overwriteChangeDateLbl:'基準日付変更（任意）', overwriteDateGoBtn:'この日付で進める', overwriteConfirmBtn:'上書き',
+    fileSelectModalTitle:'📁 ファイル選択', progSaveModalTitle:'📈 実績現況保存', progSaveSiteLbl:'現場名：',
+    progSaveBaselineLbl:'基準線日付：', progSaveSheetNameSuffix:'（シート名：{ymd}）', progSaveOverallRateLbl:'全体実績率：',
+    progSaveCumAmtLbl:'累積実績金額：', wonUnit:'ウォン', progSaveMethodLbl:'保存方法を選択してください',
+    progSaveNewFileBtn:'新規ファイルとして保存', progSaveNewFileDesc:'新しいExcelファイルを作成します（{filename}）', progSaveExistingFileBtn:'既存ファイル選択',
+    progSaveExistingFileDesc:'選択したファイルのデータを取り込み「{filename}」として保存します', progSaveHint:'※ 同じ日付のシートが存在する場合は上書きされ、累積履歴シートは自動的に更新されます。', fileTypeJsonBackup:'JSONバックアップファイル(.json)',
+    fileTypePng:'PNG画像(.png)', fileTypeXlsb:'Excelバイナリブック(.xlsb)', fileTypeXlsx:'Excelブック(.xlsx)',
+    fileTypePdf:'PDF文書(.pdf)',
     serverBackupOnlyDoneMsg:'✅ サーバーバックアップ完了（PC保存はキャンセルされました）：{name}', backupErrMsg:'バックアップエラー：{msg}', backupListErrMsg:'バックアップ一覧エラー：{msg}',
     restoreModalTitle:'復元', noBackupFilesMsg:'バックアップファイルがありません。', restoreBtnLabel:'復元',
     deleteBtnLabel:'削除', restoreSelectModalTitle:'復元 — バックアップ選択', restoreSelectHint:'選択したバックアップで現在の工程表を置き換えます（復元直前に自動バックアップを作成、全員に影響）。',
@@ -10919,7 +10964,7 @@ async function doServerBackup(){
     if(j.content){
       // 서버 백업과 별개로, 개인 PC에도 원하는 폴더를 골라 저장(매번 저장창 표시).
       const blob=new Blob([j.content],{type:'application/json'});
-      const _res=await saveWithPicker(j.name, blob, [{ description:'JSON 백업 파일(.json)', accept:{ 'application/json':['.json'] } }]);
+      const _res=await saveWithPicker(j.name, blob, [{ description:t('fileTypeJsonBackup'), accept:{ 'application/json':['.json'] } }]);
       if(_res==='saved'){ toast(t('backupDoneMsg',{name:j.name})); return; }
       if(_res==='cancel'){ toast(t('serverBackupOnlyDoneMsg',{name:j.name})); return; }
       _downloadText(j.name, j.content); // 'unsupported' → 브라우저 다운로드 폴백(비보안 http 등)
@@ -11270,7 +11315,7 @@ function saveAsPng(){
       canvas.toBlob(async(blob)=>{
         // 매 저장마다 위치·파일명을 묻는 저장창(현재 방식) → 사용자가 폴더 선택.
         const _res = await saveWithPicker(filename, blob, [
-          { description:'PNG 이미지(.png)', accept:{ 'image/png':['.png'] } }
+          { description:t('fileTypePng'), accept:{ 'image/png':['.png'] } }
         ]);
         if(_res==='saved'){ toast(t('pngSavedMsg')); }
         else if(_res==='cancel'){ toast(t('saveCancelledMsg')); }
@@ -11345,7 +11390,7 @@ async function exportExcel(){
     // 매 저장마다 위치·파일명을 묻는 저장창을 띄운다 → 사용자가 매번 원하는 폴더에 저장 가능.
     // 저장창을 못 쓰는 환경(비보안 http 등)에서만 브라우저 기본 다운로드로 폴백.
     const _res = await saveWithPicker(fname, blob, [
-      { description:'Excel 바이너리 통합 문서(.xlsb)', accept:{ 'application/vnd.ms-excel.sheet.binary.macroEnabled.12':['.xlsb'] } }
+      { description:t('fileTypeXlsb'), accept:{ 'application/vnd.ms-excel.sheet.binary.macroEnabled.12':['.xlsb'] } }
     ]);
     if(_res==='saved'){ toast(t('excelSavedMsg')); }
     else if(_res==='cancel'){ toast(t('saveCancelledMsg')); }
@@ -11664,26 +11709,25 @@ function _showOverwriteConfirm(meta, onYes, onDateChange){
   ocm.innerHTML=
     '<div style="background:#fff;border-radius:10px;box-shadow:0 12px 40px rgba(0,0,0,.28);width:390px;max-width:92vw;overflow:hidden">'+
       '<div style="background:#dc2626;color:#fff;padding:12px 16px;font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px">'+
-        '<span>⚠ 덮어쓰기 확인</span>'+
+        '<span>'+esc(t('overwriteConfirmTitle'))+'</span>'+
       '</div>'+
       '<div style="padding:20px 20px 18px">'+
         '<p style="font-size:13.5px;font-weight:700;color:#1a1816;margin:0 0 8px">'+
-          '동일한 기준일자 시트가 이미 있습니다.'+
+          esc(t('overwriteConfirmDesc1'))+
         '</p>'+
         '<p style="font-size:11.5px;color:#6b6760;margin:0 0 16px;line-height:1.7">'+
-          '기준일자 <b style="color:#dc2626">'+baseDate+'</b> 시트가 파일에 존재합니다.<br>'+
-          '그대로 <b>덮어쓰기</b> 하거나, 기준일자를 잘못 두었다면 아래에서 <b>날짜를 바꿔</b> 저장할 수 있습니다.'+
+          t('overwriteConfirmDesc2',{date:baseDate})+
         '</p>'+
         '<div style="background:#f7f5f1;border:1px solid #e2ddd7;border-radius:6px;padding:10px 12px;margin-bottom:16px">'+
-          '<label style="font-size:11px;font-weight:700;color:#6b6760;display:block;margin-bottom:5px">기준일자 변경(선택)</label>'+
+          '<label style="font-size:11px;font-weight:700;color:#6b6760;display:block;margin-bottom:5px">'+esc(t('overwriteChangeDateLbl'))+'</label>'+
           '<div style="display:flex;gap:6px">'+
             '<input type="date" id="ocm-date" value="'+baseDate+'" style="flex:1;min-width:0;padding:7px 9px;border:1.5px solid #e2ddd7;border-radius:5px;font-size:13px;font-family:inherit">'+
-            '<button id="ocm-date-go" style="padding:7px 12px;border:none;background:#1c3a5e;color:#fff;border-radius:5px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap">이 날짜로 진행</button>'+
+            '<button id="ocm-date-go" style="padding:7px 12px;border:none;background:#1c3a5e;color:#fff;border-radius:5px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap">'+esc(t('overwriteDateGoBtn'))+'</button>'+
           '</div>'+
         '</div>'+
         '<div style="display:flex;gap:8px">'+
-          '<button id="ocm-no" style="flex:1;padding:10px;border:1.5px solid #d1ccc7;background:#f5f3ef;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;color:#3a3530">취소</button>'+
-          '<button id="ocm-yes" style="flex:1;padding:10px;border:none;background:#dc2626;color:#fff;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer">덮어쓰기</button>'+
+          '<button id="ocm-no" style="flex:1;padding:10px;border:1.5px solid #d1ccc7;background:#f5f3ef;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;color:#3a3530">'+esc(t('wordCancel'))+'</button>'+
+          '<button id="ocm-yes" style="flex:1;padding:10px;border:none;background:#dc2626;color:#fff;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer">'+esc(t('overwriteConfirmBtn'))+'</button>'+
         '</div>'+
       '</div>'+
     '</div>';
@@ -11720,7 +11764,7 @@ function _showFileListModal(files, onSelect){
   m.innerHTML=
     '<div style="background:#fff;border-radius:10px;box-shadow:0 12px 40px rgba(0,0,0,.28);width:500px;max-width:92vw;overflow:hidden">'+
       '<div style="background:#1a5c9e;color:#fff;padding:12px 16px;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:space-between">'+
-        '<span>📁 파일 선택</span>'+
+        '<span>'+esc(t('fileSelectModalTitle'))+'</span>'+
         '<button id="flm-close" style="background:none;border:none;color:#fff;font-size:20px;cursor:pointer;line-height:1;padding:0 4px">×</button>'+
       '</div>'+
       '<div id="flm-list" style="max-height:340px;overflow-y:auto">'+listHtml+'</div>'+
@@ -11768,7 +11812,7 @@ function _saveSnapshotAsNewFile(meta){
   // 매 저장마다 위치·파일명을 묻는 저장창(현재 방식) → 사용자가 폴더를 직접 선택.
   // (동일 파일 덮어쓰기 확인은 브라우저 저장창이 자체적으로 처리한다.)
   saveWithPicker(fname, xlsxBlob2, [
-    { description:'Excel 통합 문서(.xlsx)', accept:{ 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':['.xlsx'] } }
+    { description:t('fileTypeXlsx'), accept:{ 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':['.xlsx'] } }
   ]).then(function(_res){
     if(_res==='saved'){ toast(t('newFileSavedMsg',{fname,sheet:meta.ymd})); }
     else if(_res==='cancel'){ toast(t('saveCancelledMsg')); }
@@ -12189,29 +12233,30 @@ function exportProgressSnapshot(){
   var wrap=document.createElement('div');
   wrap.id='progSaveModal';
   wrap.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:99999;display:flex;align-items:center;justify-content:center;font-family:"Noto Sans KR",sans-serif;';
+  var _pmsFname=meta.projName+'_실적현황_'+meta.ymd+'.xlsx';
   wrap.innerHTML=
     '<div style="background:#fff;border-radius:8px;box-shadow:0 12px 40px rgba(0,0,0,.25);width:440px;max-width:92vw;overflow:hidden">'+
       '<div style="background:#1c3a5e;color:#fff;padding:12px 16px;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:space-between">'+
-        '<span>📈 실적현황 저장</span>'+
+        '<span>'+esc(t('progSaveModalTitle'))+'</span>'+
         '<span style="cursor:pointer;font-size:18px;line-height:1" id="pms-close">×</span>'+
       '</div>'+
       '<div style="padding:16px 18px;font-size:12.5px;color:#1a1816;line-height:1.6">'+
         '<div style="background:#f4f6f9;border:1px solid #e2ddd7;border-radius:6px;padding:10px 12px;margin-bottom:14px">'+
-          '<div><b>현장명:</b> '+meta.projName+'</div>'+
-          '<div><b>기준선 날짜:</b> <span style="color:#1a6b3a;font-weight:700">'+meta.baseDate+'</span> <span style="color:#6b6760">(시트명: '+meta.ymd+')</span></div>'+
-          '<div><b>전체 실적율:</b> '+meta.overallRate+'% / 누적실적금액: '+meta.totalActAmt.toLocaleString()+'원</div>'+
+          '<div><b>'+esc(t('progSaveSiteLbl'))+'</b> '+esc(meta.projName)+'</div>'+
+          '<div><b>'+esc(t('progSaveBaselineLbl'))+'</b> <span style="color:#1a6b3a;font-weight:700">'+meta.baseDate+'</span> <span style="color:#6b6760">'+esc(t('progSaveSheetNameSuffix',{ymd:meta.ymd}))+'</span></div>'+
+          '<div><b>'+esc(t('progSaveOverallRateLbl'))+'</b> '+meta.overallRate+'% / '+esc(t('progSaveCumAmtLbl'))+' '+meta.totalActAmt.toLocaleString()+esc(t('wonUnit'))+'</div>'+
         '</div>'+
-        '<div style="font-weight:600;margin-bottom:8px">저장 방식을 선택하세요</div>'+
+        '<div style="font-weight:600;margin-bottom:8px">'+esc(t('progSaveMethodLbl'))+'</div>'+
         '<button id="pms-new" style="width:100%;padding:12px 14px;border:1px solid #1a6b3a;background:#1a6b3a;color:#fff;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:8px;text-align:left">'+
-          '🆕 <b>신규 파일로 저장</b><br>'+
-          '<span style="font-weight:400;font-size:11.5px;opacity:.9">새 엑셀 파일을 생성합니다 ('+meta.projName+'_실적현황_'+meta.ymd+'.xlsx)</span>'+
+          '🆕 <b>'+esc(t('progSaveNewFileBtn'))+'</b><br>'+
+          '<span style="font-weight:400;font-size:11.5px;opacity:.9">'+esc(t('progSaveNewFileDesc',{filename:_pmsFname}))+'</span>'+
         '</button>'+
         '<button id="pms-open" style="width:100%;padding:12px 14px;border:1px solid #1c3a5e;background:#1c3a5e;color:#fff;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;text-align:left">'+
-          '📂 <b>기존 파일 선택</b><br>'+
-          '<span style="font-weight:400;font-size:11.5px;opacity:.9">선택한 파일의 데이터를 가져와 \"'+meta.projName+'_실적현황_'+meta.ymd+'.xlsx\" 로 저장합니다</span>'+
+          '📂 <b>'+esc(t('progSaveExistingFileBtn'))+'</b><br>'+
+          '<span style="font-weight:400;font-size:11.5px;opacity:.9">'+esc(t('progSaveExistingFileDesc',{filename:_pmsFname}))+'</span>'+
         '</button>'+
         '<input type="file" id="pms-file" accept=".xlsx,.xls" style="display:none">'+
-        '<div style="margin-top:12px;font-size:11px;color:#6b6760">※ 동일 날짜 시트가 존재할 경우 덮어쓰며, 누적이력 시트는 자동으로 업데이트됩니다.</div>'+
+        '<div style="margin-top:12px;font-size:11px;color:#6b6760">'+esc(t('progSaveHint'))+'</div>'+
       '</div>'+
     '</div>';
   document.body.appendChild(wrap);
@@ -12925,7 +12970,7 @@ function _drawGanttPdf(){
   const pdfBlob=pdf.output('blob');
   // 매 저장마다 위치·파일명을 묻는 저장창(현재 방식) → 사용자가 폴더 선택.
   saveWithPicker(pdfFilename, pdfBlob, [
-    { description:'PDF 문서(.pdf)', accept:{ 'application/pdf':['.pdf'] } }
+    { description:t('fileTypePdf'), accept:{ 'application/pdf':['.pdf'] } }
   ]).then(_res=>{
     if(_res==='saved'){ toast(t('pdfSavedMsg',{pages})); }
     else if(_res==='cancel'){ toast(t('saveCancelledMsg')); }
