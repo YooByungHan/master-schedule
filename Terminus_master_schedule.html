@@ -2070,6 +2070,13 @@ const I18N = {
     progSaveExistingFileDesc:'선택한 파일의 데이터를 가져와 "{filename}" 로 저장합니다', progSaveHint:'※ 동일 날짜 시트가 존재할 경우 덮어쓰며, 누적이력 시트는 자동으로 업데이트됩니다.', fileTypeJsonBackup:'JSON 백업 파일(.json)',
     fileTypePng:'PNG 이미지(.png)', fileTypeXlsb:'Excel 바이너리 통합 문서(.xlsb)', fileTypeXlsx:'Excel 통합 문서(.xlsx)',
     fileTypePdf:'PDF 문서(.pdf)',
+    xlHdrCode:'코드', xlHdrTaskName:'공종명', xlHdrDetailTask:'세부공종',
+    xlHdrQty:'물량', xlHdrUnit:'단위', xlHdrContractAmt:'계약금액(원)',
+    xlHdrPlanStart:'계획시작', xlHdrPlanEnd:'계획종료', xlHdrActQty:'실적물량',
+    xlHdrActRate:'실적율(%)', xlHdrActAmt:'실적금액(원)', xlSumRowLabel:'[합  계]',
+    xlHistDateHdr:'기준일', xlHistSiteHdr:'현장명', xlHistCumActAmtHdr:'누적실적금액(원)',
+    xlHistCumRateHdr:'누적실적율(%)', xlHistSavedAtHdr:'저장시각', xlSheetHistory:'누적이력',
+    xlSheetConsolidated:'통합현황', progressFileLabel:'실적현황',
     serverBackupOnlyDoneMsg:'✅ 서버 백업 완료 (내 PC 저장은 취소됨): {name}', backupErrMsg:'백업 오류: {msg}', backupListErrMsg:'백업 목록 오류: {msg}',
     restoreModalTitle:'복원', noBackupFilesMsg:'백업 파일이 없습니다.', restoreBtnLabel:'복원',
     deleteBtnLabel:'삭제', restoreSelectModalTitle:'복원 — 백업 선택', restoreSelectHint:'선택한 백업으로 현재 공정표를 교체합니다(복원 직전 자동백업 생성, 전원 영향).',
@@ -2325,6 +2332,13 @@ const I18N = {
     progSaveExistingFileDesc:'Imports data from the selected file and saves it as "{filename}"', progSaveHint:'※ If a sheet for the same date exists, it will be overwritten, and the cumulative history sheet is updated automatically.', fileTypeJsonBackup:'JSON backup file (.json)',
     fileTypePng:'PNG image (.png)', fileTypeXlsb:'Excel binary workbook (.xlsb)', fileTypeXlsx:'Excel workbook (.xlsx)',
     fileTypePdf:'PDF document (.pdf)',
+    xlHdrCode:'Code', xlHdrTaskName:'Task Name', xlHdrDetailTask:'Sub-task',
+    xlHdrQty:'Quantity', xlHdrUnit:'Unit', xlHdrContractAmt:'Contract Amount (KRW)',
+    xlHdrPlanStart:'Plan Start', xlHdrPlanEnd:'Plan End', xlHdrActQty:'Actual Quantity',
+    xlHdrActRate:'Progress Rate(%)', xlHdrActAmt:'Actual Amount (KRW)', xlSumRowLabel:'[Total]',
+    xlHistDateHdr:'Baseline Date', xlHistSiteHdr:'Site', xlHistCumActAmtHdr:'Cumulative Actual Amount (KRW)',
+    xlHistCumRateHdr:'Cumulative Progress Rate(%)', xlHistSavedAtHdr:'Saved At', xlSheetHistory:'History',
+    xlSheetConsolidated:'Consolidated Status', progressFileLabel:'Progress',
     serverBackupOnlyDoneMsg:'✅ Server backup complete (saving to my PC was cancelled): {name}', backupErrMsg:'Backup error: {msg}', backupListErrMsg:'Backup list error: {msg}',
     restoreModalTitle:'Restore', noBackupFilesMsg:'There are no backup files.', restoreBtnLabel:'Restore',
     deleteBtnLabel:'Delete', restoreSelectModalTitle:'Restore — Select Backup', restoreSelectHint:'This replaces the current schedule with the selected backup (an automatic backup is created right before restoring, and it affects everyone).',
@@ -2580,6 +2594,13 @@ const I18N = {
     progSaveExistingFileDesc:'Importa los datos del archivo seleccionado y los guarda como "{filename}"', progSaveHint:'※ Si existe una hoja para la misma fecha, se sobrescribirá, y la hoja de historial acumulado se actualiza automáticamente.', fileTypeJsonBackup:'Archivo de respaldo JSON (.json)',
     fileTypePng:'Imagen PNG (.png)', fileTypeXlsb:'Libro binario de Excel (.xlsb)', fileTypeXlsx:'Libro de Excel (.xlsx)',
     fileTypePdf:'Documento PDF (.pdf)',
+    xlHdrCode:'Código', xlHdrTaskName:'Nombre de Tarea', xlHdrDetailTask:'Subtarea',
+    xlHdrQty:'Cantidad', xlHdrUnit:'Unidad', xlHdrContractAmt:'Monto del Contrato (KRW)',
+    xlHdrPlanStart:'Inicio de Plan', xlHdrPlanEnd:'Fin de Plan', xlHdrActQty:'Cantidad Real',
+    xlHdrActRate:'Tasa de Avance(%)', xlHdrActAmt:'Monto Real (KRW)', xlSumRowLabel:'[Total]',
+    xlHistDateHdr:'Fecha de Referencia', xlHistSiteHdr:'Obra', xlHistCumActAmtHdr:'Monto Real Acumulado (KRW)',
+    xlHistCumRateHdr:'Tasa de Avance Acumulada(%)', xlHistSavedAtHdr:'Guardado el', xlSheetHistory:'Historial',
+    xlSheetConsolidated:'Estado Consolidado', progressFileLabel:'Progreso',
     serverBackupOnlyDoneMsg:'✅ Copia de seguridad del servidor completa (se canceló el guardado en mi PC): {name}', backupErrMsg:'Error de respaldo: {msg}', backupListErrMsg:'Error de lista de copias de seguridad: {msg}',
     restoreModalTitle:'Restaurar', noBackupFilesMsg:'No hay archivos de respaldo.', restoreBtnLabel:'Restaurar',
     deleteBtnLabel:'Eliminar', restoreSelectModalTitle:'Restaurar — Seleccionar Copia de Seguridad', restoreSelectHint:'Esto reemplaza el cronograma actual con la copia de seguridad seleccionada (se crea una copia de seguridad automática justo antes de restaurar, y afecta a todos).',
@@ -2835,6 +2856,13 @@ const I18N = {
     progSaveExistingFileDesc:'Importiert Daten aus der ausgewählten Datei und speichert sie als "{filename}"', progSaveHint:'※ Falls ein Blatt für dasselbe Datum existiert, wird es überschrieben, und das kumulierte Verlaufsblatt wird automatisch aktualisiert.', fileTypeJsonBackup:'JSON-Sicherungsdatei (.json)',
     fileTypePng:'PNG-Bild (.png)', fileTypeXlsb:'Excel-Binärarbeitsmappe (.xlsb)', fileTypeXlsx:'Excel-Arbeitsmappe (.xlsx)',
     fileTypePdf:'PDF-Dokument (.pdf)',
+    xlHdrCode:'Code', xlHdrTaskName:'Vorgangsname', xlHdrDetailTask:'Untervorgang',
+    xlHdrQty:'Menge', xlHdrUnit:'Einheit', xlHdrContractAmt:'Vertragsbetrag (KRW)',
+    xlHdrPlanStart:'Plan-Start', xlHdrPlanEnd:'Plan-Ende', xlHdrActQty:'Ist-Menge',
+    xlHdrActRate:'Fortschrittsrate(%)', xlHdrActAmt:'Ist-Betrag (KRW)', xlSumRowLabel:'[Summe]',
+    xlHistDateHdr:'Basisdatum', xlHistSiteHdr:'Standort', xlHistCumActAmtHdr:'Kumulierter Ist-Betrag (KRW)',
+    xlHistCumRateHdr:'Kumulierte Fortschrittsrate(%)', xlHistSavedAtHdr:'Gespeichert am', xlSheetHistory:'Verlauf',
+    xlSheetConsolidated:'Konsolidierter Status', progressFileLabel:'Fortschritt',
     serverBackupOnlyDoneMsg:'✅ Serversicherung abgeschlossen (Speichern auf meinem PC wurde abgebrochen): {name}', backupErrMsg:'Sicherungsfehler: {msg}', backupListErrMsg:'Fehler bei der Sicherungsliste: {msg}',
     restoreModalTitle:'Wiederherstellen', noBackupFilesMsg:'Es sind keine Sicherungsdateien vorhanden.', restoreBtnLabel:'Wiederherstellen',
     deleteBtnLabel:'Löschen', restoreSelectModalTitle:'Wiederherstellen — Sicherung auswählen', restoreSelectHint:'Dadurch wird der aktuelle Zeitplan durch die ausgewählte Sicherung ersetzt (unmittelbar vor der Wiederherstellung wird automatisch eine Sicherung erstellt, betrifft alle Benutzer).',
@@ -3090,6 +3118,13 @@ const I18N = {
     progSaveExistingFileDesc:'選択したファイルのデータを取り込み「{filename}」として保存します', progSaveHint:'※ 同じ日付のシートが存在する場合は上書きされ、累積履歴シートは自動的に更新されます。', fileTypeJsonBackup:'JSONバックアップファイル(.json)',
     fileTypePng:'PNG画像(.png)', fileTypeXlsb:'Excelバイナリブック(.xlsb)', fileTypeXlsx:'Excelブック(.xlsx)',
     fileTypePdf:'PDF文書(.pdf)',
+    xlHdrCode:'コード', xlHdrTaskName:'工種名', xlHdrDetailTask:'細部工種',
+    xlHdrQty:'数量', xlHdrUnit:'単位', xlHdrContractAmt:'契約金額（ウォン）',
+    xlHdrPlanStart:'計画開始', xlHdrPlanEnd:'計画終了', xlHdrActQty:'実績数量',
+    xlHdrActRate:'実績率(%)', xlHdrActAmt:'実績金額（ウォン）', xlSumRowLabel:'［合計］',
+    xlHistDateHdr:'基準日', xlHistSiteHdr:'現場名', xlHistCumActAmtHdr:'累積実績金額（ウォン）',
+    xlHistCumRateHdr:'累積実績率(%)', xlHistSavedAtHdr:'保存日時', xlSheetHistory:'累積履歴',
+    xlSheetConsolidated:'統合現況', progressFileLabel:'実績現況',
     serverBackupOnlyDoneMsg:'✅ サーバーバックアップ完了（PC保存はキャンセルされました）：{name}', backupErrMsg:'バックアップエラー：{msg}', backupListErrMsg:'バックアップ一覧エラー：{msg}',
     restoreModalTitle:'復元', noBackupFilesMsg:'バックアップファイルがありません。', restoreBtnLabel:'復元',
     deleteBtnLabel:'削除', restoreSelectModalTitle:'復元 — バックアップ選択', restoreSelectHint:'選択したバックアップで現在の工程表を置き換えます（復元直前に自動バックアップを作成、全員に影響）。',
@@ -11521,9 +11556,9 @@ function _buildProgressSheet(meta){
   // row0: 빈행, row1: 제목, row2: hdr1, row3: hdr2, row4: 합계, row5~: 데이터
   var rowEmpty   = Array(TOTAL_COLS).fill('');
   var rowTitle   = [titleCell].concat(Array(TOTAL_COLS-1).fill(''));
-  var rowH1      = ['코드','공종명','세부공종','물량','단위','계약금액(원)','계획시작','계획종료', meta.baseDate,'',''];
-  var rowH2      = ['','','','','','','','','실적물량','실적율(%)','실적금액(원)'];
-  var sumRow     = ['[합  계]','','','','',''+meta.totalAmt,'','','',meta.overallRate,meta.totalActAmt];
+  var rowH1      = [t('xlHdrCode'),t('xlHdrTaskName'),t('xlHdrDetailTask'),t('xlHdrQty'),t('xlHdrUnit'),t('xlHdrContractAmt'),t('xlHdrPlanStart'),t('xlHdrPlanEnd'), meta.baseDate,'',''];
+  var rowH2      = ['','','','','','','','',t('xlHdrActQty'),t('xlHdrActRate'),t('xlHdrActAmt')];
+  var sumRow     = [t('xlSumRowLabel'),'','','','',''+meta.totalAmt,'','','',meta.overallRate,meta.totalActAmt];
 
   // 데이터 행 생성 (codeRows 기반)
   var dataRows=[];
@@ -11633,7 +11668,7 @@ function _buildProgressSheet(meta){
 function _buildHistorySheet(history){
   var GREEN='1A6B3A', WHITE='FFFFFF';
   var BORDER={top:{style:'thin',color:{rgb:'B8B2AA'}},bottom:{style:'thin',color:{rgb:'B8B2AA'}},left:{style:'thin',color:{rgb:'B8B2AA'}},right:{style:'thin',color:{rgb:'B8B2AA'}}};
-  var HDR2=['기준일','현장명','계약금액(원)','누적실적금액(원)','누적실적율(%)','저장시각'];
+  var HDR2=[t('xlHistDateHdr'),t('xlHistSiteHdr'),t('xlHdrContractAmt'),t('xlHistCumActAmtHdr'),t('xlHistCumRateHdr'),t('xlHistSavedAtHdr')];
   var histRows=history.map(function(h){
     var sa=h.savedAt||'';
     if(sa.indexOf('T')>=0) sa=sa.replace('T',' ').slice(0,19);
@@ -11785,6 +11820,17 @@ function _showFileListModal(files, onSelect){
   });
 }
 
+/* 언어와 무관하게 누적이력/통합현황 시트를 찾기 위한 헬퍼.
+   과거에 다른 UI 언어로 저장된 파일도 인식하도록 I18N 전 언어의 번역명을 모두 대조한다. */
+function _findSheetByI18nKey(wb, key){
+  var names=Object.keys(I18N).map(function(lang){ return I18N[lang][key]; });
+  return wb.SheetNames.find(function(n){ return names.indexOf(n)>=0; });
+}
+
+function _progressSnapshotFileName(meta){
+  return meta.projName+'_'+t('progressFileLabel')+'_'+meta.ymd+'.xlsx';
+}
+
 function _saveSnapshotAsNewFile(meta){
   var HIST_KEY='msch_progress_history_v62';
 
@@ -11794,16 +11840,17 @@ function _saveSnapshotAsNewFile(meta){
   var history=[newEntry];
   try{ localStorage.setItem(HIST_KEY, JSON.stringify(history)); }catch(e){}
 
+  var histName=t('xlSheetHistory'), consolName=t('xlSheetConsolidated');
   var wb=XLSX.utils.book_new();
   var ws2=_buildHistorySheet(history);
-  XLSX.utils.book_append_sheet(wb,ws2,'누적이력');
+  XLSX.utils.book_append_sheet(wb,ws2,histName);
   var wsConsol=_buildConsolidatedSheet(wb, meta);
-  XLSX.utils.book_append_sheet(wb,wsConsol,'통합현황');
+  XLSX.utils.book_append_sheet(wb,wsConsol,consolName);
   var ws=_buildProgressSheet(meta);
   XLSX.utils.book_append_sheet(wb,ws,meta.ymd);
-  wb.SheetNames=['누적이력','통합현황',meta.ymd];
+  wb.SheetNames=[histName,consolName,meta.ymd];
 
-  var fname=meta.projName+'_실적현황_'+meta.ymd+'.xlsx';
+  var fname=_progressSnapshotFileName(meta);
   var xlsxData2=XLSX.write(wb,{bookType:'xlsx',type:'array',cellStyles:true});
   var xlsxBlob2=new Blob([xlsxData2],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
 
@@ -11839,7 +11886,7 @@ function _buildConsolidatedSheet(wb, meta){
     for(var ri=5;ri<rows.length;ri++){
       var r=rows[ri];
       var code=String(r[0]||'').trim();
-      if(!code||code.indexOf('[합')>=0) continue;
+      if(!code) continue;
       map[code]={
         name:String(r[1]||''),
         name2:String(r[2]||''),
@@ -11917,16 +11964,16 @@ function _buildConsolidatedSheet(wb, meta){
   var totalCols=FIXED+allDates.length*DATE_COLS;
   var rowEmpty=Array(totalCols).fill('');
   var rowTitle=[titleCell].concat(Array(totalCols-1).fill(''));
-  var hdr1=['코드','공종명','세부공종','물량','단위','계약금액(원)','계획시작','계획종료'];
+  var hdr1=[t('xlHdrCode'),t('xlHdrTaskName'),t('xlHdrDetailTask'),t('xlHdrQty'),t('xlHdrUnit'),t('xlHdrContractAmt'),t('xlHdrPlanStart'),t('xlHdrPlanEnd')];
   var hdr2=['','','','','','','',''];
   allDates.forEach(function(ymd){
     var dLabel=ymd.slice(0,4)+'-'+ymd.slice(4,6)+'-'+ymd.slice(6,8);
     hdr1.push(dLabel,'','');
-    hdr2.push('실적물량','실적율(%)','실적금액(원)');
+    hdr2.push(t('xlHdrActQty'),t('xlHdrActRate'),t('xlHdrActAmt'));
   });
 
   // 합계행
-  var sumRow=['[합  계]','','','','',''+meta.totalAmt,'',''];
+  var sumRow=[t('xlSumRowLabel'),'','','','',''+meta.totalAmt,'',''];
   var dateTotals={};
   allDates.forEach(function(ymd){
     var dm=dateDataMap[ymd]||{};
@@ -12074,7 +12121,7 @@ function _saveSnapshotIntoExisting(meta, file, saveDir){
         // 1) 누적이력 머지
         var HIST_KEY='msch_progress_history_v62';
         var history=[];
-        var hsName=wb.SheetNames.find(function(n){return n==='누적이력';});
+        var hsName=_findSheetByI18nKey(wb,'xlSheetHistory');
         if(hsName) history=_readHistoryFromSheet(wb.Sheets[hsName]);
         try{
           var saved=localStorage.getItem(HIST_KEY);
@@ -12099,11 +12146,12 @@ function _saveSnapshotIntoExisting(meta, file, saveDir){
         var wsProg=_buildProgressSheet(meta);
         var wsHist=_buildHistorySheet(history);
 
-        // 3) 누적이력 시트 교체(또는 추가)
-        if(wb.SheetNames.indexOf('누적이력')>=0){
-          wb.Sheets['누적이력']=wsHist;
+        // 3) 누적이력 시트 교체(또는 추가) — 기존 시트가 다른 언어로 저장돼 있으면 그 이름을 그대로 유지
+        if(hsName){
+          wb.Sheets[hsName]=wsHist;
         }else{
-          XLSX.utils.book_append_sheet(wb,wsHist,'누적이력');
+          hsName=t('xlSheetHistory');
+          XLSX.utils.book_append_sheet(wb,wsHist,hsName);
         }
 
         // 4) 기준선 날짜 시트 교체(있으면) 또는 추가
@@ -12114,23 +12162,24 @@ function _saveSnapshotIntoExisting(meta, file, saveDir){
           XLSX.utils.book_append_sheet(wb,wsProg,sheetName);
         }
 
-        // 5) 통합현황 시트 생성/갱신
+        // 5) 통합현황 시트 생성/갱신 — 기존 시트가 다른 언어로 저장돼 있으면 그 이름을 그대로 유지
         var wsConsolidated=_buildConsolidatedSheet(wb, meta);
-        var CONSOL_NAME='통합현황';
-        if(wb.SheetNames.indexOf(CONSOL_NAME)>=0){
+        var CONSOL_NAME=_findSheetByI18nKey(wb,'xlSheetConsolidated');
+        if(CONSOL_NAME){
           wb.Sheets[CONSOL_NAME]=wsConsolidated;
         }else{
+          CONSOL_NAME=t('xlSheetConsolidated');
           XLSX.utils.book_append_sheet(wb,wsConsolidated,CONSOL_NAME);
         }
 
         // 6) 시트 순서: 누적이력 → 통합현황 → YYYYMMDD 오름차순
-        var dateSheets=wb.SheetNames.filter(function(n){return n!=='누적이력'&&n!==CONSOL_NAME&&/^\d{8}$/.test(n);});
-        var restSheets=wb.SheetNames.filter(function(n){return n!=='누적이력'&&n!==CONSOL_NAME&&!/^\d{8}$/.test(n);});
+        var dateSheets=wb.SheetNames.filter(function(n){return n!==hsName&&n!==CONSOL_NAME&&/^\d{8}$/.test(n);});
+        var restSheets=wb.SheetNames.filter(function(n){return n!==hsName&&n!==CONSOL_NAME&&!/^\d{8}$/.test(n);});
         dateSheets.sort();
-        wb.SheetNames=['누적이력',CONSOL_NAME].concat(dateSheets).concat(restSheets);
+        wb.SheetNames=[hsName,CONSOL_NAME].concat(dateSheets).concat(restSheets);
 
         // 7) 파일명: 기준선 날짜로 새 파일 생성
-        var newName=meta.projName+'_실적현황_'+meta.ymd+'.xlsx';
+        var newName=_progressSnapshotFileName(meta);
 
         var xlsxData3=XLSX.write(wb,{bookType:'xlsx',type:'array',cellStyles:true});
         var xlsxBlob3=new Blob([xlsxData3],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
@@ -12231,7 +12280,7 @@ function exportProgressSnapshot(){
   var wrap=document.createElement('div');
   wrap.id='progSaveModal';
   wrap.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:99999;display:flex;align-items:center;justify-content:center;font-family:"Noto Sans KR",sans-serif;';
-  var _pmsFname=meta.projName+'_실적현황_'+meta.ymd+'.xlsx';
+  var _pmsFname=_progressSnapshotFileName(meta);
   wrap.innerHTML=
     '<div style="background:#fff;border-radius:8px;box-shadow:0 12px 40px rgba(0,0,0,.25);width:440px;max-width:92vw;overflow:hidden">'+
       '<div style="background:#1c3a5e;color:#fff;padding:12px 16px;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:space-between">'+
