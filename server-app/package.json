@@ -1,7 +1,7 @@
 {
   "name": "terminus-masterschedule-server",
   "productName": "Terminus MasterSchedule Server",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Terminus MasterSchedule Server — 사내 LAN 서버 트레이 앱",
   "author": "유병한",
   "license": "ISC",
