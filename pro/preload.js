@@ -10,6 +10,8 @@ contextBridge.exposeInMainWorld('terminusNative', {
   saveFile: (opts) => ipcRenderer.invoke('terminus:saveFile', opts),
   // 앱 버전(package.json version)
   getVersion: () => ipcRenderer.invoke('terminus:getVersion'),
+  // 완전 종료(트레이 없이 창만 있는 구조라, 설정 > 종료 버튼에서 명시적으로 호출)
+  quitApp: () => ipcRenderer.invoke('terminus:quitApp'),
   // 네이티브 폴더 선택/조회 (실적관리 기존파일 선택, 저장 폴더 기억 등)
   // 반환: {canceled:true} | {canceled:false, path}
   selectFolder: () => ipcRenderer.invoke('terminus:selectFolder'),

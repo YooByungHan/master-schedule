@@ -207,6 +207,11 @@ ipcMain.handle('terminus:writeFileToDir', (evt, opts) => {
 // 앱 버전 조회(렌더러가 화면에 자동 표기)
 ipcMain.handle('terminus:getVersion', () => app.getVersion());
 
+// 완전 종료 — 트레이 아이콘이 없어 "창 닫기(X)"만으로는 완전히 꺼졌는지 사용자가
+// 확신하기 어려웠음(업데이트 설치 시 "앱이 실행 중" 오류로 이어짐). 설정 모달에
+// 명시적인 "종료" 버튼을 두고 여기서 app.quit()을 직접 호출한다.
+ipcMain.handle('terminus:quitApp', () => { app.quit(); });
+
 // ── 자동 업데이트 ──────────────────────────────────────────────
 function setupAutoUpdate() {
   if (!app.isPackaged) return; // 개발 중엔 건너뜀
