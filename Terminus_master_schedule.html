@@ -11421,7 +11421,7 @@ async function exportExcel(){
     const pl=[]; (p.predLinks||[]).forEach(l=>{ (l.tgtIds||[]).forEach(t=>{ if(l.srcId&&t) pl.push([l.srcId,t]); }); });
     if(pl.length){ XLSX.utils.sheet_add_aoa(wsC,[['선행ID','후행ID']],{origin:'A19'}); XLSX.utils.sheet_add_aoa(wsC,pl,{origin:'A20'}); }
     const out=XLSX.write(wb,{bookType:'xlsb',bookVBA:true,type:'array'});
-    const t=new Date(); const ymd=''+t.getFullYear()+String(t.getMonth()+1).padStart(2,'0')+String(t.getDate()).padStart(2,'0');
+    const now=new Date(); const ymd=''+now.getFullYear()+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0');
     const fname=(projName||'공정표')+'_간트_'+ymd+'.xlsb';
     const blob=new Blob([out],{type:'application/vnd.ms-excel.sheet.binary.macroEnabled.12'});
     // 저장은 항상 "접속한 사용자 본인 PC"로만 한다. (서버 출력 폴더 저장 경로 제거)
