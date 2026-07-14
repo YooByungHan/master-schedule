@@ -11,6 +11,19 @@ const { app, BrowserWindow, ipcMain, dialog, shell } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
+// ── 단일 인스턴스 강제 ─────────────────────────────────────────
+// Pro는 1인 전용 앱이라 중복 실행을 지원하지 않는다. 중복 실행을 막지
+// 않으면 두 번째 프로세스가 ai-server.js의 3100번 포트 바인딩에 실패해
+// 처리되지 않은 예외로 크래시하고, 게다가 두 프로세스가 같은 userData
+// 저장 폴더를 동시에 써서 데이터가 깨질 위험이 있었다.
+// 잠금을 못 얻으면(=이미 실행 중) 이 프로세스는 아무 것도 하지 않고 즉시 종료하고,
+// 대신 이미 떠 있는 창을 앞으로 가져온다(second-instance 이벤트).
+const gotTheLock = app.requestSingleInstanceLock();
+if (!gotTheLock) {
+  app.quit();
+  return;
+}
+
 // 개발(파일이 상위 폴더) vs 패키징(파일이 앱 루트) 경로 흡수
 const BASE = app.isPackaged ? __dirname : path.join(__dirname, '..');
 
@@ -233,6 +246,15 @@ function setupAutoUpdate() {
   autoUpdater.on('error', (err) => console.warn('[update] ', err && err.message));
   try { autoUpdater.checkForUpdates(); } catch (e) { /* 오프라인 등 무시 */ }
 }
+
+// 두 번째 실행 시도 감지 — 새 창을 만들지 않고 기존 창을 앞으로 가져온다.
+app.on('second-instance', () => {
+  const win = mainWindow || gateWindow;
+  if (win) {
+    if (win.isMinimized()) win.restore();
+    win.focus();
+  }
+});
 
 app.whenReady().then(async () => {
   const gate = await checkGateForLaunch().catch(() => ({ allowed: true, reason: 'gate_error' }));

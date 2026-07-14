@@ -64,6 +64,12 @@ const server = http.createServer((req, res) => {
   res.end(JSON.stringify({ ok:false, msg:'AI 분석 서버 — POST /api/ai/analyze 만 지원' }));
 });
 
+// 포트가 이미 사용 중이면(예: 단일 인스턴스 잠금을 못 얻은 좀비 프로세스가 남아있는
+// 경우 등) 처리되지 않은 예외로 전체 앱이 크래시하지 않도록 조용히 로그만 남긴다.
+server.on('error', (e) => {
+  console.error('[ai-server] 포트 ' + PORT + ' 바인딩 실패:', e && e.message);
+});
+
 server.listen(PORT, () => {
   console.log('====================================');
   console.log(' Pro AI 분석 서버 (ai-server.js)');
