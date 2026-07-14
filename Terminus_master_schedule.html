@@ -4418,6 +4418,10 @@ function initApp(){
   // 통합 비교(회의): 엔터프라이즈 관리자(원도급)만 — 여러 업체 슬롯 접근 권한 필요
   const _meetBtn=document.getElementById('meetingTabBtn');
   if(_meetBtn) _meetBtn.style.display = 'none'; // 데이터 입력 탭 AI 패널로 일원화
+  // 공정회의(hgMeeting) 버튼그룹: Pro는 서버 연결 모드가 아니라 항상 "관리자만
+  // 사용할 수 있습니다"만 뜨므로(enterMeetingMode()의 _serverMode 조건), 아예 숨김
+  const _hgMeeting=document.getElementById('hgMeeting');
+  if(_hgMeeting) _hgMeeting.style.display = _isPro ? 'none' : '';
   const _tlBtn=document.getElementById('timelineTabBtn');
   if(_tlBtn) _tlBtn.style.display = 'none'; // 〃 (공정 흐름 → AI 패널로 통합)
   const _mbd=document.getElementById('meetingBaseDate');
