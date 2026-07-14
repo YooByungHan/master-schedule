@@ -756,6 +756,12 @@ body.pred-edit-mode .nacts-edit{display:flex!important}
 }
 .di:focus{border-color:var(--navy);background:#fff}
 .di::-webkit-calendar-picker-indicator{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;margin:0;padding:0}
+/* Firefox의 네이티브 date input은 연/월/일 서브필드 + 스피너 폭이 Chromium보다 훨씬 넓어서,
+   Chromium 기준(76px)으로 맞춰두면 일(day) 필드가 잘려 "년-월"까지만 보인다.
+   -moz-appearance는 Firefox(Gecko)에서만 지원되므로 이 피처쿼리로 Firefox만 골라 폭을 넓힌다. */
+@supports (-moz-appearance:none){
+  .di{ width:120px; min-width:120px; }
+}
 .date-grp.pg .di{border-color:#bfdbfe}
 .date-grp.ag .di{border-color:#bbf7d0}
 .di.auto-calc{
