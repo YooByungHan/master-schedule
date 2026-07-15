@@ -5,8 +5,11 @@
  *  1) server.js를 앱 내부에서 백그라운드로 구동(Node 별도 설치 불필요, 콘솔창/배치파일 없음)
  *  2) 시스템 트레이 아이콘으로 상태 확인 · 브라우저 열기 · 직원용 주소 복사 ·
  *     HTTPS 인증서 생성 · 재시작 · 종료
- *  3) 실데이터(계정/현장데이터/설정/백업 등)는 설치 폴더 옆 data 폴더에 저장
- *     (TERMINUS_SERVER_DATA_DIR) — git-clone 방식과 같은 "코드 옆 데이터" 감각 유지.
+ *  3) 실데이터(계정/현장데이터/설정/백업 등)는 문서(Documents) 폴더 아래에 저장
+ *     (TERMINUS_SERVER_DATA_DIR) — 관리자 권한 없이도 항상 쓸 수 있고, 탐색기에서
+ *     "문서" 바로가기로 바로 찾을 수 있는 위치. (2026-07-14 변경 — 이전엔 설치
+ *     폴더(exe) 옆 data/ 였는데, AppData 하위라 일반 사용자가 찾기 어려웠음.
+ *     기존 설치에서 업데이트한 경우 아래에서 자동으로 새 위치로 옮겨준다.)
  *  4) 실행 시 GitHub Release 확인 → 최신 버전 자동 업데이트(electron-updater)
  */
 const { app, Tray, Menu, shell, dialog, nativeImage, clipboard } = require('electron');
@@ -23,10 +26,29 @@ if (!gotLock) {
 // 개발(파일이 상위 폴더) vs 패키징(파일이 앱 루트) 경로 흡수
 const BASE = app.isPackaged ? __dirname : path.join(__dirname, '..');
 
-// 데이터 폴더: 패키징 시 설치 폴더(exe) 옆의 data/, 개발 중엔 저장소 루트 그대로.
-const DATA_DIR = app.isPackaged
-  ? path.join(path.dirname(app.getPath('exe')), 'data')
+// 데이터 폴더: 패키징 시 문서(Documents) 폴더 아래, 개발 중엔 저장소 루트 그대로.
+let DATA_DIR = app.isPackaged
+  ? path.join(app.getPath('documents'), 'Terminus MasterSchedule Server')
   : BASE;
+
+// 구버전(설치 폴더 옆 data/)에서 업데이트한 경우, 기존 데이터를 새 위치로 1회 이전.
+// 새 위치에 이미 데이터가 있으면(=이미 이전했거나 신규 설치) 건드리지 않는다.
+// 이전 도중 실패하면(권한 문제 등) 데이터 유실을 막기 위해 기존 위치를 그대로 쓴다.
+if (app.isPackaged) {
+  const oldDataDir = path.join(path.dirname(app.getPath('exe')), 'data');
+  try {
+    if (fs.existsSync(oldDataDir) && !fs.existsSync(DATA_DIR)) {
+      fs.mkdirSync(path.dirname(DATA_DIR), { recursive: true });
+      fs.cpSync(oldDataDir, DATA_DIR, { recursive: true });
+      fs.rmSync(oldDataDir, { recursive: true, force: true });
+      console.log('[Server] 데이터 폴더를 문서(Documents)로 이전했습니다:', DATA_DIR);
+    }
+  } catch (e) {
+    console.error('[Server] 데이터 폴더 이전 실패 — 기존 위치를 계속 사용합니다:', e && e.message);
+    DATA_DIR = oldDataDir;
+  }
+}
+
 process.env.TERMINUS_SERVER_DATA_DIR = DATA_DIR;
 // server.js의 /api/version이 이 값을 우선 사용(패키징 시 루트 package.json을
 // 번들하면 Electron 앱 매니페스트와 경로가 겹치므로, 버전은 env로 전달한다).
