@@ -11059,14 +11059,19 @@ function _onRestoreFileSelected(input){
   const reader=new FileReader();
   reader.onload=async e=>{
     input.value=''; // 같은 파일 다시 선택해도 change 이벤트가 뜨도록 초기화
-    let snap;
-    try{ snap=JSON.parse(e.target.result); }catch(err){ toast(t('restoreFromFileInvalidMsg')); return; }
-    if(!snap||!snap.primaryId||!snap.projects||!snap.projects[snap.primaryId]||!snap.projects[snap.primaryId].sections){
-      toast(t('restoreFromFileInvalidMsg')); return;
-    }
+    let d;
+    try{ d=JSON.parse(e.target.result); }catch(err){ toast(t('restoreFromFileInvalidMsg')); return; }
+    // 백업 파일 형식이 여러 버전 걸쳐 조금씩 다르다(예전엔 primaryId가 없거나,
+    // 프로젝트 하나만 최상위에 그대로 저장되기도 함) — 로컬 파일 열기 때 이미
+    // 검증된 _pickPrimaryFromFile()로 "진짜 주 프로젝트"를 찾아 형식을 통일한다.
+    const hint=(typeof _fileCompanyHint==='function')?_fileCompanyHint(f.name):'';
+    const pick=(typeof _pickPrimaryFromFile==='function')?_pickPrimaryFromFile(d, hint):null;
+    if(!pick||!pick.proj||!pick.proj.sections){ toast(t('restoreFromFileInvalidMsg')); return; }
     if(!confirm(t('restoreConfirmMsg',{name:f.name}))) return;
+    const pid=pick.id||'IMPORTED';
+    const normalized={ primaryId:pid, projects:{[pid]:pick.proj}, companies:[{id:pid, name:pick.companyName||''}], companyName:pick.companyName||'' };
     try{
-      const r=await fetch(API+'/api/backup/restoreFromContent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:CU.userId,site:_activeSite,content:e.target.result})});
+      const r=await fetch(API+'/api/backup/restoreFromContent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:CU.userId,site:_activeSite,content:JSON.stringify(normalized)})});
       const rj=await r.json();
       if(!rj.ok){ toast(t('restoreFailMsg',{msg:(rj.msg||'')})); return; }
       closeModal(); toast(t('restoreDoneShortMsg'));
