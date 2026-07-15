@@ -2346,6 +2346,33 @@ const requestHandler = async (req, res) => {
       });
     } catch(e){ res.writeHead(400); res.end('bad json'); } return;
   }
+  // 폴더 구조(현장 이름 하위폴더)를 몰라도 되도록, 사용자가 로컬 PC에서 고른 백업
+  // 파일 내용을 그대로 업로드해서 복원한다. 다른 PC에서 만든 백업이나 다른
+  // 현장(교육용 등)의 백업도 그대로 가져올 수 있도록, 파일 안의 primaryId가
+  // 아니라 "현재 접속한 현장"의 실제 원도급 업체 ID를 대상으로 덮어쓴다.
+  if (req.method === 'POST' && url === '/api/backup/restoreFromContent') {
+    try { const { userId, site, content } = await parseBody(req); const a=loadAccounts();
+      if(!canBackup(a,userId,site)){ res.writeHead(403,{'Content-Type':'application/json'}); res.end(JSON.stringify({ok:false,msg:'권한 없음'})); return; }
+      const who=(acctUser(a,userId)||{}).name||'';
+      let snap; try{ snap=(typeof content==='string')?JSON.parse(content):content; }catch(e){ res.writeHead(400,{'Content-Type':'application/json'}); res.end(JSON.stringify({ok:false,msg:'올바른 백업 파일이 아닙니다'})); return; }
+      const srcPid=snap&&snap.primaryId; const srcProj=srcPid&&snap.projects&&snap.projects[srcPid];
+      if(!srcProj||!srcProj.sections){ res.writeHead(400,{'Content-Type':'application/json'}); res.end(JSON.stringify({ok:false,msg:'백업 파일 형식이 올바르지 않습니다'})); return; }
+      const st=(a.sites||[]).find(s=>s.id===site); const pid=st&&st.primaryCompanyId;
+      if(!pid){ res.writeHead(400,{'Content-Type':'application/json'}); res.end(JSON.stringify({ok:false,msg:'현재 현장에 등록된 원도급 업체가 없습니다'})); return; }
+      _doBackup(site,'복원전', who); // 복원 직전 자동백업
+      const data=readSite(site);
+      data.projects=data.projects||{}; data.projects[pid]=srcProj;
+      data.companies=data.companies||[]; const c=data.companies.find(x=>x.id===pid);
+      const srcName=(snap.companies&&snap.companies[0]&&snap.companies[0].name)||snap.companyName;
+      if(c){ if(srcName) c.name=srcName; } else data.companies.push({id:pid, name:srcName||st.name||'원도급'});
+      writeSite(site, data, err=>{ if(err){ res.writeHead(500); res.end('error'); return; }
+        backupLog(site,{user:who,action:'복원(파일업로드)',type:'파일업로드',file:(snap._siteName?('['+snap._siteName+'] '):'')+(snap.companyName||'')});
+        let t=0; try{ t=fs.statSync(sitePath(site)).mtimeMs; }catch(e){}
+        wss.clients.forEach(ws=>{ if(ws.readyState===ws.OPEN) ws.send(JSON.stringify({type:'reload', site, t})); });
+        res.writeHead(200,{'Content-Type':'application/json'}); res.end(JSON.stringify({ok:true}));
+      });
+    } catch(e){ res.writeHead(400); res.end('bad json'); } return;
+  }
   if (req.method === 'POST' && url === '/api/backup/delete') {
     try { const { userId, site, name } = await parseBody(req); const a=loadAccounts();
       if(!isLocalReq(req)){ res.writeHead(403,{'Content-Type':'application/json'}); res.end(JSON.stringify({ok:false,msg:'삭제는 서버 PC에서만 가능'})); return; }

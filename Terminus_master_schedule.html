@@ -1881,6 +1881,7 @@ body.pred-edit-mode .nacts{min-width:44px}
 </div>
 
 <input type="file" id="loadInp" accept=".json" style="display:none" onchange="importJSON(this)">
+<input type="file" id="restoreFileInp" accept=".json" style="display:none" onchange="_onRestoreFileSelected(this)">
 <div class="calc-backdrop" id="calcBackdrop" style="display:none" onclick="calcClose()"></div>
 <div class="calc-pop" id="calcPop" style="display:none">
   <!-- Old값 행: 이전값 있을 때만 표시 -->
@@ -2089,6 +2090,7 @@ const I18N = {
     deleteBtnLabel:'삭제', restoreSelectModalTitle:'복원 — 백업 선택', restoreSelectHint:'선택한 백업으로 현재 공정표를 교체합니다(복원 직전 자동백업 생성, 전원 영향).',
     restoreDeleteServerOnlyHint:' 삭제는 서버 PC에서만 가능합니다.', restoreConfirmMsg:'"{name}"\n이 백업으로 현재 공정표를 교체할까요?\n(복원 직전 자동백업이 생성됩니다 · 전원에게 반영됩니다)', restoreFailMsg:'복원 실패: {msg}',
     restoreDoneShortMsg:'✅ 복원 완료', restoreErrMsg:'복원 오류: {msg}', backupDeleteConfirmMsg:'"{name}" 백업을 삭제할까요?',
+    restoreFromFileBtn:'📁 파일에서 복원', restoreFromFileHint:'다른 PC의 백업 파일이나 다른 현장의 데이터를 폴더 위치와 상관없이 직접 선택해서 복원할 수 있습니다.', restoreFromFileInvalidMsg:'⚠ 올바른 백업 파일이 아닙니다(형식을 확인해주세요)',
     backupDeletedMsg:'삭제됨', backupDeleteFailMsg:'삭제 실패: {msg}', genericErrMsg:'오류',
     saveLabelSave:'저장', saveLabelBackup:'백업', saveCompleteMsg:'{lbl} 완료: {filename}',
     saveCompleteDownloadMsg:'{lbl} 완료: {filename} · 위치=다운로드 폴더(브라우저 "다운로드 시 위치 묻기"로 폴더 선택 가능)', restoreAdminOnlyMsg:'⚠ 백업복원은 관리자만 실행할 수 있습니다', invalidBackupFileMsg:'올바르지 않은 백업 파일입니다',
@@ -2352,6 +2354,7 @@ const I18N = {
     deleteBtnLabel:'Delete', restoreSelectModalTitle:'Restore — Select Backup', restoreSelectHint:'This replaces the current schedule with the selected backup (an automatic backup is created right before restoring, and it affects everyone).',
     restoreDeleteServerOnlyHint:' Deleting is only possible on the server PC.', restoreConfirmMsg:'"{name}"\nReplace the current schedule with this backup?\n(An automatic backup will be created before restoring · this affects everyone)', restoreFailMsg:'Restore failed: {msg}',
     restoreDoneShortMsg:'✅ Restore complete', restoreErrMsg:'Restore error: {msg}', backupDeleteConfirmMsg:'Delete the backup "{name}"?',
+    restoreFromFileBtn:'📁 Restore from File', restoreFromFileHint:'Select a backup file from another PC or another site — regardless of its folder location — and restore directly from it.', restoreFromFileInvalidMsg:'⚠ This is not a valid backup file (please check the format)',
     backupDeletedMsg:'Deleted', backupDeleteFailMsg:'Delete failed: {msg}', genericErrMsg:'Error',
     saveLabelSave:'Save', saveLabelBackup:'Backup', saveCompleteMsg:'{lbl} complete: {filename}',
     saveCompleteDownloadMsg:'{lbl} complete: {filename} · location = Downloads folder (enable your browser\'s "Ask where to save" option to pick a folder)', restoreAdminOnlyMsg:'⚠ Only administrators can run backup restore', invalidBackupFileMsg:'This is not a valid backup file',
@@ -2615,6 +2618,7 @@ const I18N = {
     deleteBtnLabel:'Eliminar', restoreSelectModalTitle:'Restaurar — Seleccionar Copia de Seguridad', restoreSelectHint:'Esto reemplaza el cronograma actual con la copia de seguridad seleccionada (se crea una copia de seguridad automática justo antes de restaurar, y afecta a todos).',
     restoreDeleteServerOnlyHint:' La eliminación solo es posible en la PC del servidor.', restoreConfirmMsg:'"{name}"\n¿Reemplazar el cronograma actual con esta copia de seguridad?\n(Se creará una copia de seguridad automática antes de restaurar · esto afecta a todos)', restoreFailMsg:'Error al restaurar: {msg}',
     restoreDoneShortMsg:'✅ Restauración completa', restoreErrMsg:'Error de restauración: {msg}', backupDeleteConfirmMsg:'¿Eliminar la copia de seguridad "{name}"?',
+    restoreFromFileBtn:'📁 Restaurar desde Archivo', restoreFromFileHint:'Seleccione un archivo de respaldo de otra PC u otra obra, sin importar su ubicación de carpeta, y restaure directamente desde él.', restoreFromFileInvalidMsg:'⚠ Este no es un archivo de respaldo válido (verifique el formato)',
     backupDeletedMsg:'Eliminado', backupDeleteFailMsg:'Error al eliminar: {msg}', genericErrMsg:'Error',
     saveLabelSave:'Guardar', saveLabelBackup:'Copia de seguridad', saveCompleteMsg:'{lbl} completo: {filename}',
     saveCompleteDownloadMsg:'{lbl} completo: {filename} · ubicación = carpeta de Descargas (active la opción "Preguntar dónde guardar" del navegador para elegir carpeta)', restoreAdminOnlyMsg:'⚠ Solo los administradores pueden ejecutar la restauración de copias de seguridad', invalidBackupFileMsg:'Este no es un archivo de copia de seguridad válido',
@@ -2878,6 +2882,7 @@ const I18N = {
     deleteBtnLabel:'Löschen', restoreSelectModalTitle:'Wiederherstellen — Sicherung auswählen', restoreSelectHint:'Dadurch wird der aktuelle Zeitplan durch die ausgewählte Sicherung ersetzt (unmittelbar vor der Wiederherstellung wird automatisch eine Sicherung erstellt, betrifft alle Benutzer).',
     restoreDeleteServerOnlyHint:' Löschen ist nur auf dem Server-PC möglich.', restoreConfirmMsg:'"{name}"\nAktuellen Zeitplan durch diese Sicherung ersetzen?\n(Vor der Wiederherstellung wird automatisch eine Sicherung erstellt · betrifft alle Benutzer)', restoreFailMsg:'Wiederherstellung fehlgeschlagen: {msg}',
     restoreDoneShortMsg:'✅ Wiederherstellung abgeschlossen', restoreErrMsg:'Wiederherstellungsfehler: {msg}', backupDeleteConfirmMsg:'Sicherung "{name}" löschen?',
+    restoreFromFileBtn:'📁 Aus Datei wiederherstellen', restoreFromFileHint:'Wählen Sie eine Sicherungsdatei von einem anderen PC oder einer anderen Baustelle aus — unabhängig vom Ordnerort — und stellen Sie direkt daraus wieder her.', restoreFromFileInvalidMsg:'⚠ Dies ist keine gültige Sicherungsdatei (bitte Format prüfen)',
     backupDeletedMsg:'Gelöscht', backupDeleteFailMsg:'Löschen fehlgeschlagen: {msg}', genericErrMsg:'Fehler',
     saveLabelSave:'Speichern', saveLabelBackup:'Sicherung', saveCompleteMsg:'{lbl} abgeschlossen: {filename}',
     saveCompleteDownloadMsg:'{lbl} abgeschlossen: {filename} · Speicherort = Downloads-Ordner (aktivieren Sie die Browseroption "Speicherort beim Herunterladen fragen", um einen Ordner auszuwählen)', restoreAdminOnlyMsg:'⚠ Nur Administratoren können die Sicherungswiederherstellung ausführen', invalidBackupFileMsg:'Dies ist keine gültige Sicherungsdatei',
@@ -3141,6 +3146,7 @@ const I18N = {
     deleteBtnLabel:'削除', restoreSelectModalTitle:'復元 — バックアップ選択', restoreSelectHint:'選択したバックアップで現在の工程表を置き換えます（復元直前に自動バックアップを作成、全員に影響）。',
     restoreDeleteServerOnlyHint:' 削除はサーバーPCでのみ可能です。', restoreConfirmMsg:'「{name}」\nこのバックアップで現在の工程表を置き換えますか？\n（復元直前に自動バックアップが作成されます・全員に反映されます）', restoreFailMsg:'復元失敗：{msg}',
     restoreDoneShortMsg:'✅ 復元完了', restoreErrMsg:'復元エラー：{msg}', backupDeleteConfirmMsg:'「{name}」バックアップを削除しますか？',
+    restoreFromFileBtn:'📁 ファイルから復元', restoreFromFileHint:'他のPCのバックアップファイルや別現場のデータを、フォルダの場所に関係なく直接選択して復元できます。', restoreFromFileInvalidMsg:'⚠ 有効なバックアップファイルではありません（形式を確認してください）',
     backupDeletedMsg:'削除されました', backupDeleteFailMsg:'削除失敗：{msg}', genericErrMsg:'エラー',
     saveLabelSave:'保存', saveLabelBackup:'バックアップ', saveCompleteMsg:'{lbl}完了：{filename}',
     saveCompleteDownloadMsg:'{lbl}完了：{filename}・保存先＝ダウンロードフォルダ（ブラウザの「ダウンロード時に保存先を確認」設定でフォルダ選択可能）', restoreAdminOnlyMsg:'⚠ バックアップ復元は管理者のみ実行できます', invalidBackupFileMsg:'無効なバックアップファイルです',
@@ -11028,19 +11034,47 @@ async function doServerBackup(){
     toast(t('backupDoneMsg',{name:j.name}));
   }catch(e){ toast(t('backupErrMsg',{msg:(e.message||'')})); }
 }
+function _restoreFromFileSection(){
+  return `<div style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--border)">
+    <p style="font-size:10.5px;color:var(--text3);margin-bottom:6px">${esc(t('restoreFromFileHint'))}</p>
+    <button class="btn bw btn-xs" onclick="document.getElementById('restoreFileInp').click()">${esc(t('restoreFromFileBtn'))}</button>
+  </div>`;
+}
 async function showRestoreModal(){
   if(!_activeSite){ toast(t('noSiteInfoBackupMsg')); return; }
   let j; try{ const r=await fetch(API+'/api/backup/list?userId='+encodeURIComponent(CU.userId)+'&site='+encodeURIComponent(_activeSite)); j=await r.json(); }catch(e){}
   if(!j||!j.ok){ toast(t('backupListErrMsg',{msg:((j&&j.msg)||'')})); return; }
-  if(!j.files.length){ showModal(`<div class="modal-title">${esc(t('restoreModalTitle'))}</div><div style="padding:14px;color:var(--text2)">${esc(t('noBackupFilesMsg'))}</div><div class="modal-acts"><button class="btn bgray" onclick="closeModal()">${esc(t('stgClose'))}</button></div>`); return; }
+  if(!j.files.length){ showModal(`<div class="modal-title">${esc(t('restoreModalTitle'))}</div><div style="padding:14px;color:var(--text2)">${esc(t('noBackupFilesMsg'))}</div>${_restoreFromFileSection()}<div class="modal-acts"><button class="btn bgray" onclick="closeModal()">${esc(t('stgClose'))}</button></div>`); return; }
   const rows=j.files.map(f=>`<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 8px;border:1px solid var(--border);border-radius:5px;font-size:12px">
     <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(f.name)}"><b>${esc(f.name)}</b> <span style="color:var(--text3)">[${esc(f.type||'')}]</span></span>
     <span style="display:flex;gap:4px;flex-shrink:0">
       <button class="btn bp btn-xs" onclick="doRestore('${esc(f.name)}')">${esc(t('restoreBtnLabel'))}</button>
       ${j.canDelete?`<button class="btn bd btn-xs" onclick="doBackupDelete('${esc(f.name)}')">${esc(t('deleteBtnLabel'))}</button>`:''}
     </span></div>`).join('');
-  showModal(`<div class="modal-title">${esc(t('restoreSelectModalTitle'))}</div><p style="font-size:11px;color:var(--text3);margin-bottom:6px">${esc(t('restoreSelectHint'))}${j.canDelete?'':esc(t('restoreDeleteServerOnlyHint'))}</p><div style="display:flex;flex-direction:column;gap:5px;max-height:50vh;overflow:auto">${rows}</div><div class="modal-acts"><button class="btn bgray" onclick="closeModal()">${esc(t('stgClose'))}</button></div>`);
+  showModal(`<div class="modal-title">${esc(t('restoreSelectModalTitle'))}</div><p style="font-size:11px;color:var(--text3);margin-bottom:6px">${esc(t('restoreSelectHint'))}${j.canDelete?'':esc(t('restoreDeleteServerOnlyHint'))}</p><div style="display:flex;flex-direction:column;gap:5px;max-height:50vh;overflow:auto">${rows}</div>${_restoreFromFileSection()}<div class="modal-acts"><button class="btn bgray" onclick="closeModal()">${esc(t('stgClose'))}</button></div>`);
   document.getElementById('modalBox').style.width='640px'; // 백업 파일명이 길면 잘리는 문제 완화(기본 440px보다 넓게)
+}
+function _onRestoreFileSelected(input){
+  const f=input.files&&input.files[0]; if(!f) return;
+  const reader=new FileReader();
+  reader.onload=async e=>{
+    input.value=''; // 같은 파일 다시 선택해도 change 이벤트가 뜨도록 초기화
+    let snap;
+    try{ snap=JSON.parse(e.target.result); }catch(err){ toast(t('restoreFromFileInvalidMsg')); return; }
+    if(!snap||!snap.primaryId||!snap.projects||!snap.projects[snap.primaryId]||!snap.projects[snap.primaryId].sections){
+      toast(t('restoreFromFileInvalidMsg')); return;
+    }
+    if(!confirm(t('restoreConfirmMsg',{name:f.name}))) return;
+    try{
+      const r=await fetch(API+'/api/backup/restoreFromContent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:CU.userId,site:_activeSite,content:e.target.result})});
+      const rj=await r.json();
+      if(!rj.ok){ toast(t('restoreFailMsg',{msg:(rj.msg||'')})); return; }
+      closeModal(); toast(t('restoreDoneShortMsg'));
+      try{ await loadFromServer(); }catch(err){} initApp();
+    }catch(err){ toast(t('restoreErrMsg',{msg:(err.message||'')})); }
+  };
+  reader.onerror=()=>{ input.value=''; toast(t('restoreFromFileInvalidMsg')); };
+  reader.readAsText(f);
 }
 async function doRestore(name){
   if(!confirm(t('restoreConfirmMsg',{name}))) return;
