@@ -9217,15 +9217,7 @@ function renderAdmin(){
         <button class="btn bd btn-xs" onclick="_clearAdminClaudeKey()">${t('wordDelete')}</button>
       </div>
     </div>
-    <div class="admin-sec">
-      <div class="admin-title">${t('adminHolTitle')}
-        <button class="btn bp btn-xs" onclick="showHolidayModal()">${t('adminHolEditBtn')}</button>
-      </div>
-      <p style="font-size:11px;color:var(--text2);margin-bottom:6px">${t('adminHolDesc')}</p>
-      <div id="holidayPreview" style="font-size:11px;color:var(--text3)"></div>
-    </div>
     </div>`;
-  renderHolidayPreview();
 }
 function _saveAdminClaudeKey(){
   const k=(document.getElementById('adminClaudeKey')?.value||'').trim();
@@ -9362,13 +9354,7 @@ async function _renderAdminServer(){
           <button class="btn bd btn-xs" onclick="_clearAdminGroqKeyServer()">${t('wordDelete')}</button>
         </div>
       </div>
-      <div class="admin-sec">
-        <div class="admin-title">${t('adminHolTitle')}
-          <button class="btn bp btn-xs" onclick="showHolidayModal()">${t('adminHolEditBtn')}</button>
-        </div>
-        <div id="holidayPreview" style="font-size:11px;color:var(--text3)"></div>
-      </div>`;
-    renderHolidayPreview();
+      `;
     if(_activeSite) _renderSiteMembers();
     // 키 설정 상태 조회 (키 자체는 서버에서 내려주지 않음)
     fetch('/api/admin/claude-key/status').then(r=>r.json()).then(s=>{
@@ -11054,6 +11040,7 @@ async function showRestoreModal(){
       ${j.canDelete?`<button class="btn bd btn-xs" onclick="doBackupDelete('${esc(f.name)}')">${esc(t('deleteBtnLabel'))}</button>`:''}
     </span></div>`).join('');
   showModal(`<div class="modal-title">${esc(t('restoreSelectModalTitle'))}</div><p style="font-size:11px;color:var(--text3);margin-bottom:6px">${esc(t('restoreSelectHint'))}${j.canDelete?'':esc(t('restoreDeleteServerOnlyHint'))}</p><div style="display:flex;flex-direction:column;gap:5px;max-height:50vh;overflow:auto">${rows}</div><div class="modal-acts"><button class="btn bgray" onclick="closeModal()">${esc(t('stgClose'))}</button></div>`);
+  document.getElementById('modalBox').style.width='640px'; // 백업 파일명이 길면 잘리는 문제 완화(기본 440px보다 넓게)
 }
 async function doRestore(name){
   if(!confirm(t('restoreConfirmMsg',{name}))) return;
@@ -11224,7 +11211,7 @@ function showModal(h, noOutsideClose){
   ov.style.display='flex';
   ov._noClose=!!noOutsideClose;
 }
-function closeModal(){document.getElementById('modalOv').style.display='none'}
+function closeModal(){document.getElementById('modalOv').style.display='none'; document.getElementById('modalBox').style.width='';}
 function showConf(msg,fn){
   _cbFn=fn;
   showModal(`
